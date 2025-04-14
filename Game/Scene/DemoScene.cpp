@@ -11,9 +11,13 @@
 void DemoScene::Init()
 {
 	Object3dManager::GetInstance()->Init();
+	ModelManager::GetInstance()->LoadModel("Resources/worldDesign", "worldDesign.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/worldDesign", "map.obj");
 	wood_ = std::make_unique<WorldDesign>();
-	wood_->Init({100.0f,100.0f,100.0f},{0.0f,-15.0f,30.0f},"map");
+	wood_->Init({ 1.0f,1.0f,1.0f }, { 0.0f,15.0f,30.0f }, "worldDesign");
+	map_ = std::make_unique<WorldDesign>();
+	map_->Init({ 100.0f,100.0f,100.0f }, { 100.0f,50.0f,30.0f }, "map");
+
 	
 	camera_ = std::make_unique<Camera>();
 	camera_->Initialize();
@@ -29,10 +33,13 @@ void DemoScene::Update()
 
 	if (Input::GetInstance()->TriggerKey(DIK_B)) {
 		wood_.reset();
+		map_.reset();
 	}
 	camera_->Update();
 	if (wood_.get()) {
 		wood_->Update();
+		map_->Update();
+
 	}
 	Object3dManager::GetInstance()->Update();
 	postProcess_->Update();

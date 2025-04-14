@@ -51,6 +51,7 @@ private:
 
 	// 背景オブジェクト
 	std::unique_ptr<WorldDesign> wood_;
+	std::unique_ptr<WorldDesign> map_;
 
 
 };
