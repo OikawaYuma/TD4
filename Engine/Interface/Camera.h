@@ -11,6 +11,8 @@
 #include "Transform.h"
 #include "mathFunction.h"
 #include <numbers>
+#include "Input.h"
+#include "algorithm"
 
 class Camera
 {
@@ -18,6 +20,11 @@ public:
 	void Initialize();
 	void Update();
 	void CameraDebug();
+
+	//debug
+	void Move();
+	void HandleGamepadMovement();
+	void HandleRightStick(const XINPUT_STATE& joyState);
 
 public: //Getter
 	const Transform& GetTransform() const { return transform_; }
@@ -49,6 +56,18 @@ private:
 	float asepectRatio_ = float(WinAPI::kClientWidth_) / float(WinAPI::kClientHeight_);
 	float nearClip_ = 0.1f;
 	float farClip_ = 1000.0f;
+
+	//debug
+	   /// <summary>
+	/// 視点移動の感度
+	/// </summary>
+	float lookSensitivity = 0.03f;
+	/// <summary>
+	/// プレイヤーの移動速度
+	/// </summary>
+	float baseSpeed = 0.3f;
+	float Yspeed = 1.0f;
+	float boostedSpeed = 0.45f;
 };
 
 

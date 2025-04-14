@@ -23,6 +23,7 @@
 #include "PostProcess.h"
 #include "Skybox/Skybox.h"
 #include "WorldDesign/WorldDesign.h"
+#include "map/map.h"
 
 class DemoScene : public IScene
 {
@@ -51,7 +52,7 @@ private:
 
 	// 背景オブジェクト
 	std::unique_ptr<WorldDesign> wood_;
-	std::unique_ptr<WorldDesign> map_;
+	std::unique_ptr<map> map_;
 
 
 };

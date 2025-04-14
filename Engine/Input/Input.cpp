@@ -70,6 +70,19 @@ bool Input::PushKey(BYTE keyNumber)
 	return false;
 }
 
+bool Input::GetJoystickState2(XINPUT_STATE& state)
+{
+	ZeroMemory(&state, sizeof(XINPUT_STATE));
+
+	// コントローラーの状態を取得
+	result = XInputGetState(0, &state);
+
+	if (result == ERROR_SUCCESS) {
+		return true;
+	}
+	return false;
+}
+
 bool Input::GetJoystickState()
 {
 	

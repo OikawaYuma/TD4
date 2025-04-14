@@ -44,6 +44,7 @@ public:
 	XINPUT_STATE GetJoyState() { return joyState; };
 
 	bool GetJoystickState();
+	bool GetJoystickState2(XINPUT_STATE& state);
 
 	bool PushJoyButton(uint32_t button);
 

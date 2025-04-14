@@ -1,17 +1,17 @@
-#include "WorldDesign.h"
+#include "map.h"
 #include "TextureManager.h"
 #include "ModelManager.h"
 #include "Model.h"
 #include "Object3dManager.h"
 #include "Input.h"
-WorldDesign::~WorldDesign()
+map::~map()
 {
 	SetObjectPram();
 	shadowObject_.reset();
 }
-void WorldDesign::Init(const Vector3& scale, const Vector3& translate, const std::string filename)
+void map::Init(const Vector3& scale, const Vector3& translate, const std::string filename)
 {
-	floorTex_ = TextureManager::GetInstance()->StoreTexture("Resources/wood.png");
+	floorTex_ = TextureManager::GetInstance()->StoreTexture("Resources/load.png");
 	color_ = { 1.0f,1.0f,1.0f,1.0f };
 
 	objectPram_ = Object3dManager::GetInstance()->StoreObject(filename, floorTex_, Transparency::Opaque);
@@ -30,7 +30,7 @@ void WorldDesign::Init(const Vector3& scale, const Vector3& translate, const std
 	shadowObject_->Update();
 }
 
-void WorldDesign::Update()
+void map::Update()
 {
 	if (objectPram_.lock()) {
 		if (Input::GetInstance()->PushKey(DIK_L)) {
@@ -43,10 +43,9 @@ void WorldDesign::Update()
 
 
 
-void WorldDesign::SetObjectPram()
+void map::SetObjectPram()
 {
 	if (auto locked = objectPram_.lock()) {  // weak_ptrからshared_ptrに変換
 		locked->isAlive = false;
 	}
 }
-
