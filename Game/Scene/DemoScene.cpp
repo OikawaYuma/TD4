@@ -16,7 +16,7 @@ void DemoScene::Init()
 	wood_ = std::make_unique<WorldDesign>();
 	wood_->Init({ 1.0f,1.0f,1.0f }, { 0.0f,15.0f,30.0f }, "worldDesign");
 	map_ = std::make_unique<map>();
-	map_->Init({ 100.0f,100.0f,100.0f }, { 100.0f,50.0f,30.0f }, "map");
+	map_->Init({ 1.0f,1.0f,1.0f }, { 10.0f,50.0f,30.0f }, "map");
 
 	
 	camera_ = std::make_unique<Camera>();
@@ -43,7 +43,10 @@ void DemoScene::Update()
 	}
 	Object3dManager::GetInstance()->Update();
 	postProcess_->Update();
+
 	camera_->CameraDebug();
+
+	PostEffectChange();
 }
 void DemoScene::Draw()
 {
@@ -70,6 +73,7 @@ int DemoScene::GameClose()
 
 void DemoScene::PostEffectChange()
 {
+	ImGui::Begin("PostEffect");
 	Vector2 viggnetDarkness = postProcess_->GetDarkness();
 	float gauss = postProcess_->GetDeviation();
 	float threa = postProcess_->GetThreshold();
