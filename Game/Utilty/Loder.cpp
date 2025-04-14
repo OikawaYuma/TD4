@@ -123,9 +123,14 @@ void Loder::LoadJsonFile(const std::string kDefaultBaseDirectory, const std::str
 		/*if (objectData.filename.compare("player") == 0) {
 			ModelManager::GetInstance()->LoadModel("Resources/" + objectData.filename, objectData.filename + ".obj");
 		}*/
+		objectData;
 
 	}
-
+	enemys;
+	ground;
+	items;
+	worldDesigns;
+	player;
 }
 
 

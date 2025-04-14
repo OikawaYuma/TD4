@@ -16,7 +16,7 @@ void WorldDesign::Init(const Vector3& scale, const Vector3& translate, const std
 
 	objectPram_ = Object3dManager::GetInstance()->StoreObject(filename,floorTex_, Transparency::Opaque);
 	objectPram_.lock()->worldTransform.scale_ = scale;
-	objectPram_.lock()->worldTransform.translation_.x = 5;
+	objectPram_.lock()->worldTransform.translation_ = translate;
 	objectPram_.lock()->color = color_;
 
 
