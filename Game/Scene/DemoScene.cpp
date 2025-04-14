@@ -11,9 +11,9 @@
 void DemoScene::Init()
 {
 	Object3dManager::GetInstance()->Init();
-	ModelManager::GetInstance()->LoadModel("Resources/worldDesign", "worldDesign.obj");
+	ModelManager::GetInstance()->LoadModel("Resources/worldDesign", "map.obj");
 	wood_ = std::make_unique<WorldDesign>();
-	wood_->Init({1.0f,1.0f,1.0f},{0.0f,0.0f,30.0f},"worldDesign");
+	wood_->Init({100.0f,100.0f,100.0f},{0.0f,-15.0f,30.0f},"map");
 	
 	camera_ = std::make_unique<Camera>();
 	camera_->Initialize();
@@ -36,6 +36,7 @@ void DemoScene::Update()
 	}
 	Object3dManager::GetInstance()->Update();
 	postProcess_->Update();
+	camera_->CameraDebug();
 }
 void DemoScene::Draw()
 {
@@ -62,7 +63,6 @@ int DemoScene::GameClose()
 
 void DemoScene::PostEffectChange()
 {
-	ImGui::Begin("PostEffect");
 	Vector2 viggnetDarkness = postProcess_->GetDarkness();
 	float gauss = postProcess_->GetDeviation();
 	float threa = postProcess_->GetThreshold();
@@ -111,9 +111,6 @@ void DemoScene::PostEffectChange()
 		ImGui::SliderFloat("Devaition", &gauss, 0.01f, 10.0f);
 		ImGui::TreePop();
 	}
-
-
-
 
 	if (ImGui::TreeNode("DepthOutline")) {
 		if (ImGui::Button("DepthOutline On")) {

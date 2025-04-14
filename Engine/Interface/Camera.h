@@ -5,7 +5,7 @@
 */
 #pragma once
 #include"WinAPI.h"
-
+#include "imgui/imgui.h"
 #include "Vector3.h"
 #include "Matrix4x4.h"
 #include "Transform.h"
@@ -17,6 +17,7 @@ class Camera
 public:
 	void Initialize();
 	void Update();
+	void CameraDebug();
 
 public: //Getter
 	const Transform& GetTransform() const { return transform_; }
