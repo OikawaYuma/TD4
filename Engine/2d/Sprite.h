@@ -42,9 +42,9 @@ public:
 	Sprite();
 	~Sprite();
 
-	void Init(const Vector2& pos,const Vector2& size, const Vector4& color, const std::string& filePath);
+	void Init(const std::string& filePath);
 	void Update();
-	void Draw(uint32_t texture, const Vector4& color);
+	void Draw();
 	void Release();
 	Transform GetTransform() {
 		return transform_;
@@ -68,6 +68,7 @@ public:
 	void SetTextureSize(const Vector2& textureSize) {
 		this->textureSize_ = textureSize;
 	}
+	void SetTexture(uint32_t texIndex) { texIndex_ = texIndex; }
 	void SetColor(const Vector4& color) { materialData->color = color; }
 	D3D12_VERTEX_BUFFER_VIEW CreateBufferView();
 private:
@@ -76,14 +77,20 @@ private:
 	WinAPI* sWinAPI;
 	DirectXCommon* sDirectXCommon;
 	Mesh* mesh_;
+	// ポジション
 	Vector2 position_ = { 0.0f, 0.0f };
-	Vector2 size_ = { 1.0f,1.0f };
+	// 大きさ
+	Vector2 size_ = { 64.0f,64.0f };
+	// 中心
 	Vector2 anchorPoint_ = { 0.0f,0.0f };
 	// テクスチャ左上座標
 	Vector2 textureleftTop_ = { 0.0f,0.0f };
 	// テクスチャ切り出しサイズ
 	Vector2 textureSize_ = { 100.0f,100.0f };
+	// トランスフォーム
 	Transform transform_;
+	// テクスチャ
+	uint32_t texIndex_ = 0;
 	// 頂点バッファビューを作成する
 	D3D12_VERTEX_BUFFER_VIEW vertexBufferViewSprite_{};
 

@@ -8,12 +8,7 @@ void Score::Init(Vector2 pos, Vector2 size, bool isSum,float width)
 
 	for (int i = 0; i < 6; i++) {
 		scoreSprite_[i] = std::make_unique<Sprite>();
-		scoreSprite_[i]->Init(
-			{ i * width + pos.x,pos.y }, // gameScene x 32 y 96
-			size,
-			{ 0.5f , 0.5f },
-			{ 1.0f, 1.0f, 1.0f, 1.0f },
-			"Resources/Reticle.png");
+		scoreSprite_[i]->Init("Resources/Reticle.png");
 	}
 	isSum_ = isSum;
 }
@@ -34,6 +29,6 @@ void Score::Update(const int& time, const int& killCount)
 void Score::Draw()
 {
 	for (int i = 0; i < 6; i++) {
-		scoreSprite_[i]->Draw(gameNumber_[digitScore_[i]],{1.0f,1.0f,1.0f,1.0f});
+		scoreSprite_[i]->Draw();
 	}
 }

@@ -54,6 +54,7 @@ private:
 	std::unique_ptr<WorldDesign> wood_;
 	std::unique_ptr<map> map_;
 
-
+	// Sprite
+	std::unique_ptr<Sprite> sprite_;
 };
 

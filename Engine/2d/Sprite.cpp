@@ -14,7 +14,7 @@ Sprite::~Sprite()
 }
 ;
 
-void Sprite::Init(const Vector2& pos, const Vector2& size,const Vector4& color, const std::string& filePath) {
+void Sprite::Init(const std::string& filePath) {
 	sWinAPI = WinAPI::GetInstance();
 	sDirectXCommon = DirectXCommon::GetInstance();
 
@@ -48,10 +48,10 @@ void Sprite::Init(const Vector2& pos, const Vector2& size,const Vector4& color, 
 	materialResource = Mesh::CreateBufferResource(sDirectXCommon->GetDevice(), sizeof(Material));
 	// 頂点リソースにデータを書き込む
 	materialData = nullptr;
+	
 	// 書き込むためのアドレスを取得
 	materialResource->Map(0, nullptr, reinterpret_cast<void**>(&materialData));
-	// 色のデータを変数から読み込み
-	materialData->color = color;
+	materialData->color = { 1.0f,1.0f,1.0f,1.0f };
 	materialData->uvTransform = MakeIdentity4x4();
 
 	// Sprite用のTransformationMatrix用のリソースを作る。Matrix4x4 1つ分のサイズを用意する
@@ -61,9 +61,9 @@ void Sprite::Init(const Vector2& pos, const Vector2& size,const Vector4& color, 
 	// 単位行列を書き込んでおく
 	transformationMatrixDataSprite->WVP = MakeIdentity4x4();
 
-	position_ = pos;
+	
 	// Transform変数の初期化
-	transform_ = { {size.x,size.y,1.0f},{0.0f,0.0f,0.0f},{pos.x,pos.y ,0.0f} };
+	transform_ = { {size_.x,size_.y,1.0f},{0.0f,0.0f,0.0f},{position_.x,position_.y,0.0f} };
 
 	indexResourceSprite = Mesh::CreateBufferResource(sDirectXCommon->GetDevice(), sizeof(uint32_t) * 6);
 	// リソースの先頭のアドレスから使う
@@ -95,21 +95,18 @@ void Sprite::Init(const Vector2& pos, const Vector2& size,const Vector4& color, 
 
 };
 void Sprite::Update() {
-	transform_.translate = { position_.x,position_.y ,0.0f };
+	// Transform変数の更新
+	transform_ = { {size_.x,size_.y,1.0f},{0.0f,0.0f,0.0f},{position_.x,position_.y,0.0f} };
 	//transform_.scale = { size_.x,size_.y,1.0f };
 	float left = 0.0f - anchorPoint_.x;
 	float right = 1.0f - anchorPoint_.x;
 	float top = 0.0f - anchorPoint_.y;
 	float bottom = 1.0f - anchorPoint_.y;
-
-
 	// 1枚目の三角形
 	vertexDataSprite_[0].position = { left,bottom,0.0f,1.0f };//左下
 	vertexDataSprite_[1].position = { left,top,0.0f,1.0f }; // 左上
 	vertexDataSprite_[2].position = { right,bottom,0.0f,1.0f }; // 右下
 	vertexDataSprite_[3].position = { right,top,0.0f,1.0f }; // 右上
-
-	
 	//float tex_left = textureleftTop_.x / originSize_.x;
 	//float tex_right = (textureleftTop_.x + textureSize_.x) / originSize_.x;
 	//float tex_top = textureleftTop_.y / originSize_.y;
@@ -128,9 +125,8 @@ void Sprite::Update() {
 };
 
 
-void Sprite::Draw(uint32_t texture, const Vector4& color) {
+void Sprite::Draw() {
 	pso_ = PSOSprite::GatInstance();
-	materialData->color = color;
 	// Sprite用のWorldViewProjectMatrixを作る
 	Matrix4x4 worldMatrixSprite = MakeAffineMatrix(transform_.scale, transform_.rotate, transform_.translate);
 	Matrix4x4 viewMatrixSprite = MakeIdentity4x4();
@@ -148,9 +144,8 @@ void Sprite::Draw(uint32_t texture, const Vector4& color) {
 	// TransformationmatrixCBufferの場所を設定
 	sDirectXCommon->GetCommandList()->SetGraphicsRootConstantBufferView(1, transformationMatrixResouceSprite->GetGPUVirtualAddress());
 	// SRV のDescriptorTableの先頭を設定。2はrootParameter[2]である。
-	sDirectXCommon->GetCommandList()->SetGraphicsRootDescriptorTable(2, SRVManager::GetGPUDescriptorHandle(texture));
+	sDirectXCommon->GetCommandList()->SetGraphicsRootDescriptorTable(2, SRVManager::GetGPUDescriptorHandle(texIndex_));
 	// 描画（DrawCall/ドローコール）
-	//sDirectXCommon->GetCommandList()->DrawInstanced(6, 1, 0, 0);
 	sDirectXCommon->GetCommandList()->DrawIndexedInstanced(6, 1, 0, 0, 0);
 }
 
