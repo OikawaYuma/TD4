@@ -11,29 +11,14 @@ void GameTimer::Init()
 	colonTex_ = TextureManager::GetInstance()->StoreTexture("Resources/number/colon.png");
 	for (int i = 0; i < 2; i++) {
 		timeSprite_[i] = std::make_unique<Sprite>();
-		timeSprite_[i]->Init(
-			{ 640 + i * 36.0f - 72.0f,32.0f },
-			{ 64.0, 64.0f },
-			{ 0.5f , 0.5f },
-			{ 1.0f, 1.0f, 1.0f, 1.0f },
-			"Resources/Reticle.png");
+		timeSprite_[i]->Init("Resources/Reticle.png");
 	}
 	for (int i = 2; i < 4; i++) {
 		timeSprite_[i] = std::make_unique<Sprite>();
-		timeSprite_[i]->Init(
-			{ 640 + i * 36.0f - 36.0f,32.0f },
-			{ 64.0, 64.0f },
-			{ 0.5f , 0.5f },
-			{ 1.0f, 1.0f, 1.0f, 1.0f },
-			"Resources/Reticle.png");
+		timeSprite_[i]->Init("Resources/Reticle.png");
 	}
 	colonSprite_ = std::make_unique<Sprite>();
-	colonSprite_->Init(
-		{ 640.0f ,32.0f },
-		{ 64.0, 64.0f },
-		{ 0.5f , 0.5f },
-		{ 1.0f, 1.0f, 1.0f, 1.0f },
-		"Resources/Reticle.png");
+	colonSprite_->Init("Resources/Reticle.png");
 	gameTime_.sumTime = 60;
 	frame_ = 0;
 	apearFlag_ = false;
@@ -66,12 +51,12 @@ void GameTimer::Update(const float& apearPoint)
 void GameTimer::Draw()
 {
 	if (apearFlag_) {
-		timeSprite_[0]->Draw(gameNumber_[gameTime_.minutesTwoDigit], { 1.0f,1.0f,1.0f,1.0f });
-		timeSprite_[1]->Draw(gameNumber_[gameTime_.minutesOneDigit], { 1.0f,1.0f,1.0f,1.0f });
-		timeSprite_[2]->Draw(gameNumber_[gameTime_.secondsTwoDigit], { 1.0f,1.0f,1.0f,1.0f });
-		timeSprite_[3]->Draw(gameNumber_[gameTime_.secondsOneDigit], { 1.0f,1.0f,1.0f,1.0f });
+		timeSprite_[0]->Draw();
+		timeSprite_[1]->Draw();
+		timeSprite_[2]->Draw();
+		timeSprite_[3]->Draw();
 
-		colonSprite_->Draw(colonTex_, { 1.0f,1.0f,1.0f,1.0f });
+		colonSprite_->Draw();
 	}
 }
 
