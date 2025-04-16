@@ -14,14 +14,9 @@ Sprite::~Sprite()
 }
 ;
 
-void Sprite::Init(const Vector2& pos, const Vector2& size, const Vector2& anchorPoint, const Vector4& color, const std::string& filePath) {
+void Sprite::Init(const Vector2& pos, const Vector2& size,const Vector4& color, const std::string& filePath) {
 	sWinAPI = WinAPI::GetInstance();
 	sDirectXCommon = DirectXCommon::GetInstance();
-
-	//rootParamerters[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE; // DescripterTableを使う
-	//rootParamerters[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL; // PixelShaderで使う
-	//rootParamerters[0].DescriptorTable.pDescriptorRanges = descriptorRange_; // Tableの中身の配列を指定
-	//rootParamerters[0].DescriptorTable.NumDescriptorRanges = _countof(descriptorRange_); // Tableで利用する数
 
 	// Sprite用の頂点リソースを作る
 	vertexResourceSprite_ = Mesh::CreateBufferResource(sDirectXCommon->GetDevice(), sizeof(VertexData) * 4);
@@ -34,11 +29,10 @@ void Sprite::Init(const Vector2& pos, const Vector2& size, const Vector2& anchor
 	vertexBufferViewSprite_.StrideInBytes = sizeof(VertexData);
 
 	vertexResourceSprite_->Map(0, nullptr, reinterpret_cast<void**>(&vertexDataSprite_));
-	anchorPoint_ = anchorPoint;
-	float left = 0.0f - anchorPoint.x;
-	float right = 1.0f - anchorPoint.x;
-	float top = 0.0f - anchorPoint.y;
-	float bottom = 1.0f - anchorPoint.y;
+	float left = 0.0f - anchorPoint_.x;
+	float right = 1.0f - anchorPoint_.x;
+	float top = 0.0f - anchorPoint_.y;
+	float bottom = 1.0f - anchorPoint_.y;
 	// 1枚目の三角形
 	vertexDataSprite_[0].position = { left,bottom,0.0f,1.0f };//左下
 	vertexDataSprite_[1].position = { left,top,0.0f,1.0f }; // 左上
@@ -52,8 +46,6 @@ void Sprite::Init(const Vector2& pos, const Vector2& size, const Vector2& anchor
 	vertexDataSprite_[3].texcorrd = { 1.0f,0.0f };
 	// 実際に頂点リソースを作る
 	materialResource = Mesh::CreateBufferResource(sDirectXCommon->GetDevice(), sizeof(Material));
-
-	/*materialBufferView = CreateBufferView();;*/
 	// 頂点リソースにデータを書き込む
 	materialData = nullptr;
 	// 書き込むためのアドレスを取得
@@ -61,8 +53,6 @@ void Sprite::Init(const Vector2& pos, const Vector2& size, const Vector2& anchor
 	// 色のデータを変数から読み込み
 	materialData->color = color;
 	materialData->uvTransform = MakeIdentity4x4();
-
-
 
 	// Sprite用のTransformationMatrix用のリソースを作る。Matrix4x4 1つ分のサイズを用意する
 	transformationMatrixResouceSprite = Mesh::CreateBufferResource(sDirectXCommon->GetDevice(), sizeof(TransformationMatrix));
