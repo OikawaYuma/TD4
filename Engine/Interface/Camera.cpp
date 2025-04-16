@@ -109,6 +109,9 @@ void Camera::CameraDebug()
     ImGui::PushStyleColor(ImGuiCol_TitleBgActive, ImVec4(0.2f, 0.0f, 0.7f, 0.8f));
     ImGui::PushStyleColor(ImGuiCol_TitleBg, ImVec4(0.1f, 0.0f, 0.3f, 0.5f));
     ImGui::Begin("camera");
+    ImGui::Text("Move : Left stick");
+    ImGui::Text("View : Right stick");
+    ImGui::Text("Y Move : LB RB button");
 
     // FOVの調整
     ImGui::DragFloat("FOV", &fovY_, 0.01f);
