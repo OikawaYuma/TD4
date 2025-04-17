@@ -12,11 +12,11 @@ void DemoScene::Init()
 {
 	Object3dManager::GetInstance()->Init();
 	ModelManager::GetInstance()->LoadModel("Resources/worldDesign", "worldDesign.obj");
-	ModelManager::GetInstance()->LoadModel("Resources/map", "map0.obj");
+	ModelManager::GetInstance()->LoadModel("Resources/map", "map2.obj");
 	wood_ = std::make_unique<WorldDesign>();
 	wood_->Init({ 1.0f,1.0f,1.0f }, { 0.0f,15.0f,30.0f }, "worldDesign");
 	map_ = std::make_unique<map>();
-	map_->Init({ 100.0f,100.0f,100.0f }, { 100.0f,0.0f,30.0f }, "map0");
+	map_->Init({ 100.0f,100.0f,100.0f }, { 100.0f,0.0f,30.0f }, "map2");
 
 	sprite_ = std::make_unique<Sprite>();
 	sprite_->Init("Resources/load.png");
