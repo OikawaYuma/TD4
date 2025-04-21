@@ -25,7 +25,7 @@ void DemoScene::Init()
 	sprite_->SetTexture(TextureManager::GetInstance()->StoreTexture("Resources/load.png"));
 	camera_ = std::make_unique<Camera>();
 	camera_->Initialize();
-	
+	Loder::LoadJsonFile()
 	postProcess_ = std::make_unique<PostProcess>();
 	postProcess_->Init();
 	postProcess_->SetEffectNo(PostEffectMode::kFullScreen);

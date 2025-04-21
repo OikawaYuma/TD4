@@ -22,7 +22,6 @@ public:
 		Transform transform;
 	};
 	std::vector<ObjectData> objects;
-
 private:
 	
 	
@@ -37,6 +36,7 @@ class Loder
 {
 public:
 	static void LoadJsonFileBase(const std::string kDefaultBaseDirectory, const std::string fileName,std::vector<Object3d*>& objects,Camera* camera);
+	static void LoadJsonFile2(const std::string kDefaultBaseDirectory, const std::string fileName);
 	static void LoadJsonFile(const std::string kDefaultBaseDirectory, const std::string fileName,Player *player,std::list<std::unique_ptr<BaseEnemy>>& enemys,std::list<std::unique_ptr<PlayerItem>>& items, std::list<std::unique_ptr<WorldDesign>>& worldDesigns,Ground * ground);
 };
 
