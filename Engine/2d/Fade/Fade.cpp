@@ -6,7 +6,7 @@ void Fade::Init(const std::string& filePath)
     fadeSprite = new Sprite();
     fadeSprite->Init(filePath);
     fadeSprite->SetTexture(TextureManager::GetInstance()->StoreTexture("Resources/Black.png"));
-    fadeSprite->SetPosition({ 200.0f,0.0f });
+    fadeSprite->SetPosition({ 0.0f,0.0f });
     fadeSprite->SetTextureSize({ 1920.0f,1280.0f });
     fadeSprite->SetSize({ 1920.0f,1280.0f });
     material.color = { 1.0f,1.0f,1.0f,0.0f };
