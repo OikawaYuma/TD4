@@ -9,13 +9,14 @@ map::~map()
 	SetObjectPram();
 	shadowObject_.reset();
 }
-void map::Init(const Vector3& scale, const Vector3& translate, const std::string filename)
+void map::Init(const Vector3& scale, const Vector3& rotate, const Vector3& translate, const std::string filename)
 {
-	floorTex_ = TextureManager::GetInstance()->StoreTexture("Resources/load.png");
+	floorTex_ = TextureManager::GetInstance()->StoreTexture("Resources/load2.png");
 	color_ = { 1.0f,1.0f,1.0f,1.0f };
 
 	objectPram_ = Object3dManager::GetInstance()->StoreObject(filename, floorTex_, Transparency::Opaque);
 	objectPram_.lock()->worldTransform.scale_ = scale;
+	objectPram_.lock()->worldTransform.rotation_ = rotate;
 	objectPram_.lock()->worldTransform.translation_ = translate;
 	objectPram_.lock()->color = color_;
 

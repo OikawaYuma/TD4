@@ -1,22 +1,16 @@
 /**
-* @ file
-* @ brief
-*/
-
-#pragma once
-#include <memory>
-#include "IScene.h"
-#include "Triangle.h"
-/**
 * @ file DemoScene.h
 * @ brief 試用の部分に関するScene
 * * @ author 及川　優麿　（オイカワ　ユウマ）
 */
-
-
+#pragma once
+#include <memory>
+#include "IScene.h"
+#include "Triangle.h"
 #include "WorldTransform.h"
 #include "Input.h"
 #include "Particle.h"
+#include <list>
 #include "Sprite.h"
 #include "Object3d.h"
 #include "Model.h"
@@ -25,7 +19,7 @@
 #include "WorldDesign/WorldDesign.h"
 #include "map/map.h"
 #include "Fade/Fade.h"
-
+#include "Loder.h"
 class DemoScene : public IScene
 {
 public:
@@ -43,6 +37,8 @@ public:
 
 	void ParticleEmitter();
 
+	void ArrageObj(std::list<std::unique_ptr<map>>& maps);
+
 private:
 	
 	
@@ -53,11 +49,13 @@ private:
 
 	// 背景オブジェクト
 	std::unique_ptr<WorldDesign> wood_;
-	std::unique_ptr<map> map_;
+	std::list<std::unique_ptr<map>> maps_;
 
 	std::unique_ptr<Fade> fade_;
 
 	// Sprite
 	std::unique_ptr<Sprite> sprite_;
+	uint32_t spTx_ = 0;
+	LevelData levelData_{};
 };
 
