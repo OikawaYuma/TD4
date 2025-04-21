@@ -176,10 +176,6 @@ void DemoScene::PostEffectChange()
 void DemoScene::ParticleEmitter()
 {
 
-	
-
-
-
 }
 
 void DemoScene::ArrageObj(std::list<std::unique_ptr<map>>& maps)
