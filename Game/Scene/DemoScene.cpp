@@ -40,10 +40,6 @@ void DemoScene::Init()
 void DemoScene::Update()
 {
 	camera_->Move();
-	if (Input::GetInstance()->TriggerKey(DIK_B)) {
-		wood_.reset();
-		map_.reset();
-	}
 	if (Input::GetInstance()->TriggerKey(DIK_V)) {
 		fade_->StartFadeIn();
 	}
