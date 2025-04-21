@@ -121,6 +121,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
   <ItemGroup>
     <ClCompile Include="Engine\2d\PostEffect\Effect\DissolveOutline.cpp" />
     <ClCompile Include="Engine\3d\Object3d\GameObjectCommon.cpp" />
+    <ClCompile Include="Engine\2d\Fade\Fade.cpp" />
     <ClCompile Include="Game\GameTimer\GameTimer.cpp" />
     <ClCompile Include="Game\GameCamera\ClearCamera\ClearCamera.cpp" />
     <ClCompile Include="Engine\Externals\imgui\imgui.cpp" />
@@ -201,6 +202,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
   <ItemGroup>
     <ClInclude Include="Engine\2d\PostEffect\Effect\DissolveOutline.h" />
     <ClInclude Include="Engine\3d\Object3d\GameObjectCommon.h" />
+    <ClInclude Include="Engine\2d\Fade\Fade.h" />
     <ClInclude Include="Game\GameTimer\GameTimer.h" />
     <ClInclude Include="Game\GameCamera\ClearCamera\ClearCamera.h" />
     <ClInclude Include="Engine\Externals\imgui\imconfig.h" />

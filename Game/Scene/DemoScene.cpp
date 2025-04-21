@@ -19,7 +19,9 @@ void DemoScene::Init()
 	ModelManager::GetInstance()->LoadModel("Resources/car", "car.obj");
 	wood_ = std::make_unique<WorldDesign>();
 	wood_->Init({ 1.0f,1.0f,1.0f }, { 0.0f,15.0f,30.0f }, "car");
-	
+	fade_ = std::make_unique<Fade>();
+	fade_->Init("Resources/fade.png");
+	fade_->SetTexture(TextureManager::GetInstance()->StoreTexture("Resources/fade.png"));
 	spTx_ = TextureManager::GetInstance()->StoreTexture("Resources/load2.png");
 	sprite_ = std::make_unique<Sprite>();
 	sprite_->Init("Resources/load2.png");
@@ -38,16 +40,23 @@ void DemoScene::Init()
 void DemoScene::Update()
 {
 	camera_->Move();
-	
+	if (Input::GetInstance()->TriggerKey(DIK_B)) {
+		wood_.reset();
+		map_.reset();
+	}
+	if (Input::GetInstance()->TriggerKey(DIK_V)) {
+		fade_->StartFadeIn();
+	}
 	camera_->Update();
 	for (std::list<std::unique_ptr<map>>::iterator itr = maps_.begin(); itr != maps_.end(); itr++) {
 		(*itr)->Update();
 	}
 	Object3dManager::GetInstance()->Update();
 	postProcess_->Update();
-
 	camera_->CameraDebug();
 	sprite_->Update();
+	fade_->Update();
+	fade_->UpdateFade();
 	PostEffectChange();
 }
 void DemoScene::Draw()
@@ -62,7 +71,8 @@ void DemoScene::PostDraw()
 
 void DemoScene::Draw2d()
 {
-	sprite_->Draw();
+	//sprite_->Draw();
+	fade_->Draw();
 }
 
 void DemoScene::Release() {
