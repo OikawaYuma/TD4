@@ -21,6 +21,10 @@ void DemoScene::Init()
 	map_ = std::make_unique<map>();
 	map_->Init({ 100.0f,100.0f,100.0f }, { 100.0f,0.0f,30.0f }, "IROHAmap");
 
+	fade_ = std::make_unique<Fade>();
+	fade_->Init("Resources/fade.png");
+	fade_->SetTexture(TextureManager::GetInstance()->StoreTexture("Resources/fade.png"));
+
 	sprite_ = std::make_unique<Sprite>();
 	sprite_->Init("Resources/load.png");
 	sprite_->SetTexture(TextureManager::GetInstance()->StoreTexture("Resources/load.png"));
@@ -40,6 +44,9 @@ void DemoScene::Update()
 		wood_.reset();
 		map_.reset();
 	}
+	if (Input::GetInstance()->TriggerKey(DIK_V)) {
+		fade_->StartFadeIn();
+	}
 	camera_->Update();
 	if (wood_.get()) {
 		wood_->Update();
@@ -48,9 +55,10 @@ void DemoScene::Update()
 	}
 	Object3dManager::GetInstance()->Update();
 	postProcess_->Update();
-
 	camera_->CameraDebug();
 	sprite_->Update();
+	fade_->Update();
+	fade_->UpdateFade();
 	PostEffectChange();
 }
 void DemoScene::Draw()
@@ -65,7 +73,8 @@ void DemoScene::PostDraw()
 
 void DemoScene::Draw2d()
 {
-	sprite_->Draw();
+	//sprite_->Draw();
+	fade_->Draw();
 }
 
 void DemoScene::Release() {

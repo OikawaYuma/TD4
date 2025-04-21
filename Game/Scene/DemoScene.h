@@ -24,6 +24,7 @@
 #include "Skybox/Skybox.h"
 #include "WorldDesign/WorldDesign.h"
 #include "map/map.h"
+#include "Fade/Fade.h"
 
 class DemoScene : public IScene
 {
@@ -53,6 +54,8 @@ private:
 	// 背景オブジェクト
 	std::unique_ptr<WorldDesign> wood_;
 	std::unique_ptr<map> map_;
+
+	std::unique_ptr<Fade> fade_;
 
 	// Sprite
 	std::unique_ptr<Sprite> sprite_;
