@@ -14,8 +14,8 @@ void DemoScene::Init()
 	ModelManager::GetInstance()->LoadModel("Resources/worldDesign", "worldDesign.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/map", "IROHAmap2.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/map", "map.obj");
-	ModelManager::GetInstance()->LoadModel("Resources/car", "car.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/map", "IROHAmap.obj");
+	ModelManager::GetInstance()->LoadModel("Resources/car", "car.obj");
 	wood_ = std::make_unique<WorldDesign>();
 	wood_->Init({ 1.0f,1.0f,1.0f }, { 0.0f,15.0f,30.0f }, "car");
 	map_ = std::make_unique<map>();
