@@ -31,11 +31,11 @@ public:
 
 #pragma region getter
 
-	virtual Collider* GetCollider() { return collider_.get(); }
+	Collider* GetCollider() { return collider_.get(); }
 
-	virtual const Vector3& GetWorldPosition()const;
+	const Vector3& GetWorldPosition()const;
 
-	virtual const Vector3& GetScale()const;
+	const Vector3& GetScale()const;
 
 #pragma endregion
 
