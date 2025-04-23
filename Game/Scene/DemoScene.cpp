@@ -34,7 +34,7 @@ void DemoScene::Init()
 	particle_->SetModel("car.obj");
 	particle_->Init();
 	particle_->SetCamera(camera_.get());
-	emitter_.count = 10;
+	emitter_.count = 2;
 	emitter_.frequency = 5000.0f;
 	emitter_.frequencyTime = 0.0f;
 
@@ -70,6 +70,7 @@ void DemoScene::Update()
 	for (std::list<std::unique_ptr<map>>::iterator itr = maps_.begin(); itr != maps_.end(); itr++) {
 		(*itr)->Update();
 	}
+	particle_->CreateParticle();
 	Object3dManager::GetInstance()->Update();
 	postProcess_->Update();
 	camera_->CameraDebug();
