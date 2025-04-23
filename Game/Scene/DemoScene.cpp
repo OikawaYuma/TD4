@@ -29,6 +29,30 @@ void DemoScene::Init()
 	camera_ = std::make_unique<Camera>();
 	camera_->Initialize();
 	levelData_ = Loder::LoadJsonFile("Resources/map","IROHAmap");
+
+	particle_ = std::make_unique<Particle>();
+	particle_->SetModel("car.obj");
+	particle_->Init();
+	particle_->SetCamera(camera_.get());
+	emitter_.count = 10;
+	emitter_.frequency = 5000.0f;
+	emitter_.frequencyTime = 0.0f;
+
+	emitter_.transform.rotate = { 0.0f,0.0f,0.0f };
+	emitter_.transform.scale = { 0.25f,0.25f,0.25f };
+	emitter_.transform.translate = { 0.0f,1.0f,25.0f };
+	randRangePro_ = {
+		{0.0f,0.0f},
+		{0.0f,0.0f},
+		{0.0f,0.0f}
+	};
+	emitter_.randRangeXYZ = randRangePro_;
+	emitter_.size = 0.5f;
+	emitter_.boundPro.power = 1.0f;
+	emitter_.boundPro.gravity = 0.0f;
+	emitter_.boundPro.isBound = true;
+	particle_->SetEmitter(emitter_);
+	particle_->SetTexture(spTx_);
 	ArrageObj(maps_);
 	postProcess_ = std::make_unique<PostProcess>();
 	postProcess_->Init();
@@ -50,6 +74,7 @@ void DemoScene::Update()
 	postProcess_->Update();
 	camera_->CameraDebug();
 	sprite_->Update();
+	particle_->Update(true);
 	fade_->Update();
 	fade_->UpdateFade();
 	PostEffectChange();
@@ -57,6 +82,7 @@ void DemoScene::Update()
 void DemoScene::Draw()
 {
 	Object3dManager::GetInstance()->Draw(camera_.get());
+	particle_->Draw();
 }
 
 void DemoScene::PostDraw()

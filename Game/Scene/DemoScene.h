@@ -20,6 +20,7 @@
 #include "map/map.h"
 #include "Fade/Fade.h"
 #include "Loder.h"
+#include "Particle.h"
 class DemoScene : public IScene
 {
 public:
@@ -50,7 +51,10 @@ private:
 	// 背景オブジェクト
 	std::unique_ptr<WorldDesign> wood_;
 	std::list<std::unique_ptr<map>> maps_;
-
+	// 背景オブジェクト
+	std::unique_ptr<Particle> particle_;
+	Emitter emitter_{};
+	RandRangePro randRangePro_{};
 	std::unique_ptr<Fade> fade_;
 
 	// Sprite
