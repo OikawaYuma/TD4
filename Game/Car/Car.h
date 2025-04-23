@@ -1,35 +1,25 @@
 #pragma once
-#include "BaseObject/BaseObject.h"
+#include "CarParts/CarBody/CarBody.h"
+#include "CarParts/CarEngine/CarEngine.h"
+#include "CarParts/CarTire/CarTire.h"
+#include <vector>
 
-class Car : public BaseObject
+class Car
 {
 public:
 
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	/// <param name="scale"></param>
-	/// <param name="translate"></param>
-	/// <param name="filename"></param>
-	void Initialize(const Vector3& rotate, const Vector3& scale, const Vector3& translate, const std::string filename)override;
+	void Initialize();
 
 	/// <summary>
 	/// 更新
 	/// </summary>
-	void Update()override;
-
-#pragma region setter
-
-
-#pragma endregion
-
-#pragma region getter
-
-
-#pragma endregion
+	void Update();
 
 private:
-
-
+	WorldTransform worldTransform_{};
+	std::vector<std::unique_ptr<BaseObject>> parts_;
 };
 
