@@ -119,8 +119,14 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Game\Car\Car.cpp" />
+    <ClCompile Include="Game\CarParts\CarTire\CarTire.cpp" />
+    <ClCompile Include="Game\CarParts\CarEngine\CarEngine.cpp" />
+    <ClCompile Include="Game\BaseObject\BaseObject.cpp" />
+    <ClCompile Include="Game\CarParts\CarBody\CarBody.cpp" />
     <ClCompile Include="Engine\2d\PostEffect\Effect\DissolveOutline.cpp" />
     <ClCompile Include="Engine\3d\Object3d\GameObjectCommon.cpp" />
+    <ClCompile Include="Game\GameObject\GameObject.cpp" />
     <ClCompile Include="Engine\2d\Fade\Fade.cpp" />
     <ClCompile Include="Game\GameTimer\GameTimer.cpp" />
     <ClCompile Include="Game\GameCamera\ClearCamera\ClearCamera.cpp" />
@@ -200,8 +206,14 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Game\map\map.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Game\Car\Car.h" />
+    <ClInclude Include="Game\CarParts\CarTire\CarTire.h" />
+    <ClInclude Include="Game\CarParts\CarEngine\CarEngine.h" />
+    <ClInclude Include="Game\BaseObject\BaseObject.h" />
+    <ClInclude Include="Game\CarParts\CarBody\CarBody.h" />
     <ClInclude Include="Engine\2d\PostEffect\Effect\DissolveOutline.h" />
     <ClInclude Include="Engine\3d\Object3d\GameObjectCommon.h" />
+    <ClInclude Include="Game\GameObject\GameObject.h" />
     <ClInclude Include="Engine\2d\Fade\Fade.h" />
     <ClInclude Include="Game\GameTimer\GameTimer.h" />
     <ClInclude Include="Game\GameCamera\ClearCamera\ClearCamera.h" />
