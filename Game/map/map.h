@@ -16,7 +16,7 @@ class map
 {
 public:
 	~map();
-	void Init(const Vector3& scale, const Vector3& translate, const std::string filename);
+	void Init(const Vector3& scale, const Vector3& rotate, const Vector3& translate, const std::string filename);
 	void Update();
 public: // Getter
 

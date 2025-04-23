@@ -15,18 +15,45 @@ void DemoScene::Init()
 	ModelManager::GetInstance()->LoadModel("Resources/map", "IROHAmap2.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/map", "map.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/car", "car.obj");
-	ModelManager::GetInstance()->LoadModel("Resources/map", "IROHAmap.obj");
+	//ModelManager::GetInstance()->LoadModel("Resources/map", "IROHAmap.obj");
 	wood_ = std::make_unique<WorldDesign>();
 	wood_->Init({ 1.0f,1.0f,1.0f }, { 0.0f,15.0f,30.0f }, "car");
-	map_ = std::make_unique<map>();
-	map_->Init({ 100.0f,100.0f,100.0f }, { 100.0f,0.0f,30.0f }, "IROHAmap");
-
+	fade_ = std::make_unique<Fade>();
+	fade_->Init("Resources/fade.png");
+	fade_->SetTexture(TextureManager::GetInstance()->StoreTexture("Resources/fade.png"));
+	spTx_ = TextureManager::GetInstance()->StoreTexture("Resources/load2.png");
 	sprite_ = std::make_unique<Sprite>();
-	sprite_->Init("Resources/load.png");
-	sprite_->SetTexture(TextureManager::GetInstance()->StoreTexture("Resources/load.png"));
+	sprite_->Init("Resources/load2.png");
+	
+	sprite_->SetTexture(spTx_);
 	camera_ = std::make_unique<Camera>();
 	camera_->Initialize();
-	
+	levelData_ = Loder::LoadJsonFile("Resources/map","IROHAmap");
+
+	particle_ = std::make_unique<Particle>();
+	particle_->SetModel("car.obj");
+	particle_->Init();
+	particle_->SetCamera(camera_.get());
+	emitter_.count = 10;
+	emitter_.frequency = 5000.0f;
+	emitter_.frequencyTime = 0.0f;
+
+	emitter_.transform.rotate = { 0.0f,0.0f,0.0f };
+	emitter_.transform.scale = { 0.25f,0.25f,0.25f };
+	emitter_.transform.translate = { 0.0f,1.0f,25.0f };
+	randRangePro_ = {
+		{0.0f,0.0f},
+		{0.0f,0.0f},
+		{0.0f,0.0f}
+	};
+	emitter_.randRangeXYZ = randRangePro_;
+	emitter_.size = 0.5f;
+	emitter_.boundPro.power = 1.0f;
+	emitter_.boundPro.gravity = 0.0f;
+	emitter_.boundPro.isBound = true;
+	particle_->SetEmitter(emitter_);
+	particle_->SetTexture(spTx_);
+	ArrageObj(maps_);
 	postProcess_ = std::make_unique<PostProcess>();
 	postProcess_->Init();
 	postProcess_->SetEffectNo(PostEffectMode::kFullScreen);
@@ -36,26 +63,26 @@ void DemoScene::Init()
 void DemoScene::Update()
 {
 	camera_->Move();
-	if (Input::GetInstance()->TriggerKey(DIK_B)) {
-		wood_.reset();
-		map_.reset();
+	if (Input::GetInstance()->TriggerKey(DIK_V)) {
+		fade_->StartFadeIn();
 	}
 	camera_->Update();
-	if (wood_.get()) {
-		wood_->Update();
-		map_->Update();
-
+	for (std::list<std::unique_ptr<map>>::iterator itr = maps_.begin(); itr != maps_.end(); itr++) {
+		(*itr)->Update();
 	}
 	Object3dManager::GetInstance()->Update();
 	postProcess_->Update();
-
 	camera_->CameraDebug();
 	sprite_->Update();
+	particle_->Update(true);
+	fade_->Update();
+	fade_->UpdateFade();
 	PostEffectChange();
 }
 void DemoScene::Draw()
 {
 	Object3dManager::GetInstance()->Draw(camera_.get());
+	particle_->Draw();
 }
 
 void DemoScene::PostDraw()
@@ -65,7 +92,8 @@ void DemoScene::PostDraw()
 
 void DemoScene::Draw2d()
 {
-	sprite_->Draw();
+	//sprite_->Draw();
+	fade_->Draw();
 }
 
 void DemoScene::Release() {
@@ -181,8 +209,18 @@ void DemoScene::PostEffectChange()
 void DemoScene::ParticleEmitter()
 {
 
+}
+
+void DemoScene::ArrageObj(std::list<std::unique_ptr<map>>& maps)
+{
+
+	for (auto& objectData : levelData_.objects) {
+		if (objectData.filename.compare("load") == 0) {
+			ModelManager::GetInstance()->LoadModel("Resources/" + objectData.filename, objectData.filename + ".obj");
+			std::unique_ptr<map> enemy = std::make_unique<map>();
+			enemy->Init(objectData.transform.scale,objectData.transform.rotate, objectData.transform.translate, objectData.filename);
+			maps.push_back(std::move(enemy));
+		}
+	}
 	
-
-
-
 }

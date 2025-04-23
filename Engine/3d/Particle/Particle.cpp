@@ -35,6 +35,7 @@ void Particle::Init() {
 	vertexResource_->Map(0, nullptr, reinterpret_cast<void**>(&vertexData_));
 	std::memcpy(vertexData_, model_->GetModelData().vertices.data(), sizeof(VertexData) * model_->GetModelData().vertices.size());
 
+	worldTransform_.Initialize();
 	
 
 	// 実際に頂点リソースを作る
