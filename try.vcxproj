@@ -119,6 +119,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Game\BaseObject\BaseObject.cpp" />
+    <ClCompile Include="Game\Car\Car.cpp" />
     <ClCompile Include="Engine\2d\PostEffect\Effect\DissolveOutline.cpp" />
     <ClCompile Include="Engine\3d\Object3d\GameObjectCommon.cpp" />
     <ClCompile Include="Game\GameTimer\GameTimer.cpp" />
@@ -199,6 +201,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Game\map\map.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Game\BaseObject\BaseObject.h" />
+    <ClInclude Include="Game\Car\Car.h" />
     <ClInclude Include="Engine\2d\PostEffect\Effect\DissolveOutline.h" />
     <ClInclude Include="Engine\3d\Object3d\GameObjectCommon.h" />
     <ClInclude Include="Game\GameTimer\GameTimer.h" />

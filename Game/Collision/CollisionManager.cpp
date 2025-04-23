@@ -5,43 +5,21 @@
 
 void CollisionManager::CheckAllCollision() {
 
-	
-	std::list<Collider*> colliders_;
-	//const std::list<EnemyBullet*>& enemyBullets = gameScene_->GetEnemyBullets();
-
-	
-	// コライダーをリストに登録
-	//colliders_.push_back(enemy_);
-
-	//for (auto obstacles = enemy.begin();
-	//	obstacles != enemy.end(); ++obstacles) {
-
-	//	colliders_.push_back((*obstacles).get()); // enemyをリストに登録
-
-	//}
-	
-
-	// std::list<Collider*> colliders;
 	//  リスト内のペアを総当たり
 	std::list<Collider*>::iterator itrA = colliders_.begin();
 	for (; itrA != colliders_.end(); ++itrA) {
-
+		Collider* colliderA = *itrA;
 		// イテレータBはイテレータ―Aの次の要素から回す（重複判定を回避）
 		std::list<Collider*>::iterator itrB = itrA;
 		itrB++;
 		for (; itrB != colliders_.end(); ++itrB) {
-
+			Collider* colliderB = *itrB;
 			// ペアの当たり判定
 			CheckCollisionPair(*itrA, *itrB);
 		}
 	}
 }
 
-void CollisionManager::PushClider(Collider* collider)
-{
-	collider;
-	///colliders_.push_back(collider);
-}
 
 void CollisionManager::CheckCollisionPair(Collider* colliderA, Collider* colliderB) {
 
@@ -50,12 +28,8 @@ void CollisionManager::CheckCollisionPair(Collider* colliderA, Collider* collide
 		return;
 	};
 
-	
-	/*for (EnemyBullet* bullet : enemyBullets) {
-		colliders_.push_back(bullet);
-	}*/
-
-	if (colliderA->GetCollisionMode() == Ballc && colliderB->GetCollisionMode() == Ballc) {
+	// 球同士の当たり判定
+	if (colliderA->GetCollisionMode() == CollisionMode::Ballc && colliderB->GetCollisionMode() == CollisionMode::Ballc) {
 		// 判定対象AとBの座標
 		Vector3 posA, posB;
 		float radiusA, radiusB;
@@ -68,30 +42,26 @@ void CollisionManager::CheckCollisionPair(Collider* colliderA, Collider* collide
 		posB = colliderB->GetWorldPosition();
 		radiusB = colliderB->GetRadius();
 		// 弾と弾の考交差判定
-		// 衝突フィルタリング
 
-		float p2b = (posB.x - posA.x) * (posB.x - posA.x) + (posB.y - posA.y) * (posB.y - posA.y) +
-			(posB.z - posA.z) * (posB.z - posA.z);
-		float r2r = (radiusA + radiusB) * (radiusA + radiusB);
-		/*  if (((colliderA->GetCollisonAttribute() & colliderB->GetCollisionMask())!=0) ||
-			  ((colliderB->GetCollisonAttribute() & colliderA->GetCollisionMask()))!=0) {
-		  return;
-		  };*/
-
-		if (p2b <= r2r) {
-
+		if (CheckCollision(posA, radiusA, posB, radiusB)) {
 			// コライダーAの衝突時コールバックを呼び出す
-			colliderA->OnCollision(colliderB->GetCollisonAttribute());
+			colliderA->SetOnCollision(true);
 			// コライダーBの衝突時コールバックを呼び出す
-			colliderB->OnCollision(colliderA->GetCollisonAttribute());
+			colliderB->SetOnCollision(true);
+		}
+		else {
+			// コライダーAの衝突時コールバックを呼び出す
+			colliderA->SetOnCollision(false);
+			// コライダーBの衝突時コールバックを呼び出す
+			colliderB->SetOnCollision(false);
 		}
 	}
 
 
 	// 以下制作中
 	if (
-		(colliderA->GetCollisionMode() == Ballc && colliderB->GetCollisionMode() == OBBc) ||
-		(colliderA->GetCollisionMode() == OBBc && colliderB->GetCollisionMode() == Ballc)
+		(colliderA->GetCollisionMode() == CollisionMode::Ballc && colliderB->GetCollisionMode() == CollisionMode::OBBc) ||
+		(colliderA->GetCollisionMode() == CollisionMode::OBBc && colliderB->GetCollisionMode() == CollisionMode::Ballc)
 		) {
 		// 判定対象AとBの座標
 		Vector3 posA, posB;
@@ -106,23 +76,23 @@ void CollisionManager::CheckCollisionPair(Collider* colliderA, Collider* collide
 		radiusB = colliderB->GetRadius();
 		// 弾と弾の考交差判定
 		// 衝突フィルタリング
+	}
+}
 
-		/*float p2b = (posB.x - posA.x) * (posB.x - posA.x) + (posB.y - posA.y) * (posB.y - posA.y) +
-			(posB.z - posA.z) * (posB.z - posA.z);
-		float r2r = (radiusA + radiusB) * (radiusA + radiusB);*/
+bool CollisionManager::CheckCollision(Vector3 v1, float v1Radious, Vector3 v2, float v2Radious)
+{
+	float x = (v2.x - v1.x);
+	float y = (v2.y - v1.y);
+	float z = (v2.z - v1.z);
 
+	float position = (x * x) + (y * y) + (z * z);
 
-		/*  if (((colliderA->GetCollisonAttribute() & colliderB->GetCollisionMask())!=0) ||
-			  ((colliderB->GetCollisonAttribute() & colliderA->GetCollisionMask()))!=0) {
-		  return;
-		  };*/
+	float radious = v1Radious + v2Radious;
 
-		//if (IsCollisionAABB()) {
-
-		//	// コライダーAの衝突時コールバックを呼び出す
-		//	colliderA->OnCollision(colliderB->GetCollisonAttribute());
-		//	// コライダーBの衝突時コールバックを呼び出す
-		//	colliderB->OnCollision(colliderA->GetCollisonAttribute());
-		//}
+	if (position <= (radious * radious)) {
+		return true;
+	}
+	else {
+		return false;
 	}
 };

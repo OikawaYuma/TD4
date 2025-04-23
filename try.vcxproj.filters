@@ -302,6 +302,8 @@
     <ClCompile Include="Engine\2d\PostEffect\Effect\DissolveOutline.cpp" />
     <ClCompile Include="Engine\3d\Object3d\GameObjectCommon.cpp" />
     <ClCompile Include="Game\map\map.cpp" />
+    <ClCompile Include="Game\Car\Car.cpp" />
+    <ClCompile Include="Game\BaseObject\BaseObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Utility\function.h">
@@ -549,6 +551,8 @@
     <ClInclude Include="Engine\2d\PostEffect\Effect\DissolveOutline.h" />
     <ClInclude Include="Engine\3d\Object3d\GameObjectCommon.h" />
     <ClInclude Include="Game\map\map.h" />
+    <ClInclude Include="Game\Car\Car.h" />
+    <ClInclude Include="Game\BaseObject\BaseObject.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shader\Particle.PS.hlsl">
