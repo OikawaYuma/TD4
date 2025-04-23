@@ -23,7 +23,7 @@ public:
 #pragma region getter
 
 	float GetRadius() { return radius_; }
-	const Vector3& GetWorldPosition()const { worldPosition_; }
+	const Vector3& GetWorldPosition()const { return worldPosition_; }
 	// 衝突属性（自分）を取得
 	uint32_t GetCollisonAttribute() { return collisionAttribute_; }
 	// 衝突マスク（相手）を取得

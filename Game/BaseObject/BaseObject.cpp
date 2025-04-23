@@ -36,23 +36,17 @@ void BaseObject::Update()
 
 const Vector3& BaseObject::GetWorldPosition()const
 {
-	Vector3 worldPos;
-	if (auto obj = objectParam_.lock()) {
-		worldPos.x = obj->worldTransform.matWorld_.m[3][0];
-		worldPos.y = obj->worldTransform.matWorld_.m[3][1];
-		worldPos.z = obj->worldTransform.matWorld_.m[3][2];
-	}
+	Vector3 worldPos{};
+	worldPos.x = objectParam_.lock()->worldTransform.matWorld_.m[3][0];
+	worldPos.y = objectParam_.lock()->worldTransform.matWorld_.m[3][1];
+	worldPos.z = objectParam_.lock()->worldTransform.matWorld_.m[3][2];
+
 	return worldPos;
 }
 
 const Vector3& BaseObject::GetScale() const
 {
-	Vector3 scale;
-	if (auto obj = objectParam_.lock()) {
-		scale = obj->worldTransform.scale_;
-	}
-
-	return scale;
+	return objectParam_.lock()->worldTransform.scale_;
 }
 
 void BaseObject::SetObjectParam()
