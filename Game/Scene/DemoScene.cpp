@@ -14,10 +14,10 @@ void DemoScene::Init()
 	ModelManager::GetInstance()->LoadModel("Resources/worldDesign", "worldDesign.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/map", "IROHAmap2.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/map", "map.obj");
-	ModelManager::GetInstance()->LoadModel("Resources/car", "car.obj");
+	ModelManager::GetInstance()->LoadModel("Resources/map", "map0.obj");
 	//ModelManager::GetInstance()->LoadModel("Resources/map", "IROHAmap.obj");
 	wood_ = std::make_unique<WorldDesign>();
-	wood_->Init({ 1.0f,1.0f,1.0f }, { 0.0f,15.0f,30.0f }, "car");
+	wood_->Init({ 1.0f,1.0f,1.0f }, { 0.0f,15.0f,30.0f }, "map0");
 	fade_ = std::make_unique<Fade>();
 	fade_->Init("Resources/fade.png");
 	fade_->SetTexture(TextureManager::GetInstance()->StoreTexture("Resources/fade.png"));
@@ -81,7 +81,7 @@ void DemoScene::Update()
 void DemoScene::Draw()
 {
 	Object3dManager::GetInstance()->Draw(camera_.get());
-	particle_->Draw();
+	//particle_->Draw();
 }
 
 void DemoScene::PostDraw()
