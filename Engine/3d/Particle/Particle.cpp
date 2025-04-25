@@ -135,18 +135,7 @@ void Particle::Update()
 		(*particleIterator).transform.translate.x += (*particleIterator).velocity.x * kDeltaTime;
 		(*particleIterator).transform.translate.y += (*particleIterator).velocity.y * kDeltaTime;
 		(*particleIterator).transform.translate.z += (*particleIterator).velocity.z * kDeltaTime;
-		/*if ((*particleIterator).transform.translate.y <= 0.0f) {
-			(*particleIterator).transform.translate.y = 0.0f;
-			(*particleIterator).transform.scale.y = 0.01f;
-			if (!(*particleIterator).isfall) {
-				(*particleIterator).transform.scale.x *= 1.5f;
-				(*particleIterator).transform.scale.z *= 1.5f;
-				(*particleIterator).isfall = true;
-			}
-			(*particleIterator).velocity.x = 0.0f;
-			(*particleIterator).velocity.z = 0.0f;
-		}*/
-		
+		// フラグが立つとでかくなる
 		if (scaleChangeFlag_) {
 			(*particleIterator).transform.scale = Add((*particleIterator).transform.scale, { 0.1f ,0.1f,0.1f });
 		}
