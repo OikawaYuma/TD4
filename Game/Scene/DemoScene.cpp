@@ -21,6 +21,10 @@ void DemoScene::Init()
 	sprite_ = std::make_unique<Sprite>();
 	sprite_->Init("Resources/load.png");
 	sprite_->SetTexture(TextureManager::GetInstance()->StoreTexture("Resources/load.png"));
+
+	ui_ = std::make_unique<UI>();
+	ui_->Initialize();
+	
 	camera_ = std::make_unique<Camera>();
 	camera_->Initialize();
 	
@@ -48,6 +52,7 @@ void DemoScene::Update()
 
 	camera_->CameraDebug();
 	sprite_->Update();
+	ui_->Update();
 	PostEffectChange();
 }
 void DemoScene::Draw()
@@ -63,6 +68,7 @@ void DemoScene::PostDraw()
 void DemoScene::Draw2d()
 {
 	sprite_->Draw();
+	ui_->Draw();
 }
 
 void DemoScene::Release() {

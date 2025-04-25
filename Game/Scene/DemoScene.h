@@ -24,6 +24,7 @@
 #include "Skybox/Skybox.h"
 #include "WorldDesign/WorldDesign.h"
 #include "map/map.h"
+#include <UI/UI.h>
 
 class DemoScene : public IScene
 {
@@ -56,5 +57,6 @@ private:
 
 	// Sprite
 	std::unique_ptr<Sprite> sprite_;
+	std::unique_ptr<UI> ui_;
 };
 

@@ -52,6 +52,7 @@ public:
 	// getter
 	const Vector2& GetPosition() const { return position_; }
 	const Vector2& GetSize() const { return size_; }
+	const Vector3& GetRotate() const { return rotate_; }
 	const Vector2& GetAnchorPoint()const { return anchorPoint_; }
 	const Vector2& GetTextureLeftTop()const { return textureleftTop_; }
 	const Vector2& GetTextureSize()const { return textureSize_; }
@@ -59,6 +60,7 @@ public:
 	// setter
 	void SetPosition(const Vector2& position) { this->position_ = position; }
 	void SetSize(const Vector2& size) { this->transform_.scale = { size.x,size.y,1.0f }; }
+	void SetRot(const Vector3& rot) { this->transform_.rotate = rot; }
 	void SetAnchorPoint(const Vector2& anchorPoint) {
 		this->anchorPoint_ = anchorPoint;
 	}
@@ -81,6 +83,8 @@ private:
 	Vector2 position_ = { 0.0f, 0.0f };
 	// 大きさ
 	Vector2 size_ = { 64.0f,64.0f };
+	// 回転
+	Vector3 rotate_ = { 0.0f,0.0f,0.0f };
 	// 中心
 	Vector2 anchorPoint_ = { 0.0f,0.0f };
 	// テクスチャ左上座標
