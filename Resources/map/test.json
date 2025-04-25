@@ -1,0 +1,5547 @@
+{
+    "name": "scene",
+    "objects": [
+        {
+            "type": "MESH",
+            "name": "TemplateObj",
+            "transform": {
+                "translation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            }
+        },
+        {
+            "type": "CURVE",
+            "name": "NURBSパス",
+            "transform": {
+                "translation": [
+                    0.0,
+                    0.0,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.001",
+            "transform": {
+                "translation": [
+                    -36.1193962097168,
+                    5.335803508758545,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    69.66030883789062
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.002",
+            "transform": {
+                "translation": [
+                    -35.93706130981445,
+                    5.268211364746094,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    69.66030883789062
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.003",
+            "transform": {
+                "translation": [
+                    -35.754722595214844,
+                    5.200619220733643,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    69.66030883789062
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.004",
+            "transform": {
+                "translation": [
+                    -35.5723876953125,
+                    5.133027076721191,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    69.66030883789062
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.005",
+            "transform": {
+                "translation": [
+                    -35.39004898071289,
+                    5.06543493270874,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    69.66030883789062
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.006",
+            "transform": {
+                "translation": [
+                    -35.20771026611328,
+                    4.997842788696289,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    69.66030883789062
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.007",
+            "transform": {
+                "translation": [
+                    -35.02537536621094,
+                    4.930250644683838,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    69.66030883789062
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.008",
+            "transform": {
+                "translation": [
+                    -34.84303665161133,
+                    4.862658500671387,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    69.66030883789062
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.009",
+            "transform": {
+                "translation": [
+                    -34.66069793701172,
+                    4.7950663566589355,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    69.66030883789062
+                ],
+                "scaling": [
+                    0.10000000149011612,
+                    0.10000000149011612,
+                    0.10000000149011612
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.010",
+            "transform": {
+                "translation": [
+                    -34.478363037109375,
+                    4.727474212646484,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    69.66030883789062
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.011",
+            "transform": {
+                "translation": [
+                    -34.29523468017578,
+                    4.662092685699463,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    70.97191619873047
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.012",
+            "transform": {
+                "translation": [
+                    -34.11139678955078,
+                    4.598691940307617,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    70.97191619873047
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.013",
+            "transform": {
+                "translation": [
+                    -33.92756271362305,
+                    4.5352911949157715,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    70.97191619873047
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.014",
+            "transform": {
+                "translation": [
+                    -33.74372482299805,
+                    4.471890449523926,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    70.97191619873047
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.015",
+            "transform": {
+                "translation": [
+                    -33.55989074707031,
+                    4.408489227294922,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    70.97191619873047
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.016",
+            "transform": {
+                "translation": [
+                    -33.37605285644531,
+                    4.345088481903076,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    70.97191619873047
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.017",
+            "transform": {
+                "translation": [
+                    -33.19221878051758,
+                    4.2816877365112305,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    70.97191619873047
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.018",
+            "transform": {
+                "translation": [
+                    -33.00838088989258,
+                    4.218286514282227,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    70.97191619873047
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.019",
+            "transform": {
+                "translation": [
+                    -32.82454299926758,
+                    4.154885768890381,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    70.97191619873047
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.020",
+            "transform": {
+                "translation": [
+                    -32.64031219482422,
+                    4.09267520904541,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    72.26673126220703
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.021",
+            "transform": {
+                "translation": [
+                    -32.4550895690918,
+                    4.033444881439209,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    72.26673126220703
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.022",
+            "transform": {
+                "translation": [
+                    -32.269866943359375,
+                    3.974214553833008,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    72.26673126220703
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.023",
+            "transform": {
+                "translation": [
+                    -32.08464813232422,
+                    3.9149842262268066,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    72.26673126220703
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.024",
+            "transform": {
+                "translation": [
+                    -31.899425506591797,
+                    3.8557538986206055,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    72.26673126220703
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.025",
+            "transform": {
+                "translation": [
+                    -31.714200973510742,
+                    3.796523332595825,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    72.26673126220703
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.026",
+            "transform": {
+                "translation": [
+                    -31.52897834777832,
+                    3.737293004989624,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    72.26673126220703
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.027",
+            "transform": {
+                "translation": [
+                    -31.34375762939453,
+                    3.6780624389648438,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    72.26673126220703
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.028",
+            "transform": {
+                "translation": [
+                    -31.15853500366211,
+                    3.6188321113586426,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    72.26673126220703
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.029",
+            "transform": {
+                "translation": [
+                    -30.97296142578125,
+                    3.56074595451355,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    73.54574584960938
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.030",
+            "transform": {
+                "translation": [
+                    -30.786462783813477,
+                    3.505664587020874,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    73.54574584960938
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.031",
+            "transform": {
+                "translation": [
+                    -30.599964141845703,
+                    3.4505832195281982,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    73.54574584960938
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.032",
+            "transform": {
+                "translation": [
+                    -30.413467407226562,
+                    3.3955020904541016,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    73.54574584960938
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.033",
+            "transform": {
+                "translation": [
+                    -30.226970672607422,
+                    3.3404204845428467,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    73.54574584960938
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.034",
+            "transform": {
+                "translation": [
+                    -30.040470123291016,
+                    3.285339117050171,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    73.54574584960938
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.035",
+            "transform": {
+                "translation": [
+                    -29.853973388671875,
+                    3.230257749557495,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    73.54574584960938
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.036",
+            "transform": {
+                "translation": [
+                    -29.66747283935547,
+                    3.1751766204833984,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    73.54574584960938
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.037",
+            "transform": {
+                "translation": [
+                    -29.480976104736328,
+                    3.1200950145721436,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    73.54574584960938
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.038",
+            "transform": {
+                "translation": [
+                    -29.293893814086914,
+                    3.0670764446258545,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    74.80944061279297
+                ],
+                "scaling": [
+                    0.9999999403953552,
+                    0.9999999403953552,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.039",
+            "transform": {
+                "translation": [
+                    -29.106225967407227,
+                    3.0161213874816895,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    74.80944061279297
+                ],
+                "scaling": [
+                    0.9999999403953552,
+                    0.9999999403953552,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.040",
+            "transform": {
+                "translation": [
+                    -28.918560028076172,
+                    2.9651663303375244,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    74.80944061279297
+                ],
+                "scaling": [
+                    0.9999999403953552,
+                    0.9999999403953552,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.041",
+            "transform": {
+                "translation": [
+                    -28.730892181396484,
+                    2.9142112731933594,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    74.80944061279297
+                ],
+                "scaling": [
+                    0.9999999403953552,
+                    0.9999999403953552,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.042",
+            "transform": {
+                "translation": [
+                    -28.543224334716797,
+                    2.8632562160491943,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    74.80944061279297
+                ],
+                "scaling": [
+                    0.9999999403953552,
+                    0.9999999403953552,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.043",
+            "transform": {
+                "translation": [
+                    -28.355558395385742,
+                    2.8123011589050293,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    74.80944061279297
+                ],
+                "scaling": [
+                    0.9999999403953552,
+                    0.9999999403953552,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.044",
+            "transform": {
+                "translation": [
+                    -28.167890548706055,
+                    2.7613461017608643,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    74.80944061279297
+                ],
+                "scaling": [
+                    0.9999999403953552,
+                    0.9999999403953552,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.045",
+            "transform": {
+                "translation": [
+                    -27.980222702026367,
+                    2.710391044616699,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    74.80944061279297
+                ],
+                "scaling": [
+                    0.9999999403953552,
+                    0.9999999403953552,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.046",
+            "transform": {
+                "translation": [
+                    -27.79255485534668,
+                    2.659435749053955,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    74.80944061279297
+                ],
+                "scaling": [
+                    0.9999999403953552,
+                    0.9999999403953552,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.047",
+            "transform": {
+                "translation": [
+                    -27.603866577148438,
+                    2.6124134063720703,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    76.05795288085938
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.048",
+            "transform": {
+                "translation": [
+                    -27.415132522583008,
+                    2.5655598640441895,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    76.05795288085938
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.049",
+            "transform": {
+                "translation": [
+                    -27.22640037536621,
+                    2.5187058448791504,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    76.05795288085938
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.050",
+            "transform": {
+                "translation": [
+                    -27.03766632080078,
+                    2.4718520641326904,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    76.05795288085938
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.051",
+            "transform": {
+                "translation": [
+                    -26.848934173583984,
+                    2.4249982833862305,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    76.05795288085938
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.052",
+            "transform": {
+                "translation": [
+                    -26.660198211669922,
+                    2.3781442642211914,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    76.05795288085938
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.053",
+            "transform": {
+                "translation": [
+                    -26.471466064453125,
+                    2.3312904834747314,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    76.05795288085938
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.054",
+            "transform": {
+                "translation": [
+                    -26.282732009887695,
+                    2.2844367027282715,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    76.05795288085938
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.055",
+            "transform": {
+                "translation": [
+                    -26.09337043762207,
+                    2.2402453422546387,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    77.29124450683594
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.056",
+            "transform": {
+                "translation": [
+                    -25.903671264648438,
+                    2.1974644660949707,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    77.29124450683594
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.057",
+            "transform": {
+                "translation": [
+                    -25.713973999023438,
+                    2.154683828353882,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    77.29124450683594
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.058",
+            "transform": {
+                "translation": [
+                    -25.524276733398438,
+                    2.111903190612793,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    77.29124450683594
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.059",
+            "transform": {
+                "translation": [
+                    -25.334579467773438,
+                    2.069122314453125,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    77.29124450683594
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.060",
+            "transform": {
+                "translation": [
+                    -25.144880294799805,
+                    2.026341676712036,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    77.29124450683594
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.061",
+            "transform": {
+                "translation": [
+                    -24.955183029174805,
+                    1.9835609197616577,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    77.29124450683594
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.062",
+            "transform": {
+                "translation": [
+                    -24.765483856201172,
+                    1.9407801628112793,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    77.29124450683594
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.063",
+            "transform": {
+                "translation": [
+                    -24.575279235839844,
+                    1.9003617763519287,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    78.5090103149414
+                ],
+                "scaling": [
+                    0.9999999403953552,
+                    0.9999999403953552,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.064",
+            "transform": {
+                "translation": [
+                    -24.384716033935547,
+                    1.8616223335266113,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    78.5090103149414
+                ],
+                "scaling": [
+                    0.9999999403953552,
+                    0.9999999403953552,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.065",
+            "transform": {
+                "translation": [
+                    -24.194150924682617,
+                    1.8228827714920044,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    78.5090103149414
+                ],
+                "scaling": [
+                    0.9999999403953552,
+                    0.9999999403953552,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.066",
+            "transform": {
+                "translation": [
+                    -24.00358772277832,
+                    1.784143328666687,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    78.5090103149414
+                ],
+                "scaling": [
+                    0.9999999403953552,
+                    0.9999999403953552,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.067",
+            "transform": {
+                "translation": [
+                    -23.81302261352539,
+                    1.74540376663208,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    78.5090103149414
+                ],
+                "scaling": [
+                    0.9999999403953552,
+                    0.9999999403953552,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.068",
+            "transform": {
+                "translation": [
+                    -23.622459411621094,
+                    1.7066643238067627,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    78.5090103149414
+                ],
+                "scaling": [
+                    0.9999999403953552,
+                    0.9999999403953552,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.069",
+            "transform": {
+                "translation": [
+                    -23.431894302368164,
+                    1.6679248809814453,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    78.5090103149414
+                ],
+                "scaling": [
+                    0.9999999403953552,
+                    0.9999999403953552,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.070",
+            "transform": {
+                "translation": [
+                    -23.241331100463867,
+                    1.6291853189468384,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    78.5090103149414
+                ],
+                "scaling": [
+                    0.9999999403953552,
+                    0.9999999403953552,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.071",
+            "transform": {
+                "translation": [
+                    -23.050186157226562,
+                    1.5934555530548096,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    79.71038055419922
+                ],
+                "scaling": [
+                    0.9999999403953552,
+                    0.9999999403953552,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.072",
+            "transform": {
+                "translation": [
+                    -22.85885238647461,
+                    1.5587197542190552,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    79.71038055419922
+                ],
+                "scaling": [
+                    0.9999999403953552,
+                    0.9999999403953552,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.073",
+            "transform": {
+                "translation": [
+                    -22.667518615722656,
+                    1.5239840745925903,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    79.71038055419922
+                ],
+                "scaling": [
+                    0.9999999403953552,
+                    0.9999999403953552,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.074",
+            "transform": {
+                "translation": [
+                    -22.47618293762207,
+                    1.4892483949661255,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    79.71038055419922
+                ],
+                "scaling": [
+                    0.9999999403953552,
+                    0.9999999403953552,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.075",
+            "transform": {
+                "translation": [
+                    -22.284849166870117,
+                    1.4545127153396606,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    79.71038055419922
+                ],
+                "scaling": [
+                    0.9999999403953552,
+                    0.9999999403953552,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.076",
+            "transform": {
+                "translation": [
+                    -22.093515396118164,
+                    1.4197769165039062,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    79.71038055419922
+                ],
+                "scaling": [
+                    0.9999999403953552,
+                    0.9999999403953552,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.077",
+            "transform": {
+                "translation": [
+                    -21.902179718017578,
+                    1.385041356086731,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    79.71038055419922
+                ],
+                "scaling": [
+                    0.9999999403953552,
+                    0.9999999403953552,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.078",
+            "transform": {
+                "translation": [
+                    -21.71074104309082,
+                    1.350918173789978,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    80.8938980102539
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.079",
+            "transform": {
+                "translation": [
+                    -21.51873016357422,
+                    1.3201420307159424,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    80.8938980102539
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.080",
+            "transform": {
+                "translation": [
+                    -21.326717376708984,
+                    1.2893658876419067,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    80.8938980102539
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.081",
+            "transform": {
+                "translation": [
+                    -21.134706497192383,
+                    1.258589744567871,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    80.8938980102539
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.082",
+            "transform": {
+                "translation": [
+                    -20.94269561767578,
+                    1.227813720703125,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    80.8938980102539
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.083",
+            "transform": {
+                "translation": [
+                    -20.75068473815918,
+                    1.1970374584197998,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    80.8938980102539
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.084",
+            "transform": {
+                "translation": [
+                    -20.558673858642578,
+                    1.1662614345550537,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    80.8938980102539
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.085",
+            "transform": {
+                "translation": [
+                    -20.366661071777344,
+                    1.135485291481018,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    80.8938980102539
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.086",
+            "transform": {
+                "translation": [
+                    -20.17418670654297,
+                    1.1078070402145386,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    82.05792999267578
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.087",
+            "transform": {
+                "translation": [
+                    -19.981590270996094,
+                    1.0809378623962402,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    82.05792999267578
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.088",
+            "transform": {
+                "translation": [
+                    -19.788991928100586,
+                    1.0540688037872314,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    82.05792999267578
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.089",
+            "transform": {
+                "translation": [
+                    -19.596397399902344,
+                    1.027199625968933,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    82.05792999267578
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.090",
+            "transform": {
+                "translation": [
+                    -19.403799057006836,
+                    1.0003304481506348,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    82.05792999267578
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.091",
+            "transform": {
+                "translation": [
+                    -19.21120262145996,
+                    0.9734612703323364,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    82.05792999267578
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.092",
+            "transform": {
+                "translation": [
+                    -19.018606185913086,
+                    0.9465920925140381,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    82.05792999267578
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.093",
+            "transform": {
+                "translation": [
+                    -18.8256778717041,
+                    0.9222800731658936,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    83.20001983642578
+                ],
+                "scaling": [
+                    0.9999999403953552,
+                    0.9999999403953552,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.094",
+            "transform": {
+                "translation": [
+                    -18.632583618164062,
+                    0.8992546796798706,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    83.20001983642578
+                ],
+                "scaling": [
+                    0.9999999403953552,
+                    0.9999999403953552,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.095",
+            "transform": {
+                "translation": [
+                    -18.439489364624023,
+                    0.8762292265892029,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    83.20001983642578
+                ],
+                "scaling": [
+                    0.9999999403953552,
+                    0.9999999403953552,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.096",
+            "transform": {
+                "translation": [
+                    -18.246395111083984,
+                    0.8532037734985352,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    83.20001983642578
+                ],
+                "scaling": [
+                    0.9999999403953552,
+                    0.9999999403953552,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.097",
+            "transform": {
+                "translation": [
+                    -18.053302764892578,
+                    0.8301783800125122,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    83.20001983642578
+                ],
+                "scaling": [
+                    0.9999999403953552,
+                    0.9999999403953552,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.098",
+            "transform": {
+                "translation": [
+                    -17.860206604003906,
+                    0.8071529865264893,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    83.20001983642578
+                ],
+                "scaling": [
+                    0.9999999403953552,
+                    0.9999999403953552,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.099",
+            "transform": {
+                "translation": [
+                    -17.6671142578125,
+                    0.7841275930404663,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    83.20001983642578
+                ],
+                "scaling": [
+                    0.9999999403953552,
+                    0.9999999403953552,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.100",
+            "transform": {
+                "translation": [
+                    -17.47370147705078,
+                    0.7640039324760437,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    84.31668090820312
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.101",
+            "transform": {
+                "translation": [
+                    -17.280197143554688,
+                    0.7447461485862732,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    84.31668090820312
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.102",
+            "transform": {
+                "translation": [
+                    -17.086688995361328,
+                    0.7254884243011475,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    84.31668090820312
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.103",
+            "transform": {
+                "translation": [
+                    -16.893184661865234,
+                    0.706230640411377,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    84.31668090820312
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.104",
+            "transform": {
+                "translation": [
+                    -16.699676513671875,
+                    0.6869728565216064,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    84.31668090820312
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.105",
+            "transform": {
+                "translation": [
+                    -16.50617218017578,
+                    0.6677151322364807,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    84.31668090820312
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.106",
+            "transform": {
+                "translation": [
+                    -16.312631607055664,
+                    0.6488465666770935,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    85.4042739868164
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.107",
+            "transform": {
+                "translation": [
+                    -16.118793487548828,
+                    0.6332650184631348,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    85.4042739868164
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.108",
+            "transform": {
+                "translation": [
+                    -15.924957275390625,
+                    0.6176834106445312,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    85.4042739868164
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.109",
+            "transform": {
+                "translation": [
+                    -15.731120109558105,
+                    0.6021018624305725,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    85.4042739868164
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.110",
+            "transform": {
+                "translation": [
+                    -15.537282943725586,
+                    0.586520254611969,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    85.4042739868164
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.111",
+            "transform": {
+                "translation": [
+                    -15.343446731567383,
+                    0.5709387063980103,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    85.4042739868164
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.112",
+            "transform": {
+                "translation": [
+                    -15.14961051940918,
+                    0.5553571581840515,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    85.4042739868164
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.113",
+            "transform": {
+                "translation": [
+                    -14.95560359954834,
+                    0.5421648621559143,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    86.4575424194336
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.114",
+            "transform": {
+                "translation": [
+                    -14.761512756347656,
+                    0.5301494598388672,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    86.4575424194336
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.115",
+            "transform": {
+                "translation": [
+                    -14.567422866821289,
+                    0.5181341171264648,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    86.4575424194336
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.116",
+            "transform": {
+                "translation": [
+                    -14.373331069946289,
+                    0.5061187148094177,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    86.4575424194336
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.117",
+            "transform": {
+                "translation": [
+                    -14.179241180419922,
+                    0.4941033124923706,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    86.4575424194336
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.118",
+            "transform": {
+                "translation": [
+                    -13.985151290893555,
+                    0.4820879101753235,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    86.4575424194336
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.119",
+            "transform": {
+                "translation": [
+                    -13.790976524353027,
+                    0.4716518819332123,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    87.4708480834961
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.120",
+            "transform": {
+                "translation": [
+                    -13.596704483032227,
+                    0.46307066082954407,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    87.4708480834961
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.121",
+            "transform": {
+                "translation": [
+                    -13.40243148803711,
+                    0.45448940992355347,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    87.4708480834961
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.122",
+            "transform": {
+                "translation": [
+                    -13.208158493041992,
+                    0.44590815901756287,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    87.4708480834961
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.123",
+            "transform": {
+                "translation": [
+                    -13.013885498046875,
+                    0.43732690811157227,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    87.4708480834961
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.124",
+            "transform": {
+                "translation": [
+                    -12.81961441040039,
+                    0.42874568700790405,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    87.4708480834961
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.125",
+            "transform": {
+                "translation": [
+                    -12.625285148620605,
+                    0.4217127561569214,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    88.43709564208984
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.126",
+            "transform": {
+                "translation": [
+                    -12.430895805358887,
+                    0.41640788316726685,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    88.43709564208984
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.127",
+            "transform": {
+                "translation": [
+                    -12.236506462097168,
+                    0.4111030101776123,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    88.43709564208984
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.128",
+            "transform": {
+                "translation": [
+                    -12.042116165161133,
+                    0.40579813718795776,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    88.43709564208984
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.129",
+            "transform": {
+                "translation": [
+                    -11.847726821899414,
+                    0.4004932940006256,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    88.43709564208984
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.130",
+            "transform": {
+                "translation": [
+                    -11.653337478637695,
+                    0.39518845081329346,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    88.43709564208984
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.131",
+            "transform": {
+                "translation": [
+                    -11.458906173706055,
+                    0.3920593857765198,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    89.34735870361328
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.132",
+            "transform": {
+                "translation": [
+                    -11.264455795288086,
+                    0.3898426592350006,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    89.34735870361328
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.133",
+            "transform": {
+                "translation": [
+                    -11.07000732421875,
+                    0.3876259922981262,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    89.34735870361328
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.134",
+            "transform": {
+                "translation": [
+                    -10.875556945800781,
+                    0.38540929555892944,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    89.34735870361328
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.135",
+            "transform": {
+                "translation": [
+                    -10.681108474731445,
+                    0.3831925690174103,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    89.34735870361328
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.136",
+            "transform": {
+                "translation": [
+                    -10.48665714263916,
+                    0.38141152262687683,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    -89.81097412109375
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.137",
+            "transform": {
+                "translation": [
+                    -10.292196273803711,
+                    0.3820594549179077,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    -89.81097412109375
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.138",
+            "transform": {
+                "translation": [
+                    -10.097734451293945,
+                    0.3827073574066162,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    -89.81097412109375
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.139",
+            "transform": {
+                "translation": [
+                    -9.903274536132812,
+                    0.3833552598953247,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    -89.81097412109375
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.140",
+            "transform": {
+                "translation": [
+                    -9.708812713623047,
+                    0.3840031623840332,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    -89.81097412109375
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.141",
+            "transform": {
+                "translation": [
+                    -9.514351844787598,
+                    0.3846510946750641,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    -89.81097412109375
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.142",
+            "transform": {
+                "translation": [
+                    -9.31991195678711,
+                    0.38740748167037964,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    -89.04276275634766
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.143",
+            "transform": {
+                "translation": [
+                    -9.125476837158203,
+                    0.39065536856651306,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    -89.04276275634766
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.144",
+            "transform": {
+                "translation": [
+                    -8.931042671203613,
+                    0.3939032554626465,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    -89.04276275634766
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.145",
+            "transform": {
+                "translation": [
+                    -8.736607551574707,
+                    0.3971511721611023,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    -89.04276275634766
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.146",
+            "transform": {
+                "translation": [
+                    -8.5421724319458,
+                    0.4003990888595581,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    -89.04276275634766
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.147",
+            "transform": {
+                "translation": [
+                    -8.347772598266602,
+                    0.4051949679851532,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    -88.36865234375
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.148",
+            "transform": {
+                "translation": [
+                    -8.153388977050781,
+                    0.41073089838027954,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    -88.36865234375
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.149",
+            "transform": {
+                "translation": [
+                    -7.959006309509277,
+                    0.4162667989730835,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    -88.36865234375
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.150",
+            "transform": {
+                "translation": [
+                    -7.764623165130615,
+                    0.42180269956588745,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    -88.36865234375
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.151",
+            "transform": {
+                "translation": [
+                    -7.570240020751953,
+                    0.4273386299610138,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    -88.36865234375
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.152",
+            "transform": {
+                "translation": [
+                    -7.375904560089111,
+                    0.4343041181564331,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    -87.80233001708984
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.153",
+            "transform": {
+                "translation": [
+                    -7.181585311889648,
+                    0.4417616128921509,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    -87.80233001708984
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.154",
+            "transform": {
+                "translation": [
+                    -6.987266540527344,
+                    0.4492191672325134,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    -87.80233001708984
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.155",
+            "transform": {
+                "translation": [
+                    -6.792947769165039,
+                    0.4566766321659088,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    -87.80233001708984
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.156",
+            "transform": {
+                "translation": [
+                    -6.598628997802734,
+                    0.464145690202713,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    -87.36197662353516
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.157",
+            "transform": {
+                "translation": [
+                    -6.4043731689453125,
+                    0.47309598326683044,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    -87.36197662353516
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.158",
+            "transform": {
+                "translation": [
+                    -6.210117340087891,
+                    0.4820462763309479,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    -87.36197662353516
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.159",
+            "transform": {
+                "translation": [
+                    -6.015861511230469,
+                    0.4909965395927429,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    -87.36197662353516
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.160",
+            "transform": {
+                "translation": [
+                    -5.821605205535889,
+                    0.49994686245918274,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    -87.36197662353516
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.161",
+            "transform": {
+                "translation": [
+                    -5.627371788024902,
+                    0.5093560218811035,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    -87.06900024414062
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.162",
+            "transform": {
+                "translation": [
+                    -5.433163642883301,
+                    0.5192995071411133,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    -87.06900024414062
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.163",
+            "transform": {
+                "translation": [
+                    -5.238956451416016,
+                    0.529242992401123,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    -87.06900024414062
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.164",
+            "transform": {
+                "translation": [
+                    -5.044748306274414,
+                    0.5391865372657776,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    -87.06900024414062
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.165",
+            "transform": {
+                "translation": [
+                    -4.85054349899292,
+                    0.5491715669631958,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    -86.94677734375
+                ],
+                "scaling": [
+                    0.9999999403953552,
+                    0.9999999403953552,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.166",
+            "transform": {
+                "translation": [
+                    -4.656357288360596,
+                    0.5595293641090393,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    -86.94677734375
+                ],
+                "scaling": [
+                    0.9999999403953552,
+                    0.9999999403953552,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.167",
+            "transform": {
+                "translation": [
+                    -4.46217155456543,
+                    0.5698871612548828,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    -86.94677734375
+                ],
+                "scaling": [
+                    0.9999999403953552,
+                    0.9999999403953552,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.168",
+            "transform": {
+                "translation": [
+                    -4.2679853439331055,
+                    0.5802450180053711,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    -86.94677734375
+                ],
+                "scaling": [
+                    0.9999999403953552,
+                    0.9999999403953552,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.169",
+            "transform": {
+                "translation": [
+                    -4.073799133300781,
+                    0.5906028151512146,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    -86.94677734375
+                ],
+                "scaling": [
+                    0.9999999403953552,
+                    0.9999999403953552,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.170",
+            "transform": {
+                "translation": [
+                    -3.879601001739502,
+                    0.6007285714149475,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    -87.0216293334961
+                ],
+                "scaling": [
+                    0.9999999403953552,
+                    0.9999999403953552,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.171",
+            "transform": {
+                "translation": [
+                    -3.6854019165039062,
+                    0.6108328700065613,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    -87.0216293334961
+                ],
+                "scaling": [
+                    0.9999999403953552,
+                    0.9999999403953552,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.172",
+            "transform": {
+                "translation": [
+                    -3.4912023544311523,
+                    0.620937168598175,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    -87.0216293334961
+                ],
+                "scaling": [
+                    0.9999999403953552,
+                    0.9999999403953552,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.173",
+            "transform": {
+                "translation": [
+                    -3.2970030307769775,
+                    0.6310415267944336,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    -87.0216293334961
+                ],
+                "scaling": [
+                    0.9999999403953552,
+                    0.9999999403953552,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.174",
+            "transform": {
+                "translation": [
+                    -3.1027584075927734,
+                    0.6402298212051392,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    -87.32179260253906
+                ],
+                "scaling": [
+                    0.9999999403953552,
+                    0.9999999403953552,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.175",
+            "transform": {
+                "translation": [
+                    -2.908508777618408,
+                    0.6493164300918579,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    -87.32179260253906
+                ],
+                "scaling": [
+                    0.9999999403953552,
+                    0.9999999403953552,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.176",
+            "transform": {
+                "translation": [
+                    -2.714259147644043,
+                    0.6584030389785767,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    -87.32179260253906
+                ],
+                "scaling": [
+                    0.9999999403953552,
+                    0.9999999403953552,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.177",
+            "transform": {
+                "translation": [
+                    -2.520005941390991,
+                    0.6674044132232666,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    -87.87781524658203
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.178",
+            "transform": {
+                "translation": [
+                    -2.3256773948669434,
+                    0.6746059656143188,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    -87.87781524658203
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.179",
+            "transform": {
+                "translation": [
+                    -2.1313486099243164,
+                    0.6818075180053711,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    -87.87781524658203
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.180",
+            "transform": {
+                "translation": [
+                    -1.9370200634002686,
+                    0.6890089511871338,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    -87.87781524658203
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.181",
+            "transform": {
+                "translation": [
+                    -1.7426625490188599,
+                    0.695235550403595,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    -88.7204818725586
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.182",
+            "transform": {
+                "translation": [
+                    -1.5482490062713623,
+                    0.6995794773101807,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    -88.7204818725586
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.183",
+            "transform": {
+                "translation": [
+                    -1.3538354635238647,
+                    0.7039235234260559,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    -88.7204818725586
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.184",
+            "transform": {
+                "translation": [
+                    -1.1594219207763672,
+                    0.7082674503326416,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    -88.7204818725586
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.185",
+            "transform": {
+                "translation": [
+                    -0.9649710655212402,
+                    0.7095571160316467,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    -89.8808822631836
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.186",
+            "transform": {
+                "translation": [
+                    -0.7705094814300537,
+                    0.7099703550338745,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    -89.8808822631836
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.187",
+            "transform": {
+                "translation": [
+                    -0.5760478973388672,
+                    0.7103835344314575,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    -89.8808822631836
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.188",
+            "transform": {
+                "translation": [
+                    -0.38160526752471924,
+                    0.709065854549408,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    88.62223052978516
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.189",
+            "transform": {
+                "translation": [
+                    -0.1871994584798813,
+                    0.7043895721435547,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    88.62223052978516
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.190",
+            "transform": {
+                "translation": [
+                    0.00720629096031189,
+                    0.6997132897377014,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    88.62223052978516
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.191",
+            "transform": {
+                "translation": [
+                    0.2016080766916275,
+                    0.694936990737915,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    86.76334381103516
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.192",
+            "transform": {
+                "translation": [
+                    0.3957598805427551,
+                    0.6839573383331299,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    86.76334381103516
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.193",
+            "transform": {
+                "translation": [
+                    0.589911699295044,
+                    0.6729776859283447,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    86.76334381103516
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.194",
+            "transform": {
+                "translation": [
+                    0.7840635776519775,
+                    0.6619980335235596,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    86.76334381103516
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.195",
+            "transform": {
+                "translation": [
+                    0.9777648448944092,
+                    0.6450929641723633,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    84.5402603149414
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.196",
+            "transform": {
+                "translation": [
+                    1.1713446378707886,
+                    0.6265906095504761,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    84.5402603149414
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.197",
+            "transform": {
+                "translation": [
+                    1.364924430847168,
+                    0.6080883145332336,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    84.5402603149414
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.198",
+            "transform": {
+                "translation": [
+                    1.5578510761260986,
+                    0.5840649008750916,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    81.96537017822266
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.199",
+            "transform": {
+                "translation": [
+                    1.7504042387008667,
+                    0.5568847060203552,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    81.96537017822266
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.200",
+            "transform": {
+                "translation": [
+                    1.9429574012756348,
+                    0.5297045707702637,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    81.96537017822266
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.201",
+            "transform": {
+                "translation": [
+                    2.134638547897339,
+                    0.49730199575424194,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    79.07304382324219
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.202",
+            "transform": {
+                "translation": [
+                    2.3255748748779297,
+                    0.46044033765792847,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    79.07304382324219
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.203",
+            "transform": {
+                "translation": [
+                    2.5165112018585205,
+                    0.423578679561615,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    79.07304382324219
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.204",
+            "transform": {
+                "translation": [
+                    2.7063543796539307,
+                    0.38178715109825134,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    75.92176818847656
+                ],
+                "scaling": [
+                    0.9999999403953552,
+                    0.9999999403953552,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.205",
+            "transform": {
+                "translation": [
+                    2.8949756622314453,
+                    0.3344847857952118,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    75.92176818847656
+                ],
+                "scaling": [
+                    0.9999999403953552,
+                    0.9999999403953552,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.206",
+            "transform": {
+                "translation": [
+                    3.083596706390381,
+                    0.28718239068984985,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    75.92176818847656
+                ],
+                "scaling": [
+                    0.9999999403953552,
+                    0.9999999403953552,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.207",
+            "transform": {
+                "translation": [
+                    3.27097225189209,
+                    0.23545996844768524,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    72.5921859741211
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.208",
+            "transform": {
+                "translation": [
+                    3.4565277099609375,
+                    0.17728255689144135,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    72.5921859741211
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.209",
+            "transform": {
+                "translation": [
+                    3.642083168029785,
+                    0.11910514533519745,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    72.5921859741211
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.210",
+            "transform": {
+                "translation": [
+                    3.826458692550659,
+                    0.057522207498550415,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    69.1812515258789
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.211",
+            "transform": {
+                "translation": [
+                    4.008224010467529,
+                    -0.011592116206884384,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    69.1812515258789
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.212",
+            "transform": {
+                "translation": [
+                    4.1899895668029785,
+                    -0.08070641756057739,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    69.1812515258789
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.213",
+            "transform": {
+                "translation": [
+                    4.371077537536621,
+                    -0.15145523846149445,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    65.79148864746094
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.214",
+            "transform": {
+                "translation": [
+                    4.54843807220459,
+                    -0.2311961054801941,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    65.79148864746094
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.215",
+            "transform": {
+                "translation": [
+                    4.725799560546875,
+                    -0.31093695759773254,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    65.79148864746094
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.216",
+            "transform": {
+                "translation": [
+                    4.903160095214844,
+                    -0.39067786931991577,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    65.79148864746094
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.217",
+            "transform": {
+                "translation": [
+                    5.076170444488525,
+                    -0.4794002175331116,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    62.519493103027344
+                ],
+                "scaling": [
+                    0.9999999403953552,
+                    0.9999999403953552,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.218",
+            "transform": {
+                "translation": [
+                    5.248691082000732,
+                    -0.5691341161727905,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    62.519493103027344
+                ],
+                "scaling": [
+                    0.9999999403953552,
+                    0.9999999403953552,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.219",
+            "transform": {
+                "translation": [
+                    5.421211242675781,
+                    -0.6588680148124695,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    62.519493103027344
+                ],
+                "scaling": [
+                    0.9999999403953552,
+                    0.9999999403953552,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.220",
+            "transform": {
+                "translation": [
+                    5.591150760650635,
+                    -0.7532549500465393,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    59.44605255126953
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.221",
+            "transform": {
+                "translation": [
+                    5.758612155914307,
+                    -0.8521096110343933,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    59.44605255126953
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.222",
+            "transform": {
+                "translation": [
+                    5.92607307434082,
+                    -0.9509643316268921,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    59.44605255126953
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.223",
+            "transform": {
+                "translation": [
+                    6.093533992767334,
+                    -1.049818992614746,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    59.44605255126953
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.224",
+            "transform": {
+                "translation": [
+                    6.256182670593262,
+                    -1.1563873291015625,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    56.629764556884766
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.225",
+            "transform": {
+                "translation": [
+                    6.41858434677124,
+                    -1.2633506059646606,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    56.629764556884766
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.226",
+            "transform": {
+                "translation": [
+                    6.580986022949219,
+                    -1.3703137636184692,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    56.629764556884766
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.227",
+            "transform": {
+                "translation": [
+                    6.7424845695495605,
+                    -1.4785847663879395,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    54.10598373413086
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.228",
+            "transform": {
+                "translation": [
+                    6.900018692016602,
+                    -1.5925955772399902,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    54.10598373413086
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.229",
+            "transform": {
+                "translation": [
+                    7.057552814483643,
+                    -1.706606388092041,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    54.10598373413086
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.230",
+            "transform": {
+                "translation": [
+                    7.215086936950684,
+                    -1.8206171989440918,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    54.10598373413086
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.231",
+            "transform": {
+                "translation": [
+                    7.371821880340576,
+                    -1.9356892108917236,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    51.88870620727539
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.232",
+            "transform": {
+                "translation": [
+                    7.524827003479004,
+                    -2.0557096004486084,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    51.88870620727539
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.233",
+            "transform": {
+                "translation": [
+                    7.677832126617432,
+                    -2.175729751586914,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    51.88870620727539
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.234",
+            "transform": {
+                "translation": [
+                    7.830837249755859,
+                    -2.295750141143799,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    51.88870620727539
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.235",
+            "transform": {
+                "translation": [
+                    7.983842849731445,
+                    -2.4157702922821045,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    51.88870620727539
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.236",
+            "transform": {
+                "translation": [
+                    8.133211135864258,
+                    -2.540271043777466,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    49.975101470947266
+                ],
+                "scaling": [
+                    0.9999999403953552,
+                    0.9999999403953552,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.237",
+            "transform": {
+                "translation": [
+                    8.282123565673828,
+                    -2.6653337478637695,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    49.975101470947266
+                ],
+                "scaling": [
+                    0.9999999403953552,
+                    0.9999999403953552,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.238",
+            "transform": {
+                "translation": [
+                    8.431035995483398,
+                    -2.790396213531494,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    49.975101470947266
+                ],
+                "scaling": [
+                    0.9999999403953552,
+                    0.9999999403953552,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.239",
+            "transform": {
+                "translation": [
+                    8.579947471618652,
+                    -2.9154586791992188,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    49.975101470947266
+                ],
+                "scaling": [
+                    0.9999999403953552,
+                    0.9999999403953552,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.240",
+            "transform": {
+                "translation": [
+                    8.727828025817871,
+                    -3.041715145111084,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    48.350589752197266
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.241",
+            "transform": {
+                "translation": [
+                    8.87313461303711,
+                    -3.1709489822387695,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    48.350589752197266
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.242",
+            "transform": {
+                "translation": [
+                    9.018442153930664,
+                    -3.300182819366455,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    48.350589752197266
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.243",
+            "transform": {
+                "translation": [
+                    9.163748741149902,
+                    -3.4294166564941406,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    48.350589752197266
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.244",
+            "transform": {
+                "translation": [
+                    9.309056282043457,
+                    -3.558650493621826,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    48.350589752197266
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.245",
+            "transform": {
+                "translation": [
+                    9.453324317932129,
+                    -3.6890244483947754,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    46.99333953857422
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.246",
+            "transform": {
+                "translation": [
+                    9.595529556274414,
+                    -3.8216638565063477,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    46.99333953857422
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.247",
+            "transform": {
+                "translation": [
+                    9.737733840942383,
+                    -3.95430326461792,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    46.99333953857422
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.248",
+            "transform": {
+                "translation": [
+                    9.879939079284668,
+                    -4.086942195892334,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    46.99333953857422
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.249",
+            "transform": {
+                "translation": [
+                    10.022144317626953,
+                    -4.219581604003906,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    46.99333953857422
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "TemplateObj.250",
+            "transform": {
+                "translation": [
+                    10.164349555969238,
+                    -4.3522210121154785,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    46.99333953857422
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        }
+    ]
+}

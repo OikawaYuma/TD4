@@ -28,7 +28,7 @@ void DemoScene::Init()
 	sprite_->SetTexture(spTx_);
 	camera_ = std::make_unique<Camera>();
 	camera_->Initialize();
-	levelData_ = Loder::LoadJsonFile("Resources/map","IROHAmap");
+	levelData_ = Loder::LoadJsonFile("Resources/map","test");
 
 	particle_ = std::make_unique<Particle>();
 	particle_->SetModel("worldDesign.obj");
@@ -215,11 +215,11 @@ void DemoScene::ArrageObj(std::list<std::unique_ptr<map>>& maps)
 
 	for (auto& objectData : levelData_.objects) {
 		if (objectData.filename.compare("load") == 0) {
+			
 			ModelManager::GetInstance()->LoadModel("Resources/" + objectData.filename, objectData.filename + ".obj");
 			std::unique_ptr<map> enemy = std::make_unique<map>();
 			enemy->Init(objectData.transform.scale,objectData.transform.rotate, objectData.transform.translate, objectData.filename);
 			maps.push_back(std::move(enemy));
 		}
 	}
-	
 }

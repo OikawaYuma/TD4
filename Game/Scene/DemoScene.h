@@ -61,5 +61,7 @@ private:
 	std::unique_ptr<Sprite> sprite_;
 	uint32_t spTx_ = 0;
 	LevelData levelData_{};
+
+	int selectedIndex[1] = {0};
 };
 
