@@ -33,7 +33,7 @@ public:
 
 	Collider* GetCollider() { return collider_.get(); }
 
-	const Vector3& GetWorldPosition()const;
+    Vector3 GetWorldPosition()const;
 
 	const Vector3& GetScale()const;
 
