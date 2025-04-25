@@ -31,7 +31,7 @@ void DemoScene::Init()
 	levelData_ = Loder::LoadJsonFile("Resources/map","IROHAmap");
 
 	particle_ = std::make_unique<Particle>();
-	particle_->SetModel("car.obj");
+	particle_->SetModel("worldDesign.obj");
 	particle_->Init();
 	particle_->SetCamera(camera_.get());
 	emitter_.count = 2;
@@ -48,11 +48,9 @@ void DemoScene::Init()
 	};
 	emitter_.randRangeXYZ = randRangePro_;
 	emitter_.size = 0.5f;
-	emitter_.boundPro.power = 1.0f;
-	emitter_.boundPro.gravity = 0.0f;
-	emitter_.boundPro.isBound = true;
 	particle_->SetEmitter(emitter_);
 	particle_->SetTexture(spTx_);
+	particle_->SetScleChangeFlag(true);
 	ArrageObj(maps_);
 	postProcess_ = std::make_unique<PostProcess>();
 	postProcess_->Init();
@@ -75,7 +73,7 @@ void DemoScene::Update()
 	postProcess_->Update();
 	camera_->CameraDebug();
 	sprite_->Update();
-	particle_->Update(true);
+	particle_->Update();
 	fade_->Update();
 	fade_->UpdateFade();
 	PostEffectChange();

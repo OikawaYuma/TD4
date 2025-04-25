@@ -24,26 +24,20 @@ void Particle::Init() {
 
 	// 頂点リソースを作る
 	vertexResource_ = Mesh::CreateBufferResource(sDirectXCommon->GetDevice(), sizeof(VertexData) * model_->GetModelData().vertices.size());
-
 	// 頂点バッファビューを作成する
 	vertexBufferView_.BufferLocation = vertexResource_->GetGPUVirtualAddress(); // リソースの先頭のアドレスから使う
 	vertexBufferView_.SizeInBytes = UINT(sizeof(VertexData) * model_->GetModelData().vertices.size()); // 使用するリソースのサイズは頂点のサイズ
 	vertexBufferView_.StrideInBytes = sizeof(VertexData); // 1頂点当たりのサイズ
-
 	// 頂点リソースにデータを書き込む
 	vertexData_ = nullptr;
 	vertexResource_->Map(0, nullptr, reinterpret_cast<void**>(&vertexData_));
 	std::memcpy(vertexData_, model_->GetModelData().vertices.data(), sizeof(VertexData) * model_->GetModelData().vertices.size());
-
-	worldTransform_.Initialize();
-	
 
 	// 実際に頂点リソースを作る
 	materialResource = Mesh::CreateBufferResource(sDirectXCommon->GetDevice(), sizeof(Material));
 	/*materialBufferView = CreateBufferView();;*/
 	// 頂点リソースにデータを書き込む
 	materialData_ = nullptr;
-
 	// 書き込むためのアドレスを取得
 	materialResource->Map(0, nullptr, reinterpret_cast<void**>(&materialData_));
 	// 色のデータを変数から読み込み
@@ -52,29 +46,22 @@ void Particle::Init() {
 	materialData_->uvTransform = MakeIdentity4x4();
 	materialData_->shininess = 60.0f;
 
-	
-	// Transform変数の初期化
-
 	// Sprite用のTransformationMatrix用のリソースを作る。Matrix4x4 1つ分のサイズを用意する
 	transformationMatrixResouceSprite = Mesh::CreateBufferResource(sDirectXCommon->GetDevice(), sizeof(ParticleForGPU) * kNumMaxInstance);
 	// 書き込むためのアドレスを取得
 	transformationMatrixResouceSprite->Map(0, nullptr, reinterpret_cast<void**>(&instancingData));
 	// 単位行列を書き込んでおく
-
 	for (uint32_t index = 0; index < kNumMaxInstance; ++index) {
 		instancingData[index].WVP = MakeIdentity4x4();
 		instancingData[index].World = MakeIdentity4x4();
 		instancingData[index].color = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
 	}
-
 	indexResource_ = Mesh::CreateBufferResource(DirectXCommon::GetInstance()->GetDevice().Get(), sizeof(uint32_t) * model_->GetModelData().indices.size());
 	indexBufferView_.BufferLocation = indexResource_->GetGPUVirtualAddress();
 	indexBufferView_.SizeInBytes = sizeof(uint32_t) * static_cast<uint32_t>(model_->GetModelData().indices.size());
 	indexBufferView_.Format = DXGI_FORMAT_R32_UINT;
-
 	uint32_t* indexDataSprite = nullptr;
 	indexResource_->Map(0, nullptr, reinterpret_cast<void**>(&indexDataSprite));
-
 	std::memcpy(indexDataSprite, model_->GetModelData().indices.data(), sizeof(uint32_t) * model_->GetModelData().indices.size());
 
 
@@ -99,18 +86,17 @@ void Particle::Init() {
 	directionalLightData->direction = { 0.0f,-1.0f,0.0f };
 	directionalLightData->intensity = 0.6f;
 
+	// ワールド座標の初期化
+	worldTransform_.Initialize();
 
 	//emitter_.transform = { emitter.transform.scale,{0.0f,0.0f,0.0f},{0.0f,0.0f,20.0f} };
 	emitter_.count = 6;
 	emitter_.frequency = 0.02f;// 0.5秒ごとに発生
 	emitter_.frequencyTime = 0.0f;// 発生頻度用の時刻、0で初期化
 
-	emitter_.boundPro.power = 1.0f;
-	emitter_.boundPro.gravity = 0.0f;
-	emitter_.boundPro.isBound = true;
 	numInstance_ = 0;
 }
-void Particle::Update(bool scaleAddFlag)
+void Particle::Update()
 {
 
 	emitter_.transform.translate = worldTransform_.translation_;
@@ -119,9 +105,7 @@ void Particle::Update(bool scaleAddFlag)
 		instancingData[index].WVP = worldTransform_.matWorld_;
 		instancingData[index].World = worldTransform_.matWorld_;
 		instancingData[index].color = Vector4(1.0f, 1.0f, 1.0f, 0.8f);
-	}
-	Bound();
-	
+	}	
 
 	//materialData->color = {1.0f,1.0f,1.0f,1.0f};
 	Matrix4x4 backToFrontMatrix = MakeRotateYMatrix(std::numbers::pi_v<float>);
@@ -149,9 +133,9 @@ void Particle::Update(bool scaleAddFlag)
 		}
 
 		(*particleIterator).transform.translate.x += (*particleIterator).velocity.x * kDeltaTime;
-		(*particleIterator).transform.translate.y += (*particleIterator).velocity.y * kDeltaTime + emitter_.boundPro.power;
+		(*particleIterator).transform.translate.y += (*particleIterator).velocity.y * kDeltaTime;
 		(*particleIterator).transform.translate.z += (*particleIterator).velocity.z * kDeltaTime;
-		if ((*particleIterator).transform.translate.y <= 0.0f) {
+		/*if ((*particleIterator).transform.translate.y <= 0.0f) {
 			(*particleIterator).transform.translate.y = 0.0f;
 			(*particleIterator).transform.scale.y = 0.01f;
 			if (!(*particleIterator).isfall) {
@@ -161,9 +145,9 @@ void Particle::Update(bool scaleAddFlag)
 			}
 			(*particleIterator).velocity.x = 0.0f;
 			(*particleIterator).velocity.z = 0.0f;
-		}
+		}*/
 		
-		if (scaleAddFlag) {
+		if (scaleChangeFlag_) {
 			(*particleIterator).transform.scale = Add((*particleIterator).transform.scale, { 0.1f ,0.1f,0.1f });
 		}
 		(*particleIterator).currentTime += kDeltaTime;
@@ -263,18 +247,6 @@ void Particle::CreateParticle()
 	particles_.splice(particles_.end(), Emission(randomEngine));
 }
 
-void Particle::Bound()
-{
-	if (emitter_.boundPro.isBound) {
-		// 重量加速度
-		const float kGravityAcceleration = 0.005f;
-		emitter_.boundPro.gravity += kGravityAcceleration;
-		// 加速度ベクトル
-		Vector3 accelerationVector = { 0, -emitter_.boundPro.gravity, 0 };
-		// 加速する
-		emitter_.boundPro.power += accelerationVector.y;
-	}
-}
 
 
 void Particle::SetModel(const std::string& filePath)
