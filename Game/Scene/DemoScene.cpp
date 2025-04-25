@@ -14,10 +14,10 @@ void DemoScene::Init()
 	ModelManager::GetInstance()->LoadModel("Resources/worldDesign", "worldDesign.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/map", "IROHAmap2.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/map", "map.obj");
-	ModelManager::GetInstance()->LoadModel("Resources/car", "car.obj");
+	ModelManager::GetInstance()->LoadModel("Resources/map", "map0.obj");
 	//ModelManager::GetInstance()->LoadModel("Resources/map", "IROHAmap.obj");
 	wood_ = std::make_unique<WorldDesign>();
-	wood_->Init({ 1.0f,1.0f,1.0f }, { 0.0f,15.0f,30.0f }, "car");
+	wood_->Init({ 1.0f,1.0f,1.0f }, { 0.0f,15.0f,30.0f }, "map0");
 	fade_ = std::make_unique<Fade>();
 	fade_->Init("Resources/fade.png");
 	fade_->SetTexture(TextureManager::GetInstance()->StoreTexture("Resources/fade.png"));
@@ -31,10 +31,10 @@ void DemoScene::Init()
 	levelData_ = Loder::LoadJsonFile("Resources/map","IROHAmap");
 
 	particle_ = std::make_unique<Particle>();
-	particle_->SetModel("car.obj");
+	particle_->SetModel("worldDesign.obj");
 	particle_->Init();
 	particle_->SetCamera(camera_.get());
-	emitter_.count = 10;
+	emitter_.count = 2;
 	emitter_.frequency = 5000.0f;
 	emitter_.frequencyTime = 0.0f;
 
@@ -48,11 +48,9 @@ void DemoScene::Init()
 	};
 	emitter_.randRangeXYZ = randRangePro_;
 	emitter_.size = 0.5f;
-	emitter_.boundPro.power = 1.0f;
-	emitter_.boundPro.gravity = 0.0f;
-	emitter_.boundPro.isBound = true;
 	particle_->SetEmitter(emitter_);
 	particle_->SetTexture(spTx_);
+	particle_->SetScleChangeFlag(true);
 	ArrageObj(maps_);
 	postProcess_ = std::make_unique<PostProcess>();
 	postProcess_->Init();
@@ -70,11 +68,12 @@ void DemoScene::Update()
 	for (std::list<std::unique_ptr<map>>::iterator itr = maps_.begin(); itr != maps_.end(); itr++) {
 		(*itr)->Update();
 	}
+	particle_->CreateParticle();
 	Object3dManager::GetInstance()->Update();
 	postProcess_->Update();
 	camera_->CameraDebug();
 	sprite_->Update();
-	particle_->Update(true);
+	particle_->Update();
 	fade_->Update();
 	fade_->UpdateFade();
 	PostEffectChange();
@@ -82,7 +81,7 @@ void DemoScene::Update()
 void DemoScene::Draw()
 {
 	Object3dManager::GetInstance()->Draw(camera_.get());
-	particle_->Draw();
+	//particle_->Draw();
 }
 
 void DemoScene::PostDraw()

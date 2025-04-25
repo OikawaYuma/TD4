@@ -43,6 +43,7 @@ struct ParticleForGPU {
 	Matrix4x4 World;
 	Vector4 color;
 };
+
 struct RandRangePro {
 	Vector2 rangeX;
 	Vector2 rangeY;
@@ -64,7 +65,6 @@ struct Emitter {
 	float frequencyTime; //!< 頻度用時刻
 	RandRangePro randRangeXYZ; //!xyzの発生範囲の設定
 	float size;
-	BoundP boundPro;
 };
 
 
@@ -85,7 +85,7 @@ public:
 	~Particle();
 
 	void Init();
-	void Update(bool scaleAddFlag);
+	void Update();
 	void Draw();
 	void Release();
 	ParticlePro MakeNewParticle(std::mt19937& randomEngine);
@@ -93,8 +93,6 @@ public:
 	std::list<ParticlePro> Emission(std::mt19937& randEngine);
 
 	void CreateParticle();
-
-	void Bound();
 
 
 public: // Setter
@@ -112,6 +110,7 @@ public: // Setter
 
 	void SetDirectionLight(const DirectionalLight& direction) { *directionalLightData = direction; }
 
+	void SetScleChangeFlag(const bool& scaleChangeFlag) { scaleChangeFlag_ = scaleChangeFlag; }
 
 private:
 	// 借りてくる
@@ -176,4 +175,7 @@ private:
 	const float kDeltaTime = 1.0f / 60.0f;
 	Emitter emitter_{};
 	RandRangePro randRange_;
+
+	// Scaleサイズが変更されるか判断するFlag
+	bool scaleChangeFlag_ = false;
 };
