@@ -18,6 +18,7 @@ ModelData Model::LoadObjFile(const std::string& directoryPath, const std::string
 		assert(mesh->HasTextureCoords(0)); // TexcoordがないMeshは今回は非対応
 		
 		uint32_t baseVertexIndex = static_cast<uint32_t>(modelData_.vertices.size());
+		baseVertexIndex;
 		// ここからMeshの中身(Face)の解析を行っていく
 		for (uint32_t faceIndex = 0; faceIndex < mesh->mNumFaces; ++faceIndex) {
 			aiFace& face = mesh->mFaces[faceIndex];

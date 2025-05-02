@@ -79,9 +79,15 @@ public:
 		float currentTime;
 		bool isfall;
 	};
+// Random関数の初期化
+private:
+	std::random_device seedGenerator_{};
+	std::mt19937 randomEngine_;
+public:
 
-
-	Particle();
+	Particle()
+	: randomEngine_(seedGenerator_()) // 初期化リストで初期化する
+	{}
 	~Particle();
 
 	void Init();
@@ -93,7 +99,10 @@ public:
 	std::list<ParticlePro> Emission(std::mt19937& randEngine);
 
 	void CreateParticle();
-
+	// SetJson
+	void SetJsonPram();
+	// ApplyGlovalvariables
+	void ApplyGlovalVariables();
 
 public: // Setter
 	void SetModel(const std::string& filePath);
@@ -112,6 +121,8 @@ public: // Setter
 
 	void SetScleChangeFlag(const bool& scaleChangeFlag) { scaleChangeFlag_ = scaleChangeFlag; }
 
+	void SetName(const std::string& name) { name_ = name; }
+
 private:
 	// 借りてくる
 	WinAPI* sWinAPI = nullptr;
@@ -121,6 +132,10 @@ private:
 	Camera* camera_ = nullptr;
 
 	Model* model_ = nullptr;
+
+private:
+	// 使用するパーティクル名
+	std::string name_;
 
 	const static uint32_t kNumMaxInstance = 10000; // インスタンス数
 
@@ -174,8 +189,8 @@ private:
 	//実時間を計測して可変fpsで動かせるようにしておくとなお良い
 	const float kDeltaTime = 1.0f / 60.0f;
 	Emitter emitter_{};
-	RandRangePro randRange_;
 
 	// Scaleサイズが変更されるか判断するFlag
 	bool scaleChangeFlag_ = false;
+
 };

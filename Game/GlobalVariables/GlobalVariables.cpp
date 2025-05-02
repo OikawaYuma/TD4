@@ -13,7 +13,7 @@ GlobalVariables* GlobalVariables::GetInstance()
 
 void GlobalVariables::Update()
 {
-#ifdef DEBUG
+#ifdef _DEBUG
 	if (!ImGui::Begin("Global Variables", nullptr, ImGuiWindowFlags_MenuBar)) {
 		ImGui::End();
 		return;
@@ -53,7 +53,7 @@ void GlobalVariables::Update()
 			// Vector3型の値を保持してれば
 			else if (std::holds_alternative<Vector3>(item.value)) {
 				Vector3* ptr = std::get_if<Vector3>(&item.value);
-				ImGui::SliderFloat3(itemName.c_str(), &ptr->x, -10.0f, 10.0f);
+				ImGui::SliderFloat3(itemName.c_str(), &ptr->x, -100.0f, 100.0f);
 			}
 		}
 		ImGui::Text("\n");
