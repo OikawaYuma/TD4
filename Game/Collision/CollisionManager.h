@@ -8,30 +8,45 @@
 #include "Collider.h"
 #include<list>
 #include <memory>
-class GameScene;
-class Player;
-class Enemy;
-class EnemyBullet;
+
 class CollisionManager {
 public:
-	void CheckCollisionPair(Collider* colliderA, Collider* colliderB);
+	/// <summary>
+	/// 衝突判定チェック
+	/// </summary>
 	void CheckAllCollision();
-	// ClliderにPushする
-	void PushClider(Collider* collider);
-	void SetGameScene(GameScene* gamescene) { gameScene_ = gamescene; }
-	void SetPlayer(Player* player) { player_ = player; }
-	void SetEnemy(Enemy* enemy) { enemy_ = enemy; }
-	void SetEnemyBullet(EnemyBullet* enemy) { enemyBullet_ = enemy; }
+
+	/// <summary>
+	/// コライダーのリストに追加
+	/// </summary>
+	/// <param name="collider"></param>
+	void PushCollider(Collider* collider) { colliders_.push_back(collider); };
+
+	/// <summary>
+	/// コライダーのリストをクリア
+	/// </summary>
+	void ColliderClear() { colliders_.clear(); }
+
 private:
-	GameScene* gameScene_ = nullptr;
-	//std::list<Collider*> colliders_;
-	// 自キャラ
-	Player* player_ = nullptr;
 
-	// 敵キャラ
-	Enemy* enemy_ = nullptr;
+	/// <summary>
+	/// 衝突フィルタリング
+	/// </summary>
+	/// <param name="colliderA"></param>
+	/// <param name="colliderB"></param>
+	void CheckCollisionPair(Collider* colliderA, Collider* colliderB);
 
-	EnemyBullet* enemyBullet_ = nullptr;
-	uint32_t collisionNum = 2;
+	/// <summary>
+	/// 球同士の当たり判定
+	/// </summary>
+	/// <param name="v1"></param>
+	/// <param name="v1Radious"></param>
+	/// <param name="v2"></param>
+	/// <param name="v2Radious"></param>
+	/// <returns></returns>
+	bool CheckCollision(Vector3 v1, float v1Radious, Vector3 v2, float v2Radious);
+
+private:
+	std::list<Collider*> colliders_;
 };
 
