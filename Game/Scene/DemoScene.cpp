@@ -7,6 +7,7 @@
 #include<stdio.h>
 #include<time.h>
 #include "Object3dManager.h"
+#include "GlobalVariables/GlobalVariables.h"
 #include <Audio.h>
 void DemoScene::Init()
 {
@@ -15,6 +16,7 @@ void DemoScene::Init()
 	ModelManager::GetInstance()->LoadModel("Resources/map", "IROHAmap2.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/map", "map.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/map", "map0.obj");
+	ModelManager::GetInstance()->LoadModel("Resources/ball", "ball.obj");
 	//ModelManager::GetInstance()->LoadModel("Resources/map", "IROHAmap.obj");
 	wood_ = std::make_unique<WorldDesign>();
 	wood_->Init({ 1.0f,1.0f,1.0f }, { 0.0f,15.0f,30.0f }, "map0");
@@ -28,29 +30,33 @@ void DemoScene::Init()
 	sprite_->SetTexture(spTx_);
 	camera_ = std::make_unique<Camera>();
 	camera_->Initialize();
-	levelData_ = Loder::LoadJsonFile("Resources/map","test");
+	levelData_ = Loder::LoadJsonFile("Resources/map","IROHAmap");
+	GlobalVariables::GetInstance()->LoadFiles();
 
 	particle_ = std::make_unique<Particle>();
-	particle_->SetModel("worldDesign.obj");
+	particle_->SetModel("ball.obj");
 	particle_->Init();
+	particle_->SetName("bomb");
+	particle_->ApplyGlovalVariables();
+	particle_->SetJsonPram();
+	
 	particle_->SetCamera(camera_.get());
-	emitter_.count = 2;
-	emitter_.frequency = 5000.0f;
+	emitter_.count = 10;
+	emitter_.frequency = 0.5f;
 	emitter_.frequencyTime = 0.0f;
-
 	emitter_.transform.rotate = { 0.0f,0.0f,0.0f };
 	emitter_.transform.scale = { 0.25f,0.25f,0.25f };
 	emitter_.transform.translate = { 0.0f,1.0f,25.0f };
-	randRangePro_ = {
-		{0.0f,0.0f},
-		{0.0f,0.0f},
-		{0.0f,0.0f}
+	emitter_.randRangeXYZ =	//発生範囲を設定
+	{
+		{0.3f,0.7f},
+		{0.2f,0.5f},
+		{-0.5f,0.3f}
 	};
-	emitter_.randRangeXYZ = randRangePro_;
 	emitter_.size = 0.5f;
 	particle_->SetEmitter(emitter_);
 	particle_->SetTexture(spTx_);
-	particle_->SetScleChangeFlag(true);
+	particle_->SetScleChangeFlag(false);
 	ArrageObj(maps_);
 	postProcess_ = std::make_unique<PostProcess>();
 	postProcess_->Init();
@@ -65,10 +71,11 @@ void DemoScene::Update()
 		fade_->StartFadeIn();
 	}
 	camera_->Update();
+	GlobalVariables::GetInstance()->Update();
 	for (std::list<std::unique_ptr<map>>::iterator itr = maps_.begin(); itr != maps_.end(); itr++) {
 		(*itr)->Update();
 	}
-	particle_->CreateParticle();
+	//particle_->CreateParticle();
 	Object3dManager::GetInstance()->Update();
 	postProcess_->Update();
 	camera_->CameraDebug();
@@ -81,7 +88,7 @@ void DemoScene::Update()
 void DemoScene::Draw()
 {
 	Object3dManager::GetInstance()->Draw(camera_.get());
-	//particle_->Draw();
+	particle_->Draw();
 }
 
 void DemoScene::PostDraw()
