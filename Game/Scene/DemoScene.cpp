@@ -30,7 +30,7 @@ void DemoScene::Init()
 	sprite_->SetTexture(spTx_);
 	camera_ = std::make_unique<Camera>();
 	camera_->Initialize();
-	levelData_ = Loder::LoadJsonFile("Resources/map","IROHAmap");
+	levelData_ = Loder::LoadJsonFile("Resources/json","stage1");
 	GlobalVariables::GetInstance()->LoadFiles();
 
 	particle_ = std::make_unique<Particle>();

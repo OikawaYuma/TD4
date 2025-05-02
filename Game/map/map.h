@@ -25,9 +25,7 @@ public: // Getter
 
 	void SetObjectPram();
 private:
-	std::unique_ptr<PlaneProjectionShadow> shadowObject_;
 	std::weak_ptr<ObjectPram> objectPram_{};
-	std::weak_ptr<ObjectPram> shadowObjectPram_{};
 	uint32_t floorTex_ = 0;
 	Camera* camera_ = nullptr;
 
