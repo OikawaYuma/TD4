@@ -7,7 +7,7 @@
 map::~map()
 {
 	SetObjectPram();
-	shadowObject_.reset();
+
 }
 void map::Init(const Vector3& scale, const Vector3& rotate, const Vector3& translate, const std::string filename)
 {
@@ -26,9 +26,6 @@ void map::Init(const Vector3& scale, const Vector3& rotate, const Vector3& trans
 	material_.uvTransform = MakeIdentity4x4();
 	material_.shininess = 60.0f;
 
-	shadowObject_ = std::make_unique<PlaneProjectionShadow>();
-	shadowObject_->Init(&objectPram_.lock()->worldTransform, filename);
-	shadowObject_->Update();
 }
 
 void map::Update()
@@ -39,7 +36,6 @@ void map::Update()
 		};
 		objectPram_.lock()->worldTransform.UpdateMatrix();
 	}
-	shadowObject_->Update();
 }
 
 
