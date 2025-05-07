@@ -18,6 +18,7 @@
 #include "Skybox/Skybox.h"
 #include "WorldDesign/WorldDesign.h"
 #include "map/map.h"
+#include "Car/Car.h"
 #include "Fade/Fade.h"
 #include "Loder.h"
 #include "Particle.h"
@@ -51,6 +52,7 @@ private:
 	// 背景オブジェクト
 	std::unique_ptr<WorldDesign> wood_;
 	std::list<std::unique_ptr<map>> maps_;
+	std::unique_ptr<Car> car_;
 	// 背景オブジェクト
 	std::unique_ptr<Particle> particle_;
 	Emitter emitter_{};

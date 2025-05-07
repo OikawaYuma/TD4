@@ -45,13 +45,13 @@ GameManager::GameManager() {
 
 GameManager::~GameManager() {}
 
-const char kWindowTitle[] = "LE2B_05_オイカワユウマ";
+const char kWindowTitle[] = "MAROENIGINE";
 
 int GameManager::Run() {
 	//DirectXCommon::D3DResourceLeakChecker leakCheck;
 
 	WinAPI* sWinAPI = WinAPI::GetInstance();
-	sWinAPI->Initialize(L"スライムの成長");
+	sWinAPI->Initialize(L"怒離不闘");
 	
 	DirectXCommon* sDirctX = DirectXCommon::GetInstance();
 	sDirctX->Initialize();
