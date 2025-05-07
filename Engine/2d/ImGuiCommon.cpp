@@ -1,4 +1,4 @@
-﻿#include "ImGuiCommon.h"
+#include "ImGuiCommon.h"
 #include"WinAPI.h"
 #include"DirectXCommon.h"
 #include "SRVManager.h"
@@ -57,7 +57,7 @@ void ImGuiCommon::UICreate() {
 
 
 void ImGuiCommon::Release() {
-	ImGui_ImplDX12_Shutdown();
+	/*ImGui_ImplDX12_Shutdown();
 	ImGui_ImplWin32_Shutdown();
-	ImGui::DestroyContext();
+	ImGui::DestroyContext();*/
 }

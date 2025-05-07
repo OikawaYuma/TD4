@@ -7,15 +7,16 @@
 map::~map()
 {
 	SetObjectPram();
-	shadowObject_.reset();
+
 }
-void map::Init(const Vector3& scale, const Vector3& translate, const std::string filename)
+void map::Init(const Vector3& scale, const Vector3& rotate, const Vector3& translate, const std::string filename)
 {
-	floorTex_ = TextureManager::GetInstance()->StoreTexture("Resources/load.png");
+	floorTex_ = TextureManager::GetInstance()->StoreTexture("Resources/load2.png");
 	color_ = { 1.0f,1.0f,1.0f,1.0f };
 
 	objectPram_ = Object3dManager::GetInstance()->StoreObject(filename, floorTex_, Transparency::Opaque);
 	objectPram_.lock()->worldTransform.scale_ = scale;
+	objectPram_.lock()->worldTransform.rotation_ = rotate;
 	objectPram_.lock()->worldTransform.translation_ = translate;
 	objectPram_.lock()->color = color_;
 
@@ -25,9 +26,6 @@ void map::Init(const Vector3& scale, const Vector3& translate, const std::string
 	material_.uvTransform = MakeIdentity4x4();
 	material_.shininess = 60.0f;
 
-	shadowObject_ = std::make_unique<PlaneProjectionShadow>();
-	shadowObject_->Init(&objectPram_.lock()->worldTransform, filename);
-	shadowObject_->Update();
 }
 
 void map::Update()
@@ -38,7 +36,6 @@ void map::Update()
 		};
 		objectPram_.lock()->worldTransform.UpdateMatrix();
 	}
-	shadowObject_->Update();
 }
 
 
