@@ -75,6 +75,7 @@ void DemoScene::Update()
 	for (std::list<std::unique_ptr<map>>::iterator itr = maps_.begin(); itr != maps_.end(); itr++) {
 		(*itr)->Update();
 	}
+	car_->Update();
 	//particle_->CreateParticle();
 	Object3dManager::GetInstance()->Update();
 	postProcess_->Update();
@@ -229,8 +230,18 @@ void DemoScene::ArrageObj(std::list<std::unique_ptr<map>>& maps)
 				objectData.transform.rotate .x * 3.1415f /180.0f,
 				objectData.transform.rotate.y * 3.1415f / 180.0f ,
 				objectData.transform.rotate.z * 3.1415f / 180.0f
-		}, objectData.transform.translate, objectData.filename);
+				}, objectData.transform.translate, objectData.filename);
 			maps.push_back(std::move(enemy));
+		}
+		if (objectData.filename.compare("car") == 0) {
+
+			ModelManager::GetInstance()->LoadModel("Resources/" + objectData.filename, objectData.filename + ".obj");
+			car_ = std::make_unique<Car>();
+			car_->Initialize(objectData.transform.scale, {
+				objectData.transform.rotate.x,
+				objectData.transform.rotate.y,
+				objectData.transform.rotate.z
+				}, objectData.transform.translate, objectData.filename);
 		}
 	}
 }
