@@ -249,7 +249,7 @@ void DirectXCommon::Release() {
 	swapChainResources_[1].Reset();*/
 	CloseHandle(fenceEvent_);
 	CloseWindow(sWinAPI_->GetHwnd());
-	//ImGuiCommon::GetInstance()->Release();
+	ImGuiCommon::GetInstance()->Release();
 }
 
 

@@ -2,6 +2,10 @@
 #include "TextureManager.h"
 void Score::Init(Vector2 pos, Vector2 size, bool isSum,float width)
 {
+	width;
+	pos;
+	size;
+
 	for (int i = 0; i < 10;i++) {
 		gameNumber_[i] = TextureManager::GetInstance()->StoreTexture("Resources/number/number" + std::to_string(i)+".png");
 	}

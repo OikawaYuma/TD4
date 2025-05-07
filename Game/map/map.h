@@ -16,7 +16,7 @@ class map
 {
 public:
 	~map();
-	void Init(const Vector3& scale, const Vector3& translate, const std::string filename);
+	void Init(const Vector3& scale, const Vector3& rotate, const Vector3& translate, const std::string filename);
 	void Update();
 public: // Getter
 
@@ -25,9 +25,7 @@ public: // Getter
 
 	void SetObjectPram();
 private:
-	std::unique_ptr<PlaneProjectionShadow> shadowObject_;
 	std::weak_ptr<ObjectPram> objectPram_{};
-	std::weak_ptr<ObjectPram> shadowObjectPram_{};
 	uint32_t floorTex_ = 0;
 	Camera* camera_ = nullptr;
 
