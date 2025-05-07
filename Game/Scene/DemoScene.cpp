@@ -16,8 +16,12 @@ void DemoScene::Init()
 	ModelManager::GetInstance()->LoadModel("Resources/map", "IROHAmap2.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/map", "map.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/map", "map0.obj");
+	ModelManager::GetInstance()->LoadModel("Resources/ball", "ball.obj");
 
-	
+	followCamera_ = std::make_unique<FollowCamera>();
+	followCamera_->Init();
+	WorldTransform* wt = car_->GetWorldTransform();
+	followCamera_->SetTarget(wt);
 
 	fade_ = std::make_unique<Fade>();
 	fade_->Init("Resources/fade.png");
@@ -50,6 +54,8 @@ void DemoScene::Init()
 
 void DemoScene::Update()
 {
+	followCamera_->Upadate();
+
 	camera_->Move();
 	if (Input::GetInstance()->TriggerKey(DIK_V)) {
 		fade_->StartFadeIn();

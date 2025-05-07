@@ -17,6 +17,7 @@
 #include "PostProcess.h"
 #include "Skybox/Skybox.h"
 #include "WorldDesign/WorldDesign.h"
+#include "GameCamera/FollowCamera/FollowCamera.h"
 #include "map/map.h"
 #include <UI/UI.h>
 #include "Car/Car.h"
@@ -45,7 +46,8 @@ public:
 
 private:
 	
-	
+	std::unique_ptr<FollowCamera> followCamera_;
+
 	std::unique_ptr<PostProcess> postProcess_;
 	// Clearシーン用Camera
 	std::unique_ptr<Camera> camera_ = nullptr;
@@ -55,6 +57,9 @@ private:
 	std::list<std::unique_ptr<map>> maps_;
 	std::unique_ptr<Car> car_;
 	// 背景オブジェクト
+	std::unique_ptr<Particle> particle_;
+	Emitter emitter_{};
+	RandRangePro randRangePro_{};
 	std::unique_ptr<Fade> fade_;
 	std::unique_ptr<CarSmoke> carSmoke_;
 	// Sprite

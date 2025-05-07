@@ -62,3 +62,7 @@ void Car::CreateCarTire()
 	rearRightTire->SetParent(&worldTransform_);
 	tires_.push_back(std::move(rearRightTire));
 }
+
+WorldTransform* Car::GetWorldTransform() {
+	return &worldTransform_;
+}
