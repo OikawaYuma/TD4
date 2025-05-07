@@ -51,7 +51,6 @@ private:
 	Vector3 hsv = {1.0f,1.0f,1.0f};
 
 	// 背景オブジェクト
-	std::unique_ptr<WorldDesign> wood_;
 	std::list<std::unique_ptr<map>> maps_;
 	std::unique_ptr<Car> car_;
 	// 背景オブジェクト

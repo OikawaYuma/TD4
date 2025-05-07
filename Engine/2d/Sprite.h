@@ -61,7 +61,6 @@ public:
 	void SetPosition(const Vector2& position) { this->position_ = position; }
 	void SetSize(const Vector2& size) { this->transform_.scale = { size.x,size.y,1.0f }; }
 	void SetRot(const Vector3& rot) { this->transform_.rotate = rot; }
-	void SetSize(const Vector2& size) { size_ = size; }
 	void SetAnchorPoint(const Vector2& anchorPoint) {
 		this->anchorPoint_ = anchorPoint;
 	}

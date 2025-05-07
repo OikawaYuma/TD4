@@ -31,9 +31,6 @@ void map::Init(const Vector3& scale, const Vector3& rotate, const Vector3& trans
 void map::Update()
 {
 	if (objectPram_.lock()) {
-		if (Input::GetInstance()->PushKey(DIK_L)) {
-			objectPram_.lock()->worldTransform.translation_.x++;
-		};
 		objectPram_.lock()->worldTransform.UpdateMatrix();
 	}
 }
