@@ -16,12 +16,16 @@ public:
 	/// <summary>
 	/// 更新
 	/// </summary>
-	void Update();
+	void Update(float uiSpeed);
 
 private:
 	WorldTransform worldTransform_{};
 	std::vector<std::unique_ptr<BaseObject>> parts_;
 
+	// 車体
+	std::unique_ptr<CarBody> body_;
+	// 車輪
+	std::list < std::unique_ptr<CarTire>> tires_;
 
 	// 仮
 	std::weak_ptr<ObjectPram> objectPram_{};

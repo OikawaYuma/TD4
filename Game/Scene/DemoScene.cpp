@@ -17,6 +17,7 @@ void DemoScene::Init()
 	ModelManager::GetInstance()->LoadModel("Resources/map", "map.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/map", "map0.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/ball", "ball.obj");
+	
 
 	fade_ = std::make_unique<Fade>();
 	fade_->Init("Resources/fade.png");
@@ -78,7 +79,7 @@ void DemoScene::Update()
 	for (std::list<std::unique_ptr<map>>::iterator itr = maps_.begin(); itr != maps_.end(); itr++) {
 		(*itr)->Update();
 	}
-	car_->Update();
+	car_->Update(ui_->GetSpeed());
 	//particle_->CreateParticle();
 	Object3dManager::GetInstance()->Update();
 	postProcess_->Update();

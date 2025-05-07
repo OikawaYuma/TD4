@@ -3,6 +3,7 @@
 
 class CarTire : public BaseObject
 {
+public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
@@ -18,7 +19,7 @@ class CarTire : public BaseObject
 
 #pragma region setter
 
-
+	void SetParent(WorldTransform* worldTransform);
 #pragma endregion
 
 #pragma region getter
