@@ -303,6 +303,7 @@
     <ClCompile Include="Engine\3d\Object3d\GameObjectCommon.cpp" />
     <ClCompile Include="Game\map\map.cpp" />
     <ClCompile Include="Game\UI\UI.cpp" />
+    <ClCompile Include="Game\UI\SpeedMeter\SpeedMeter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Utility\function.h">
@@ -551,6 +552,7 @@
     <ClInclude Include="Engine\3d\Object3d\GameObjectCommon.h" />
     <ClInclude Include="Game\map\map.h" />
     <ClInclude Include="Game\UI\UI.h" />
+    <ClInclude Include="Game\UI\SpeedMeter\SpeedMeter.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shader\Particle.PS.hlsl">
