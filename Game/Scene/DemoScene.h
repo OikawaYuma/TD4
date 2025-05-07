@@ -18,6 +18,7 @@
 #include "Skybox/Skybox.h"
 #include "WorldDesign/WorldDesign.h"
 #include "map/map.h"
+#include <UI/UI.h>
 #include "Car/Car.h"
 #include "Fade/Fade.h"
 #include "Loder.h"
@@ -61,6 +62,7 @@ private:
 
 	// Sprite
 	std::unique_ptr<Sprite> sprite_;
+	std::unique_ptr<UI> ui_;
 	uint32_t spTx_ = 0;
 	LevelData levelData_{};
 

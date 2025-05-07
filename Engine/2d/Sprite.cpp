@@ -63,7 +63,7 @@ void Sprite::Init(const std::string& filePath) {
 
 	
 	// Transform変数の初期化
-	transform_ = { {size_.x,size_.y,1.0f},{0.0f,0.0f,0.0f},{position_.x,position_.y,0.0f} };
+	transform_ = { {size_.x,size_.y,1.0f},rotate_,{position_.x,position_.y,0.0f} };
 
 	indexResourceSprite = Mesh::CreateBufferResource(sDirectXCommon->GetDevice(), sizeof(uint32_t) * 6);
 	// リソースの先頭のアドレスから使う
@@ -96,7 +96,7 @@ void Sprite::Init(const std::string& filePath) {
 };
 void Sprite::Update() {
 	// Transform変数の更新
-	transform_ = { {size_.x,size_.y,1.0f},{0.0f,0.0f,0.0f},{position_.x,position_.y,0.0f} };
+	transform_ = { {size_.x,size_.y,1.0f},rotate_,{position_.x,position_.y,0.0f} };
 	//transform_.scale = { size_.x,size_.y,1.0f };
 	float left = 0.0f - anchorPoint_.x;
 	float right = 1.0f - anchorPoint_.x;

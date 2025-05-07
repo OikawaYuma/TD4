@@ -25,6 +25,11 @@ void DemoScene::Init()
 	fade_->SetTexture(TextureManager::GetInstance()->StoreTexture("Resources/fade.png"));
 	spTx_ = TextureManager::GetInstance()->StoreTexture("Resources/load2.png");
 	sprite_ = std::make_unique<Sprite>();
+	sprite_->Init("Resources/load.png");
+	sprite_->SetTexture(TextureManager::GetInstance()->StoreTexture("Resources/load.png"));
+
+	ui_ = std::make_unique<UI>();
+	ui_->Initialize();
 	sprite_->Init("Resources/load2.png");
 	
 	sprite_->SetTexture(spTx_);
@@ -81,6 +86,7 @@ void DemoScene::Update()
 	postProcess_->Update();
 	camera_->CameraDebug();
 	sprite_->Update();
+	ui_->Update();
 	particle_->Update();
 	fade_->Update();
 	fade_->UpdateFade();
@@ -99,6 +105,8 @@ void DemoScene::PostDraw()
 
 void DemoScene::Draw2d()
 {
+	sprite_->Draw();
+	ui_->Draw();
 	//sprite_->Draw();
 	fade_->Draw();
 }
