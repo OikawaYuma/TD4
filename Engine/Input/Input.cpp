@@ -2,7 +2,7 @@
 #include "WinAPI.h"
 //Xinput.lib; Xinput9_1_0.lib
 #include <iostream>
-const float Input::DEADZONE_THRESHOLD = 0.1f;
+const float Input::DEADZONE_THRESHOLD = 0.3f;
 
 void Input::Initialize() {
 	WinAPI *sWinAPI = WinAPI::GetInstance();

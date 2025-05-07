@@ -15,6 +15,8 @@ public:
 
 	// Setter
 	void SetSpeed(float speed_) { speed = speed_; }
+	// Getter
+	float GetSpeed() { return speed; }
 
 private:
 	// Sprite
