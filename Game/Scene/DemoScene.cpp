@@ -18,10 +18,7 @@ void DemoScene::Init()
 	ModelManager::GetInstance()->LoadModel("Resources/map", "map0.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/ball", "ball.obj");
 
-	followCamera_ = std::make_unique<FollowCamera>();
-	followCamera_->Init();
-	WorldTransform* wt = car_->GetWorldTransform();
-	followCamera_->SetTarget(wt);
+	
 
 	fade_ = std::make_unique<Fade>();
 	fade_->Init("Resources/fade.png");
@@ -66,10 +63,17 @@ void DemoScene::Init()
 	particle_->SetTexture(spTx_);
 	particle_->SetScleChangeFlag(false);
 	ArrageObj(maps_);
+
+	followCamera_ = std::make_unique<FollowCamera>();
+	followCamera_->Init();
+	WorldTransform* wt = car_->GetWorldTransform();
+	followCamera_->SetTarget(wt);
+
 	postProcess_ = std::make_unique<PostProcess>();
 	postProcess_->Init();
 	postProcess_->SetEffectNo(PostEffectMode::kFullScreen);
 	
+
 }
 
 void DemoScene::Update()
@@ -99,7 +103,7 @@ void DemoScene::Update()
 }
 void DemoScene::Draw()
 {
-	Object3dManager::GetInstance()->Draw(camera_.get());
+	Object3dManager::GetInstance()->Draw(followCamera_->GetCamera());
 	particle_->Draw();
 }
 
