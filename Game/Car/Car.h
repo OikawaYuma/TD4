@@ -18,6 +18,8 @@ public:
 	/// </summary>
 	void Update(float uiSpeed);
 
+	WorldTransform* GetWorldTransform();
+
 private:
 	WorldTransform worldTransform_{};
 	std::vector<std::unique_ptr<BaseObject>> parts_;

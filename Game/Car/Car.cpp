@@ -56,3 +56,7 @@ void Car::Update(float uiSpeed)
 		(*itr)->Update();
 	}
 }
+
+WorldTransform* Car::GetWorldTransform() {
+	return &worldTransform_;
+}

@@ -27,7 +27,7 @@ void FollowCamera::StartCameraEffect()
 
 void FollowCamera::Upadate()
 {
-	
+
 	Vector3 cameraRotate = camera_->GetRotate();
 	destinationAngleY_ = cameraRotate.y;
 
@@ -42,9 +42,6 @@ void FollowCamera::Upadate()
 		}
 
 	}
-
-
-
 
 	camera_->SetRotate(cameraRotate);
 
@@ -64,8 +61,6 @@ void FollowCamera::Upadate()
 		interarget_ = Lerp(interarget_, target_->translation_, cameraTime_);
 	}
 
-
-
 	// 追従対象からのオフセット
 	if (target_) {
 		Vector3 offset = { 0,2,offsetZ_ };
@@ -76,7 +71,6 @@ void FollowCamera::Upadate()
 
 
 	EndPosAdustment();
-
 
 	camera_->Update();
 }
@@ -118,7 +112,7 @@ void FollowCamera::EndPosAdustment()
 {
 
 	Vector3 cameraTranslate = camera_->GetTranslate();
-	
+
 	preOffsetZ_ = offsetZ_;
 	// X軸補間
 	if (cameraTranslate.x >= 140.0f) {
@@ -150,8 +144,8 @@ void FollowCamera::EndPosAdustment()
 			cameraTranslate.y = y;
 
 			// offsetZ_ の補間（X軸補間に基づいて）
-			offsetZ_ = Lerp(Lerp(-30, -12, (preCameraTranslate_.z - 140) / (160 - 140)), Lerp(-30, -12, (cameraTranslate.x - 140) / (160 - 140)) , cameraChanegeTimer_);
-			
+			offsetZ_ = Lerp(Lerp(-30, -12, (preCameraTranslate_.z - 140) / (160 - 140)), Lerp(-30, -12, (cameraTranslate.x - 140) / (160 - 140)), cameraChanegeTimer_);
+
 			if (cameraChanegeTimer_ >= 1.0f) {
 				cameraDirection_ = XP;
 				cameraChanegeTimer_ = 0.0f;
@@ -164,7 +158,7 @@ void FollowCamera::EndPosAdustment()
 				cameraTranslate.x = 160.0f;
 			}
 			// X軸の補間に対応するY軸の補間
-			float y = Lerp(Lerp(5, 1.3f, (std::fabs(cameraTranslate.z) - 140) / (160 - 140)), Lerp(5,1.3f, (cameraTranslate.x - 140) / (160 - 140)), cameraChanegeTimer_);
+			float y = Lerp(Lerp(5, 1.3f, (std::fabs(cameraTranslate.z) - 140) / (160 - 140)), Lerp(5, 1.3f, (cameraTranslate.x - 140) / (160 - 140)), cameraChanegeTimer_);
 			cameraTranslate.y = y;
 
 			// offsetZ_ の補間（X軸補間に基づいて）
@@ -176,7 +170,7 @@ void FollowCamera::EndPosAdustment()
 		}
 	}
 	else if (cameraTranslate.x <= -140.0f) {
-		
+
 		if (cameraDirection_ == NONEDIRECTION) {
 			cameraDirection_ = XM;
 		}
@@ -238,7 +232,7 @@ void FollowCamera::EndPosAdustment()
 			cameraDirection_ = ZP;
 		}
 
-		
+
 		if (cameraDirection_ == ZP) {
 			// X軸が160を超えないように制限
 			if (cameraTranslate.z > 160.0f) {
