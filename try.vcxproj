@@ -119,8 +119,9 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Game\CarParts\CarTire\FrontCarTire\FrontCarTire.cpp" />
     <ClCompile Include="Game\Car\Car.cpp" />
-    <ClCompile Include="Game\CarParts\CarTire\CarTire.cpp" />
+    <ClCompile Include="Game\CarParts\CarTire\RearCarTire\RearCarTire.cpp" />
     <ClCompile Include="Game\CarParts\CarEngine\CarEngine.cpp" />
     <ClCompile Include="Game\BaseObject\BaseObject.cpp" />
     <ClCompile Include="Game\CarParts\CarBody\CarBody.cpp" />
@@ -207,8 +208,10 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Game\map\map.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Game\CarParts\CarTire\FrontCarTire\FrontCarTire.h" />
+    <ClInclude Include="Game\CarParts\CarTire\ICarTire.h" />
     <ClInclude Include="Game\Car\Car.h" />
-    <ClInclude Include="Game\CarParts\CarTire\CarTire.h" />
+    <ClInclude Include="Game\CarParts\CarTire\RearCarTire\RearCarTire.h" />
     <ClInclude Include="Game\CarParts\CarEngine\CarEngine.h" />
     <ClInclude Include="Game\BaseObject\BaseObject.h" />
     <ClInclude Include="Game\CarParts\CarBody\CarBody.h" />

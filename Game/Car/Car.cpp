@@ -3,43 +3,13 @@
 
 void Car::Initialize(const Vector3& scale, const Vector3& rotate, const Vector3& translate, const std::string filename)
 {
-	ModelManager::GetInstance()->LoadModel("Resources/carBody", "carBody.obj");
-	ModelManager::GetInstance()->LoadModel("Resources/carTire", "carTire.obj");
-	floorTex_ = TextureManager::GetInstance()->StoreTexture("Resources/car/car.png");
-	color_ = { 1.0f,1.0f,1.0f,1.0f };
 	// 車の核となる場所を設定　各クラスに送る座標
 	worldTransform_.Initialize();
-	// 車体に座標を送り初期化
-	body_ = std::make_unique<CarBody>();
-	body_->Initialize({}, {}, {}, "carBody");
-	body_->SetParent(&worldTransform_);
-	// 車輪に座標を送り初期化
-	// 左前車輪
-	std:: unique_ptr<CarTire>frontLeftTire_ = std::make_unique<CarTire>();
-	frontLeftTire_->Initialize({ 0.0f,0.0f,0.0f }, {}, { -0.79f,0.34f,1.31f }, "carTire");
-	frontLeftTire_->SetParent(&worldTransform_);
-	tires_.push_back(std::move(frontLeftTire_));
-	// 右前車輪
-	std::unique_ptr<CarTire>frontRightTire_ = std::make_unique<CarTire>();
-	frontRightTire_->Initialize({ 0.0f,3.1415f,0.0f }, {}, { 0.79f,0.34f,1.31f }, "carTire");
-	frontRightTire_->SetParent(&worldTransform_);
-	tires_.push_back(std::move(frontRightTire_));
-	// 左後車輪
-	std::unique_ptr<CarTire>rearLeftTire_ = std::make_unique<CarTire>();
-	rearLeftTire_->Initialize({ 0.0f,0.0f,0.0f }, {}, { -0.79f,0.34f,-1.31f }, "carTire");
-	rearLeftTire_->SetParent(&worldTransform_);
-	tires_.push_back(std::move(rearLeftTire_));
-	// 左後車輪
-	std::unique_ptr<CarTire>rearRightTire_ = std::make_unique<CarTire>();
-	rearRightTire_->Initialize({ 0.0f,3.1415f,0.0f }, {}, { 0.79f,0.34f,-1.31f }, "carTire");
-	rearRightTire_->SetParent(&worldTransform_);
-	tires_.push_back(std::move(rearRightTire_));
+	// body生成
+	CreateCarBody();
+	// tire生成
+	CreateCarTire();
 
-	// マテリアル情報の初期化
-	material_.color = { 1.0f,1.0f,1.0f,1.0f };
-	material_.enableLighting = true;
-	material_.uvTransform = MakeIdentity4x4();
-	material_.shininess = 60.0f;
 }
 
 void Car::Update(float uiSpeed)
@@ -51,8 +21,44 @@ void Car::Update(float uiSpeed)
 
 	// 車体の更新
 	body_->Update();
+
 	// 車輪の更新
-	for (std::list<std::unique_ptr<CarTire>>::iterator itr = tires_.begin(); itr != tires_.end(); itr++) {
-		(*itr)->Update();
+	for (auto& tire : tires_) {
+		tire->Update();
 	}
+}
+
+void Car::CreateCarBody()
+{
+	ModelManager::GetInstance()->LoadModel("Resources/carBody", "carBody.obj");
+	// 車体に座標を送り初期化
+	body_ = std::make_unique<CarBody>();
+	body_->Initialize({}, {}, {}, "carBody");
+	body_->SetParent(&worldTransform_);
+}
+
+void Car::CreateCarTire()
+{
+	ModelManager::GetInstance()->LoadModel("Resources/carTire", "carTire.obj");
+	// 車輪に座標を送り初期化
+	// 左前車輪
+	std::unique_ptr<ICarTire> frontLeftTire = std::make_unique<FrontCarTire>();
+	frontLeftTire->Initialize({ 0.0f,0.0f,0.0f }, {}, { -0.79f,0.34f,1.31f }, "carTire");
+	frontLeftTire->SetParent(&worldTransform_);
+	tires_.push_back(std::move(frontLeftTire));
+	// 右前車輪
+	std::unique_ptr<ICarTire> frontRightTire = std::make_unique<FrontCarTire>();
+	frontRightTire->Initialize({ 0.0f,3.1415f,0.0f }, {}, { 0.79f,0.34f,1.31f }, "carTire");
+	frontRightTire->SetParent(&worldTransform_);
+	tires_.push_back(std::move(frontRightTire));
+	// 左後車輪
+	std::unique_ptr<ICarTire> rearLeftTire = std::make_unique<RearCarTire>();
+	rearLeftTire->Initialize({ 0.0f,0.0f,0.0f }, {}, { -0.79f,0.34f,-1.31f }, "carTire");
+	rearLeftTire->SetParent(&worldTransform_);
+	tires_.push_back(std::move(rearLeftTire));
+	// 左後車輪
+	std::unique_ptr<ICarTire> rearRightTire = std::make_unique<RearCarTire>();
+	rearRightTire->Initialize({ 0.0f,3.1415f,0.0f }, {}, { 0.79f,0.34f,-1.31f }, "carTire");
+	rearRightTire->SetParent(&worldTransform_);
+	tires_.push_back(std::move(rearRightTire));
 }

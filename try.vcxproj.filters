@@ -307,9 +307,10 @@
     <ClCompile Include="Game\BaseObject\BaseObject.cpp" />
     <ClCompile Include="Game\GameObject\GameObject.cpp" />
     <ClCompile Include="Game\CarParts\CarEngine\CarEngine.cpp" />
-    <ClCompile Include="Game\CarParts\CarTire\CarTire.cpp" />
+    <ClCompile Include="Game\CarParts\CarTire\RearCarTire\RearCarTire.cpp" />
     <ClCompile Include="Game\Car\Car.cpp" />
     <ClCompile Include="Engine\2d\Fade\Fade.cpp" />
+    <ClCompile Include="Game\CarParts\CarTire\FrontCarTire\FrontCarTire.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Utility\function.h">
@@ -562,9 +563,11 @@
     <ClInclude Include="Game\BaseObject\BaseObject.h" />
     <ClInclude Include="Game\GameObject\GameObject.h" />
     <ClInclude Include="Game\CarParts\CarEngine\CarEngine.h" />
-    <ClInclude Include="Game\CarParts\CarTire\CarTire.h" />
+    <ClInclude Include="Game\CarParts\CarTire\RearCarTire\RearCarTire.h" />
     <ClInclude Include="Game\Car\Car.h" />
     <ClInclude Include="Engine\2d\Fade\Fade.h" />
+    <ClInclude Include="Game\CarParts\CarTire\ICarTire.h" />
+    <ClInclude Include="Game\CarParts\CarTire\FrontCarTire\FrontCarTire.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shader\Particle.PS.hlsl">

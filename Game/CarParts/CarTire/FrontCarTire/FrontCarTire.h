@@ -1,15 +1,13 @@
 #pragma once
-#include "BaseObject/BaseObject.h"
+#include "CarParts/CarTire/ICarTire.h"
 
-class CarTire : public BaseObject
+class FrontCarTire : public ICarTire 
 {
 public:
+
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	/// <param name="scale"></param>
-	/// <param name="translate"></param>
-	/// <param name="filename"></param>
 	void Initialize(const Vector3& rotate, const Vector3& scale, const Vector3& translate, const std::string filename)override;
 
 	/// <summary>
@@ -19,7 +17,8 @@ public:
 
 #pragma region setter
 
-	void SetParent(WorldTransform* worldTransform);
+	void SetParent(const WorldTransform* worldTransform)override;
+
 #pragma endregion
 
 #pragma region getter
@@ -28,6 +27,7 @@ public:
 #pragma endregion
 
 private:
+
 
 };
 
