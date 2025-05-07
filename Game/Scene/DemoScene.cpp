@@ -213,14 +213,28 @@ void DemoScene::ParticleEmitter()
 void DemoScene::ArrageObj(std::list<std::unique_ptr<map>>& maps)
 {
 
+	/*for (auto& objectData : levelData_.objects) {
+		if (objectData.filename.compare("Cubeload") == 0) {
+
+			ModelManager::GetInstance()->LoadModel("Resources", objectData.filename + ".obj");
+			std::unique_ptr<map> enemy = std::make_unique<map>();
+			enemy->Init(objectData.transform.scale, {
+				objectData.transform.rotate.x * 3.1415f / 180.0f,
+				objectData.transform.rotate.y * 3.1415f / 180.0f ,
+				objectData.transform.rotate.z * 3.1415f / 180.0f
+				}, objectData.transform.translate, objectData.filename);
+			maps.push_back(std::move(enemy));
+		}
+	}*/
+
 	for (auto& objectData : levelData_.objects) {
 		if (objectData.filename.compare("Cubeload") == 0) {
 
 			ModelManager::GetInstance()->LoadModel("Resources",objectData.filename + ".obj");
 			std::unique_ptr<map> enemy = std::make_unique<map>();
 			enemy->Init(objectData.transform.scale, {
-				objectData.transform.rotate .x * 3.1415f /180.0f,
-				objectData.transform.rotate.y * 3.1415f / 180.0f ,
+				objectData.transform.rotate.x * 3.1415f / 180.0f,
+				objectData.transform.rotate.y * 3.1415f / -180.0f ,
 				objectData.transform.rotate.z * 3.1415f / 180.0f
 		}, objectData.transform.translate, objectData.filename);
 			maps.push_back(std::move(enemy));
