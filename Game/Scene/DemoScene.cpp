@@ -18,10 +18,7 @@ void DemoScene::Init()
 	ModelManager::GetInstance()->LoadModel("Resources/map", "map0.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/ball", "ball.obj");
 
-	followCamera_ = std::make_unique<FollowCamera>();
-	followCamera_->Init();
-	WorldTransform* wt = car_->GetWorldTransform();
-	followCamera_->SetTarget(wt);
+	
 
 	fade_ = std::make_unique<Fade>();
 	fade_->Init("Resources/fade.png");
@@ -45,11 +42,18 @@ void DemoScene::Init()
 	carSmoke_->Init();
 	
 	ArrageObj(maps_);
+
+	followCamera_ = std::make_unique<FollowCamera>();
+	followCamera_->Init();
+	WorldTransform* wt = car_->GetWorldTransform();
+	followCamera_->SetTarget(wt);
+
 	carSmoke_->SetParent(car_->GetWorldTransform());
 	postProcess_ = std::make_unique<PostProcess>();
 	postProcess_->Init();
 	postProcess_->SetEffectNo(PostEffectMode::kFullScreen);
 	
+
 }
 
 void DemoScene::Update()
