@@ -74,6 +74,11 @@ void DemoScene::Update()
 	if (Input::GetInstance()->TriggerKey(DIK_V)) {
 		fade_->StartFadeIn();
 	}
+#ifdef _DEBUG
+	PostEffectChange();
+	camera_->CameraDebug();
+#endif // _DEBUG
+
 	camera_->Update();
 	GlobalVariables::GetInstance()->Update();
 	for (std::list<std::unique_ptr<map>>::iterator itr = maps_.begin(); itr != maps_.end(); itr++) {
@@ -83,13 +88,13 @@ void DemoScene::Update()
 	//particle_->CreateParticle();
 	Object3dManager::GetInstance()->Update();
 	postProcess_->Update();
-	camera_->CameraDebug();
+	
 	sprite_->Update();
 	ui_->Update();
 	particle_->Update();
 	fade_->Update();
 	fade_->UpdateFade();
-	PostEffectChange();
+	
 }
 void DemoScene::Draw()
 {
@@ -104,7 +109,7 @@ void DemoScene::PostDraw()
 
 void DemoScene::Draw2d()
 {
-	sprite_->Draw();
+	//sprite_->Draw();
 	ui_->Draw();
 	//sprite_->Draw();
 	fade_->Draw();
