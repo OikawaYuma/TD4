@@ -64,7 +64,7 @@ void UI::Update()
 			speed = minSpeed;
 		}
 	}
-
+#ifdef _DEBUG
 	ImGui::Begin("UI");
 	ImGui::DragFloat("speed", &speed, 1.0f);
 	if (ImGui::TreeNode("Meter")) {
@@ -82,6 +82,9 @@ void UI::Update()
 		ImGui::TreePop();
 	}
 	ImGui::End();
+#endif // _DEBUG
+
+	
 }
 
 void UI::Draw()

@@ -3,6 +3,10 @@
 
 void Car::Initialize(const Vector3& scale, const Vector3& rotate, const Vector3& translate, const std::string filename)
 {
+	rotate;
+	scale;
+	translate;
+
 	ModelManager::GetInstance()->LoadModel("Resources/carBody", "carBody.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/carTire", "carTire.obj");
 	floorTex_ = TextureManager::GetInstance()->StoreTexture("Resources/car/car.png");

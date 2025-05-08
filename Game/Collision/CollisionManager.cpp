@@ -9,11 +9,13 @@ void CollisionManager::CheckAllCollision() {
 	std::list<Collider*>::iterator itrA = colliders_.begin();
 	for (; itrA != colliders_.end(); ++itrA) {
 		Collider* colliderA = *itrA;
+		colliderA;
 		// イテレータBはイテレータ―Aの次の要素から回す（重複判定を回避）
 		std::list<Collider*>::iterator itrB = itrA;
 		itrB++;
 		for (; itrB != colliders_.end(); ++itrB) {
 			Collider* colliderB = *itrB;
+			colliderB;
 			// ペアの当たり判定
 			CheckCollisionPair(*itrA, *itrB);
 		}
