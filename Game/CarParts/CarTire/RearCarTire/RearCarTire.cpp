@@ -4,7 +4,7 @@
 void RearCarTire::Initialize(const Vector3& rotate, const Vector3& scale, const Vector3& translate, const std::string filename)
 {
 	// texture
-	texture_ = TextureManager::GetInstance()->StoreTexture("Resources/car/CAR.png");
+	texture_ = TextureManager::GetInstance()->StoreTexture("Resources/car/carTire.png");
 	BaseObject::Initialize(rotate, { 1.0f,1.0f,1.0f }, translate, filename); // 共通の初期化
 }
 
