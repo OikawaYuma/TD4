@@ -12,12 +12,17 @@ void CarEngine::Update()
 {
 	BaseObject::Update();
 
-	// アクセル確認用
-	if (Input::GetInstance()->PushKey(DIK_G)) {
-		ac_ += 1.0f;
+	// RTボタンの押し込み具合
+	float rtValue = Input::GetInstance()->GetRTValue();
+	// 押したら加速
+	if (rtValue > 0.1f) {
+		// 押し込みが100%になったら最大
+		// これじゃすぐ最大なるから後でだんだん加速するように変えるよん
+		ac_ += rtValue * kMaxAc_;
 	}
+
 	// アクセルの範囲制限
-	ac_ = std::clamp(ac_, 1.0f, 100.0f);
+	ac_ = std::clamp(ac_, 0.0f, kMaxAc_);
 
 	// トルクの計算
 	TorqueCalc();

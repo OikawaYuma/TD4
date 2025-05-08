@@ -60,6 +60,8 @@ private:
 	float torque_ = 0.0f;
 	// アクセル
 	float ac_ = 0.0f;
+	// アクセル最大値
+	const float kMaxAc_ = 100.0f;
 	// エンジンブレーキトルク
 	float ebt_ = 0.0f;
 	// 回転速度
