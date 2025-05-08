@@ -18,6 +18,11 @@ public:
 	/// </summary>
 	virtual void Update() = 0;
 
+	/// <summary>
+	/// 回転
+	/// </summary>
+	virtual void Rotate() = 0;
+
 #pragma region setter
 
 	virtual void SetParent(const WorldTransform* worldTransform) = 0;

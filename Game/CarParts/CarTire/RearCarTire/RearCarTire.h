@@ -15,6 +15,11 @@ public:
 	/// </summary>
 	void Update()override;
 
+	/// <summary>
+	/// 回転
+	/// </summary>
+	void Rotate()override;
+
 #pragma region setter
 
 	void SetParent(const WorldTransform* worldTransform)override;
