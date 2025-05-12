@@ -16,7 +16,7 @@ void DemoScene::Init()
 	ModelManager::GetInstance()->LoadModel("Resources/map", "IROHAmap2.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/map", "map.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/map", "map0.obj");
-	ModelManager::GetInstance()->LoadModel("Resources/ball", "ball.obj");
+
 	
 
 	fade_ = std::make_unique<Fade>();
@@ -36,32 +36,12 @@ void DemoScene::Init()
 	camera_->Initialize();
 	levelData_ = Loder::LoadJsonFile("Resources/json","stage1");
 	GlobalVariables::GetInstance()->LoadFiles();
-
-	particle_ = std::make_unique<Particle>();
-	particle_->SetModel("ball.obj");
-	particle_->Init();
-	particle_->SetName("bomb");
-	particle_->ApplyGlovalVariables();
-	particle_->SetJsonPram();
+	carSmoke_ = std::make_unique<CarSmoke>();
+	carSmoke_->SetCamera(camera_.get());
+	carSmoke_->Init();
 	
-	particle_->SetCamera(camera_.get());
-	emitter_.count = 10;
-	emitter_.frequency = 0.5f;
-	emitter_.frequencyTime = 0.0f;
-	emitter_.transform.rotate = { 0.0f,0.0f,0.0f };
-	emitter_.transform.scale = { 0.25f,0.25f,0.25f };
-	emitter_.transform.translate = { 0.0f,1.0f,25.0f };
-	emitter_.randRangeXYZ =	//発生範囲を設定
-	{
-		{0.3f,0.7f},
-		{0.2f,0.5f},
-		{-0.5f,0.3f}
-	};
-	emitter_.size = 0.5f;
-	particle_->SetEmitter(emitter_);
-	particle_->SetTexture(spTx_);
-	particle_->SetScleChangeFlag(false);
 	ArrageObj(maps_);
+	carSmoke_->SetParent(car_->GetWorldTransform());
 	postProcess_ = std::make_unique<PostProcess>();
 	postProcess_->Init();
 	postProcess_->SetEffectNo(PostEffectMode::kFullScreen);
@@ -91,15 +71,14 @@ void DemoScene::Update()
 	
 	sprite_->Update();
 	ui_->Update();
-	particle_->Update();
 	fade_->Update();
 	fade_->UpdateFade();
-	
+	carSmoke_->Update();
 }
 void DemoScene::Draw()
 {
 	Object3dManager::GetInstance()->Draw(camera_.get());
-	particle_->Draw();
+	carSmoke_->Draw();
 }
 
 void DemoScene::PostDraw()
