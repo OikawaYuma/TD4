@@ -23,6 +23,7 @@
 #include "Fade/Fade.h"
 #include "Loder.h"
 #include "Particle.h"
+#include "CarSmoke/CarSmoke.h"
 class DemoScene : public IScene
 {
 public:
@@ -54,11 +55,8 @@ private:
 	std::list<std::unique_ptr<map>> maps_;
 	std::unique_ptr<Car> car_;
 	// 背景オブジェクト
-	std::unique_ptr<Particle> particle_;
-	Emitter emitter_{};
-	RandRangePro randRangePro_{};
 	std::unique_ptr<Fade> fade_;
-
+	std::unique_ptr<CarSmoke> carSmoke_;
 	// Sprite
 	std::unique_ptr<Sprite> sprite_;
 	std::unique_ptr<UI> ui_;

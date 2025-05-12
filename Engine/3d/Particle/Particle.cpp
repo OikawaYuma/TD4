@@ -109,8 +109,15 @@ void Particle::Init() {
 void Particle::Update()
 {
 
-	emitter_.transform.translate = worldTransform_.translation_;
+	
 	worldTransform_.UpdateMatrix();
+	emitter_.transform.translate = {
+		emitter_.transform.translate.x = worldTransform_.matWorld_.m[3][0],
+		emitter_.transform.translate.y = worldTransform_.matWorld_.m[3][1],
+		emitter_.transform.translate.z = worldTransform_.matWorld_.m[3][2]
+
+
+	};
 	for (uint32_t index = 0; index < kNumMaxInstance; ++index) {
 		instancingData[index].WVP = worldTransform_.matWorld_;
 		instancingData[index].World = worldTransform_.matWorld_;

@@ -20,6 +20,10 @@ public:
 	/// </summary>
 	void Update(float uiSpeed);
 
+public: //Getter
+	WorldTransform* GetWorldTransform() { return &worldTransform_; }
+
+
 private:
 
 	/// <summary>
