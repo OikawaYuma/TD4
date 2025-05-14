@@ -45,8 +45,7 @@ void DemoScene::Init()
 
 	followCamera_ = std::make_unique<FollowCamera>();
 	followCamera_->Init();
-	WorldTransform* wt = car_->GetWorldTransform();
-	followCamera_->SetTarget(wt);
+	followCamera_->SetTarget(car_->GetWorldTransform());
 
 	carSmoke_->SetParent(car_->GetWorldTransform());
 	postProcess_ = std::make_unique<PostProcess>();

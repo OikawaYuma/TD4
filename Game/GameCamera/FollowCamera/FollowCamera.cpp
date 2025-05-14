@@ -69,7 +69,3 @@ float FollowCamera::NormalizeAngle(float angle)
     return normalizeAngle;
 }
 
-void FollowCamera::SetTarget(const WorldTransform* target)
-{
-    target_ = target;
-}

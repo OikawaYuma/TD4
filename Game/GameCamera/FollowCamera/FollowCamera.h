@@ -32,12 +32,12 @@ public: // Getter
 	Camera* GetCamera() { return camera_.get(); }
 
 public:
-	void SetTarget(const WorldTransform* target);
+	void SetTarget(WorldTransform* worldTransform) { target_ = worldTransform; };
 	void SetLockOn(LockOn* lockOn) { lockOn_ = lockOn;};
 private:
 	std::unique_ptr<Camera> camera_;
 	// 追従対象
-	const WorldTransform* target_ = nullptr;
+	WorldTransform* target_ = nullptr;
 	// ロックオン
 	LockOn* lockOn_ = nullptr;
 
