@@ -25,16 +25,8 @@ public:
 	void Init();
 	void StartCameraEffect();
 	void Upadate();
-	void Reset();
-
-	// プレイヤーの位置調整
-	void PosAdustment();
-
-	// 画面端のカメラ調整
-	void EndPosAdustment();
 
 	float NormalizeAngle(float angle);
-	
 
 public: // Getter
 	Camera* GetCamera() { return camera_.get(); }
@@ -52,6 +44,7 @@ private:
 	float destinationAngleY_ = 0.0f;
 	// 追従対象の残像座標
 	Vector3 interarget_ = {};
+	Vector3 previousLookAt_ = {};
 
 	float offsetZ_ = 0.0f;
 	float preOffsetZ_ = 0.0f;
