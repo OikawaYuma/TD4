@@ -36,8 +36,6 @@ private:
 	/// </summary>
 	void CreateCarTire();
 
-	WorldTransform* GetWorldTransform();
-
 private:
 	WorldTransform worldTransform_{};
 	std::vector<std::unique_ptr<BaseObject>> parts_;
