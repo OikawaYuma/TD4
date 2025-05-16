@@ -42,7 +42,6 @@ void DemoScene::Init()
 	carSmoke_->Init();
 	
 	ArrageObj(maps_);
-
 	followCamera_ = std::make_unique<FollowCamera>();
 	followCamera_->Init();
 	WorldTransform* wt = car_->GetWorldTransform();

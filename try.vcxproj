@@ -119,6 +119,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Game\CarParts\CarSteering\CarSteering.cpp" />
     <ClCompile Include="Game\CarSmoke\CarSmoke.cpp" />
     <ClCompile Include="Game\CarParts\CarTire\FrontCarTire\FrontCarTire.cpp" />
     <ClCompile Include="Game\Car\Car.cpp" />
@@ -209,6 +210,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Game\map\map.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Game\CarParts\CarSteering\CarSteering.h" />
     <ClInclude Include="Game\CarSmoke\CarSmoke.h" />
     <ClInclude Include="Game\CarParts\CarTire\FrontCarTire\FrontCarTire.h" />
     <ClInclude Include="Game\CarParts\CarTire\ICarTire.h" />

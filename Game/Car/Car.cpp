@@ -5,16 +5,20 @@ void Car::Initialize(const Vector3& scale, const Vector3& rotate, const Vector3&
 {
 	// 車の核となる場所を設定　各クラスに送る座標
 	worldTransform_.Initialize();
+	steering_ = std::make_unique<CarSteering>();
+	steering_->Init();
 	// body生成
 	CreateCarBody();
 	// tire生成
 	CreateCarTire();
 
+	
+
 }
 
 void Car::Update(float uiSpeed)
 {
-
+	
 	// UIクラスから出たスピードを足す
 	worldTransform_.translation_.z += uiSpeed / 100.0f;
 	worldTransform_.UpdateMatrix();
@@ -26,6 +30,7 @@ void Car::Update(float uiSpeed)
 	for (auto& tire : tires_) {
 		tire->Update();
 	}
+	steering_->Update();
 }
 
 void Car::CreateCarBody()
@@ -45,20 +50,33 @@ void Car::CreateCarTire()
 	std::unique_ptr<ICarTire> frontLeftTire = std::make_unique<FrontCarTire>();
 	frontLeftTire->Initialize({ 0.0f,0.0f,0.0f }, {}, { -0.79f,0.34f,1.31f }, "carTire");
 	frontLeftTire->SetParent(&worldTransform_);
+	//　下記一行問題ICar参照
+	frontLeftTire->SetSteeringAngle(steering_->GetAngle());
 	tires_.push_back(std::move(frontLeftTire));
 	// 右前車輪
 	std::unique_ptr<ICarTire> frontRightTire = std::make_unique<FrontCarTire>();
-	frontRightTire->Initialize({ 0.0f,3.1415f,0.0f }, {}, { 0.79f,0.34f,1.31f }, "carTire");
+	frontRightTire->Initialize({ 0.0f,0.0f,0.0f }, {}, { 0.79f,0.34f,1.31f }, "carTire");
 	frontRightTire->SetParent(&worldTransform_);
+	//　下記一行問題ICar参照
+	frontRightTire->SetSteeringAngle(steering_->GetAngle());
 	tires_.push_back(std::move(frontRightTire));
 	// 左後車輪
 	std::unique_ptr<ICarTire> rearLeftTire = std::make_unique<RearCarTire>();
 	rearLeftTire->Initialize({ 0.0f,0.0f,0.0f }, {}, { -0.79f,0.34f,-1.31f }, "carTire");
 	rearLeftTire->SetParent(&worldTransform_);
+	//　下記一行問題ICar参照
+	rearLeftTire->SetSteeringAngle(steering_->GetAngle());
 	tires_.push_back(std::move(rearLeftTire));
 	// 左後車輪
 	std::unique_ptr<ICarTire> rearRightTire = std::make_unique<RearCarTire>();
-	rearRightTire->Initialize({ 0.0f,3.1415f,0.0f }, {}, { 0.79f,0.34f,-1.31f }, "carTire");
+	rearRightTire->Initialize({ 0.0f,0.0f,0.0f }, {}, { 0.79f,0.34f,-1.31f }, "carTire");
 	rearRightTire->SetParent(&worldTransform_);
+	//　下記一行問題ICar参照
+	rearRightTire->SetSteeringAngle(steering_->GetAngle());
 	tires_.push_back(std::move(rearRightTire));
+}
+
+void Car::Yawing()
+{
+
 }

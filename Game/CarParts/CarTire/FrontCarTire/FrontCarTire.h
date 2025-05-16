@@ -24,6 +24,8 @@ public:
 
 	void SetParent(const WorldTransform* worldTransform)override;
 
+
+
 #pragma endregion
 
 #pragma region getter
@@ -32,6 +34,7 @@ public:
 #pragma endregion
 
 private:
+	
 
 
 };
