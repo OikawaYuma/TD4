@@ -5,6 +5,7 @@ void Car::Initialize(const Vector3& scale, const Vector3& rotate, const Vector3&
 {
 	// 車の核となる場所を設定　各クラスに送る座標
 	worldTransform_.Initialize();
+	// ステアリング生成（Tireにポインタを渡す処理があるためそれより前に記述）
 	steering_ = std::make_unique<CarSteering>();
 	steering_->Init();
 	// body生成
@@ -19,9 +20,7 @@ void Car::Initialize(const Vector3& scale, const Vector3& rotate, const Vector3&
 void Car::Update(float uiSpeed)
 {
 	
-	// UIクラスから出たスピードを足す
-	worldTransform_.translation_.z += uiSpeed / 100.0f;
-	worldTransform_.UpdateMatrix();
+
 
 	// 車体の更新
 	body_->Update();
@@ -30,6 +29,10 @@ void Car::Update(float uiSpeed)
 	for (auto& tire : tires_) {
 		tire->Update();
 	}
+	BicycleModel(uiSpeed);
+	// UIクラスから出たスピードを足す
+	worldTransform_.UpdateMatrix();
+	// ステアリング更新
 	steering_->Update();
 }
 
@@ -79,4 +82,35 @@ void Car::CreateCarTire()
 void Car::Yawing()
 {
 
+}
+
+void Car::BicycleModel(float speed)
+{
+
+	//float wheelBase = frontLength + rearLength;
+	//float steerAngle = *steering_->GetAngle(); // ラジアン
+	//float beta = atan(tan(steerAngle) * rearLength / wheelBase);
+
+	//// ヨー角速度（rad/s）
+	//float yawRate = (speed / wheelBase) * tan(steerAngle);
+
+	//// フレーム時間（例えば 1/60 秒）
+	//float deltaTime = 1.0f / 60.0f;
+
+	//// ヨー角を更新（＝車体の向きを回す）
+	//worldTransform_.rotation_.y += yawRate * deltaTime;
+
+	//// 実際の移動方向を計算
+	//float heading = worldTransform_.rotation_.y + beta;
+	//worldTransform_.translation_.z += speed * cos(heading) * deltaTime;
+	//worldTransform_.translation_.x += speed * sin(heading) * deltaTime;
+	float adustSpeed = speed / 100.0f;
+	float wheelBase = frontLength + rearLength;
+	float beta = std:: atan(std::tan(*steering_->GetAngle()) * rearLength / wheelBase);
+	float theta = 0;
+	theta = (adustSpeed / wheelBase) * std::tan(*steering_->GetAngle());
+	float feltaTime = 1.0f / 60.0f;
+	worldTransform_.rotation_.y += (theta);
+	worldTransform_.translation_.z += adustSpeed * std::cos(worldTransform_.rotation_.y);
+	worldTransform_.translation_.x += adustSpeed * std::sin(worldTransform_.rotation_.y);
 }

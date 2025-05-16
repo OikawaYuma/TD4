@@ -44,6 +44,11 @@ private: // 移動処理
 	/// </summary>
 	void Yawing();
 
+	/// <summary>
+	/// バイシクルモデルでの車の移動および回転処理
+	/// </summary>
+	void BicycleModel(float speed);
+
 private:
 	WorldTransform worldTransform_{};
 	std::vector<std::unique_ptr<BaseObject>> parts_;
@@ -56,6 +61,10 @@ private:
 	std::unique_ptr<CarSteering> steering_;
 	// 仮
 	std::weak_ptr<ObjectPram> objectPram_{};
+	float frontLength = 1.31f;  // 重心から前輪まで
+	float rearLength = 1.31f;   // 重心から後輪まで
+
+
 	uint32_t floorTex_ = 0;
 	Vector4 color_;
 
