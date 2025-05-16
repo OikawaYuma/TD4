@@ -23,12 +23,12 @@ void FrontCarTire::Rotate()
 	if (auto param = objectParam_.lock()) {
 		param->worldTransform.rotation_.x -= rtValue * kRotateSpeed;
 	}
-
-	// 曲がるときの左右回転
-	float lxValue = Input::GetInstance()->JoyStickParmLX(1.0f);
-	const float kYawMaxAngle = 30.0f; // 適当に調整してタイヤの最大角度
+	
+	// 受け取ったステアリング角度の更新
 	if (auto param = objectParam_.lock()) {
-		param->worldTransform.rotation_.y = lxValue * kYawMaxAngle * (std::numbers::pi_v<float> / 180.0f);
+		if (steeringAngle_) { // ポイントを保有していたら
+			param->worldTransform.rotation_.y = *steeringAngle_;
+		}
 		param->worldTransform.UpdateMatrix();
 	}
 }

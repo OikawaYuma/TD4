@@ -27,8 +27,12 @@ public:
 
 	virtual void SetParent(const WorldTransform* worldTransform) = 0;
 
+	void SetSteeringAngle(float* angle) { steeringAngle_ = angle; }
+
 #pragma endregion
 
-private:
-
+protected:
+	// ステアリングクラスからポインタを受け取る
+	// インターフェースなのに作っちゃったすまん
+	float* steeringAngle_ = nullptr;
 };
