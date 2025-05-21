@@ -34,7 +34,7 @@ void UI::Update()
 	SpeedMeterSprite_->SetAnchorPoint({ 0.5f, anchorY });
 
 	// メーターの針の回転計算
-	speedRatio = speed / maxSpeed;
+	speedRatio = *speed / maxSpeed;
 	float angle = minAngle + (maxAngle - minAngle) * speedRatio;
 
 	// ラジアンに変換して z 回転に適用
@@ -50,23 +50,10 @@ void UI::Update()
 	SpeedMeterSprite_->SetSize(hariScale_);
 	SpeedMeterSprite_->SetRot(hariRotate_);
 
-	if (Input::GetInstance()->PushKey(DIK_W)) {
-		// 加速処理
-		speed += acceleration;
-		if (speed > maxSpeed) {
-			speed = maxSpeed;
-		}
-	}
-	else {
-		// 減速処理（自然に減る）
-		speed -= deceleration;
-		if (speed < minSpeed) {
-			speed = minSpeed;
-		}
-	}
+	
 #ifdef _DEBUG
 	ImGui::Begin("UI");
-	ImGui::DragFloat("speed", &speed, 1.0f);
+	ImGui::DragFloat("speed", speed, 1.0f);
 	if (ImGui::TreeNode("Meter")) {
 		ImGui::DragFloat2("pos", &pos_.x, 1.0f);
 		ImGui::DragFloat2("scale", &scale_.x, 1.0f);

@@ -17,7 +17,7 @@ void Car::Initialize(const Vector3& scale, const Vector3& rotate, const Vector3&
 
 }
 
-void Car::Update(float uiSpeed)
+void Car::Update()
 {
 	
 
@@ -29,7 +29,7 @@ void Car::Update(float uiSpeed)
 	for (auto& tire : tires_) {
 		tire->Update();
 	}
-	BicycleModel(uiSpeed);
+	BicycleModel();
 	// UIクラスから出たスピードを足す
 	worldTransform_.UpdateMatrix();
 	// ステアリング更新
@@ -84,29 +84,28 @@ void Car::Yawing()
 
 }
 
-void Car::BicycleModel(float speed)
+void Car::BicycleModel()
 {
-
-	//float wheelBase = frontLength + rearLength;
-	//float steerAngle = *steering_->GetAngle(); // ラジアン
-	//float beta = atan(tan(steerAngle) * rearLength / wheelBase);
-
-	//// ヨー角速度（rad/s）
-	//float yawRate = (speed / wheelBase) * tan(steerAngle);
-
-	//// フレーム時間（例えば 1/60 秒）
-	//float deltaTime = 1.0f / 60.0f;
-
-	//// ヨー角を更新（＝車体の向きを回す）
-	//worldTransform_.rotation_.y += yawRate * deltaTime;
-
-	//// 実際の移動方向を計算
-	//float heading = worldTransform_.rotation_.y + beta;
-	//worldTransform_.translation_.z += speed * cos(heading) * deltaTime;
-	//worldTransform_.translation_.x += speed * sin(heading) * deltaTime;
 	
+	if (Input::GetInstance()->GetJoystickState()) {
+		if (Input::GetInstance()->PushRTrigger(0.15f)) {
+			speed_ += Input::GetInstance()->GetRTValue();
+			if (speed_ >= 245.0f) {
+				speed_ = 245.0f;
+			}
+		}
+		else {
+			speed_-=0.5f;
+			if (speed_ <= 0.0f) {
+				speed_ = 0.0f;
+			}
+		}
+	}
+
+	
+
 	// 車速を100で割って正規化（おそらく 1.0 以下の小数値に調整）
-	float adustSpeed = speed / 100.0f;
+	float adustSpeed = speed_ / 100.0f;
 
 	// ホイールベース（前輪から後輪までの距離の合計）
 	float wheelBase = frontLength + rearLength;

@@ -19,10 +19,11 @@ public:
 	/// <summary>
 	/// 更新
 	/// </summary>
-	void Update(float uiSpeed);
+	void Update();
 
 public: //Getter
 	WorldTransform* GetWorldTransform() { return &worldTransform_; }
+	float* GetSpeed() { return &speed_; }
 
 
 private: // 生成処理
@@ -47,7 +48,7 @@ private: // 移動処理
 	/// <summary>
 	/// バイシクルモデルでの車の移動および回転処理
 	/// </summary>
-	void BicycleModel(float speed);
+	void BicycleModel();
 
 private:
 	WorldTransform worldTransform_{};
@@ -69,5 +70,8 @@ private:
 	Vector4 color_;
 
 	Material material_{};
+
+	// 仮のスピード（後々エンジンから出力を受け取りタイヤの回転力とか合わせて考えたい）
+	float speed_ = 0.0f;
 };
 

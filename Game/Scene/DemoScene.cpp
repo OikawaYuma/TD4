@@ -45,6 +45,8 @@ void DemoScene::Init()
 	carSmoke_ = std::make_unique<CarSmoke>();
 	carSmoke_->SetCamera(followCamera_->GetCamera());
 	carSmoke_->Init();
+	// 速度メーターにスピードのポインタを渡す
+	ui_->SetSpeed(car_->GetSpeed());
 	WorldTransform* wt = car_->GetWorldTransform();
 	followCamera_->SetTarget(wt);
 
@@ -74,7 +76,7 @@ void DemoScene::Update()
 	for (std::list<std::unique_ptr<map>>::iterator itr = maps_.begin(); itr != maps_.end(); itr++) {
 		(*itr)->Update();
 	}
-	car_->Update(ui_->GetSpeed());
+	car_->Update();
 	//particle_->CreateParticle();
 	Object3dManager::GetInstance()->Update();
 	postProcess_->Update();
