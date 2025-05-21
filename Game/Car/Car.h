@@ -19,7 +19,7 @@ public:
 	/// <summary>
 	/// 更新
 	/// </summary>
-	void Update(float uiSpeed);
+	void Update();
 
 public: //Getter
 	WorldTransform* GetWorldTransform() { return &worldTransform_; }
