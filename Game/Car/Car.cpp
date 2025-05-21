@@ -84,7 +84,7 @@ void Car::Yawing()
 
 }
 
-void Car::BicycleModel(float speed)
+void Car::BicycleModel()
 {
 
 	//float wheelBase = frontLength + rearLength;
