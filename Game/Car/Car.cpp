@@ -101,6 +101,11 @@ void Car::BicycleModel()
 			}
 		}
 	}
+	if (Input::GetInstance()->GetJoystickState()) {
+		if (Input::GetInstance()->PushLTrigger(0.15f)) {
+			speed_ -= Input::GetInstance()->GetRTValue();
+		}
+	}
 
 	
 
