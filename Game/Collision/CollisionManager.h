@@ -46,6 +46,14 @@ private:
 	/// <returns></returns>
 	bool CheckCollision(Vector3 v1, float v1Radious, Vector3 v2, float v2Radious);
 
+	/// <summary>
+	/// OBB同士
+	/// </summary>
+	/// <param name="obb1"></param>
+	/// <param name="obb2"></param>
+	/// <returns></returns>
+	bool CheckCollision(const OBB& a, const OBB& b);
+
 private:
 	std::list<Collider*> colliders_;
 };

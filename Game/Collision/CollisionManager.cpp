@@ -59,6 +59,47 @@ void CollisionManager::CheckCollisionPair(Collider* colliderA, Collider* collide
 		}
 	}
 
+	// OBB同士の当たり判定
+	if (colliderA->GetCollisionMode() == CollisionMode::OBBc && colliderB->GetCollisionMode() == CollisionMode::OBBc) {
+		OBB obbA{};
+		obbA.center = colliderA->GetWorldPosition();
+		obbA.halfSize.x = colliderA->GetScale().x / 2.0f;
+		obbA.halfSize.y = colliderA->GetScale().y / 2.0f;
+		obbA.halfSize.z = colliderA->GetScale().z / 2.0f;
+		Matrix4x4 matWorldA{};
+		matWorldA = colliderA->GetMatWorld();
+
+		// 各ローカル軸を正規化して格納（行ベース）
+		obbA.axis[0] = Normalize(Vector3(matWorldA.m[0][0], matWorldA.m[0][1], matWorldA.m[0][2])); // X軸
+		obbA.axis[1] = Normalize(Vector3(matWorldA.m[1][0], matWorldA.m[1][1], matWorldA.m[1][2])); // Y軸
+		obbA.axis[2] = Normalize(Vector3(matWorldA.m[2][0], matWorldA.m[2][1], matWorldA.m[2][2])); // Z軸
+
+		OBB obbB{};
+		obbB.center = colliderB->GetWorldPosition();
+		obbB.halfSize.x = colliderB->GetScale().x / 2.0f;
+		obbB.halfSize.y = colliderB->GetScale().y / 2.0f;
+		obbB.halfSize.z = colliderB->GetScale().z / 2.0f;
+		Matrix4x4 matWorldB{};
+		matWorldB = colliderB->GetMatWorld();
+
+		// 各ローカル軸を正規化して格納（行ベース）
+		obbB.axis[0] = Normalize(Vector3(matWorldB.m[0][0], matWorldB.m[0][1], matWorldB.m[0][2])); // X軸
+		obbB.axis[1] = Normalize(Vector3(matWorldB.m[1][0], matWorldB.m[1][1], matWorldB.m[1][2])); // Y軸
+		obbB.axis[2] = Normalize(Vector3(matWorldB.m[2][0], matWorldB.m[2][1], matWorldB.m[2][2])); // Z軸
+
+		if (CheckCollision(obbA, obbB)) {
+			// コライダーAの衝突時コールバックを呼び出す
+			colliderA->SetOnCollision(true);
+			// コライダーBの衝突時コールバックを呼び出す
+			colliderB->SetOnCollision(true);
+		}
+		else {
+			// コライダーAの衝突時コールバックを呼び出す
+			colliderA->SetOnCollision(false);
+			// コライダーBの衝突時コールバックを呼び出す
+			colliderB->SetOnCollision(false);
+		}
+	}
 
 	// 以下制作中
 	if (
@@ -97,4 +138,64 @@ bool CollisionManager::CheckCollision(Vector3 v1, float v1Radious, Vector3 v2, f
 	else {
 		return false;
 	}
-};
+}
+
+bool CollisionManager::CheckCollision(const OBB& a, const OBB& b)
+{
+	const float ep = std::numeric_limits<float>::epsilon();
+	// 各軸：aの3軸 + bの3軸 + a×bの交差軸 = 15本
+	Vector3 axis[15];
+
+	// aのローカル軸
+	for (int i = 0; i < 3; i++) {
+		axis[i] = a.axis[i];
+	}
+
+	// bのローカル軸
+	for (int i = 0; i < 3; i++) {
+		axis[i + 3] = b.axis[i];
+	}
+
+	// a×b の交差軸
+	int index = 6;
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 3; j++) {
+			axis[index++] = Normalize(Cross(a.axis[i], b.axis[j]));
+		}
+	}
+
+	// 中心間ベクトル
+	Vector3 t;
+	t.x = b.center.x - a.center.x;
+	t.y = b.center.y - a.center.y;
+	t.z = b.center.z - a.center.z;
+
+	// 全軸で投影をチェック
+	for (int i = 0; i < 15; i++) {
+		const Vector3& L = axis[i];
+		if (Length(L) < ep) continue; // 無効軸スキップ
+
+		// aの投影幅
+		float ra =
+			std::abs(Dot(a.axis[0], L)) * a.halfSize.x +
+			std::abs(Dot(a.axis[1], L)) * a.halfSize.y +
+			std::abs(Dot(a.axis[2], L)) * a.halfSize.z;
+
+		// bの投影幅
+		float rb =
+			std::abs(Dot(b.axis[0], L)) * b.halfSize.x +
+			std::abs(Dot(b.axis[1], L)) * b.halfSize.y +
+			std::abs(Dot(b.axis[2], L)) * b.halfSize.z;
+
+		// 中心差の投影
+		float dist = std::abs(Dot(t, L));
+
+		if (dist > ra + rb) {
+			// この軸で分離がある → 衝突してない
+			return false;
+		}
+	}
+
+	// 全軸で分離がなかった → 衝突している
+	return true;
+}

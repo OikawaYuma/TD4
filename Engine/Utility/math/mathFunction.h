@@ -57,6 +57,8 @@ float DotQuaternion(const Quaternion& v1, const Quaternion& v2);
 Vector3 SLerp(const Vector3& v1, const Vector3& v2, float t);
 Quaternion SLerp(const Quaternion& v1, const Quaternion& v2, float t);
 Vector3 Add(const Vector3& posa, const Vector3& posb);
+// クロス積
+Vector3 Cross(const Vector3& v1, const Vector3& v2);
 
 Vector2 Subtract(const Vector2& posa, const Vector2& posb);
 Vector3 Subtract(const Vector3& posa, const Vector3& posb);
@@ -77,3 +79,9 @@ bool IsCollisionAABB(const Vector3& AABBPos, const Vector3& AABBMin, const Vecto
 
 // 最短角度補間
 float LerpShortAngle(float a, float b, float t);
+
+struct OBB {
+	Vector3 center;      // 中心座標
+	Vector3 halfSize;    // 各軸方向の半分サイズ
+	Vector3 axis[3];     // ローカル軸X, Y, Z
+};
