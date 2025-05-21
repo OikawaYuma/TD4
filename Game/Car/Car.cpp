@@ -104,13 +104,31 @@ void Car::BicycleModel(float speed)
 	//float heading = worldTransform_.rotation_.y + beta;
 	//worldTransform_.translation_.z += speed * cos(heading) * deltaTime;
 	//worldTransform_.translation_.x += speed * sin(heading) * deltaTime;
+	
+	// 車速を100で割って正規化（おそらく 1.0 以下の小数値に調整）
 	float adustSpeed = speed / 100.0f;
+
+	// ホイールベース（前輪から後輪までの距離の合計）
 	float wheelBase = frontLength + rearLength;
-	float beta = std:: atan(std::tan(*steering_->GetAngle()) * rearLength / wheelBase);
+
+	// βは「滑り角」や「車両の方向と進行方向の差」などの補正角度を意味する
+	float beta = std::atan(std::tan(*steering_->GetAngle()) * rearLength / wheelBase);
+
+	// 車両の回転角速度を初期化
 	float theta = 0;
+
+	// 回転角速度をステア角と車速に基づいて計算
 	theta = (adustSpeed / wheelBase) * std::tan(*steering_->GetAngle());
+
+	// フレーム毎の経過時間（60fpsとして1フレーム分）
 	float feltaTime = 1.0f / 60.0f;
-	worldTransform_.rotation_.y += (theta);
+	// 車両の向きをy軸回転として更新（thetaはラジアン単位）
+	worldTransform_.rotation_.y += theta;
+
+	// 車両の位置を更新（向きに基づいて前進）
+	// z軸方向（前後方向）に移動：向いている方向にcosで前進
 	worldTransform_.translation_.z += adustSpeed * std::cos(worldTransform_.rotation_.y);
+
+	// x軸方向（左右方向）に移動：向いている方向にsinで横方向補正
 	worldTransform_.translation_.x += adustSpeed * std::sin(worldTransform_.rotation_.y);
 }
