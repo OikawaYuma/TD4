@@ -95,17 +95,21 @@ void Car::BicycleModel()
 			}
 		}
 		else {
-			speed_-=0.5f;
+			speed_ -= 0.5f;
 			if (speed_ <= 0.0f) {
 				speed_ = 0.0f;
 			}
 		}
-	}
-	if (Input::GetInstance()->GetJoystickState()) {
-		if (Input::GetInstance()->PushLTrigger(0.15f)) {
-			speed_ -= Input::GetInstance()->GetRTValue();
+		if (Input::GetInstance()->GetJoystickState()) {
+			if (Input::GetInstance()->PushLTrigger(0.5f)) {
+				speed_ -= Input::GetInstance()->GetLTValue();
+				if (speed_ <= 0.0f) {
+					speed_ = 0.0f;
+				}
+			}
 		}
 	}
+	
 
 	
 

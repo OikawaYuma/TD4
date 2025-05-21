@@ -13,6 +13,7 @@ void FollowCamera::Init()
     cameraTime_ = 1.0f;
     offsetZ_ = 0.0f;
     cameraDirection_ = NONEDIRECTION;
+    car_ = std::make_unique<Car>();
     previousLookAt_ = { 0, 0, 0 }; // 初期化
 }
 
@@ -48,7 +49,7 @@ void FollowCamera::Upadate()
     };
 
     // 滑らかな補間
-    camera_->SetTranslate(Lerp(camera_->GetTranslate(), behind, 0.5f));
+    camera_->SetTranslate(Lerp(camera_->GetTranslate(), behind,0.5f));
 
     // カメラ回転をターゲットの方向に合わせる（簡易LookAtの代替）
     Vector3 cameraRotation = {
@@ -57,17 +58,11 @@ void FollowCamera::Upadate()
         0.0f
     };
     camera_->SetRotate(cameraRotation);
+    camera_->CameraDebug();
 
     camera_->Update();
 }
 
-float FollowCamera::NormalizeAngle(float angle)
-{
-    float normalizeAngle = angle;
-    while (normalizeAngle > 1.0f * std::numbers::pi_v<float>) normalizeAngle -= 2.0f * std::numbers::pi_v<float>;
-    while (normalizeAngle < -1.0f * std::numbers::pi_v<float>) normalizeAngle += 2.0f * std::numbers::pi_v<float>;
-    return normalizeAngle;
-}
 
 void FollowCamera::SetTarget(const WorldTransform* target)
 {

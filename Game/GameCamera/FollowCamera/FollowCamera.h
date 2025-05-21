@@ -8,6 +8,7 @@
 #include "Camera.h"
 #include "WorldTransform.h"
 #include <memory>
+#include <Car/Car.h>
 
 enum CamreraDirection {
 	XP,
@@ -26,7 +27,6 @@ public:
 	void StartCameraEffect();
 	void Upadate();
 
-	float NormalizeAngle(float angle);
 
 public: // Getter
 	Camera* GetCamera() { return camera_.get(); }
@@ -36,6 +36,8 @@ public:
 	void SetLockOn(LockOn* lockOn) { lockOn_ = lockOn;};
 private:
 	std::unique_ptr<Camera> camera_;
+	std::unique_ptr<Car> car_;
+
 	// 追従対象
 	const WorldTransform* target_ = nullptr;
 	// ロックオン
