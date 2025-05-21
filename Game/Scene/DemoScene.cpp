@@ -37,13 +37,14 @@ void DemoScene::Init()
 	camera_->Initialize();
 	levelData_ = Loder::LoadJsonFile("Resources/json","stage1");
 	GlobalVariables::GetInstance()->LoadFiles();
-	carSmoke_ = std::make_unique<CarSmoke>();
-	carSmoke_->SetCamera(camera_.get());
-	carSmoke_->Init();
+	
 	
 	ArrageObj(maps_);
 	followCamera_ = std::make_unique<FollowCamera>();
 	followCamera_->Init();
+	carSmoke_ = std::make_unique<CarSmoke>();
+	carSmoke_->SetCamera(followCamera_->GetCamera());
+	carSmoke_->Init();
 	WorldTransform* wt = car_->GetWorldTransform();
 	followCamera_->SetTarget(wt);
 
@@ -86,7 +87,7 @@ void DemoScene::Update()
 }
 void DemoScene::Draw()
 {
-	Object3dManager::GetInstance()->Draw(camera_.get());
+	Object3dManager::GetInstance()->Draw(followCamera_->GetCamera());
 	carSmoke_->Draw();
 }
 
