@@ -47,6 +47,7 @@ void DemoScene::Init()
 	carSmoke_->Init();
 	// 速度メーターにスピードのポインタを渡す
 	ui_->SetSpeed(car_->GetSpeed());
+	followCamera_->SetSpeed(car_->GetSpeed());
 	WorldTransform* wt = car_->GetWorldTransform();
 	followCamera_->SetTarget(wt);
 

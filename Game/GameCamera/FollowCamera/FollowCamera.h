@@ -34,9 +34,11 @@ public: // Getter
 public:
 	void SetTarget(const WorldTransform* target);
 	void SetLockOn(LockOn* lockOn) { lockOn_ = lockOn;};
+	void SetSpeed(float* speed_) { speed = speed_; }
+
 private:
 	std::unique_ptr<Camera> camera_;
-	std::unique_ptr<Car> car_;
+	// Setter
 
 	// 追従対象
 	const WorldTransform* target_ = nullptr;
@@ -62,5 +64,7 @@ private:
 
 	float cameraChanegeTimer_ = 0.0f;
 	Vector3 preCameraTranslate_ {};
+	// 速さ
+	float* speed;
 };
 

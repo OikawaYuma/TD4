@@ -13,7 +13,6 @@ void FollowCamera::Init()
     cameraTime_ = 1.0f;
     offsetZ_ = 0.0f;
     cameraDirection_ = NONEDIRECTION;
-    car_ = std::make_unique<Car>();
     previousLookAt_ = { 0, 0, 0 }; // 初期化
 }
 
@@ -49,12 +48,12 @@ void FollowCamera::Upadate()
     };
 
     // 滑らかな補間
-    camera_->SetTranslate(Lerp(camera_->GetTranslate(), behind,0.5f));
+    camera_->SetTranslate(Lerp(camera_->GetTranslate(), behind, 0.65f));
 
     // カメラ回転をターゲットの方向に合わせる（簡易LookAtの代替）
     Vector3 cameraRotation = {
         0.0f,
-        target_->rotation_.y,
+        (target_->rotation_.y),
         0.0f
     };
     camera_->SetRotate(cameraRotation);
