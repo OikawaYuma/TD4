@@ -101,24 +101,9 @@ void CollisionManager::CheckCollisionPair(Collider* colliderA, Collider* collide
 		}
 	}
 
-	// 以下制作中
-	if (
-		(colliderA->GetCollisionMode() == CollisionMode::Ballc && colliderB->GetCollisionMode() == CollisionMode::OBBc) ||
-		(colliderA->GetCollisionMode() == CollisionMode::OBBc && colliderB->GetCollisionMode() == CollisionMode::Ballc)
-		) {
-		// 判定対象AとBの座標
-		Vector3 posA, posB;
-		float radiusA, radiusB;
+	// 球とOBBの当たり判定
+	if (colliderA->GetCollisionMode() == CollisionMode::Ballc && colliderB->GetCollisionMode() == CollisionMode::OBBc) {
 
-		// colliderAの座標
-		posA = colliderA->GetWorldPosition();
-		radiusA = colliderA->GetRadius();
-
-		// colliderBの座標
-		posB = colliderB->GetWorldPosition();
-		radiusB = colliderB->GetRadius();
-		// 弾と弾の考交差判定
-		// 衝突フィルタリング
 	}
 }
 
@@ -199,3 +184,11 @@ bool CollisionManager::CheckCollision(const OBB& a, const OBB& b)
 	// 全軸で分離がなかった → 衝突している
 	return true;
 }
+
+bool CollisionManager::CheckCollision(const Vector3& v1, float radius, const OBB& obb)
+{
+	// 最近接点を計算
+	Vector3 d = v1 - obb.center;
+	Vector3 closest = obb.center;
+}
+

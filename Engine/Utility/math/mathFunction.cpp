@@ -724,3 +724,100 @@ float LerpShortAngle(float a, float b, float t)
 	float afterAngle = a + Pi2 * t;
 	return afterAngle;
 }
+
+// 演算子のオーバーロード
+Matrix4x4 operator*(const Matrix4x4& a, const Matrix4x4& b)
+{
+	return Multiply(a, b);
+}
+
+Vector3 operator+(const Vector3& a, const Vector3& b) {
+	Vector3 c = { a.x + b.x,a.y + b.y ,a.z + b.z };
+
+	return c;
+}
+
+Vector3 operator+(const Vector3& a, const float& b) {
+	Vector3 c = { a.x + b,a.y + b,a.z + b };
+
+	return c;
+}
+
+Vector3 operator+(const float& a, const Vector3& b) {
+	Vector3 c = { b.x + a, b.y + a, b.z + a };
+
+	return c;
+}
+
+Vector3 operator-(const Vector3& a, const Vector3& b) {
+	Vector3 c = { a.x - b.x,a.y - b.y,a.z - b.z };
+
+	return c;
+}
+
+Vector3 operator-(const Vector3& a, const float& b) {
+	Vector3 c = { a.x - b,a.y - b,a.z - b };
+
+	return c;
+}
+
+Vector3 operator*(const float& a, const Vector3& b) {
+	Vector3 c = { a * b.x,a * b.y,a * b.z };
+
+	return c;
+}
+
+Vector3 operator*(const Vector3& a, const float& b)
+{
+	Vector3 c = { a.x * b, a.y * b, a.z * b };
+
+	return c;
+}
+
+Vector3 operator/(const Vector3& a, const float& b) {
+	Vector3 c = { a.x / b , a.y / b, a.z / b };
+
+	return c;
+}
+
+Vector3 operator*(const Vector3& vec, const Matrix4x4& mat) {
+	Vector4 result = {
+		vec.x * mat.m[0][0] + vec.y * mat.m[1][0] + vec.z * mat.m[2][0] + mat.m[3][0],
+		vec.x * mat.m[0][1] + vec.y * mat.m[1][1] + vec.z * mat.m[2][1] + mat.m[3][1],
+		vec.x * mat.m[0][2] + vec.y * mat.m[1][2] + vec.z * mat.m[2][2] + mat.m[3][2],
+		vec.x * mat.m[0][3] + vec.y * mat.m[1][3] + vec.z * mat.m[2][3] + mat.m[3][3]
+	};
+
+	return { result.x / result.w, result.y / result.w, result.z / result.w };
+}
+
+Vector2 operator-(const Vector2& v1, const Vector2& v2)
+{
+	Vector2 result = {
+		v1.x - v2.x,
+		v1.y - v2.y
+	};
+
+	return result;
+}
+
+Vector2 operator+(const Vector2& v1, const Vector2& v2)
+{
+	Vector2 c = { v1.x + v2.x, v1.y + v2.y };
+
+	return c;
+}
+
+Vector2 operator*(const Vector2& v1, const float& a)
+{
+	Vector2 c = { v1.x * a, v1.y * a };
+
+	return c;
+}
+
+Vector2 operator*(const float& a, const Vector2& v1)
+{
+	Vector2 c = { a * v1.x, a * v1.y };
+
+	return c;
+}

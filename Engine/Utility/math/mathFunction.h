@@ -85,3 +85,19 @@ struct OBB {
 	Vector3 halfSize;    // 各軸方向の半分サイズ
 	Vector3 axis[3];     // ローカル軸X, Y, Z
 };
+
+// 演算子のオーバーロード
+Matrix4x4 operator*(const Matrix4x4& a, const Matrix4x4& b);
+Vector3 operator+(const Vector3& a, const Vector3& b);
+Vector3 operator+(const Vector3& a, const float& b);
+Vector3 operator+(const float& a, const Vector3& b);
+Vector3 operator-(const Vector3& a, const Vector3& b);
+Vector3 operator-(const Vector3& a, const float& b);
+Vector3 operator*(const float& a, const Vector3& b);
+Vector3 operator*(const Vector3& a, const float& b);
+Vector3 operator/(const Vector3& a, const float& b);
+Vector3 operator*(const Vector3& vec, const Matrix4x4& mat);
+Vector2 operator-(const Vector2& v1, const Vector2& v2);
+Vector2 operator+(const Vector2& v1, const Vector2& v2);
+Vector2 operator*(const Vector2& v1, const float& a);
+Vector2 operator*(const float& a,const Vector2& v1);
