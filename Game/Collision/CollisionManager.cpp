@@ -103,6 +103,77 @@ void CollisionManager::CheckCollisionPair(Collider* colliderA, Collider* collide
 
 	// 球とOBBの当たり判定
 	if (colliderA->GetCollisionMode() == CollisionMode::Ballc && colliderB->GetCollisionMode() == CollisionMode::OBBc) {
+		OBB obb{};
+		obb.center = colliderB->GetWorldPosition();
+		obb.halfSize.x = colliderB->GetScale().x / 2.0f;
+		obb.halfSize.y = colliderB->GetScale().y / 2.0f;
+		obb.halfSize.z = colliderB->GetScale().z / 2.0f;
+		Matrix4x4 matWorld{};
+		matWorld = colliderB->GetMatWorld();
+
+		// 各ローカル軸を正規化して格納（行ベース）
+		obb.axis[0] = Normalize(Vector3(matWorld.m[0][0], matWorld.m[0][1], matWorld.m[0][2])); // X軸
+		obb.axis[1] = Normalize(Vector3(matWorld.m[1][0], matWorld.m[1][1], matWorld.m[1][2])); // Y軸
+		obb.axis[2] = Normalize(Vector3(matWorld.m[2][0], matWorld.m[2][1], matWorld.m[2][2])); // Z軸
+
+
+		// colliderBの座標
+		Vector3 center{};
+		float radius{};
+		center = colliderA->GetWorldPosition();
+		radius = colliderA->GetRadius();
+
+		// 弾と弾の考交差判定
+		if (CheckCollision(center, radius,obb)) {
+			// コライダーAの衝突時コールバックを呼び出す
+			colliderA->SetOnCollision(true);
+			// コライダーBの衝突時コールバックを呼び出す
+			colliderB->SetOnCollision(true);
+		}
+		else {
+			// コライダーAの衝突時コールバックを呼び出す
+			colliderA->SetOnCollision(false);
+			// コライダーBの衝突時コールバックを呼び出す
+			colliderB->SetOnCollision(false);
+		}
+
+	}
+
+	// 球とOBBの当たり判定
+	if (colliderA->GetCollisionMode() == CollisionMode::OBBc && colliderB->GetCollisionMode() == CollisionMode::Ballc) {
+		OBB obb{};
+		obb.center = colliderA->GetWorldPosition();
+		obb.halfSize.x = colliderA->GetScale().x / 2.0f;
+		obb.halfSize.y = colliderA->GetScale().y / 2.0f;
+		obb.halfSize.z = colliderA->GetScale().z / 2.0f;
+		Matrix4x4 matWorld{};
+		matWorld = colliderA->GetMatWorld();
+
+		// 各ローカル軸を正規化して格納（行ベース）
+		obb.axis[0] = Normalize(Vector3(matWorld.m[0][0], matWorld.m[0][1], matWorld.m[0][2])); // X軸
+		obb.axis[1] = Normalize(Vector3(matWorld.m[1][0], matWorld.m[1][1], matWorld.m[1][2])); // Y軸
+		obb.axis[2] = Normalize(Vector3(matWorld.m[2][0], matWorld.m[2][1], matWorld.m[2][2])); // Z軸
+
+
+		// colliderBの座標
+		Vector3 center{};
+		float radius{};
+		center = colliderB->GetWorldPosition();
+		radius = colliderB->GetRadius();
+
+		// 弾と弾の考交差判定
+		if (CheckCollision(center, radius, obb)) {
+			// コライダーAの衝突時コールバックを呼び出す
+			colliderA->SetOnCollision(true);
+			// コライダーBの衝突時コールバックを呼び出す
+			colliderB->SetOnCollision(true);
+		}
+		else {
+			// コライダーAの衝突時コールバックを呼び出す
+			colliderA->SetOnCollision(false);
+			// コライダーBの衝突時コールバックを呼び出す
+			colliderB->SetOnCollision(false);
+		}
 
 	}
 }
@@ -190,5 +261,30 @@ bool CollisionManager::CheckCollision(const Vector3& v1, float radius, const OBB
 	// 最近接点を計算
 	Vector3 d = v1 - obb.center;
 	Vector3 closest = obb.center;
+
+	// X軸
+	{
+		float dist = Dot(d, obb.axis[0]);
+		float clamped = std::clamp(dist, -obb.halfSize.x, obb.halfSize.x);
+		closest = closest + obb.axis[0] * clamped;
+	}
+	// Y軸
+	{
+		float dist = Dot(d, obb.axis[1]);
+		float clamped = std::clamp(dist, -obb.halfSize.y, obb.halfSize.y);
+		closest = closest + obb.axis[1] * clamped;
+	}
+	// Z軸
+	{
+		float dist = Dot(d, obb.axis[2]);
+		float clamped = std::clamp(dist, -obb.halfSize.z, obb.halfSize.z);
+		closest = closest + obb.axis[2] * clamped;
+	}
+
+	// 球の中心と最近接点との距離の2乗を計算
+	Vector3 delta = v1 - closest;
+	float distSq = Length(delta);
+
+	return distSq <= radius * radius;
 }
 

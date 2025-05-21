@@ -8,6 +8,8 @@
 #include "Collider.h"
 #include<list>
 #include <memory>
+#include <iostream>
+#include <algorithm>
 
 class CollisionManager {
 public:
