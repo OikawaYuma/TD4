@@ -25,14 +25,6 @@ void RearCarTire::Rotate()
 		param->worldTransform.rotation_.x -= rtValue * kRoolSpeed;
 		param->worldTransform.UpdateMatrix();
 	}
-
-	// 曲がるときの左右回転
-	float lxValue = Input::GetInstance()->JoyStickParmLX(1.0f);
-	const float kYawMaxAngle = 30.0f; // 適当に調整してタイヤの最大角度
-	if (auto param = objectParam_.lock()) {
-		param->worldTransform.rotation_.y = lxValue * kYawMaxAngle * (std::numbers::pi_v<float> / 180.0f);
-		param->worldTransform.UpdateMatrix();
-	}
 }
 
 void RearCarTire::SetParent(const WorldTransform* worldTransform)

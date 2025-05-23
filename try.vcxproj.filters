@@ -312,6 +312,7 @@
     <ClCompile Include="Engine\2d\Fade\Fade.cpp" />
     <ClCompile Include="Game\CarParts\CarTire\FrontCarTire\FrontCarTire.cpp" />
     <ClCompile Include="Game\CarSmoke\CarSmoke.cpp" />
+    <ClCompile Include="Game\CarParts\CarSteering\CarSteering.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Utility\function.h">
@@ -570,6 +571,7 @@
     <ClInclude Include="Game\CarParts\CarTire\ICarTire.h" />
     <ClInclude Include="Game\CarParts\CarTire\FrontCarTire\FrontCarTire.h" />
     <ClInclude Include="Game\CarSmoke\CarSmoke.h" />
+    <ClInclude Include="Game\CarParts\CarSteering\CarSteering.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shader\Particle.PS.hlsl">

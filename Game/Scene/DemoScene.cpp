@@ -16,6 +16,7 @@ void DemoScene::Init()
 	ModelManager::GetInstance()->LoadModel("Resources/map", "IROHAmap2.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/map", "map.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/map", "map0.obj");
+	ModelManager::GetInstance()->LoadModel("Resources/ball", "ball.obj");
 
 	
 
@@ -36,20 +37,32 @@ void DemoScene::Init()
 	camera_->Initialize();
 	levelData_ = Loder::LoadJsonFile("Resources/json","stage1");
 	GlobalVariables::GetInstance()->LoadFiles();
-	carSmoke_ = std::make_unique<CarSmoke>();
-	carSmoke_->SetCamera(camera_.get());
-	carSmoke_->Init();
+	
 	
 	ArrageObj(maps_);
+	followCamera_ = std::make_unique<FollowCamera>();
+	followCamera_->Init();
+	carSmoke_ = std::make_unique<CarSmoke>();
+	carSmoke_->SetCamera(followCamera_->GetCamera());
+	carSmoke_->Init();
+	// 速度メーターにスピードのポインタを渡す
+	ui_->SetSpeed(car_->GetSpeed());
+	followCamera_->SetSpeed(car_->GetSpeed());
+	WorldTransform* wt = car_->GetWorldTransform();
+	followCamera_->SetTarget(wt);
+
 	carSmoke_->SetParent(car_->GetWorldTransform());
 	postProcess_ = std::make_unique<PostProcess>();
 	postProcess_->Init();
 	postProcess_->SetEffectNo(PostEffectMode::kFullScreen);
 	
+
 }
 
 void DemoScene::Update()
 {
+	followCamera_->Upadate();
+
 	camera_->Move();
 	if (Input::GetInstance()->TriggerKey(DIK_V)) {
 		fade_->StartFadeIn();
@@ -64,7 +77,7 @@ void DemoScene::Update()
 	for (std::list<std::unique_ptr<map>>::iterator itr = maps_.begin(); itr != maps_.end(); itr++) {
 		(*itr)->Update();
 	}
-	car_->Update(ui_->GetSpeed());
+	car_->Update();
 	//particle_->CreateParticle();
 	Object3dManager::GetInstance()->Update();
 	postProcess_->Update();
@@ -77,7 +90,7 @@ void DemoScene::Update()
 }
 void DemoScene::Draw()
 {
-	Object3dManager::GetInstance()->Draw(camera_.get());
+	Object3dManager::GetInstance()->Draw(followCamera_->GetCamera());
 	carSmoke_->Draw();
 }
 
