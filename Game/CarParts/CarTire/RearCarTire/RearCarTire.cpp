@@ -20,7 +20,7 @@ void RearCarTire::Rotate()
 	// とりあえず仮
 	// 前進方向の回転
 	float rtValue = Input::GetInstance()->GetRTValue();
-	const float kRoolSpeed = 5.0f; // 適当に調整して
+	const float kRoolSpeed = -5.0f; // 適当に調整して
 	if (auto param = objectParam_.lock()) {
 		param->worldTransform.rotation_.x -= rtValue * kRoolSpeed;
 		param->worldTransform.UpdateMatrix();
