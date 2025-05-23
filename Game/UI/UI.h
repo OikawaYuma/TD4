@@ -33,6 +33,9 @@ private:
 	float acceleration = 1.5f;
 	// 減速度
 	float deceleration = 1.0f;
+
+	Vector2 orokamonoVelocity_{ 10.0f,  8.0f }; // 愚か者の移動速度
+
 	// 位置
 	Vector2 pos_ = { 970.0f, 410.0f };
 	// 大きさ

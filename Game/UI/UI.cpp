@@ -56,7 +56,8 @@ void UI::Update()
 	SpeedMeterSprite_->SetPosition(hariPos_);
 	SpeedMeterSprite_->SetSize(hariScale_);
 	SpeedMeterSprite_->SetRot(hariRotate_);
-
+  
+  
 	orokamono_->Update();
 	orokamono_->SetSize({ 1000.0f,1000.0f });
 
