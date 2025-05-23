@@ -109,7 +109,7 @@ PixelShaderOutput main(VertexShaderOutput input)
        // output.color.rgb *= gMaterial.color.rgb;
         
         //Objectの法線と光の方向と強さから輝度をとる
-        float32_t nl = 
+        float32_t nl =
         max(0, dot(input.normal, -gDirectionalLight.direction)) * gMaterial.shininess;
         if (nl <= 0.01f)
         {
@@ -123,7 +123,7 @@ PixelShaderOutput main(VertexShaderOutput input)
         {
             nl = 1.0f;
         }
-        output.color.rgb *=nl;
+        output.color.rgb *= nl;
        // output.color.rgb *= nl;
         
         // 以下はこの方法でもできるということ　attenuationFactorは距離による減衰のこと
