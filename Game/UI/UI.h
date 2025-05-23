@@ -1,6 +1,7 @@
 #pragma once
 #include <memory>
 #include <Sprite.h>
+#include <algorithm>
 
 class UI {
 public:
@@ -14,7 +15,7 @@ public:
 	void Draw();
 
 	// Setter
-	void SetSpeed(float speed_) { speed = speed_; }
+	void SetSpeed(float* speed_) { speed = speed_; }
 
 private:
 	// Sprite
@@ -27,7 +28,7 @@ private:
 	// 最低速
 	const float minSpeed = 0.0f;
 	// 速さ
-	float speed;
+	float* speed;
 	// 加速度
 	float acceleration = 1.5f;
 	// 減速度
@@ -52,4 +53,5 @@ private:
 	float speedRatio;
 	float minAngle = -132.0f;
 	float maxAngle = 132.0f;
+	float alpha_ = 0.0f;
 };
