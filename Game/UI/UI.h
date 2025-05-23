@@ -14,7 +14,7 @@ public:
 	void Draw();
 
 	// Setter
-	void SetSpeed(float* speed_) { speed = speed_; }
+	void SetSpeed(float speed_) { speed = speed_; }
 
 private:
 	// Sprite
