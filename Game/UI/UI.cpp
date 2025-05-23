@@ -26,9 +26,9 @@ void UI::Initialize()
 	orokamono_->SetTexture(TextureManager::GetInstance()->StoreTexture("Resources/orokamono.jpg"));
 	orokamono_->Init("Resources/orokamono.jpg");
 	orokamono_->SetAnchorPoint(Vector2(0.5f, 0.5f));
-	orokamono_->SetPosition({ 640.0f,360.0f });
-	orokamono_->SetColor({ 1.0f,1.0f,1.0f,0.02f });
-	
+	orokamono_->SetPosition({ 50.0f,50.0f });
+	orokamono_->SetColor({ 1.0f,1.0f,1.0f,0.6f });
+
 }
 
 void UI::Update()
@@ -57,8 +57,15 @@ void UI::Update()
 	SpeedMeterSprite_->SetSize(hariScale_);
 	SpeedMeterSprite_->SetRot(hariRotate_);
 
+	Vector2 pos = orokamono_->GetPosition();
+	pos.x += orokamonoVelocity_.x;
+	pos.y += orokamonoVelocity_.y;
+	if (pos.x < 50 || pos.x > 1230) orokamonoVelocity_.x *= -1;
+	if (pos.y < 50 || pos.y > 670) orokamonoVelocity_.y *= -1;
+	orokamono_->SetPosition(pos);
+
 	orokamono_->Update();
-	orokamono_->SetSize({ 1000.0f,1000.0f });
+	orokamono_->SetSize({ 100.0f,100.0f });
 
 
 	if (Input::GetInstance()->PushKey(DIK_W)) {
