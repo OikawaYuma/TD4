@@ -61,9 +61,9 @@ void UI::Update()
 	orokamono_->Update();
 	orokamono_->SetSize({ 1000.0f,1000.0f });
 
-	float alphaRatio = std::clamp(*speed / maxSpeed, 0.0f, 1.0f);
+	float alphaRatio = std::clamp(*speed / maxSpeed, 0.0f, 0.8f);
 
-	alpha_ = 0.0f + (1.0f - 0.0f) * alphaRatio;
+	alpha_ = 0.0f + (0.8f - 0.0f) * alphaRatio;
 
 	orokamono_->SetColor({ 1.0f, 1.0f, 1.0f, alpha_ });
 
@@ -94,5 +94,5 @@ void UI::Draw()
 {
 	SpeedSprite_->Draw();
 	SpeedMeterSprite_->Draw();
-	orokamono_->Draw();
+	//orokamono_->Draw();
 }
