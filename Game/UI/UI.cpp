@@ -23,7 +23,7 @@ void UI::Initialize()
 	SpeedMeterSprite_->SetAnchorPoint({ 0.5f, 0.9333f });
 	// 愚か者
 	orokamono_ = std::make_unique<Sprite>();
-	orokamono_->SetTexture(TextureManager::GetInstance()->StoreTexture("Resources/orokamono.jpg"));
+	orokamono_->SetTexture(TextureManager::GetInstance()->StoreTexture("Resources/minaiteiKasu.jpg"));
 	orokamono_->Init("Resources/orokamono.jpg");
 	orokamono_->SetAnchorPoint(Vector2(0.5f, 0.5f));
 	orokamono_->SetPosition({ 640.0f,360.0f });
