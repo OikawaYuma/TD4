@@ -20,6 +20,7 @@ private:
 	// Sprite
 	std::unique_ptr<Sprite> SpeedSprite_;
 	std::unique_ptr<Sprite> SpeedMeterSprite_;
+	std::unique_ptr<Sprite> orokamono_;
 
 	// 最高速
 	const float maxSpeed = 245.0f;
