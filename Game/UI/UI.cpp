@@ -27,7 +27,7 @@ void UI::Initialize()
 	orokamono_->Init("Resources/orokamono.jpg");
 	orokamono_->SetAnchorPoint(Vector2(0.5f, 0.5f));
 	orokamono_->SetPosition({ 640.0f,360.0f });
-	orokamono_->SetColor({ 1.0f,1.0f,1.0f,0.02f });
+	orokamono_->SetColor({ 1.0f,1.0f,1.0f,0.0f });
 	
 }
 
@@ -41,7 +41,7 @@ void UI::Update()
 	SpeedMeterSprite_->SetAnchorPoint({ 0.5f, anchorY });
 
 	// メーターの針の回転計算
-	speedRatio = speed / maxSpeed;
+	speedRatio = *speed / maxSpeed;
 	float angle = minAngle + (maxAngle - minAngle) * speedRatio;
 
 	// ラジアンに変換して z 回転に適用
@@ -60,25 +60,15 @@ void UI::Update()
 	orokamono_->Update();
 	orokamono_->SetSize({ 1000.0f,1000.0f });
 
+	float alphaRatio = std::clamp(*speed / maxSpeed, 0.0f, 1.0f);
 
-	if (Input::GetInstance()->PushKey(DIK_W)) {
-		// 加速処理
-		speed += acceleration;
-		if (speed > maxSpeed) {
-			speed = maxSpeed;
-		}
-	}
-	else {
-		// 減速処理（自然に減る）
-		speed -= deceleration;
-		if (speed < minSpeed) {
-			speed = minSpeed;
-		}
-	}
+	alpha_ = 0.0f + (1.0f - 0.0f) * alphaRatio;
+
+	orokamono_->SetColor({ 1.0f, 1.0f, 1.0f, alpha_ });
 
 #ifdef _DEBUG
 	ImGui::Begin("UI");
-	ImGui::DragFloat("speed", &speed, 1.0f);
+	ImGui::DragFloat("speed", speed, 1.0f);
 	if (ImGui::TreeNode("Meter")) {
 		ImGui::DragFloat2("pos", &pos_.x, 1.0f);
 		ImGui::DragFloat2("scale", &scale_.x, 1.0f);
