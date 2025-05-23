@@ -196,7 +196,7 @@ bool CollisionManager::CheckCollision(Vector3 v1, float v1Radious, Vector3 v2, f
 	}
 }
 
-bool CollisionManager::CheckCollision(const OBB& a, const OBB& b)
+bool CollisionManager::CheckCollision(OBB a, OBB b)
 {
 	const float ep = std::numeric_limits<float>::epsilon();
 	// 各軸：aの3軸 + bの3軸 + a×bの交差軸 = 15本
@@ -256,7 +256,7 @@ bool CollisionManager::CheckCollision(const OBB& a, const OBB& b)
 	return true;
 }
 
-bool CollisionManager::CheckCollision(const Vector3& v1, float radius, const OBB& obb)
+bool CollisionManager::CheckCollision(Vector3 v1, float radius, OBB obb)
 {
 	// 最近接点を計算
 	Vector3 d = v1 - obb.center;

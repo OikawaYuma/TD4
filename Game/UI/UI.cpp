@@ -21,6 +21,13 @@ void UI::Initialize()
 	SpeedMeterSprite_->SetRot(hariRotate_);
 	// アンカーポイントの設定
 	SpeedMeterSprite_->SetAnchorPoint({ 0.5f, 0.9333f });
+	// 愚か者
+	orokamono_ = std::make_unique<Sprite>();
+	orokamono_->SetTexture(TextureManager::GetInstance()->StoreTexture("Resources/orokamono.jpg"));
+	orokamono_->Init("Resources/orokamono.jpg");
+	orokamono_->SetAnchorPoint(Vector2(0.5f, 0.5f));
+	orokamono_->SetPosition({ 640.0f,360.0f });
+	orokamono_->SetColor({ 1.0f,1.0f,1.0f,0.02f });
 	
 }
 
@@ -49,6 +56,11 @@ void UI::Update()
 	SpeedMeterSprite_->SetPosition(hariPos_);
 	SpeedMeterSprite_->SetSize(hariScale_);
 	SpeedMeterSprite_->SetRot(hariRotate_);
+
+	
+	orokamono_->Update();
+	orokamono_->SetSize({ 1000.0f,1000.0f });
+
 
 	if (Input::GetInstance()->PushKey(DIK_W)) {
 		// 加速処理
@@ -91,4 +103,5 @@ void UI::Draw()
 {
 	SpeedSprite_->Draw();
 	SpeedMeterSprite_->Draw();
+	orokamono_->Draw();
 }

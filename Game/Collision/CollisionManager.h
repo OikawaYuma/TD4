@@ -10,6 +10,7 @@
 #include <memory>
 #include <iostream>
 #include <algorithm>
+#include"math/mathFunction.h"
 
 class CollisionManager {
 public:
@@ -54,7 +55,7 @@ private:
 	/// <param name="obb1"></param>
 	/// <param name="obb2"></param>
 	/// <returns></returns>
-	bool CheckCollision(const OBB& a, const OBB& b);
+	bool CheckCollision(OBB a, OBB b);
 
 	/// <summary>
 	/// 球とOBBの当たり判定
@@ -63,7 +64,7 @@ private:
 	/// <param name="radius"></param>
 	/// <param name="obb"></param>
 	/// <returns></returns>
-	bool CheckCollision(const Vector3& v1,float radius, const OBB& obb);
+	bool CheckCollision(Vector3 v1,float radius, OBB obb);
 
 private:
 	std::list<Collider*> colliders_;

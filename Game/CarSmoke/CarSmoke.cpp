@@ -23,7 +23,7 @@ void CarSmoke::Init()
 		{0.2f,0.5f},
 		{-0.5f,0.3f}
 	};
-	tex_ = TextureManager::GetInstance()->StoreTexture("Resources/white.png");
+	tex_ = TextureManager::GetInstance()->StoreTexture("Resources/orokamono.jpg");
 	emitter_.size = 0.5f;
 	particle_->SetCamera(camera_);
 	particle_->SetEmitter(emitter_);
