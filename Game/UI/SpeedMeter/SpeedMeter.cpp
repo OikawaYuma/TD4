@@ -8,13 +8,13 @@ void SpeedMeterUI::Initialize()
 {
 	// メーター本体
 	SpeedSprite_ = std::make_unique<Sprite>();
-	SpeedSprite_->SetTexture(TextureManager::GetInstance()->StoreTexture("Resources/meter.png"));
-	SpeedSprite_->Init("Resources/meter.png");
+	SpeedSprite_->SetTexture(TextureManager::GetInstance()->StoreTexture("Resources/UI/meter.png"));
+	SpeedSprite_->Init("Resources/UI/meter.png");
 
 	// 赤い針
 	SpeedMeterSprite_ = std::make_unique<Sprite>();
-	SpeedMeterSprite_->SetTexture(TextureManager::GetInstance()->StoreTexture("Resources/hari.png"));
-	SpeedMeterSprite_->Init("Resources/hari.png");
+	SpeedMeterSprite_->SetTexture(TextureManager::GetInstance()->StoreTexture("Resources/UI/hari.png"));
+	SpeedMeterSprite_->Init("Resources/UI/hari.png");
 	SpeedMeterSprite_->SetRot(hariRotate_);
 	// アンカーポイントの設定
 	SpeedMeterSprite_->SetAnchorPoint({ 0.5f, 0.9333f });

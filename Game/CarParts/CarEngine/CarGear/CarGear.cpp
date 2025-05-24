@@ -46,11 +46,6 @@ void Gear::Update()
 
     // 現在のギア状態に応じた処理を実行
     currentState->Update(this);
-
-    ImGui::Begin("Gear");
-    ImGui::Text("Current Gear: %d", currentGear);
-    ImGui::Text("Speed: %.1f", GetCurrentSpeed());
-    ImGui::End();
 }
 
 float Gear::GetCurrentSpeed() const {
