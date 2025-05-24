@@ -1,5 +1,6 @@
 #pragma once
 #include "SpeedMeter/SpeedMeter.h"
+#include "Gear/GearUI.h"
 
 class UI {
 public:
@@ -14,9 +15,13 @@ public:
 
 	// Setter
 	void SetSpeed(float speed_);
+	void SetGear(int gear);
 
 private:
 	// スピードメーター
 	std::unique_ptr<SpeedMeterUI> speedMeterUI_;
+
+	// ギア
+	std::unique_ptr<GearUI> gearUI_;
 	
 };

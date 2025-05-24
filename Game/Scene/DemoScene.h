@@ -66,7 +66,7 @@ private:
 	LevelData levelData_{};
 
 	// Gear
-	std::unique_ptr<Gear> gear_;
+	std::unique_ptr<Gear> carGear_;
 
 	int selectedIndex[1] = {0};
 };

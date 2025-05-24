@@ -19,7 +19,7 @@ public:
 	void ChangeState(int gearNum);
 	// 現在のスピード取得
 	float GetCurrentSpeed() const;
-	float GetCurrentGear() const;
+	int GetCurrentGear() const;
 private:
 	// 現在のギア
 	int currentGear = 0;

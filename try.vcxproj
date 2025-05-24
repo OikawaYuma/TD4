@@ -176,6 +176,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Engine\2d\PostEffect\Effect\GaussianBlur.cpp" />
     <ClCompile Include="Engine\2d\PostEffect\Effect\GrayScale.cpp" />
     <ClCompile Include="Game\Skydome\Skydome.cpp" />
+    <ClCompile Include="Game\UI\Gear\GearUI.cpp" />
     <ClCompile Include="Game\UI\SpeedMeter\SpeedMeter.cpp" />
     <ClCompile Include="Game\UI\UI.cpp" />
     <ClCompile Include="Game\WorldDesign\WorldDesign.cpp" />
@@ -255,6 +256,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Engine\3d\Skeleton\Skeleton.h" />
     <ClInclude Include="Engine\2d\PostEffect\Effect\FullScreen.h" />
     <ClInclude Include="Game\Skydome\Skydome.h" />
+    <ClInclude Include="Game\UI\Gear\GearUI.h" />
     <ClInclude Include="Game\UI\SpeedMeter\SpeedMeter.h" />
     <ClInclude Include="Game\UI\UI.h" />
     <ClInclude Include="Game\Utilty\Loder.h" />

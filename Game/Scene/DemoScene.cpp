@@ -32,8 +32,8 @@ void DemoScene::Init()
 	ui_->Initialize();
 	sprite_->Init("Resources/load2.png");
 
-	gear_ = std::make_unique<Gear>();
-	gear_->Initialize();
+	carGear_ = std::make_unique<Gear>();
+	carGear_->Initialize();
 	
 	sprite_->SetTexture(spTx_);
 	camera_ = std::make_unique<Camera>();
@@ -89,12 +89,14 @@ void DemoScene::Update()
 	postProcess_->Update();
 	camera_->CameraDebug();
 	sprite_->Update();
+	carGear_->Update();
+	ui_->SetGear(carGear_->GetCurrentGear());
 	ui_->Update();
+	ui_->SetSpeed(carGear_->GetCurrentSpeed());
 	particle_->Update();
 	fade_->Update();
 	fade_->UpdateFade();
 	PostEffectChange();
-	gear_->Update();
 }
 void DemoScene::Draw()
 {

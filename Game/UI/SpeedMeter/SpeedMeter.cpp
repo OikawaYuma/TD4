@@ -61,7 +61,7 @@ void SpeedMeterUI::Update()
 		}
 	}
 
-	ImGui::Begin("UI");
+	ImGui::Begin("SpeedMetar");
 	ImGui::DragFloat("speed", &speed, 1.0f);
 	if (ImGui::TreeNode("Meter")) {
 		ImGui::DragFloat2("pos", &pos_.x, 1.0f);
