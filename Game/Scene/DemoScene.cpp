@@ -31,6 +31,9 @@ void DemoScene::Init()
 	ui_ = std::make_unique<UI>();
 	ui_->Initialize();
 	sprite_->Init("Resources/load2.png");
+
+	gear_ = std::make_unique<Gear>();
+	gear_->Initialize();
 	
 	sprite_->SetTexture(spTx_);
 	camera_ = std::make_unique<Camera>();
@@ -91,6 +94,7 @@ void DemoScene::Update()
 	fade_->Update();
 	fade_->UpdateFade();
 	PostEffectChange();
+	gear_->Update();
 }
 void DemoScene::Draw()
 {
