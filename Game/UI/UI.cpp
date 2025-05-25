@@ -53,7 +53,7 @@ void UI::Update()
 	
 #ifdef _DEBUG
 	ImGui::Begin("UI");
-	ImGui::DragFloat("speed", speed, 1.0f);
+	//ImGui::DragFloat("speed", &speed, 1.0f);
 	if (ImGui::TreeNode("Meter")) {
 		ImGui::DragFloat2("pos", &pos_.x, 1.0f);
 		ImGui::DragFloat2("scale", &scale_.x, 1.0f);
