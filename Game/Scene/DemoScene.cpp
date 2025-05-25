@@ -21,7 +21,7 @@ void DemoScene::Init()
 	fade_ = std::make_unique<Fade>();
 	fade_->Init("Resources/fade.png");
 	fade_->SetTexture(TextureManager::GetInstance()->StoreTexture("Resources/fade.png"));
-	spTx_ = TextureManager::GetInstance()->StoreTexture("Resources/load2.png");
+	spTx_ = TextureManager::GetInstance()->StoreTexture("Resources/load3.png");
 	sprite_ = std::make_unique<Sprite>();
 	sprite_->Init("Resources/load.png");
 	sprite_->SetTexture(TextureManager::GetInstance()->StoreTexture("Resources/load.png"));

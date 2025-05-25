@@ -50,6 +50,11 @@ private: // 移動処理
 	/// </summary>
 	void BicycleModel();
 
+private: // 外部情報　本来はここに書くべきではない
+	// 摩擦係数
+	float mu_ = 1.0f; // とりあえず乾いたコンクリで考える（大体0.9~1.2くらいらしい、スポーツのタイヤだと1.1~1.2でもいいとか）
+	// 重力
+	float g_ = 9.8f;
 private:
 	WorldTransform worldTransform_{};
 	std::vector<std::unique_ptr<BaseObject>> parts_;
@@ -69,13 +74,16 @@ private:
 	uint32_t floorTex_ = 0;
 	Vector4 color_;
 	Material material_{};
-	// 重量 荷重
-	float weight_ = 0.0f;
+	// 車の荷重 文太のインプレッサはバージョンⅤで1250kgくらいらしい。　ここもjsonとかに飛ばしたい
+	float mass_ = 1250.0f;
+	// 実際にかかる重量
+	float weight_ = mass_ * g_;
 	// グリップ
 	float grip_ = 0.0f;
 	// 静止時の最大横グリップ
-	float baseGrip_ = 0.0f;
+	float maxGrip_ = 0.0f;
 	// 仮のスピード（後々エンジンから出力を受け取りタイヤの回転力とか合わせて考えたい）
 	float speed_ = 0.0f;
+
 };
 
