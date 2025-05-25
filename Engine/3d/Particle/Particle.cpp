@@ -126,7 +126,7 @@ void Particle::Update()
 
 	//materialData->color = {1.0f,1.0f,1.0f,1.0f};
 	Matrix4x4 backToFrontMatrix = MakeRotateYMatrix(std::numbers::pi_v<float>);
-	Matrix4x4 billboardMatrix = Multiply(backToFrontMatrix, camera_->GetCameraMatrix());
+	Matrix4x4 billboardMatrix = Multiply(backToFrontMatrix, Inverse(camera_->GetViewMatrix()));
 	billboardMatrix.m[3][0] = 0.0f;
 	billboardMatrix.m[3][1] = 0.0f;
 	billboardMatrix.m[3][2] = 0.0f;
@@ -165,7 +165,7 @@ void Particle::Update()
 			instancingData[numInstance_].WVP = worldViewProjectionMatrix;
 			instancingData[numInstance_].World = worldMatrix;
 			instancingData[numInstance_].color = (*particleIterator).color;
-			instancingData[numInstance_].color.w = 0.8f;
+			instancingData[numInstance_].color.w = 0.5f;
 		}
 		++numInstance_; // 生きているparticluの数を1使うんとする
 		++particleIterator;
