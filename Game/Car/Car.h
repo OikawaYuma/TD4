@@ -62,15 +62,19 @@ private:
 	std::unique_ptr<CarSteering> steering_;
 	// 仮
 	std::weak_ptr<ObjectPram> objectPram_{};
+	// 中心からの距離
 	float frontLength = 1.31f;  // 重心から前輪まで
 	float rearLength = 1.31f;   // 重心から後輪まで
-
-
+	// Object情報
 	uint32_t floorTex_ = 0;
 	Vector4 color_;
-
 	Material material_{};
-
+	// 重量 荷重
+	float weight_ = 0.0f;
+	// グリップ
+	float grip_ = 0.0f;
+	// 静止時の最大横グリップ
+	float baseGrip_ = 0.0f;
 	// 仮のスピード（後々エンジンから出力を受け取りタイヤの回転力とか合わせて考えたい）
 	float speed_ = 0.0f;
 };

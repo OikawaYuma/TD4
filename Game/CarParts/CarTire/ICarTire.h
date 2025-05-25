@@ -35,4 +35,7 @@ protected:
 	// ステアリングクラスからポインタを受け取る
 	// インターフェースなのに作っちゃったすまん
 	float* steeringAngle_ = nullptr;
+
+	// タイヤの摩耗度　0.0が新品、1.0で完全消耗
+	float wearRate_ = 0.0f;
 };
