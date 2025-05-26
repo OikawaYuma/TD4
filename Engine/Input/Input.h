@@ -55,12 +55,6 @@ public:
 	float JoyStickParmRX(float num);
 	float JoyStickParmRY(float num);
 
-	bool PushRTrigger(float threshold);
-	bool PushLTrigger(float threshold);
-
-	float GetRTValue() { return static_cast<float>(joyState.Gamepad.bRightTrigger) / 255.0f; }
-	float GetLTValue() { return static_cast<float>(joyState.Gamepad.bLeftTrigger) / 255.0f; }
-
 	// namespace省略
 	template <class T>using ComPtr = Microsoft::WRL::ComPtr<T>;
 private:

@@ -111,8 +111,6 @@ public: // Setter
 
 	void SetWorldTransform(const WorldTransform& worldTransform) { worldTransform_ = worldTransform; }
 
-	void SetParent(WorldTransform* worldTransform){worldTransform_.parent_ = worldTransform;}
-
 	void SetCamera(Camera* camera) { camera_ = camera; }
 
 	void SetEmitter(Emitter emitter) { emitter_ = emitter; }

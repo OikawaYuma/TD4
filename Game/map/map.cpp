@@ -11,7 +11,7 @@ map::~map()
 }
 void map::Init(const Vector3& scale, const Vector3& rotate, const Vector3& translate, const std::string filename)
 {
-	floorTex_ = TextureManager::GetInstance()->StoreTexture("Resources/load3.png");
+	floorTex_ = TextureManager::GetInstance()->StoreTexture("Resources/load2.png");
 	color_ = { 1.0f,1.0f,1.0f,1.0f };
 
 	objectPram_ = Object3dManager::GetInstance()->StoreObject(filename, floorTex_, Transparency::Opaque);
@@ -22,7 +22,7 @@ void map::Init(const Vector3& scale, const Vector3& rotate, const Vector3& trans
 
 
 	material_.color = { 1.0f,1.0f,1.0f,1.0f };
-	material_.enableLighting = false;
+	material_.enableLighting = true;
 	material_.uvTransform = MakeIdentity4x4();
 	material_.shininess = 60.0f;
 
@@ -31,6 +31,9 @@ void map::Init(const Vector3& scale, const Vector3& rotate, const Vector3& trans
 void map::Update()
 {
 	if (objectPram_.lock()) {
+		if (Input::GetInstance()->PushKey(DIK_L)) {
+			objectPram_.lock()->worldTransform.translation_.x++;
+		};
 		objectPram_.lock()->worldTransform.UpdateMatrix();
 	}
 }

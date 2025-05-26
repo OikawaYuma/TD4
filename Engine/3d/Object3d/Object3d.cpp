@@ -21,10 +21,11 @@ void Object3d::Init()
 	/*materialBufferView = CreateBufferView();;*/
 	// 頂点リソースにデータを書き込む
 	materialData_ = nullptr;
+
 	// 書き込むためのアドレスを取得
 	materialResource->Map(0, nullptr, reinterpret_cast<void**>(&materialData_));
 	// 色のデータを変数から読み込み
-	materialData_->color = { 1.0f,1.0f,1.0f,1.0f };
+	materialData_->color = {1.0f,1.0f,1.0f,1.0f};
 	materialData_->enableLighting = true;
 	materialData_->uvTransform = MakeIdentity4x4();
 	materialData_->shininess = 60.0f;
@@ -44,7 +45,7 @@ void Object3d::Init()
 	// 書き込むためのアドレスを取得
 	spotLightResource_->Map(0, nullptr, reinterpret_cast<void**>(&spotLightData_));
 
-
+	
 	spotlight.color = { 0.0f,0.0f,0.0f,1.0f };
 	spotlight.position = { 2.0f,1.25f,0.0f };
 	spotlight.distance = 7.0f;
@@ -68,58 +69,57 @@ void Object3d::Init()
 	object3dData_.instancingSrvHandleCPU = SRVManager::GetCPUDescriptorHandle(SRVIndex_);
 	object3dData_.instancingSrvHandleGPU = SRVManager::GetGPUDescriptorHandle(SRVIndex_);
 	//for (uint32_t index = 0; index < kNumMaxInstance_; ++index) {
-	instancingData_[objectNum_].WVP = MakeIdentity4x4();
-	instancingData_[objectNum_].World = MakeIdentity4x4();
-	instancingData_[objectNum_].WorldInverseTranspose = MakeIdentity4x4();
-	instancingData_[objectNum_].color = { 1.0f,1.0f,1.0f,1.0f };
+		instancingData_[objectNum_].WVP = MakeIdentity4x4();
+		instancingData_[objectNum_].World = MakeIdentity4x4();
+		instancingData_[objectNum_].WorldInverseTranspose = MakeIdentity4x4();
+		instancingData_[objectNum_].color = { 1.0f,1.0f,1.0f,1.0f };
 	//}
 
 }
 
 void Object3d::Update()
 {
+	
 
-
-
+	
 	/*if (instancingWorld_[0]) {
 		for (uint32_t index = 0; index < objectNum_; ++index) {
 			instancingData_[index].World =instancingWorld_[index]->matWorld_;
 			instancingData_[index].WVP = instancingData_[index].World;
 			instancingData_[index].WorldInverseTranspose = MakeIdentity4x4();
-			instancingData_[index].color =
+			instancingData_[index].color = 
 				Vector4(
 					instancingColor_[index]->x,
-					instancingColor_[index]->y,
+					instancingColor_[index]->y, 
 					instancingColor_[index]->z,
 					instancingColor_[index]->w);
 		}
 	}
 	else if (!instancingWorld_[0]) {
-
+		
 			instancingData_[0].World = worldTransform_.matWorld_;
 			instancingData_[0].WVP = instancingData_[0].World;
 			instancingData_[0].WorldInverseTranspose = MakeIdentity4x4();
 			instancingData_[0].color = { 1.0f,1.0f,1.0f,1.0f };
-
+		
 	}*/
+	
+	 numInstance_ = 0;
+		for (std::list<std::shared_ptr<ObjectPram>>::iterator objectPtamIterator = objectParms_.begin(); objectPtamIterator != objectParms_.end();) {
+			if ((*objectPtamIterator)->isAlive == false) {
+				objectPtamIterator = objectParms_.erase(objectPtamIterator);
+				continue;
+			}
+			if (numInstance_ < kNumMaxInstance_) {
 
-	numInstance_ = 0;
-	for (std::list<std::shared_ptr<ObjectPram>>::iterator objectPtamIterator = objectParms_.begin(); objectPtamIterator != objectParms_.end();) {
-		if ((*objectPtamIterator)->isAlive == false) {
-			objectPtamIterator = objectParms_.erase(objectPtamIterator);
-			continue;
+				instancingData_[numInstance_].World = (*objectPtamIterator)->worldTransform.matWorld_;
+				instancingData_[numInstance_].WVP = instancingData_[numInstance_].World;
+				instancingData_[numInstance_].color = (*objectPtamIterator)->color;
+			}
+			numInstance_++;
+			++objectPtamIterator;
 		}
-		if (numInstance_ < kNumMaxInstance_) {
-
-			instancingData_[numInstance_].World = (*objectPtamIterator)->worldTransform.matWorld_;
-			instancingData_[numInstance_].WVP = instancingData_[numInstance_].World;
-			instancingData_[numInstance_].WorldInverseTranspose = MakeIdentity4x4();
-			instancingData_[numInstance_].color = (*objectPtamIterator)->color;
-		}
-		numInstance_++;
-		++objectPtamIterator;
-	}
-
+	
 
 
 	worldTransform_.UpdateMatrix();
@@ -133,27 +133,48 @@ void Object3d::Update()
 
 }
 
-void Object3d::Draw(Camera* camera)
+void Object3d::Draw(Camera* camera )
 {
 	numInstance_ = 0;
+	//if (objectParms_.size() == 0) {
 
 
-	for (std::list<std::shared_ptr<ObjectPram>>::iterator objectPtamIterator = objectParms_.begin(); objectPtamIterator != objectParms_.end();) {
-		if ((*objectPtamIterator)->isAlive == false) {
-			objectPtamIterator = objectParms_.erase(objectPtamIterator);
-			continue;
+		/*if (instancingWorld_[0]) {
+			for (uint32_t index = 0; index < objectNum_; ++index) {
+				instancingData_[index].World = instancingWorld_[index]->matWorld_;
+				instancingData_[index].WVP = Multiply(instancingData_[index].World, camera->GetViewprojectionMatrix());
+				instancingData_[index].WorldInverseTranspose = Inverse(Transpose(instancingData_[index].World));
+				instancingData_[index].color = Vector4(
+					instancingColor_[index]->x,
+					instancingColor_[index]->y,
+					instancingColor_[index]->z,
+					instancingColor_[index]->w);
+			}
 		}
-		if (numInstance_ < kNumMaxInstance_) {
-			instancingData_[numInstance_].World = (*objectPtamIterator)->worldTransform.matWorld_;
-			instancingData_[numInstance_].WVP = Multiply(instancingData_[numInstance_].World, camera->GetViewprojectionMatrix());;
-			instancingData_[numInstance_].WorldInverseTranspose = Inverse(Transpose((*objectPtamIterator)->worldTransform.matWorld_));
-			instancingData_[numInstance_].color = (*objectPtamIterator)->color;
-			instancingData_[numInstance_].color.w = 1.0f;
-		}
-		numInstance_++;
-		++objectPtamIterator;
-	}
+		else if (!instancingWorld_[0]) {
 
+			instancingData_[0].World = worldTransform_.matWorld_;
+			instancingData_[0].WVP = Multiply(instancingData_[0].World, camera->GetViewprojectionMatrix());
+			instancingData_[0].WorldInverseTranspose = Inverse(Transpose(instancingData_[0].World));
+			instancingData_[0].color = { 1.0f,1.0f,1.0f,1.0f };
+
+		}*/
+	//}
+	
+		for (std::list<std::shared_ptr<ObjectPram>>::iterator objectPtamIterator = objectParms_.begin(); objectPtamIterator != objectParms_.end();) {
+			if ((*objectPtamIterator)->isAlive == false) {
+				objectPtamIterator = objectParms_.erase(objectPtamIterator);
+				continue;
+			}
+			if (numInstance_ < kNumMaxInstance_) {
+				instancingData_[numInstance_].World = (*objectPtamIterator)->worldTransform.matWorld_;
+				instancingData_[numInstance_].WVP = Multiply(instancingData_[numInstance_].World, camera->GetViewprojectionMatrix());;
+				instancingData_[numInstance_].color = (*objectPtamIterator)->color;
+			}
+			numInstance_++;
+			++objectPtamIterator;
+		}
+	
 	cameraForGPUData_->worldPosition = camera->GetTransform().translate;
 	DirectXCommon* directXCommon = DirectXCommon::GetInstance();
 	if (animationModel_) {
@@ -161,7 +182,7 @@ void Object3d::Draw(Camera* camera)
 		//directionalLightData->direction =  Normalize(directionalLightData->direction);
 		directXCommon->GetCommandList()->SetGraphicsRootSignature(pso->GetProperty().rootSignature.Get());
 		directXCommon->GetCommandList()->SetPipelineState(pso->GetProperty().graphicsPipelineState.Get());    //PSOを設定
-
+		
 	}
 	else if (model_) {
 		PSO* pso = PSO::GatInstance();
@@ -177,11 +198,11 @@ void Object3d::Draw(Camera* camera)
 	}
 
 
-
-
-
-
-
+	
+	
+	
+	
+	
 	//形状を設定。PSOに設定しているものとはまた別。同じものを設定すると考えておけば良い
 	directXCommon->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	directXCommon->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResource->GetGPUVirtualAddress());
@@ -189,7 +210,7 @@ void Object3d::Draw(Camera* camera)
 	directXCommon->GetCommandList()->SetGraphicsRootConstantBufferView(3, directionalLightResource->GetGPUVirtualAddress());
 	directXCommon->GetCommandList()->SetGraphicsRootConstantBufferView(4, cameraForGPUResource_->GetGPUVirtualAddress());
 	directXCommon->GetCommandList()->SetGraphicsRootConstantBufferView(5, spotLightResource_->GetGPUVirtualAddress());
-
+	
 	// 3Dモデルが割り当てられていれば描画する
 	if (animationModel_) {
 
@@ -197,8 +218,8 @@ void Object3d::Draw(Camera* camera)
 			}, { { 1.0f,1.0,1.0,1.0f } ,{ 0.0f,-1.0f,0.0f },0.5f });
 	}
 	else if (model_) {
-
-		model_->Draw(skinTex_, numInstance_);
+		
+		model_->Draw(skinTex_,numInstance_);
 
 	}
 	else if (skybox_) {
@@ -222,7 +243,7 @@ void Object3d::Release()
 	//}
 
 	object3dData_.instancingResource.Reset();
-
+	
 }
 
 void Object3d::SetModel(const std::string& filePath)

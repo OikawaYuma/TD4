@@ -67,7 +67,7 @@ PixelShaderOutput main(VertexShaderOutput input)
     {
         discard;
     }
-    output.color = textureColor* input.color;
+    output.color = gMaterial.color * textureColor* input.color;
     if (gMaterial.enableLighting != 0)
     {
         float NdotL = dot(normalize(input.normal), -gDirectionalLight.direction);
@@ -81,7 +81,7 @@ PixelShaderOutput main(VertexShaderOutput input)
         float32_t directionSpecularPow = pow(saturate(directionNDotE), gMaterial.shininess);; // 反射強度
         // 拡散反射
         float32_t3 directionDiffuse =
-            input.color.rgb * textureColor.rgb * gDirectionalLight.color.rgb * cos * gDirectionalLight.intensity;
+            gMaterial.color.rgb * textureColor.rgb * gDirectionalLight.color.rgb * cos * gDirectionalLight.intensity;
         // 鏡面反射
         float32_t3 directionSpecular =
             gDirectionalLight.color.rgb * gDirectionalLight.intensity * directionSpecularPow * float32_t3(1.0f, 1.0f, 1.0f);
@@ -100,7 +100,7 @@ PixelShaderOutput main(VertexShaderOutput input)
         float32_t spotSpecularPow = pow(saturate(spotNDotE), 30.0f); // 反射強度
         
         float32_t3 spotDiffuse =
-        input.color.rgb * textureColor.rgb * gSpotLight.color.rgb * cos * gSpotLight.intensity * falloffFactor * factor;
+        gMaterial.color.rgb * textureColor.rgb * gSpotLight.color.rgb * cos * gSpotLight.intensity * falloffFactor * factor;
        
         float32_t3 spotSpecular =
         gSpotLight.color.rgb * gSpotLight.intensity * spotSpecularPow * float32_t3(0.1f, 0.1f, 0.1f) * falloffFactor * factor;
@@ -109,7 +109,7 @@ PixelShaderOutput main(VertexShaderOutput input)
        // output.color.rgb *= gMaterial.color.rgb;
         
         //Objectの法線と光の方向と強さから輝度をとる
-        float32_t nl =
+        float32_t nl = 
         max(0, dot(input.normal, -gDirectionalLight.direction)) * gMaterial.shininess;
         if (nl <= 0.01f)
         {
@@ -123,7 +123,7 @@ PixelShaderOutput main(VertexShaderOutput input)
         {
             nl = 1.0f;
         }
-        output.color.rgb *= nl;
+        output.color.rgb *=nl;
        // output.color.rgb *= nl;
         
         // 以下はこの方法でもできるということ　attenuationFactorは距離による減衰のこと
@@ -138,11 +138,11 @@ PixelShaderOutput main(VertexShaderOutput input)
         //// 拡散反射+鏡面反射
         //output.color.rgb = environmentColor.rgb + diffuse + specular;
         //// αは今まで通り
-        output.color.a = textureColor.a * input.color.a;
+        output.color.a = gMaterial.color.a * textureColor.a * input.color.a;
     }
     else
     {
-        output.color = textureColor * input.color;
+        output.color = gMaterial.color * textureColor * input.color.a;
     }
     
     return output;

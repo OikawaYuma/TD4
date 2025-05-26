@@ -120,11 +120,9 @@ PixelShaderOutput main(VertexShaderOutput input)
     {
         weight = 0.0f;
     }
-  // 減衰係数：遠くなるほど小さく（近距離で1.0、遠距離で0.0）
-    float32_t fadeFactor = saturate(1.0f - (viewZPre - 1.0f) / (55 - 1.0f));
-
+   
     // 差が小さい過ぎてわかりずらいので適当に6倍している。CBufferで調整パラメータとして送ったりすると良い
-    weight *= fadeFactor *4.0;
+    weight = saturate(weight);
   
     //if (length(difference) >= gMaterial.diffSize.x && length(difference) >= gMaterial.diffSize.y)
     //{
