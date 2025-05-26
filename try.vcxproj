@@ -119,15 +119,18 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Game\CarParts\CarEngine\CarGear\CarGear.cpp" />
+　　<ClCompile Include="Game\CarParts\CarEngine\CarGear\CarGear.cpp" />
     <ClCompile Include="Game\CarParts\CarEngine\CarGear\Gear0\Gear0State.cpp" />
     <ClCompile Include="Game\CarParts\CarEngine\CarGear\Gear1\Gear1State.cpp" />
     <ClCompile Include="Game\CarParts\CarEngine\CarGear\Gear2\Gear2State.cpp" />
     <ClCompile Include="Game\CarParts\CarEngine\CarGear\Gear3\Gear3State.cpp" />
     <ClCompile Include="Game\CarParts\CarEngine\CarGear\Gear4\Gear4State.cpp" />
     <ClCompile Include="Game\CarParts\CarEngine\CarGear\Gear5\Gear5State.cpp" />
+    <ClCompile Include="Game\CarParts\CarSteering\CarSteering.cpp" />
+    <ClCompile Include="Game\CarSmoke\CarSmoke.cpp" />
+    <ClCompile Include="Game\CarParts\CarTire\FrontCarTire\FrontCarTire.cpp" />
     <ClCompile Include="Game\Car\Car.cpp" />
-    <ClCompile Include="Game\CarParts\CarTire\CarTire.cpp" />
+    <ClCompile Include="Game\CarParts\CarTire\RearCarTire\RearCarTire.cpp" />
     <ClCompile Include="Game\CarParts\CarEngine\CarEngine.cpp" />
     <ClCompile Include="Game\BaseObject\BaseObject.cpp" />
     <ClCompile Include="Game\CarParts\CarBody\CarBody.cpp" />
@@ -224,8 +227,12 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Game\CarParts\CarEngine\CarGear\Gear4\Gear4State.h" />
     <ClInclude Include="Game\CarParts\CarEngine\CarGear\Gear5\Gear5State.h" />
     <ClInclude Include="Game\CarParts\CarEngine\CarGear\IGearState.h" />
+    <ClInclude Include="Game\CarParts\CarSteering\CarSteering.h" />
+    <ClInclude Include="Game\CarSmoke\CarSmoke.h" />
+    <ClInclude Include="Game\CarParts\CarTire\FrontCarTire\FrontCarTire.h" />
+    <ClInclude Include="Game\CarParts\CarTire\ICarTire.h" />
     <ClInclude Include="Game\Car\Car.h" />
-    <ClInclude Include="Game\CarParts\CarTire\CarTire.h" />
+    <ClInclude Include="Game\CarParts\CarTire\RearCarTire\RearCarTire.h" />
     <ClInclude Include="Game\CarParts\CarEngine\CarEngine.h" />
     <ClInclude Include="Game\BaseObject\BaseObject.h" />
     <ClInclude Include="Game\CarParts\CarBody\CarBody.h" />
