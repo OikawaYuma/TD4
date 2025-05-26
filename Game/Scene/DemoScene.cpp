@@ -17,7 +17,7 @@ void DemoScene::Init()
 	ModelManager::GetInstance()->LoadModel("Resources/map", "map.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/map", "map0.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/ball", "ball.obj");
-
+	ModelManager::GetInstance()->LoadModel("Resources/floor", "floor.obj");
 	fade_ = std::make_unique<Fade>();
 	fade_->Init("Resources/fade.png");
 	fade_->SetTexture(TextureManager::GetInstance()->StoreTexture("Resources/fade.png"));
@@ -25,7 +25,7 @@ void DemoScene::Init()
 	sprite_ = std::make_unique<Sprite>();
 	sprite_->Init("Resources/load.png");
 	sprite_->SetTexture(TextureManager::GetInstance()->StoreTexture("Resources/load.png"));
-
+	Object3dManager::GetInstance()->StoreObject("floor",TextureManager::GetInstance()->StoreTexture("Resources/uvChecker.png"),0);
 	ui_ = std::make_unique<UI>();
 	ui_->Initialize();
 	sprite_->Init("Resources/load2.png");
@@ -33,7 +33,7 @@ void DemoScene::Init()
 	sprite_->SetTexture(spTx_);
 	camera_ = std::make_unique<Camera>();
 	camera_->Initialize();
-	levelData_ = Loder::LoadJsonFile("Resources/json","stage3");
+	levelData_ = Loder::LoadJsonFile("Resources/json","stage4");
 	GlobalVariables::GetInstance()->LoadFiles();
 	
 	
@@ -90,16 +90,18 @@ void DemoScene::Update()
 void DemoScene::Draw()
 {
 	Object3dManager::GetInstance()->Draw(followCamera_->GetCamera());
-	carSmoke_->Draw();
+	//carSmoke_->Draw();
 }
 
 void DemoScene::PostDraw()
 {
 	postProcess_->Draw();
+	
 }
 
 void DemoScene::Draw2d()
 {
+	carSmoke_->Draw();
 	//sprite_->Draw();
 	ui_->Draw();
 	//sprite_->Draw();

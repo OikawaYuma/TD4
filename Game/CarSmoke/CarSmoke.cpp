@@ -3,7 +3,6 @@
 
 void CarSmoke::Init()
 {
-	ModelManager::GetInstance()->LoadModel("Resources/ball", "ball.obj");
 	particle_ = std::make_unique<Particle>();
 	particle_->SetModel("ball.obj");
 	particle_->Init();
