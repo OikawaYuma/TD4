@@ -6,7 +6,7 @@
 #include "CarParts/CarTire/FrontCarTire/FrontCarTire.h"
 #include "CarParts/CarTire/RearCarTire/RearCarTire.h"
 #include <vector>
-
+#include "PlaneProjectionShadow.h"
 class Car
 {
 public:
@@ -67,6 +67,8 @@ private:
 	std::unique_ptr<CarSteering> steering_;
 	// 仮
 	std::weak_ptr<ObjectPram> objectPram_{};
+	// 平行影
+	std::unique_ptr<PlaneProjectionShadow> shadow_;
 	// 中心からの距離
 	float frontLength = 1.31f;  // 重心から前輪まで
 	float rearLength = 1.31f;   // 重心から後輪まで

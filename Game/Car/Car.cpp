@@ -1,6 +1,5 @@
 #include "Car.h"
 #include <ModelManager.h>
-
 void Car::Initialize(const Vector3& scale, const Vector3& rotate, const Vector3& translate, const std::string filename)
 {
 	// 車の核となる場所を設定　各クラスに送る座標
@@ -12,7 +11,9 @@ void Car::Initialize(const Vector3& scale, const Vector3& rotate, const Vector3&
 	CreateCarBody();
 	// tire生成
 	CreateCarTire();
-
+	// 影生成
+	shadow_ = std::make_unique<PlaneProjectionShadow>();
+	shadow_->Init(&worldTransform_,filename);
 	
 
 }
@@ -30,8 +31,10 @@ void Car::Update()
 		tire->Update();
 	}
 	BicycleModel();
+	shadow_->Update();
 	// UIクラスから出たスピードを足す
 	worldTransform_.UpdateMatrix();
+	
 	// ステアリング更新
 	steering_->Update();
 }
@@ -51,28 +54,28 @@ void Car::CreateCarTire()
 	// 車輪に座標を送り初期化
 	// 左前車輪
 	std::unique_ptr<ICarTire> frontLeftTire = std::make_unique<FrontCarTire>();
-	frontLeftTire->Initialize({ 0.0f,0.0f,0.0f }, {}, { -0.79f,0.34f,1.31f }, "carTire");
+	frontLeftTire->Initialize({ 0.0f,0.0f,0.0f }, {}, { -0.71f,0.4f,1.31f }, "carTire");
 	frontLeftTire->SetParent(&worldTransform_);
 	//　下記一行問題ICar参照
 	frontLeftTire->SetSteeringAngle(steering_->GetAngle());
 	tires_.push_back(std::move(frontLeftTire));
 	// 右前車輪
 	std::unique_ptr<ICarTire> frontRightTire = std::make_unique<FrontCarTire>();
-	frontRightTire->Initialize({ 0.0f,0.0f,0.0f }, {}, { 0.79f,0.34f,1.31f }, "carTire");
+	frontRightTire->Initialize({ 0.0f,0.0f,0.0f }, {}, { 0.71f,0.4f,1.31f }, "carTire");
 	frontRightTire->SetParent(&worldTransform_);
 	//　下記一行問題ICar参照
 	frontRightTire->SetSteeringAngle(steering_->GetAngle());
 	tires_.push_back(std::move(frontRightTire));
 	// 左後車輪
 	std::unique_ptr<ICarTire> rearLeftTire = std::make_unique<RearCarTire>();
-	rearLeftTire->Initialize({ 0.0f,0.0f,0.0f }, {}, { -0.79f,0.34f,-1.31f }, "carTire");
+	rearLeftTire->Initialize({ 0.0f,0.0f,0.0f }, {}, { -0.71f,0.4f,-1.31f }, "carTire");
 	rearLeftTire->SetParent(&worldTransform_);
 	//　下記一行問題ICar参照
 	rearLeftTire->SetSteeringAngle(steering_->GetAngle());
 	tires_.push_back(std::move(rearLeftTire));
 	// 左後車輪
 	std::unique_ptr<ICarTire> rearRightTire = std::make_unique<RearCarTire>();
-	rearRightTire->Initialize({ 0.0f,0.0f,0.0f }, {}, { 0.79f,0.34f,-1.31f }, "carTire");
+	rearRightTire->Initialize({ 0.0f,0.0f,0.0f }, {}, { 0.71f,0.4f,-1.31f }, "carTire");
 	rearRightTire->SetParent(&worldTransform_);
 	//　下記一行問題ICar参照
 	rearRightTire->SetSteeringAngle(steering_->GetAngle());
@@ -113,27 +116,24 @@ void Car::BicycleModel()
 
 	const float frameTime = 60.0f;
 
-	// 車速を100で割って正規化（おそらく 1.0 以下の小数値に調整）
+	// 時速から秒速にし、1frame当たりの速度に変換
 	float adustSpeed = speed_ /3.6f / frameTime;
 
 	// ホイールベース（前輪から後輪までの距離の合計）
 	float wheelBase = frontLength + rearLength;
 
-	//// βは「滑り角」や「車両の方向と進行方向の差」などの補正角度を意味する
-	//float beta = std::atan(std::tan(*steering_->GetAngle()) * rearLength / wheelBase);
-
 	//// 車両の回転角速度を初期化
 	float theta = 0;
 
 	//// 回転角速度をステア角と車速に基づいて計算
-	theta = (adustSpeed /3.6f / wheelBase) * std::tan(*steering_->GetAngle());
+	theta = (adustSpeed / wheelBase) * std::tan(*steering_->GetAngle());
 
 	// turning radius を計算
 	float turningRadius = wheelBase / std::tan(*steering_->GetAngle());
 	float velocity = adustSpeed * frameTime; // adustSpeedは speed / 100 なので元に戻す
 
 	float requiredLatForce = std::abs((mass_ * velocity * velocity) / turningRadius);
-
+	float gripRatio = 0;
 	if (requiredLatForce <= weight_) {
 		// 曲がれる場合：今の挙動そのまま適用
 		worldTransform_.rotation_.y += theta;
@@ -143,7 +143,7 @@ void Car::BicycleModel()
 	}
 	else {
 		// 曲がれない場合：滑る（アンダーステア）方向へ補正
-		float gripRatio = weight_ / requiredLatForce;
+		gripRatio = weight_ / requiredLatForce;
 
 		// ステアが効きにくくなる → θを減衰させる（滑る）
 		theta *= gripRatio;
@@ -154,4 +154,15 @@ void Car::BicycleModel()
 		worldTransform_.translation_.z += adustSpeed * std::cos(worldTransform_.rotation_.y);
 		worldTransform_.translation_.x += adustSpeed * std::sin(worldTransform_.rotation_.y) * gripRatio; // 横の食いつきは低下
 	}
+#ifdef _DEBUG
+	ImGui::Begin("CarGrip");
+	ImGui::Text("saideForce : %f", requiredLatForce);
+	ImGui::Text("weight : %f", weight_);
+	ImGui::Text("grip : %f", gripRatio);
+	ImGui::Text("theta : %f", theta);
+	//ImGui::Text("theta : %f", theta);
+	ImGui::End();
+#endif // _DEBUG
+
+
 }
