@@ -17,67 +17,60 @@ void DemoScene::Init()
 	ModelManager::GetInstance()->LoadModel("Resources/map", "map.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/map", "map0.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/ball", "ball.obj");
-	//ModelManager::GetInstance()->LoadModel("Resources/map", "IROHAmap.obj");
-	wood_ = std::make_unique<WorldDesign>();
-	wood_->Init({ 1.0f,1.0f,1.0f }, { 0.0f,15.0f,30.0f }, "map0");
+	ModelManager::GetInstance()->LoadModel("Resources/floor", "floor.obj");
 	fade_ = std::make_unique<Fade>();
 	fade_->Init("Resources/fade.png");
 	fade_->SetTexture(TextureManager::GetInstance()->StoreTexture("Resources/fade.png"));
-	spTx_ = TextureManager::GetInstance()->StoreTexture("Resources/load2.png");
+	spTx_ = TextureManager::GetInstance()->StoreTexture("Resources/load3.png");
 	sprite_ = std::make_unique<Sprite>();
 	sprite_->Init("Resources/load.png");
 	sprite_->SetTexture(TextureManager::GetInstance()->StoreTexture("Resources/load.png"));
-
+	Object3dManager::GetInstance()->StoreObject("floor",TextureManager::GetInstance()->StoreTexture("Resources/uvChecker.png"),0);
 	ui_ = std::make_unique<UI>();
 	ui_->Initialize();
 	sprite_->Init("Resources/load2.png");
-
-	carGear_ = std::make_unique<Gear>();
-	carGear_->Initialize();
 	
 	sprite_->SetTexture(spTx_);
 	camera_ = std::make_unique<Camera>();
 	camera_->Initialize();
-	levelData_ = Loder::LoadJsonFile("Resources/json","stage1");
+	levelData_ = Loder::LoadJsonFile("Resources/json","stage4");
 	GlobalVariables::GetInstance()->LoadFiles();
-
-	particle_ = std::make_unique<Particle>();
-	particle_->SetModel("ball.obj");
-	particle_->Init();
-	particle_->SetName("bomb");
-	particle_->ApplyGlovalVariables();
-	particle_->SetJsonPram();
 	
-	particle_->SetCamera(camera_.get());
-	emitter_.count = 10;
-	emitter_.frequency = 0.5f;
-	emitter_.frequencyTime = 0.0f;
-	emitter_.transform.rotate = { 0.0f,0.0f,0.0f };
-	emitter_.transform.scale = { 0.25f,0.25f,0.25f };
-	emitter_.transform.translate = { 0.0f,1.0f,25.0f };
-	emitter_.randRangeXYZ =	//発生範囲を設定
-	{
-		{0.3f,0.7f},
-		{0.2f,0.5f},
-		{-0.5f,0.3f}
-	};
-	emitter_.size = 0.5f;
-	particle_->SetEmitter(emitter_);
-	particle_->SetTexture(spTx_);
-	particle_->SetScleChangeFlag(false);
+	
 	ArrageObj(maps_);
+	followCamera_ = std::make_unique<FollowCamera>();
+	followCamera_->Init();
+	carSmoke_ = std::make_unique<CarSmoke>();
+	carSmoke_->SetCamera(followCamera_->GetCamera());
+	carSmoke_->Init();
+	// 速度メーターにスピードのポインタを渡す
+	ui_->SetSpeed(car_->GetSpeed());
+	followCamera_->SetSpeed(car_->GetSpeed());
+	WorldTransform* wt = car_->GetWorldTransform();
+	followCamera_->SetTarget(wt);
+
+	carSmoke_->SetParent(car_->GetWorldTransform());
 	postProcess_ = std::make_unique<PostProcess>();
 	postProcess_->Init();
-	postProcess_->SetEffectNo(PostEffectMode::kFullScreen);
+	postProcess_->SetCamera(followCamera_->GetCamera());
+	postProcess_->SetEffectNo(PostEffectMode::kDepthOutline);
 	
+
 }
 
 void DemoScene::Update()
 {
+	followCamera_->Upadate();
+
 	camera_->Move();
 	if (Input::GetInstance()->TriggerKey(DIK_V)) {
 		fade_->StartFadeIn();
 	}
+#ifdef _DEBUG
+	PostEffectChange();
+	camera_->CameraDebug();
+#endif // _DEBUG
+
 	camera_->Update();
 	GlobalVariables::GetInstance()->Update();
 	for (std::list<std::unique_ptr<map>>::iterator itr = maps_.begin(); itr != maps_.end(); itr++) {
@@ -87,31 +80,29 @@ void DemoScene::Update()
 	//particle_->CreateParticle();
 	Object3dManager::GetInstance()->Update();
 	postProcess_->Update();
-	camera_->CameraDebug();
+	
 	sprite_->Update();
-	carGear_->Update();
-	ui_->SetGear(carGear_->GetCurrentGear());
 	ui_->Update();
-	ui_->SetSpeed(carGear_->GetCurrentSpeed());
-	particle_->Update();
 	fade_->Update();
 	fade_->UpdateFade();
-	PostEffectChange();
+	carSmoke_->Update();
 }
 void DemoScene::Draw()
 {
-	Object3dManager::GetInstance()->Draw(camera_.get());
-	particle_->Draw();
+	Object3dManager::GetInstance()->Draw(followCamera_->GetCamera());
+	//carSmoke_->Draw();
 }
 
 void DemoScene::PostDraw()
 {
 	postProcess_->Draw();
+	
 }
 
 void DemoScene::Draw2d()
 {
-	sprite_->Draw();
+	carSmoke_->Draw();
+	//sprite_->Draw();
 	ui_->Draw();
 	//sprite_->Draw();
 	fade_->Draw();

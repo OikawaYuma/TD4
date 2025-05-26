@@ -43,6 +43,7 @@ ModelData Model::LoadObjFile(const std::string& directoryPath, const std::string
 		}
 
 
+
 	}
 	for (uint32_t materialIndex = 0; materialIndex < scene->mNumMaterials; ++materialIndex) {
 		aiMaterial* material = scene->mMaterials[materialIndex];

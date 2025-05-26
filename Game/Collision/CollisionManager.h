@@ -8,6 +8,9 @@
 #include "Collider.h"
 #include<list>
 #include <memory>
+#include <iostream>
+#include <algorithm>
+#include"math/mathFunction.h"
 
 class CollisionManager {
 public:
@@ -45,6 +48,23 @@ private:
 	/// <param name="v2Radious"></param>
 	/// <returns></returns>
 	bool CheckCollision(Vector3 v1, float v1Radious, Vector3 v2, float v2Radious);
+
+	/// <summary>
+	/// OBB同士
+	/// </summary>
+	/// <param name="obb1"></param>
+	/// <param name="obb2"></param>
+	/// <returns></returns>
+	bool CheckCollision(OBB a, OBB b);
+
+	/// <summary>
+	/// 球とOBBの当たり判定
+	/// </summary>
+	/// <param name="v1"></param>
+	/// <param name="radius"></param>
+	/// <param name="obb"></param>
+	/// <returns></returns>
+	bool CheckCollision(Vector3 v1,float radius, OBB obb);
 
 private:
 	std::list<Collider*> colliders_;
