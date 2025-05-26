@@ -1,17 +1,19 @@
 #include "UI.h"
+#include <imgui/imgui.h>
+#include <Input.h>
+#include <numbers>
+
 UI::~UI()
 {
 }
 
 void UI::Initialize()
 {
-	// スピードメーター
-	speedMeterUI_ = std::make_unique<SpeedMeterUI>();
-	speedMeterUI_->Initialize();
+	// メーター本体
+	SpeedSprite_ = std::make_unique<Sprite>();
+	SpeedSprite_->SetTexture(TextureManager::GetInstance()->StoreTexture("Resources/meter.png"));
+	SpeedSprite_->Init("Resources/meter.png");
 
-	// ギア
-	gearUI_ = std::make_unique<GearUI>();
-	gearUI_->Initialize();
 	// 赤い針
 	SpeedMeterSprite_ = std::make_unique<Sprite>();
 	SpeedMeterSprite_->SetTexture(TextureManager::GetInstance()->StoreTexture("Resources/hari.png"));
@@ -26,28 +28,11 @@ void UI::Initialize()
 	orokamono_->SetAnchorPoint(Vector2(0.5f, 0.5f));
 	orokamono_->SetPosition({ 640.0f,360.0f });
 	orokamono_->SetColor({ 1.0f,1.0f,1.0f,0.0f });
+	
 }
 
 void UI::Update()
 {
-	// スピードメーター
-	speedMeterUI_->Update();
-
-	// ギア
-	gearUI_->Update();
-}
-
-void UI::Draw()
-{
-	// スピードメーター
-	speedMeterUI_->Draw();
-	// ギア
-	gearUI_->Draw();
-}
-
-void UI::SetSpeed(float speed_)
-{
-	speedMeterUI_->SetSpeed(speed_);
 	// アンカーの調整
 	float imageHeight = 150.0f;
 	float offsetY = 10.0f;
@@ -103,14 +88,10 @@ void UI::SetSpeed(float speed_)
 #endif // _DEBUG
 
 	
-
 }
 
-void UI::SetGear(int gear)
+void UI::Draw()
 {
-
-	gearUI_->SteGearNum(gear);
-
 	SpeedSprite_->Draw();
 	SpeedMeterSprite_->Draw();
 	//orokamono_->Draw();

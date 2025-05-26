@@ -24,7 +24,6 @@
 #include "Fade/Fade.h"
 #include "Loder.h"
 #include "Particle.h"
-#include "CarParts/CarEngine/CarGear/CarGear.h"
 #include "CarSmoke/CarSmoke.h"
 class DemoScene : public IScene
 {
@@ -46,7 +45,9 @@ public:
 	void ArrageObj(std::list<std::unique_ptr<map>>& maps);
 
 private:
+	
 	std::unique_ptr<FollowCamera> followCamera_;
+
 	std::unique_ptr<PostProcess> postProcess_;
 	// Clearシーン用Camera
 	std::unique_ptr<Camera> camera_ = nullptr;
@@ -66,9 +67,6 @@ private:
 	std::unique_ptr<UI> ui_;
 	uint32_t spTx_ = 0;
 	LevelData levelData_{};
-
-	// Gear
-	std::unique_ptr<Gear> carGear_;
 
 	int selectedIndex[1] = {0};
 };

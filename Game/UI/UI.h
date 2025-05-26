@@ -1,6 +1,4 @@
 #pragma once
-#include "SpeedMeter/SpeedMeter.h"
-#include "Gear/GearUI.h"
 #include <memory>
 #include <Sprite.h>
 #include <algorithm>
@@ -17,17 +15,6 @@ public:
 	void Draw();
 
 	// Setter
-
-	void SetSpeed(float speed_);
-	void SetGear(int gear);
-
-private:
-	// スピードメーター
-	std::unique_ptr<SpeedMeterUI> speedMeterUI_;
-
-	// ギア
-	std::unique_ptr<GearUI> gearUI_;
-	
 	void SetSpeed(float* speed_) { speed = speed_; }
 
 private:
