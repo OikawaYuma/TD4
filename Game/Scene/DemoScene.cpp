@@ -88,8 +88,8 @@ void DemoScene::Update()
 	carGear_->Update();
 	ui_->SetGear(carGear_->GetCurrentGear());
 	ui_->Update();
-	ui_->SetSpeed(carGear_->GetCurrentSpeed());
-	particle_->Update();
+	//ui_->SetSpeed(carGear_->GetCurrentSpeed());
+	//particle_->Update();
 
 	fade_->Update();
 	fade_->UpdateFade();
