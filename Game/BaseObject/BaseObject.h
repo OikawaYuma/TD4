@@ -57,7 +57,7 @@ private:
 protected:
 	std::weak_ptr<ObjectPram> objectParam_{};
 	uint32_t texture_ = 0;
-	Vector4 color_{};
+	Vector4 color_{ 1.0f,1.0f,1.0f,1.0f };
 	std::unique_ptr<Collider> collider_;
 	CollisionMode colliderMode_ = CollisionMode::None;
 };
