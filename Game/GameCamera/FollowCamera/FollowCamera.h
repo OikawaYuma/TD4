@@ -8,7 +8,6 @@
 #include "Camera.h"
 #include "WorldTransform.h"
 #include <memory>
-#include <Car/Car.h>
 
 enum CamreraDirection {
 	XP,
@@ -26,7 +25,16 @@ public:
 	void Init();
 	void StartCameraEffect();
 	void Upadate();
+	void Reset();
 
+	// プレイヤーの位置調整
+	void PosAdustment();
+
+	// 画面端のカメラ調整
+	void EndPosAdustment();
+
+	float NormalizeAngle(float angle);
+	
 
 public: // Getter
 	Camera* GetCamera() { return camera_.get(); }
@@ -34,12 +42,8 @@ public: // Getter
 public:
 	void SetTarget(const WorldTransform* target);
 	void SetLockOn(LockOn* lockOn) { lockOn_ = lockOn;};
-	void SetSpeed(float* speed_) { speed = speed_; }
-
 private:
 	std::unique_ptr<Camera> camera_;
-	// Setter
-
 	// 追従対象
 	const WorldTransform* target_ = nullptr;
 	// ロックオン
@@ -48,7 +52,6 @@ private:
 	float destinationAngleY_ = 0.0f;
 	// 追従対象の残像座標
 	Vector3 interarget_ = {};
-	Vector3 previousLookAt_ = {};
 
 	float offsetZ_ = 0.0f;
 	float preOffsetZ_ = 0.0f;
@@ -64,7 +67,5 @@ private:
 
 	float cameraChanegeTimer_ = 0.0f;
 	Vector3 preCameraTranslate_ {};
-	// 速さ
-	float *speed;
 };
 

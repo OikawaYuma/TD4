@@ -19,8 +19,8 @@ public:
 	void Update()override;
 
 #pragma region setter
-	
-	void SetParent(WorldTransform* worldTransform);
+
+
 #pragma endregion
 
 #pragma region getter

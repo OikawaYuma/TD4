@@ -17,14 +17,13 @@
 #include "PostProcess.h"
 #include "Skybox/Skybox.h"
 #include "WorldDesign/WorldDesign.h"
-#include "GameCamera/FollowCamera/FollowCamera.h"
 #include "map/map.h"
 #include <UI/UI.h>
 #include "Car/Car.h"
 #include "Fade/Fade.h"
 #include "Loder.h"
 #include "Particle.h"
-#include "CarSmoke/CarSmoke.h"
+#include "CarParts/CarEngine/CarGear/CarGear.h"
 class DemoScene : public IScene
 {
 public:
@@ -45,15 +44,13 @@ public:
 	void ArrageObj(std::list<std::unique_ptr<map>>& maps);
 
 private:
-	
-	std::unique_ptr<FollowCamera> followCamera_;
-
 	std::unique_ptr<PostProcess> postProcess_;
 	// Clearシーン用Camera
 	std::unique_ptr<Camera> camera_ = nullptr;
 	Vector3 hsv = {1.0f,1.0f,1.0f};
 
 	// 背景オブジェクト
+	std::unique_ptr<WorldDesign> wood_;
 	std::list<std::unique_ptr<map>> maps_;
 	std::unique_ptr<Car> car_;
 	// 背景オブジェクト
@@ -61,12 +58,15 @@ private:
 	Emitter emitter_{};
 	RandRangePro randRangePro_{};
 	std::unique_ptr<Fade> fade_;
-	std::unique_ptr<CarSmoke> carSmoke_;
+
 	// Sprite
 	std::unique_ptr<Sprite> sprite_;
 	std::unique_ptr<UI> ui_;
 	uint32_t spTx_ = 0;
 	LevelData levelData_{};
+
+	// Gear
+	std::unique_ptr<Gear> carGear_;
 
 	int selectedIndex[1] = {0};
 };
