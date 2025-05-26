@@ -119,6 +119,13 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+　　<ClCompile Include="Game\CarParts\CarEngine\CarGear\CarGear.cpp" />
+    <ClCompile Include="Game\CarParts\CarEngine\CarGear\Gear0\Gear0State.cpp" />
+    <ClCompile Include="Game\CarParts\CarEngine\CarGear\Gear1\Gear1State.cpp" />
+    <ClCompile Include="Game\CarParts\CarEngine\CarGear\Gear2\Gear2State.cpp" />
+    <ClCompile Include="Game\CarParts\CarEngine\CarGear\Gear3\Gear3State.cpp" />
+    <ClCompile Include="Game\CarParts\CarEngine\CarGear\Gear4\Gear4State.cpp" />
+    <ClCompile Include="Game\CarParts\CarEngine\CarGear\Gear5\Gear5State.cpp" />
     <ClCompile Include="Game\CarParts\CarSteering\CarSteering.cpp" />
     <ClCompile Include="Game\CarSmoke\CarSmoke.cpp" />
     <ClCompile Include="Game\CarParts\CarTire\FrontCarTire\FrontCarTire.cpp" />
@@ -172,6 +179,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Engine\2d\PostEffect\Effect\GaussianBlur.cpp" />
     <ClCompile Include="Engine\2d\PostEffect\Effect\GrayScale.cpp" />
     <ClCompile Include="Game\Skydome\Skydome.cpp" />
+    <ClCompile Include="Game\UI\Gear\GearUI.cpp" />
+    <ClCompile Include="Game\UI\SpeedMeter\SpeedMeter.cpp" />
     <ClCompile Include="Game\UI\UI.cpp" />
     <ClCompile Include="Game\WorldDesign\WorldDesign.cpp" />
     <ClCompile Include="Engine\2d\PostEffect\IPostEffectState.cpp" />
@@ -210,6 +219,14 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Game\map\map.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Game\CarParts\CarEngine\CarGear\CarGear.h" />
+    <ClInclude Include="Game\CarParts\CarEngine\CarGear\Gear0\Gear0State.h" />
+    <ClInclude Include="Game\CarParts\CarEngine\CarGear\Gear1\Gear1State.h" />
+    <ClInclude Include="Game\CarParts\CarEngine\CarGear\Gear2\Gear2State.h" />
+    <ClInclude Include="Game\CarParts\CarEngine\CarGear\Gear3\Gear3State.h" />
+    <ClInclude Include="Game\CarParts\CarEngine\CarGear\Gear4\Gear4State.h" />
+    <ClInclude Include="Game\CarParts\CarEngine\CarGear\Gear5\Gear5State.h" />
+    <ClInclude Include="Game\CarParts\CarEngine\CarGear\IGearState.h" />
     <ClInclude Include="Game\CarParts\CarSteering\CarSteering.h" />
     <ClInclude Include="Game\CarSmoke\CarSmoke.h" />
     <ClInclude Include="Game\CarParts\CarTire\FrontCarTire\FrontCarTire.h" />
@@ -246,6 +263,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Engine\3d\Skeleton\Skeleton.h" />
     <ClInclude Include="Engine\2d\PostEffect\Effect\FullScreen.h" />
     <ClInclude Include="Game\Skydome\Skydome.h" />
+    <ClInclude Include="Game\UI\Gear\GearUI.h" />
+    <ClInclude Include="Game\UI\SpeedMeter\SpeedMeter.h" />
     <ClInclude Include="Game\UI\UI.h" />
     <ClInclude Include="Game\Utilty\Loder.h" />
     <ClInclude Include="Engine\Interface\PSO\PSOAnimationModel.h" />

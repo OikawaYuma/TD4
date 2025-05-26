@@ -1,13 +1,13 @@
 #pragma once
-#include "SpeedMeter/SpeedMeter.h"
-#include "Gear/GearUI.h"
 #include <memory>
 #include <Sprite.h>
-#include <algorithm>
+#include <imgui/imgui.h>
+#include <Input.h>
+#include <numbers>
 
-class UI {
+class SpeedMeterUI {
 public:
-	~UI();
+	~SpeedMeterUI();
 
 	// 初期化
 	void Initialize();
@@ -17,38 +17,23 @@ public:
 	void Draw();
 
 	// Setter
-
-	void SetSpeed(float speed_);
-	void SetGear(int gear);
-
-private:
-	// スピードメーター
-	std::unique_ptr<SpeedMeterUI> speedMeterUI_;
-
-	// ギア
-	std::unique_ptr<GearUI> gearUI_;
-	
-	void SetSpeed(float* speed_) { speed = speed_; }
+	void SetSpeed(float speed_) { speed = speed_; }
 
 private:
 	// Sprite
 	std::unique_ptr<Sprite> SpeedSprite_;
 	std::unique_ptr<Sprite> SpeedMeterSprite_;
-	std::unique_ptr<Sprite> orokamono_;
 
 	// 最高速
 	const float maxSpeed = 245.0f;
 	// 最低速
 	const float minSpeed = 0.0f;
 	// 速さ
-	float* speed;
+	float speed;
 	// 加速度
 	float acceleration = 1.5f;
 	// 減速度
 	float deceleration = 1.0f;
-
-	Vector2 orokamonoVelocity_{ 10.0f,  8.0f }; // 愚か者の移動速度
-
 	// 位置
 	Vector2 pos_ = { 970.0f, 410.0f };
 	// 大きさ
@@ -66,5 +51,4 @@ private:
 	float speedRatio;
 	float minAngle = -132.0f;
 	float maxAngle = 132.0f;
-	float alpha_ = 0.0f;
 };

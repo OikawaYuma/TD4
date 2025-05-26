@@ -1,53 +1,27 @@
-#include "UI.h"
-UI::~UI()
+#include "SpeedMeter.h"
+
+SpeedMeterUI::~SpeedMeterUI()
 {
 }
 
-void UI::Initialize()
+void SpeedMeterUI::Initialize()
 {
-	// スピードメーター
-	speedMeterUI_ = std::make_unique<SpeedMeterUI>();
-	speedMeterUI_->Initialize();
+	// メーター本体
+	SpeedSprite_ = std::make_unique<Sprite>();
+	SpeedSprite_->SetTexture(TextureManager::GetInstance()->StoreTexture("Resources/UI/meter.png"));
+	SpeedSprite_->Init("Resources/UI/meter.png");
 
-	// ギア
-	gearUI_ = std::make_unique<GearUI>();
-	gearUI_->Initialize();
 	// 赤い針
 	SpeedMeterSprite_ = std::make_unique<Sprite>();
-	SpeedMeterSprite_->SetTexture(TextureManager::GetInstance()->StoreTexture("Resources/hari.png"));
-	SpeedMeterSprite_->Init("Resources/hari.png");
+	SpeedMeterSprite_->SetTexture(TextureManager::GetInstance()->StoreTexture("Resources/UI/hari.png"));
+	SpeedMeterSprite_->Init("Resources/UI/hari.png");
 	SpeedMeterSprite_->SetRot(hariRotate_);
 	// アンカーポイントの設定
 	SpeedMeterSprite_->SetAnchorPoint({ 0.5f, 0.9333f });
-	// 愚か者
-	orokamono_ = std::make_unique<Sprite>();
-	orokamono_->SetTexture(TextureManager::GetInstance()->StoreTexture("Resources/orokamono.jpg"));
-	orokamono_->Init("Resources/orokamono.jpg");
-	orokamono_->SetAnchorPoint(Vector2(0.5f, 0.5f));
-	orokamono_->SetPosition({ 640.0f,360.0f });
-	orokamono_->SetColor({ 1.0f,1.0f,1.0f,0.0f });
 }
 
-void UI::Update()
+void SpeedMeterUI::Update()
 {
-	// スピードメーター
-	speedMeterUI_->Update();
-
-	// ギア
-	gearUI_->Update();
-}
-
-void UI::Draw()
-{
-	// スピードメーター
-	speedMeterUI_->Draw();
-	// ギア
-	gearUI_->Draw();
-}
-
-void UI::SetSpeed(float speed_)
-{
-	speedMeterUI_->SetSpeed(speed_);
 	// アンカーの調整
 	float imageHeight = 150.0f;
 	float offsetY = 10.0f;
@@ -56,7 +30,7 @@ void UI::SetSpeed(float speed_)
 	SpeedMeterSprite_->SetAnchorPoint({ 0.5f, anchorY });
 
 	// メーターの針の回転計算
-	speedRatio = *speed / maxSpeed;
+	speedRatio = speed / maxSpeed;
 	float angle = minAngle + (maxAngle - minAngle) * speedRatio;
 
 	// ラジアンに変換して z 回転に適用
@@ -71,20 +45,24 @@ void UI::SetSpeed(float speed_)
 	SpeedMeterSprite_->SetPosition(hariPos_);
 	SpeedMeterSprite_->SetSize(hariScale_);
 	SpeedMeterSprite_->SetRot(hariRotate_);
-  
-  
-	orokamono_->Update();
-	orokamono_->SetSize({ 1000.0f,1000.0f });
 
-	float alphaRatio = std::clamp(*speed / maxSpeed, 0.0f, 0.8f);
+	if (Input::GetInstance()->PushKey(DIK_W)) {
+		// 加速処理
+		speed += acceleration;
+		if (speed > maxSpeed) {
+			speed = maxSpeed;
+		}
+	}
+	else {
+		// 減速処理（自然に減る）
+		speed -= deceleration;
+		if (speed < minSpeed) {
+			speed = minSpeed;
+		}
+	}
 
-	alpha_ = 0.0f + (0.8f - 0.0f) * alphaRatio;
-
-	orokamono_->SetColor({ 1.0f, 1.0f, 1.0f, alpha_ });
-
-#ifdef _DEBUG
-	ImGui::Begin("UI");
-	//ImGui::DragFloat("speed", &speed, 1.0f);
+	ImGui::Begin("SpeedMetar");
+	ImGui::DragFloat("speed", &speed, 1.0f);
 	if (ImGui::TreeNode("Meter")) {
 		ImGui::DragFloat2("pos", &pos_.x, 1.0f);
 		ImGui::DragFloat2("scale", &scale_.x, 1.0f);
@@ -100,18 +78,10 @@ void UI::SetSpeed(float speed_)
 		ImGui::TreePop();
 	}
 	ImGui::End();
-#endif // _DEBUG
-
-	
-
 }
 
-void UI::SetGear(int gear)
+void SpeedMeterUI::Draw()
 {
-
-	gearUI_->SteGearNum(gear);
-
 	SpeedSprite_->Draw();
 	SpeedMeterSprite_->Draw();
-	//orokamono_->Draw();
 }
