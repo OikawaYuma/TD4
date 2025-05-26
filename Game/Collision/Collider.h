@@ -7,8 +7,6 @@
 #pragma once
 #include"Vector3.h"
 #include<cstdint>
-#include"math/Matrix4x4.h"
-
 enum class CollisionMode {
 	AABBc,
 	OBBc,
@@ -35,8 +33,6 @@ public:
 	// スケール
 	const Vector3& GetScale() { return scale_; }
 
-	const Matrix4x4& GetMatWorld() { return matWorld_; }
-
 #pragma endregion
 
 #pragma region setter
@@ -49,7 +45,6 @@ public:
 	// 衝突マスク（相手）を設定
 	void SetCollisionMask(uint32_t CollisionMask);
 	void SetCollisionMode(CollisionMode collisionMode) { collisionMode_ = collisionMode; }
-	void SetMatWorld(const Matrix4x4& mat) { matWorld_ = mat; }
 
 #pragma endregion
 
@@ -68,6 +63,4 @@ private:
 	Vector3 worldPosition_{};
 	// collisionのフラグ
 	bool onCollision_ = false;
-	// matWorld
-	Matrix4x4 matWorld_{};
 };
