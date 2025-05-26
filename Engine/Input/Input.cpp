@@ -2,7 +2,7 @@
 #include "WinAPI.h"
 //Xinput.lib; Xinput9_1_0.lib
 #include <iostream>
-const float Input::DEADZONE_THRESHOLD = 0.1f;
+const float Input::DEADZONE_THRESHOLD = 0.3f;
 
 void Input::Initialize() {
 	WinAPI *sWinAPI = WinAPI::GetInstance();
@@ -53,6 +53,10 @@ void Input::Initialize() {
 void Input::Update() {
 	// 前回のキー入力を保存
 	memcpy(preKeys, keys, sizeof(keys));
+
+	// ジョイスティックの状態更新
+	XInputGetState(0, &joyState);
+
 	// 前回のキー入力を保存
 	memcpy(&preJoyState, &joyState, sizeof(joyState));
 
@@ -166,5 +170,15 @@ float Input::JoyStickParmRY(float num)
 	ry = ry * num;
 
 	return ry;
+}
+
+bool Input::PushRTrigger(float threshold)
+{
+	return joyState.Gamepad.bRightTrigger > (BYTE)(threshold * 255);
+}
+
+bool Input::PushLTrigger(float threshold)
+{
+	return joyState.Gamepad.bLeftTrigger > (BYTE)(threshold * 255);
 }
 
