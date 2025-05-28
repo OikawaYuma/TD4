@@ -248,13 +248,13 @@ void DemoScene::ArrageObj(std::list<std::unique_ptr<map>>& maps)
 		}
 		if (objectData.filename.compare("car") == 0) {
 
-			ModelManager::GetInstance()->LoadModel("Resources/" + objectData.filename, objectData.filename + ".obj");
+			ModelManager::GetInstance()->LoadModel("Resources/carBody",   "carBody.obj");
 			car_ = std::make_unique<Car>();
 			car_->Initialize(objectData.transform.scale, {
 				objectData.transform.rotate.x,
 				objectData.transform.rotate.y,
 				objectData.transform.rotate.z
-				}, objectData.transform.translate, objectData.filename);
+				}, objectData.transform.translate, "carBody");
 		}
 	}
 }

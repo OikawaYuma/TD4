@@ -11,9 +11,9 @@ void Car::Initialize(const Vector3& scale, const Vector3& rotate, const Vector3&
 	CreateCarBody();
 	// tire生成
 	CreateCarTire();
-	// 影生成
-	shadow_ = std::make_unique<PlaneProjectionShadow>();
-	shadow_->Init(&worldTransform_,filename);
+	//// 影生成
+	//shadow_ = std::make_unique<PlaneProjectionShadow>();
+	//shadow_->Init(&worldTransform_,filename);
 	
 
 }
@@ -31,7 +31,7 @@ void Car::Update()
 		tire->Update();
 	}
 	BicycleModel();
-	shadow_->Update();
+	//shadow_->Update();
 	// UIクラスから出たスピードを足す
 	worldTransform_.UpdateMatrix();
 	
