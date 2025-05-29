@@ -111,6 +111,14 @@ void Car::BicycleModel()
 				}
 			}
 		}
+		if (Input::GetInstance()->GetJoystickState()) {
+			if (Input::GetInstance()->PushJoyButton(XINPUT_GAMEPAD_X)) {
+				speed_ -= 0.9f;
+				if (speed_ <= 0.0f) {
+					speed_ = 0.0f;
+				}
+			}
+		}
 	}
 	
 
