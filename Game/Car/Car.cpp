@@ -124,35 +124,27 @@ void Car::BicycleModel()
 	
 
 	const float frameTime = 60.0f;
-
-	// 時速から秒速にし、1frame当たりの速度に変換
 	float adustSpeed = speed_ / 3.6f / frameTime;
-
-	// ホイールベース（前輪から後輪までの距離の合計）
 	float wheelBase = frontLength + rearLength;
-
-	// ステア角（ラジアン前提）
 	float steerAngle = *steering_->GetAngle();
+	float steerEffect = 1.2f;  // 曲がりやすさを強調する係数
+	float theta = (adustSpeed / wheelBase) * std::tan(steerAngle) * steerEffect;
 
-	// 車両の回転角速度をステア角と車速に基づいて計算
-	float theta = (adustSpeed / wheelBase) * std::tan(steerAngle);
-
-	// turning radius を計算
 	float turningRadius = wheelBase / std::tan(steerAngle);
-	float velocity = adustSpeed * frameTime; // adustSpeedは speed / 100 なので元に戻す
+	float velocity = adustSpeed * frameTime;
 
 	float requiredLatForce = std::abs((mass_ * velocity * velocity) / turningRadius);
 	float gripRatio = 1.0f;
 
 	if (requiredLatForce > weight_) {
 		gripRatio = weight_ / requiredLatForce;
-		theta *= gripRatio;  // ステアの効きが悪くなる（＝滑り）
+
+		const float gripInfluence = 0.6f;  // 滑りによる影響度（小さいほど曲がりやすくなる）
+		theta *= (1.0f - gripInfluence) + gripInfluence * gripRatio;
 	}
 
-	// 回転を反映
 	worldTransform_.rotation_.y += theta;
 
-	// 進行方向を回転に基づいて再計算
 	float yaw = worldTransform_.rotation_.y;
 	Vector3 forward = {
 		std::sin(yaw),
@@ -160,7 +152,11 @@ void Car::BicycleModel()
 		std::cos(yaw)
 	};
 
-	// ✅ gripRatioを移動全体に影響させる（アンダーステア時は曲がりが浅く＝方向も前寄りに）
+	worldTransform_.translation_.x += forward.x * adustSpeed;
+	worldTransform_.translation_.z += forward.z * adustSpeed;
+
+
+	//gripRatioを移動全体に影響させる（アンダーステア時は曲がりが浅く＝方向も前寄りに）
 	worldTransform_.translation_.x += forward.x * adustSpeed;
 	worldTransform_.translation_.z += forward.z * adustSpeed;
 
