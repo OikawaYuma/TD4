@@ -152,10 +152,6 @@ void Car::BicycleModel()
 		std::cos(yaw)
 	};
 
-	worldTransform_.translation_.x += forward.x * adustSpeed;
-	worldTransform_.translation_.z += forward.z * adustSpeed;
-
-
 	//gripRatioを移動全体に影響させる（アンダーステア時は曲がりが浅く＝方向も前寄りに）
 	worldTransform_.translation_.x += forward.x * adustSpeed;
 	worldTransform_.translation_.z += forward.z * adustSpeed;
