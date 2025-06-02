@@ -20,21 +20,18 @@ void Car::Initialize(const Vector3& scale, const Vector3& rotate, const Vector3&
 
 void Car::Update()
 {
-	
-
-
 	// 車体の更新
 	body_->Update();
-
 	// 車輪の更新
 	for (auto& tire : tires_) {
 		tire->Update();
 	}
+	// バイシクルモデルでの車の動き
 	BicycleModel();
+	// 平行影の更新
 	shadow_->Update();
 	// UIクラスから出たスピードを足す
 	worldTransform_.UpdateMatrix();
-	
 	// ステアリング更新
 	steering_->Update();
 }
@@ -112,57 +109,55 @@ void Car::BicycleModel()
 			}
 		}
 	}
-	
+	// 入力：時速 [km/h] → 毎秒に変換
+	float velocity_mps = speed_ / 3.6f;
 
-	const float frameTime = 60.0f;
+	// 1フレームあたりの時間（60FPS）
+	const float deltaTime = 1.0f / 60.0f;
+	float frameSpeed = velocity_mps * deltaTime;
 
-	// 時速から秒速にし、1frame当たりの速度に変換
-	float adustSpeed = speed_ /3.6f / frameTime;
-
-	// ホイールベース（前輪から後輪までの距離の合計）
+	// ホイールベース
 	float wheelBase = frontLength + rearLength;
 
-	//// 車両の回転角速度を初期化
-	float theta = 0;
+	// ステア角（既にラジアンと仮定）
+	float steerAngle = *steering_->GetAngle();
 
-	//// 回転角速度をステア角と車速に基づいて計算
-	theta = (adustSpeed / wheelBase) * std::tan(*steering_->GetAngle());
+	// 回転半径 R（ゼロ割防止）
+	float turningRadius = (std::abs(std::tan(steerAngle)) > 0.0001f) ? (wheelBase / std::abs(std::tan(steerAngle))) : FLT_MAX;
 
-	// turning radius を計算
-	float turningRadius = wheelBase / std::tan(*steering_->GetAngle());
-	float velocity = adustSpeed * frameTime; // adustSpeedは speed / 100 なので元に戻す
+	// 遠心力（必要な横力）
+	float requiredLatForce = (mass_ * velocity_mps * velocity_mps) / turningRadius;
 
-	float requiredLatForce = std::abs((mass_/4 * velocity * velocity) / turningRadius);
-	float gripRatio = 0;
-	if (requiredLatForce <= weight_) {
-		// 曲がれる場合：今の挙動そのまま適用
-		worldTransform_.rotation_.y += theta;
+	// 摩擦による最大横グリップ力（全車体で一括で考える）
+	float maxGripForce = mu_ * weight_; // = mu * m * g
 
-		worldTransform_.translation_.z += adustSpeed * std::cos(worldTransform_.rotation_.y);
-		worldTransform_.translation_.x += adustSpeed * std::sin(worldTransform_.rotation_.y);
+	// グリップ率
+	float gripRatio = 1.0f;
+	if (requiredLatForce > maxGripForce) {
+		gripRatio = maxGripForce / requiredLatForce;
 	}
-	else {
-		// 曲がれない場合：滑る（アンダーステア）方向へ補正
-		gripRatio = weight_ / requiredLatForce;
 
-		// ステアが効きにくくなる → θを減衰させる（滑る）
-		theta *= gripRatio;
+	// 回転角速度（ステアと速度により）
+	float theta = (velocity_mps / wheelBase) * std::tan(steerAngle);
 
-		worldTransform_.rotation_.y += theta;
+	// グリップ率が低いなら回転も減衰させる
+	theta *= gripRatio;
 
-		// 滑っている分、前に行きすぎる
-		worldTransform_.translation_.z += adustSpeed * std::cos(worldTransform_.rotation_.y);
-		worldTransform_.translation_.x += adustSpeed * std::sin(worldTransform_.rotation_.y) * gripRatio; // 横の食いつきは低下
-	}
+	// 向き更新
+	worldTransform_.rotation_.y += theta * deltaTime;
+
+	// 移動更新
+	worldTransform_.translation_.z += frameSpeed * std::cos(worldTransform_.rotation_.y);
+	worldTransform_.translation_.x += frameSpeed * std::sin(worldTransform_.rotation_.y);
+
 #ifdef _DEBUG
-	ImGui::Begin("CarGrip");
-	ImGui::Text("saideForce : %f", requiredLatForce);
-	ImGui::Text("weight : %f", weight_);
-	ImGui::Text("grip : %f", gripRatio);
-	ImGui::Text("theta : %f", theta);
-	//ImGui::Text("theta : %f", theta);
+	ImGui::Begin("CarGripDebug");
+	ImGui::Text("Required Lat Force: %.2f N", requiredLatForce);
+	ImGui::Text("Max Grip Force: %.2f N", maxGripForce);
+	ImGui::Text("Grip Ratio: %.2f", gripRatio);
+	ImGui::Text("Theta: %.4f rad/frame", theta * deltaTime);
 	ImGui::End();
-#endif // _DEBUG
+#endif
 
 
 }
