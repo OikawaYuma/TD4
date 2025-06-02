@@ -12,8 +12,8 @@ void Car::Initialize(const Vector3& scale, const Vector3& rotate, const Vector3&
 	// tire生成
 	CreateCarTire();
 	//// 影生成
-	//shadow_ = std::make_unique<PlaneProjectionShadow>();
-	//shadow_->Init(&worldTransform_,filename);
+	shadow_ = std::make_unique<PlaneProjectionShadow>();
+	shadow_->Init(&worldTransform_,filename);
 	
 
 }
@@ -31,7 +31,7 @@ void Car::Update()
 		tire->Update();
 	}
 	BicycleModel();
-	//shadow_->Update();
+	shadow_->Update();
 	// UIクラスから出たスピードを足す
 	worldTransform_.UpdateMatrix();
 	
@@ -132,7 +132,7 @@ void Car::BicycleModel()
 	float turningRadius = wheelBase / std::tan(*steering_->GetAngle());
 	float velocity = adustSpeed * frameTime; // adustSpeedは speed / 100 なので元に戻す
 
-	float requiredLatForce = std::abs((mass_ * velocity * velocity) / turningRadius);
+	float requiredLatForce = std::abs((mass_/4 * velocity * velocity) / turningRadius);
 	float gripRatio = 0;
 	if (requiredLatForce <= weight_) {
 		// 曲がれる場合：今の挙動そのまま適用

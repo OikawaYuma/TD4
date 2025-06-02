@@ -109,7 +109,7 @@ void DemoScene::PostDraw()
 
 void DemoScene::Draw2d()
 {
-	carSmoke_->Draw();
+	//carSmoke_->Draw();
 	//sprite_->Draw();
 	ui_->Draw();
 	//sprite_->Draw();
