@@ -8,6 +8,7 @@
 #include"Vector3.h"
 #include<cstdint>
 #include"math/Matrix4x4.h"
+#include <vector>
 
 enum class CollisionMode {
 	AABBc,
@@ -19,8 +20,29 @@ enum class CollisionMode {
 class Collider {
 public:
 
+	struct CollisionInfo {
+		Collider* other = nullptr;
+		Vector3 normal;
+		float penetration = 0.0f;
+	};
+
 	bool OnCollision() { return onCollision_; }
 	void SetOnCollision(bool onCollision) { onCollision_ = onCollision; }
+	/// <summary>
+	/// 衝突情報追加
+	/// </summary>
+	/// <param name="info"></param>
+	void AddCollisionInfo(const CollisionInfo& info) { info_.push_back(info); }
+	/// <summary>
+	/// 衝突情報取得
+	/// </summary>
+	/// <returns></returns>
+	const std::vector<CollisionInfo>& GetCollisionInfo()const { return info_; }
+	/// <summary>
+	/// 衝突情報をクリア
+	/// </summary>
+	void ClearInfo() { info_.clear(); }
+
 
 #pragma region getter
 
@@ -70,4 +92,6 @@ private:
 	bool onCollision_ = false;
 	// matWorld
 	Matrix4x4 matWorld_{};
+	// 衝突情報
+	std::vector<CollisionInfo> info_;
 };

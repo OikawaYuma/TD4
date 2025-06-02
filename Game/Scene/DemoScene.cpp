@@ -18,6 +18,7 @@ void DemoScene::Init()
 	ModelManager::GetInstance()->LoadModel("Resources/map", "map0.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/ball", "ball.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/floor", "floor.obj");
+	ModelManager::GetInstance()->LoadModel("Resources/box", "box.obj");
 	fade_ = std::make_unique<Fade>();
 	fade_->Init("Resources/fade.png");
 	fade_->SetTexture(TextureManager::GetInstance()->StoreTexture("Resources/fade.png"));
@@ -58,6 +59,11 @@ void DemoScene::Init()
 	postProcess_->SetCamera(followCamera_->GetCamera());
 	postProcess_->SetEffectNo(PostEffectMode::kDepthOutline);
 	
+	// collision
+	collisionManager_ = std::make_unique<CollisionManager>();
+	// 壁
+	wall_ = std::make_unique<Wall>();
+	wall_->Initialize({},{ 5.0f,5.0f,5.0f}, { 10.0f,0.0f,10.0f }, "box");
 
 }
 
@@ -94,6 +100,11 @@ void DemoScene::Update()
 	fade_->Update();
 	fade_->UpdateFade();
 	carSmoke_->Update();
+
+	// 壁
+	wall_->Update();
+
+	Collision();
 }
 void DemoScene::Draw()
 {
@@ -257,4 +268,14 @@ void DemoScene::ArrageObj(std::list<std::unique_ptr<map>>& maps)
 				}, objectData.transform.translate, "carBody");
 		}
 	}
+}
+
+void DemoScene::Collision()
+{
+	collisionManager_->ColliderClear();
+
+	collisionManager_->PushCollider(wall_->GetCollider());
+	collisionManager_->PushCollider(car_->GetBodyCollider());
+
+	collisionManager_->CheckAllCollision();
 }

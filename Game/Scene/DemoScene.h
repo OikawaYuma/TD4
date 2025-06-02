@@ -26,6 +26,9 @@
 #include "Particle.h"
 #include "CarParts/CarEngine/CarGear/CarGear.h"
 #include "CarSmoke/CarSmoke.h"
+#include "Collision/CollisionManager.h"
+#include "Obstacles/Wall.h"
+
 class DemoScene : public IScene
 {
 public:
@@ -44,6 +47,10 @@ public:
 	void ParticleEmitter();
 
 	void ArrageObj(std::list<std::unique_ptr<map>>& maps);
+
+private:
+
+	void Collision();
 
 private:
 	std::unique_ptr<FollowCamera> followCamera_;
@@ -71,5 +78,8 @@ private:
 	std::unique_ptr<Gear> carGear_;
 
 	int selectedIndex[1] = {0};
+
+	std::unique_ptr<CollisionManager> collisionManager_;
+	std::unique_ptr<Wall> wall_;
 };
 
