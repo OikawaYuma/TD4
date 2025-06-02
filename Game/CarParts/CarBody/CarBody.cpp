@@ -7,7 +7,7 @@ void CarBody::Initialize(const Vector3& rotate, const Vector3& scale, const Vect
 	translate;
 	filename;
 	// texture
-	texture_ = TextureManager::GetInstance()->StoreTexture("Resources/car/CAR.png");
+	texture_ = TextureManager::GetInstance()->StoreTexture("Resources/car/car.png");
 	// 初期化
 	BaseObject::Initialize(
 		{0.0f,0.0f,0.0f},

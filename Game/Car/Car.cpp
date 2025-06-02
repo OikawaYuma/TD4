@@ -11,9 +11,9 @@ void Car::Initialize(const Vector3& scale, const Vector3& rotate, const Vector3&
 	CreateCarBody();
 	// tire生成
 	CreateCarTire();
-	// 影生成
-	shadow_ = std::make_unique<PlaneProjectionShadow>();
-	shadow_->Init(&worldTransform_,filename);
+	//// 影生成
+	//shadow_ = std::make_unique<PlaneProjectionShadow>();
+	//shadow_->Init(&worldTransform_,filename);
 	
 
 }
@@ -31,7 +31,7 @@ void Car::Update()
 		tire->Update();
 	}
 	BicycleModel();
-	shadow_->Update();
+	//shadow_->Update();
 	// UIクラスから出たスピードを足す
 	worldTransform_.UpdateMatrix();
 	
@@ -111,49 +111,51 @@ void Car::BicycleModel()
 				}
 			}
 		}
+		if (Input::GetInstance()->GetJoystickState()) {
+			if (Input::GetInstance()->PushJoyButton(XINPUT_GAMEPAD_X)) {
+				speed_ -= 0.9f;
+				if (speed_ <= 0.0f) {
+					speed_ = 0.0f;
+				}
+			}
+		}
 	}
+
 	
 
 	const float frameTime = 60.0f;
-
-	// 時速から秒速にし、1frame当たりの速度に変換
-	float adustSpeed = speed_ /3.6f / frameTime;
-
-	// ホイールベース（前輪から後輪までの距離の合計）
+	float adustSpeed = speed_ / 3.6f / frameTime;
 	float wheelBase = frontLength + rearLength;
+	float steerAngle = *steering_->GetAngle();
+	float steerEffect = 1.2f;  // 曲がりやすさを強調する係数
+	float theta = (adustSpeed / wheelBase) * std::tan(steerAngle) * steerEffect;
 
-	//// 車両の回転角速度を初期化
-	float theta = 0;
-
-	//// 回転角速度をステア角と車速に基づいて計算
-	theta = (adustSpeed / wheelBase) * std::tan(*steering_->GetAngle());
-
-	// turning radius を計算
-	float turningRadius = wheelBase / std::tan(*steering_->GetAngle());
-	float velocity = adustSpeed * frameTime; // adustSpeedは speed / 100 なので元に戻す
+	float turningRadius = wheelBase / std::tan(steerAngle);
+	float velocity = adustSpeed * frameTime;
 
 	float requiredLatForce = std::abs((mass_ * velocity * velocity) / turningRadius);
-	float gripRatio = 0;
-	if (requiredLatForce <= weight_) {
-		// 曲がれる場合：今の挙動そのまま適用
-		worldTransform_.rotation_.y += theta;
+	float gripRatio = 1.0f;
 
-		worldTransform_.translation_.z += adustSpeed * std::cos(worldTransform_.rotation_.y);
-		worldTransform_.translation_.x += adustSpeed * std::sin(worldTransform_.rotation_.y);
-	}
-	else {
-		// 曲がれない場合：滑る（アンダーステア）方向へ補正
+	if (requiredLatForce > weight_) {
 		gripRatio = weight_ / requiredLatForce;
 
-		// ステアが効きにくくなる → θを減衰させる（滑る）
-		theta *= gripRatio;
-
-		worldTransform_.rotation_.y += theta;
-
-		// 滑っている分、前に行きすぎる
-		worldTransform_.translation_.z += adustSpeed * std::cos(worldTransform_.rotation_.y);
-		worldTransform_.translation_.x += adustSpeed * std::sin(worldTransform_.rotation_.y) * gripRatio; // 横の食いつきは低下
+		const float gripInfluence = 0.6f;  // 滑りによる影響度（小さいほど曲がりやすくなる）
+		theta *= (1.0f - gripInfluence) + gripInfluence * gripRatio;
 	}
+
+	worldTransform_.rotation_.y += theta;
+
+	float yaw = worldTransform_.rotation_.y;
+	Vector3 forward = {
+		std::sin(yaw),
+		0.0f,
+		std::cos(yaw)
+	};
+
+	//gripRatioを移動全体に影響させる（アンダーステア時は曲がりが浅く＝方向も前寄りに）
+	worldTransform_.translation_.x += forward.x * adustSpeed;
+	worldTransform_.translation_.z += forward.z * adustSpeed;
+
 #ifdef _DEBUG
 	ImGui::Begin("CarGrip");
 	ImGui::Text("saideForce : %f", requiredLatForce);

@@ -87,5 +87,7 @@ private:
 	// 仮のスピード（後々エンジンから出力を受け取りタイヤの回転力とか合わせて考えたい）
 	float speed_ = 0.0f;
 
+	bool isDrift_ = false;
+
 };
 
