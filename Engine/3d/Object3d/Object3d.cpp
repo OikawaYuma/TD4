@@ -26,7 +26,11 @@ void Object3d::Init()
 	// 色のデータを変数から読み込み
 	materialData_->color = { 1.0f,1.0f,1.0f,1.0f };
 	materialData_->enableLighting = true;
-	materialData_->uvTransform = MakeIdentity4x4();
+	WorldTransform uvW;
+	uvW.Initialize();
+	uvW.scale_ = { 1.0f , 1.0f,1.0f };
+	uvW.UpdateMatrix();
+	materialData_->uvTransform = uvW.matWorld_;
 	materialData_->shininess = 60.0f;
 
 	directionalLightData = nullptr;
