@@ -100,6 +100,7 @@ void DemoScene::Update()
 }
 void DemoScene::Draw()
 {
+	skydome_->Draw(followCamera_->GetCamera());
 	Object3dManager::GetInstance()->Draw(followCamera_->GetCamera());
 
 	//carSmoke_->Draw();
@@ -118,7 +119,6 @@ void DemoScene::Draw2d()
 	ui_->Draw();
 	//sprite_->Draw();
 	fade_->Draw();
-	skydome_->Draw(followCamera_->GetCamera());
 
 }
 
