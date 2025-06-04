@@ -4,7 +4,7 @@
 
 void Skydome::Init()
 {
-	//ModelManager::GetInstance()->LoadModel("Resources/skydome", "skydome.obj");
+	ModelManager::GetInstance()->LoadModel("Resources/skydome", "skydome.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/tenq", "TenQ.obj");
 	worldTransform_.Initialize();
 	worldTransform_.scale_ = { 100.0f, 100.0f, 100.0f }; // スケール
