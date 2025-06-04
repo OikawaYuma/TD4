@@ -62,6 +62,9 @@ private:
 
 	uint32_t cameraDirection_ = NONEDIRECTION;
 
+	float prevTargetAngle_ = 0.0f;
+	float currentSideAngle_ = 0.0f; // 現在のsideAngle
+
 	float cameraChanegeTimer_ = 0.0f;
 	Vector3 preCameraTranslate_ {};
 	// 速さ

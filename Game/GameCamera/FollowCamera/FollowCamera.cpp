@@ -27,33 +27,52 @@ void FollowCamera::StartCameraEffect()
     camera_->Update();
 }
 
+// FollowCamera.cpp の Upadate() を修正
 void FollowCamera::Upadate()
 {
     if (!target_) return;
 
-    // 進行方向をrotation_.yから計算
+    // ターゲットの進行方向（Y回転角）を取得
+    float targetAngle = target_->rotation_.y;
+
+    // 前フレームとの差分（角速度）を計算
+    float angleDiff = targetAngle - prevTargetAngle_;
+    prevTargetAngle_ = targetAngle;
+
+    // 角速度の絶対値を使い、sideAngleの目標値を決定
+    float maxSideAngle = 0.7f; // 最大横オフセット（ラジアン、例: 40度くらい）
+    float targetSideAngle = std::clamp(std::abs(angleDiff) * 600.0f, 0.0f, maxSideAngle);
+
+    // 進行方向に応じて左右どちらにオフセットするか決める（例: 右旋回なら右側から見る）
+    if (angleDiff > 0) targetSideAngle = -targetSideAngle;
+
+    // 滑らかにLerp
+    currentSideAngle_ = Lerp(currentSideAngle_, targetSideAngle, 0.01f);
+
+    // カメラ位置計算
+    float angle = targetAngle + currentSideAngle_;
     Vector3 forward = {
-        std::sin(target_->rotation_.y),
+        std::sin(angle),
         0.0f,
-        std::cos(target_->rotation_.y)
+        std::cos(angle)
     };
 
-    // カメラの背後オフセット位置
     float cameraDistance = 10.0f;
     float cameraHeight = 2.0f;
+    float maxCameraHeight = 5.0f;
+    float behindY = std::min(target_->translation_.y + cameraHeight, maxCameraHeight);
+
     Vector3 behind = {
         target_->translation_.x - forward.x * cameraDistance,
-        target_->translation_.y + cameraHeight,
+        behindY,
         target_->translation_.z - forward.z * cameraDistance
     };
 
-    // 滑らかな補間
-    camera_->SetTranslate(Lerp(camera_->GetTranslate(), behind, 0.65f));
+    camera_->SetTranslate(Lerp(camera_->GetTranslate(), behind, 0.8f));
 
-    // カメラ回転をターゲットの方向に合わせる（簡易LookAtの代替）
     Vector3 cameraRotation = {
         0.0f,
-        (target_->rotation_.y),
+        angle,
         0.0f
     };
     camera_->SetRotate(cameraRotation);
@@ -61,8 +80,6 @@ void FollowCamera::Upadate()
 
     camera_->Update();
 }
-
-
 void FollowCamera::SetTarget(const WorldTransform* target)
 {
     target_ = target;

@@ -30,7 +30,8 @@ void DemoScene::Init()
 	
 	std::weak_ptr<ObjectPram> objectpram = Object3dManager::GetInstance()->StoreObject("TenQ", TextureManager::GetInstance()->StoreTexture("Resources/TenQ/TenQ.png"), 0);
 	if (objectpram.lock()) {
-		objectpram.lock()->worldTransform.scale_ = { -100.0f,100.0f,100.0f };
+		objectpram.lock()->worldTransform.translation_ = { 0.0f,-1000000.0f,0.0f };
+		objectpram.lock()->worldTransform.scale_ = { -100000.0f,100000.0f,100000.0f };
 		objectpram.lock()->worldTransform.UpdateMatrix();
 	}
 	Object3dManager::GetInstance()->StoreObject("floor", TextureManager::GetInstance()->StoreTexture("Resources/kusa2.png"), 0);
