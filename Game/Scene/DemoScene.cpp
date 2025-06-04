@@ -18,6 +18,8 @@ void DemoScene::Init()
 	ModelManager::GetInstance()->LoadModel("Resources/map", "map0.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/ball", "ball.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/floor", "floor.obj");
+	skydome_ = std::make_unique<Skydome>();
+	skydome_->Init();
 	fade_ = std::make_unique<Fade>();
 	fade_->Init("Resources/fade.png");
 	fade_->SetTexture(TextureManager::GetInstance()->StoreTexture("Resources/fade.png"));
@@ -84,6 +86,7 @@ void DemoScene::Update()
 	Object3dManager::GetInstance()->Update();
 	postProcess_->Update();
 	
+	skydome_->Update();
 	sprite_->Update();
 	carGear_->Update();
 	ui_->SetGear(carGear_->GetCurrentGear());
@@ -98,6 +101,7 @@ void DemoScene::Update()
 void DemoScene::Draw()
 {
 	Object3dManager::GetInstance()->Draw(followCamera_->GetCamera());
+
 	//carSmoke_->Draw();
 }
 
@@ -114,6 +118,8 @@ void DemoScene::Draw2d()
 	ui_->Draw();
 	//sprite_->Draw();
 	fade_->Draw();
+	skydome_->Draw(followCamera_->GetCamera());
+
 }
 
 void DemoScene::Release() {
