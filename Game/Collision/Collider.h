@@ -9,6 +9,7 @@
 #include<cstdint>
 #include"math/Matrix4x4.h"
 #include <vector>
+#include "Collision/CollisionConfig.h"
 
 enum class CollisionMode {
 	AABBc,
@@ -77,7 +78,7 @@ public:
 
 private:
 	// 衝突半径
-	float radius_ = 2;
+	float radius_ = 100.0f;
 	// スケール
 	Vector3 scale_{};
 	// collisionMode

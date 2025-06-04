@@ -10,6 +10,7 @@
 #include <memory>
 #include <iostream>
 #include <algorithm>
+#include <limits>
 #include"math/mathFunction.h"
 
 class CollisionManager {

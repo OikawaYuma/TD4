@@ -20,6 +20,13 @@ public:
 
 private:
 
+	/// <summary>
+	/// 衝突
+	/// </summary>
+	void OnCollision();
+
+private:
+	bool isHit_ = false;
 
 };
 

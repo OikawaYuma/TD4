@@ -8,7 +8,7 @@ void CollisionManager::CheckAllCollision() {
 	// すべてのコライダーの衝突情報をリセット
 	for (auto collider : colliders_) {
 		collider->ClearInfo();
-		//collider->SetOnCollision(false);
+		collider->SetOnCollision(false);
 	}
 
 	//  リスト内のペアを総当たり
@@ -184,56 +184,57 @@ bool CollisionManager::CheckCollision(OBB a, OBB b, Vector3* outNormal, float* o
 	const float ep = std::numeric_limits<float>::epsilon();
 	Vector3 axis[15];
 
-	for (int i = 0; i < 3; i++) {
-		axis[i] = a.axis[i];
-		axis[i + 3] = b.axis[i];
-	}
-
+	// 各軸：aの軸3 + bの軸3 + 交差軸9 = 計15
+	for (int i = 0; i < 3; ++i) axis[i] = a.axis[i];
+	for (int i = 0; i < 3; ++i) axis[i + 3] = b.axis[i];
 	int index = 6;
-	for (int i = 0; i < 3; i++) {
-		for (int j = 0; j < 3; j++) {
+	for (int i = 0; i < 3; ++i) {
+		for (int j = 0; j < 3; ++j) {
 			axis[index++] = Normalize(Cross(a.axis[i], b.axis[j]));
 		}
 	}
 
+	// 中心間ベクトル
 	Vector3 t = b.center - a.center;
 
+	// 最小の貫通量とその軸を記録
 	float minOverlap = FLT_MAX;
 	Vector3 bestAxis = {};
 
-	for (int i = 0; i < 15; i++) {
+	for (int i = 0; i < 15; ++i) {
 		const Vector3& L = axis[i];
 		if (Length(L) < ep) continue;
 
-		float ra =
-			std::abs(Dot(a.axis[0], L)) * a.halfSize.x +
+		// 投影幅
+		float ra = std::abs(Dot(a.axis[0], L)) * a.halfSize.x +
 			std::abs(Dot(a.axis[1], L)) * a.halfSize.y +
 			std::abs(Dot(a.axis[2], L)) * a.halfSize.z;
 
-		float rb =
-			std::abs(Dot(b.axis[0], L)) * b.halfSize.x +
+		float rb = std::abs(Dot(b.axis[0], L)) * b.halfSize.x +
 			std::abs(Dot(b.axis[1], L)) * b.halfSize.y +
 			std::abs(Dot(b.axis[2], L)) * b.halfSize.z;
 
 		float dist = std::abs(Dot(t, L));
 
-		float overlap = ra + rb - dist;
-		if (overlap < 0) {
+		if (dist > ra + rb) {
+			// この軸で分離 → 衝突していない
 			return false;
 		}
 
+		// 今の軸での貫通量
+		float overlap = (ra + rb) - dist;
 		if (overlap < minOverlap) {
 			minOverlap = overlap;
-			bestAxis = L;
-			// 法線の向きを合わせる（A→B 方向）
-			if (Dot(L, t) < 0) {
-				bestAxis = (- 1.0f * L);
+			bestAxis = Normalize(L);
+			// 中心間ベクトルと軸の向きが逆なら法線も逆にする
+			if (Dot(t, bestAxis) < 0.0f) {
+				bestAxis = -1.0f * bestAxis;
 			}
 		}
 	}
 
-	// 出力
-	if (outNormal) *outNormal = Normalize(bestAxis);
+	// 衝突 → 法線と貫通量を出力
+	if (outNormal) *outNormal = bestAxis;
 	if (outPenetration) *outPenetration = minOverlap;
 	return true;
 }

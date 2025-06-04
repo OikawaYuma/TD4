@@ -25,6 +25,7 @@ public:
 
 #pragma region getter
 
+	const Vector3& GetPenetration()const { return penetration_; }
 
 #pragma endregion
 
@@ -53,6 +54,7 @@ private:
 private:
 
 	bool isHit_ = false;
+	Vector3 penetration_{}; // めり込み量
 
 };
 

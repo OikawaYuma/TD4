@@ -17,8 +17,8 @@ void CarBody::Initialize(const Vector3& rotate, const Vector3& scale, const Vect
 		{0.0f,0.21f,0.0f},
 		"carBody");
 
-	collider_->SetCollisonAttribute(0xFFFFFFFF);
-	collider_->SetCollisionMask(0xffffffff);
+	collider_->SetCollisonAttribute(kCollisionAttributePlayer);
+	collider_->SetCollisionMask(kCollisionAttributeEnemy);
 }
 
 void CarBody::Update()
@@ -27,17 +27,26 @@ void CarBody::Update()
 	// 押し出し
 	const auto& collisionInfo = collider_->GetCollisionInfo();
 	for (const auto& info : collisionInfo) {
-		objectParam_.lock()->worldTransform.translation_ = objectParam_.lock()->worldTransform.translation_ + (info.normal * info.penetration);
+		 penetration_ = info.normal * info.penetration;
 	}
 
 	// 更新
 	BaseObject::Update();
 
+	// colliderに送る
+	if (collider_) {
+		collider_->SetWorldPosition(GetWorldPosition());
+		collider_->SetScale(GetScale());
+		collider_->SetMatWorld(objectParam_.lock()->worldTransform.matWorld_);
+	}
+
 	OnCollision();
 
-	if (isHit_) {
-		objectParam_.lock()->color.w = 0.0f;
-	}
+#ifdef _DEBUG
+	ImGui::Begin("hit");
+	ImGui::Text("hit : %d", isHit_);
+	ImGui::End();
+#endif // _DEBUG
 
 }
 

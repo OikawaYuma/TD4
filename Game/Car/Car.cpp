@@ -33,6 +33,7 @@ void Car::Update()
 	BicycleModel();
 	//shadow_->Update();
 	// UIクラスから出たスピードを足す
+	worldTransform_.translation_ = worldTransform_.translation_ + body_->GetPenetration();
 	worldTransform_.UpdateMatrix();
 	
 	// ステアリング更新
