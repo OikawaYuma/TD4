@@ -86,35 +86,43 @@ void Car::Yawing()
 
 void Car::BicycleModel()
 {
-	
+	/*-----------------------本来CarEngineから持ってくる値--------------------------------*/
 	if (Input::GetInstance()->GetJoystickState()) {
-		if (Input::GetInstance()->PushRTrigger(0.15f)) {
-			speed_ += Input::GetInstance()->GetRTValue();
-			if (speed_ >= 245.0f) {
-				speed_ = 245.0f;
-			}
+		if (Input::GetInstance()->PushRTrigger(0.05f)) {
+			
 		}
-		else {
-			speed_ -= 0.5f;
-			if (speed_ <= 0.0f) {
-				speed_ = 0.0f;
-			}
+		throttle_ = Input::GetInstance()->GetRTValue();
+		if (Input::GetInstance()->PushLTrigger(0.05f)) {
+			
 		}
-		if (Input::GetInstance()->GetJoystickState()) {
-			if (Input::GetInstance()->PushLTrigger(0.5f)) {
-				speed_ -= Input::GetInstance()->GetLTValue();
-				if (speed_ <= 0.0f) {
-					speed_ = 0.0f;
-				}
-			}
-		}
+		brake_ = Input::GetInstance()->GetLTValue();
 	}
-	// 入力：時速 [km/h] → 毎秒に変換
-	float velocity_mps = speed_ / 3.6f;
+	// エンジントルク算出
+	float engineTorque = maxEngineTorque_ * throttle_;
+	// 駆動輪トルク（ギア比・ファイナル含む）
+	float wheelTorque = engineTorque * 1.0f * 1.0f;
+	// 駆動力[N] = トルク / 半径
+	float driveForce = wheelTorque / wheelRadius_;
+	// ブレーキ力を仮に速度に比例した原則として加える（単純化）
+	float brakeForce = brake_ * 8000.0f;
+	// 加速度[m/s2]
+	float acceleration = (driveForce - brakeForce) / mass_;
 
+	/*----------------------------------------------------------*/
 	// 1フレームあたりの時間（60FPS）
 	const float deltaTime = 1.0f / 60.0f;
-	float frameSpeed = velocity_mps * deltaTime;
+
+	// 入力：時速 [km/h] → 毎秒に変換
+	float velocity_mps = speed_ / 3.6f;
+	velocity_mps += acceleration * deltaTime;
+	// 速度下限は0（バックは考慮せず）
+	if (velocity_mps < 0.0f) {
+		velocity_mps = 0.0f;
+	}
+	// km/hに戻す
+	speed_ = velocity_mps * 3.6f;
+	
+	float frameSpeed = velocity_mps ;
 
 	// ホイールベース
 	float wheelBase = frontLength + rearLength;
@@ -144,7 +152,7 @@ void Car::BicycleModel()
 	theta *= gripRatio;
 
 	// 向き更新
-	worldTransform_.rotation_.y += theta * deltaTime;
+	worldTransform_.rotation_.y += theta;
 
 	// 移動更新
 	worldTransform_.translation_.z += frameSpeed * std::cos(worldTransform_.rotation_.y);
@@ -155,7 +163,11 @@ void Car::BicycleModel()
 	ImGui::Text("Required Lat Force: %.2f N", requiredLatForce);
 	ImGui::Text("Max Grip Force: %.2f N", maxGripForce);
 	ImGui::Text("Grip Ratio: %.2f", gripRatio);
-	ImGui::Text("Theta: %.4f rad/frame", theta * deltaTime);
+	ImGui::Text("Theta: %.4f rad/frame", theta);
+	ImGui::Text("Thorottle: %.4f ", throttle_);
+	ImGui::Text("Brake: %.4f ", brake_);
+	ImGui::Text("EngineTorque: %.4f ", engineTorque);
+	ImGui::Text("Brake: %.4f ", brake_);
 	ImGui::End();
 #endif
 
