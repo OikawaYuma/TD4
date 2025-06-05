@@ -50,6 +50,11 @@ private: // 移動処理
 	/// </summary>
 	void BicycleModel();
 
+	/// <summary>
+	/// ブレーキ処理
+	/// </summary>
+	void Brake();
+
 private: // 外部情報　本来はここに書くべきではない
 	// 摩擦係数
 	float mu_ = 1.5f; // とりあえず乾いたコンクリで考える（大体0.9~1.2くらいらしい、スポーツのタイヤだと1.1~1.2でもいいとか）
