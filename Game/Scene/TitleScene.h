@@ -26,7 +26,7 @@ public:
 	void DeleteObject();
 
 private:
-	PostProcess* postProcess_ = nullptr;
+	std::unique_ptr<PostProcess> postProcess_;
 	std::unique_ptr<Car> car_ = nullptr;
 	std::unique_ptr<Camera> camera_ = nullptr;
 };

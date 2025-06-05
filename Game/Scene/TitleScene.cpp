@@ -9,16 +9,17 @@
 
 void TitleScene::Init()
 {
-	postProcess_ = new PostProcess();
-	postProcess_->SetDissolveInfo({ 1.0f,1.0f,1.0f });
-	postProcess_->Init();
-
-	ModelManager::GetInstance()->LoadModel("Resources/car", "car.obj");
+	ModelManager::GetInstance()->LoadModel("Resources/carBody", "carBody.obj");
 	car_ = std::make_unique<Car>();
-	car_->Initialize({ 1.0f, 1.0f, 1.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, "car");
+	car_->Initialize({ 1.0f, 1.0f, 1.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, "carBody");
 
 	camera_ = std::make_unique<Camera>();
 	camera_->Initialize();
+
+	postProcess_ = std::make_unique<PostProcess>();
+	postProcess_->Init();
+	postProcess_->SetCamera(camera_.get());
+	postProcess_->SetEffectNo(PostEffectMode::kDepthOutline);
 }
 
 void TitleScene::Update()
