@@ -65,6 +65,13 @@ void TitleScene::Update()
 #endif // _DEBUG
 
 	camera_->Update();
+
+	if (Input::GetInstance()->GetJoystickState()) {
+		if (Input::GetInstance()->TriggerJoyButton(XINPUT_GAMEPAD_B)) {
+			sceneNo = DEMO;
+		}
+		
+	}
 }
 void TitleScene::Draw()
 {
