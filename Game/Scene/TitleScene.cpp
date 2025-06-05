@@ -6,6 +6,7 @@
 #include "Audio.h"
 #include "Object3dManager.h"
 #include <ModelManager.h>
+#include <GlobalVariables/GlobalVariables.h>
 
 void TitleScene::Init()
 {
@@ -15,10 +16,19 @@ void TitleScene::Init()
 
 	camera_ = std::make_unique<Camera>();
 	camera_->Initialize();
+	camera_->SetPos({ -12.0f, 3.0f, 17.0f });
+	camera_->SetRotate({ 0.0f, 2.3f, 0.0f });
+
+	ModelManager::GetInstance()->LoadModel("Resources/ball", "ball.obj");
+	GlobalVariables::GetInstance()->LoadFiles();
+	carSmoke_ = std::make_unique<CarSmoke>();
+	carSmoke_->SetCamera(camera_.get());
+	carSmoke_->Init();
+	carSmoke_->SetParent(car_->GetWorldTransform());
 
 	ModelManager::GetInstance()->LoadModel("Resources", "logo.obj");
 	logo_ = std::make_unique<Logo>();
-	logo_->Init({ 1.0f, 1.0f, 1.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, "logo");
+	logo_->Init({ 5.0f, 5.0f, 1.0f }, { 0.0f, -1.5f, 0.0f }, { 12.0f, 1.0f, 3.5f }, "logo");
 
 	postProcess_ = std::make_unique<PostProcess>();
 	postProcess_->Init();
@@ -32,14 +42,14 @@ void TitleScene::Update()
 	postProcess_->Update();
 
 #ifdef _DEBUG
-	camera_->CameraDebug();
+	//camera_->CameraDebug();
 #endif // _DEBUG
 
-	camera_->Move();
+	//camera_->Move();
 	camera_->Update();
-	
 	car_->Update();
 	logo_->Update();
+	carSmoke_->Update();
 }
 void TitleScene::Draw()
 {
@@ -54,6 +64,7 @@ void TitleScene::PostDraw()
 
 void TitleScene::Draw2d()
 {
+	carSmoke_->Draw();
 }
 
 void TitleScene::Release() {

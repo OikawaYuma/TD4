@@ -29,4 +29,6 @@ private:
 	Material material_{};
 	DirectionalLight direLight_{};
 	SpotLight spotLight_{};
+	// 平行影
+	std::unique_ptr<PlaneProjectionShadow> shadow_;
 };

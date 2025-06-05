@@ -6,7 +6,7 @@ Logo::~Logo()
 
 void Logo::Init(const Vector3& scale, const Vector3& rotate, const Vector3& translate, const std::string filename)
 {
-	floorTex_ = TextureManager::GetInstance()->StoreTexture("Resources/Black.png");
+	floorTex_ = TextureManager::GetInstance()->StoreTexture("Resources/white.png");
 	color_ = { 1.0f,1.0f,1.0f,1.0f };
 
 	objectPram_ = Object3dManager::GetInstance()->StoreObject(filename, floorTex_, Transparency::Opaque);
@@ -20,6 +20,10 @@ void Logo::Init(const Vector3& scale, const Vector3& rotate, const Vector3& tran
 	material_.enableLighting = false;
 	material_.uvTransform = MakeIdentity4x4();
 	material_.shininess = 60.0f;
+
+	//// 影生成
+	shadow_ = std::make_unique<PlaneProjectionShadow>();
+	shadow_->Init(&objectPram_.lock()->worldTransform,filename);
 }
 
 void Logo::Update()
@@ -29,7 +33,12 @@ void Logo::Update()
 	}
 
 	ImGui::Begin("Logo");
+	ImGui::DragFloat3("Scale", &objectPram_.lock()->worldTransform.scale_.x, 0.1f);
+	ImGui::DragFloat3("Rotate", &objectPram_.lock()->worldTransform.rotation_.x, 0.1f);
+	ImGui::DragFloat3("Transform", &objectPram_.lock()->worldTransform.translation_.x, 0.1f);
 	ImGui::End();
+
+	shadow_->Update();
 }
 
 void Logo::SetObjectPram()

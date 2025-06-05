@@ -13,6 +13,7 @@
 #include "WorldDesign/WorldDesign.h"
 #include <Car/Car.h>
 #include <Logo/Logo.h>
+#include <CarSmoke/CarSmoke.h>
 class TitleScene : public IScene
 {
 public:
@@ -28,8 +29,9 @@ public:
 
 private:
 	std::unique_ptr<PostProcess> postProcess_;
-	std::unique_ptr<Car> car_ = nullptr;
-	std::unique_ptr<Camera> camera_ = nullptr;
+	std::unique_ptr<Car> car_;
+	std::unique_ptr<CarSmoke> carSmoke_;
+	std::unique_ptr<Camera> camera_;
 	std::unique_ptr<Logo> logo_;
 };
 

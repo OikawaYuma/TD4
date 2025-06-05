@@ -18,14 +18,18 @@ void DemoScene::Init()
 	ModelManager::GetInstance()->LoadModel("Resources/map", "map0.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/ball", "ball.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/floor", "floor.obj");
+
 	fade_ = std::make_unique<Fade>();
 	fade_->Init("Resources/fade.png");
+
 	fade_->SetTexture(TextureManager::GetInstance()->StoreTexture("Resources/fade.png"));
 	spTx_ = TextureManager::GetInstance()->StoreTexture("Resources/load3.png");
+
 	sprite_ = std::make_unique<Sprite>();
 	sprite_->Init("Resources/load.png");
 	sprite_->SetTexture(TextureManager::GetInstance()->StoreTexture("Resources/load.png"));
 	Object3dManager::GetInstance()->StoreObject("floor",TextureManager::GetInstance()->StoreTexture("Resources/kusa.png"),0);
+
 	ui_ = std::make_unique<UI>();
 	ui_->Initialize();
 	sprite_->Init("Resources/load2.png");
@@ -38,21 +42,25 @@ void DemoScene::Init()
 	camera_->Initialize();
 	levelData_ = Loder::LoadJsonFile("Resources/json","stage4");
 	GlobalVariables::GetInstance()->LoadFiles();
-	
-	
+
 	ArrageObj(maps_);
+
 	followCamera_ = std::make_unique<FollowCamera>();
 	followCamera_->Init();
+
 	carSmoke_ = std::make_unique<CarSmoke>();
 	carSmoke_->SetCamera(followCamera_->GetCamera());
 	carSmoke_->Init();
+
 	// 速度メーターにスピードのポインタを渡す
 	ui_->SetSpeed(car_->GetSpeed());
+
 	followCamera_->SetSpeed(car_->GetSpeed());
 	WorldTransform* wt = car_->GetWorldTransform();
 	followCamera_->SetTarget(wt);
 
 	carSmoke_->SetParent(car_->GetWorldTransform());
+
 	postProcess_ = std::make_unique<PostProcess>();
 	postProcess_->Init();
 	postProcess_->SetCamera(followCamera_->GetCamera());
