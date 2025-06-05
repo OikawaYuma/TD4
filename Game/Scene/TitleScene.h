@@ -14,6 +14,9 @@
 #include <Car/Car.h>
 #include <Logo/Logo.h>
 #include <CarSmoke/CarSmoke.h>
+#include <map/map.h>
+#include "Loder.h"
+
 class TitleScene : public IScene
 {
 public:
@@ -26,6 +29,7 @@ public:
 	int GameClose()override;
 
 	void DeleteObject();
+	void ArrageObj(std::list<std::unique_ptr<map>>& maps);
 
 private:
 	std::unique_ptr<PostProcess> postProcess_;
@@ -33,5 +37,7 @@ private:
 	std::unique_ptr<CarSmoke> carSmoke_;
 	std::unique_ptr<Camera> camera_;
 	std::unique_ptr<Logo> logo_;
+	LevelData levelData_{};
+	std::list<std::unique_ptr<map>> maps_;
 };
 
