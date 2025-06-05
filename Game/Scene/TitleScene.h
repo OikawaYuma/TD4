@@ -12,6 +12,7 @@
 #include "Skydome/Skydome.h"
 #include "WorldDesign/WorldDesign.h"
 #include <Car/Car.h>
+#include <Logo/Logo.h>
 class TitleScene : public IScene
 {
 public:
@@ -29,5 +30,6 @@ private:
 	std::unique_ptr<PostProcess> postProcess_;
 	std::unique_ptr<Car> car_ = nullptr;
 	std::unique_ptr<Camera> camera_ = nullptr;
+	std::unique_ptr<Logo> logo_;
 };
 

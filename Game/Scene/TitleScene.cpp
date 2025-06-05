@@ -16,6 +16,10 @@ void TitleScene::Init()
 	camera_ = std::make_unique<Camera>();
 	camera_->Initialize();
 
+	ModelManager::GetInstance()->LoadModel("Resources", "logo.obj");
+	logo_ = std::make_unique<Logo>();
+	logo_->Init({ 1.0f, 1.0f, 1.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, "logo");
+
 	postProcess_ = std::make_unique<PostProcess>();
 	postProcess_->Init();
 	postProcess_->SetCamera(camera_.get());
@@ -35,6 +39,7 @@ void TitleScene::Update()
 	camera_->Update();
 	
 	car_->Update();
+	logo_->Update();
 }
 void TitleScene::Draw()
 {
