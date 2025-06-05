@@ -90,6 +90,9 @@ void Car::BicycleModel()
 	const float deltaTime = 1.0f / 60.0f;
 	/*-----------------------本来CarEngineから持ってくる値--------------------------------*/
 	if (Input::GetInstance()->GetJoystickState()) {
+		if (Input::GetInstance()->TriggerJoyButton(XINPUT_GAMEPAD_A)) {
+
+		}
 		if (Input::GetInstance()->PushRTrigger(0.05f)) {
 			
 		}
@@ -142,9 +145,9 @@ void Car::BicycleModel()
 	float wheelBase = frontLength + rearLength;
 	float steerAngle = *steering_->GetAngle();
 	float steerEffect = 1.2f;  // 曲がりやすさを強調する係数
-	float theta = (adustSpeed / wheelBase) * std::tan(steerAngle) * steerEffect;
+	//float theta = (adustSpeed / wheelBase) * std::tan(steerAngle) * steerEffect;
 	// ステア角（既にラジアンと仮定）
-	float steerAngle = *steering_->GetAngle();
+	//float steerAngle = *steering_->GetAngle();
 
 	// 回転半径 R（ゼロ割防止）
 	float turningRadius = (std::abs(std::tan(steerAngle)) > 0.0001f) ? (wheelBase / std::abs(std::tan(steerAngle))) : FLT_MAX;
