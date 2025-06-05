@@ -12,29 +12,26 @@ void Car::Initialize(const Vector3& scale, const Vector3& rotate, const Vector3&
 	// tire生成
 	CreateCarTire();
 	//// 影生成
-	//shadow_ = std::make_unique<PlaneProjectionShadow>();
-	//shadow_->Init(&worldTransform_,filename);
+	shadow_ = std::make_unique<PlaneProjectionShadow>();
+	shadow_->Init(&worldTransform_,filename);
 	
 
 }
 
 void Car::Update()
 {
-	
-
-
 	// 車体の更新
 	body_->Update();
-
 	// 車輪の更新
 	for (auto& tire : tires_) {
 		tire->Update();
 	}
+	// バイシクルモデルでの車の動き
 	BicycleModel();
-	//shadow_->Update();
+	// 平行影の更新
+	shadow_->Update();
 	// UIクラスから出たスピードを足す
 	worldTransform_.UpdateMatrix();
-	
 	// ステアリング更新
 	steering_->Update();
 }
@@ -89,82 +86,114 @@ void Car::Yawing()
 
 void Car::BicycleModel()
 {
-	
+	// 1フレームあたりの時間（60FPS）
+	const float deltaTime = 1.0f / 60.0f;
+	/*-----------------------本来CarEngineから持ってくる値--------------------------------*/
 	if (Input::GetInstance()->GetJoystickState()) {
-		if (Input::GetInstance()->PushRTrigger(0.15f)) {
-			speed_ += Input::GetInstance()->GetRTValue();
-			if (speed_ >= 245.0f) {
-				speed_ = 245.0f;
-			}
+		if (Input::GetInstance()->PushRTrigger(0.05f)) {
+			
 		}
-		else {
-			speed_ -= 0.5f;
-			if (speed_ <= 0.0f) {
-				speed_ = 0.0f;
-			}
+		throttle_ = Input::GetInstance()->GetRTValue();
+		if (Input::GetInstance()->PushLTrigger(0.05f)) {
+			
 		}
-		if (Input::GetInstance()->GetJoystickState()) {
-			if (Input::GetInstance()->PushLTrigger(0.5f)) {
-				speed_ -= Input::GetInstance()->GetLTValue();
-				if (speed_ <= 0.0f) {
-					speed_ = 0.0f;
-				}
-			}
-		}
-		if (Input::GetInstance()->GetJoystickState()) {
-			if (Input::GetInstance()->PushJoyButton(XINPUT_GAMEPAD_X)) {
-				speed_ -= 0.9f;
-				if (speed_ <= 0.0f) {
-					speed_ = 0.0f;
-				}
-			}
-		}
+		brake_ = Input::GetInstance()->GetLTValue();
 	}
+	// エンジントルク算出
+	float engineTorque = maxEngineTorque_ * throttle_;
+	// 駆動輪トルク（ギア比・ファイナル含む）
+	float wheelTorque = engineTorque * 1.0f * 1.0f;
+	// 駆動力[N] = トルク / 半径
+	float driveForce = wheelTorque / wheelRadius_;
+	const float maxBrakeForce = weight_ * 0.8f; // [N]
+	// ブレーキ力 [N]（最大制動力を係数として）
+	float brakeForce = brake_ * maxBrakeForce;
 
+	// 駆動と逆向きに作用するので、減速として加速度に使う
+	float netForce = driveForce - brakeForce;
+
+
+	float brakeLimitForce = mu_ * weight_; // 最大摩擦力による制動限界
+	brakeForce = std::min(brakeForce, brakeLimitForce);
+	// 加速度[m/s2]
+	float acceleration = (driveForce - brakeForce) / mass_;
+
+
+	if (throttle_ < 0.01f && brake_ == 0.0f) {
+		float engineBrakeForce = 0.2f * weight_; // 仮定値（調整可）
+		acceleration -= engineBrakeForce / mass_;
+	}
+	/*----------------------------------------------------------*/
+
+
+	// 入力：時速 [km/h] → 毎秒に変換
+	float velocity_mps = speed_ / 3.6f;
+	velocity_mps += acceleration * deltaTime;
+	// 速度下限は0（バックは考慮せず）
+	if (velocity_mps < 0.0f) {
+		velocity_mps = 0.0f;
+	}
+	// km/hに戻す
+	speed_ = velocity_mps * 3.6f;
 	
-																															
-	const float frameTime = 60.0f;
-	float adustSpeed = speed_ / 3.6f / frameTime;
+	float frameSpeed = velocity_mps * deltaTime;
+
+	// ホイールベース
 	float wheelBase = frontLength + rearLength;
 	float steerAngle = *steering_->GetAngle();
 	float steerEffect = 1.2f;  // 曲がりやすさを強調する係数
 	float theta = (adustSpeed / wheelBase) * std::tan(steerAngle) * steerEffect;
+	// ステア角（既にラジアンと仮定）
+	float steerAngle = *steering_->GetAngle();
 
-	float turningRadius = wheelBase / std::tan(steerAngle);
-	float velocity = adustSpeed * frameTime;
+	// 回転半径 R（ゼロ割防止）
+	float turningRadius = (std::abs(std::tan(steerAngle)) > 0.0001f) ? (wheelBase / std::abs(std::tan(steerAngle))) : FLT_MAX;
 
-	float requiredLatForce = std::abs((mass_ * velocity * velocity) / turningRadius);
+	// 遠心力（必要な横力）
+	float requiredLatForce = (mass_ * velocity_mps * velocity_mps) / turningRadius;
+
+	// 摩擦による最大横グリップ力（全車体で一括で考える）
+	float maxGripForce = mu_ * weight_; // = mu * m * g
+
+	// グリップ率
 	float gripRatio = 1.0f;
-
-	if (requiredLatForce > weight_) {
-		gripRatio = weight_ / requiredLatForce;
-
-		const float gripInfluence = 0.6f;  // 滑りによる影響度（小さいほど曲がりやすくなる）
-		theta *= (1.0f - gripInfluence) + gripInfluence * gripRatio;
+	if (requiredLatForce > maxGripForce) {
+		gripRatio = maxGripForce / requiredLatForce;
 	}
 
-	worldTransform_.rotation_.y += theta;
+	// 回転角速度（ステアと速度により）
+	float theta = (velocity_mps / wheelBase) * std::tan(steerAngle);
 
-	float yaw = worldTransform_.rotation_.y;
-	Vector3 forward = {
-		std::sin(yaw),
-		0.0f,
-		std::cos(yaw)
-	};
+	// グリップ率が低いなら回転も減衰させる
+	theta *= gripRatio;
 
-	//gripRatioを移動全体に影響させる（アンダーステア時は曲がりが浅く＝方向も前寄りに）
-	worldTransform_.translation_.x += forward.x * adustSpeed;
-	worldTransform_.translation_.z += forward.z * adustSpeed;
+	// 向き更新
+	worldTransform_.rotation_.y += theta * deltaTime;
+
+	// 移動更新
+	worldTransform_.translation_.z += frameSpeed * std::cos(worldTransform_.rotation_.y);
+	worldTransform_.translation_.x += frameSpeed * std::sin(worldTransform_.rotation_.y);
 
 #ifdef _DEBUG
-	ImGui::Begin("CarGrip");
-	ImGui::Text("saideForce : %f", requiredLatForce);
-	ImGui::Text("weight : %f", weight_);
-	ImGui::Text("grip : %f", gripRatio);
-	ImGui::Text("theta : %f", theta);
-	//ImGui::Text("theta : %f", theta);
+	ImGui::Begin("CarGripDebug");
+	ImGui::Text("Required Lat Force: %.2f N", requiredLatForce);
+	ImGui::Text("Max Grip Force: %.2f N", maxGripForce);
+	ImGui::Text("Grip Ratio: %.2f", gripRatio);
+	ImGui::Text("Theta: %.4f rad/frame", theta);
+	ImGui::Text("Thorottle: %.4f ", throttle_);
+	ImGui::Text("Brake: %.4f ", brake_);
+	ImGui::Text("EngineTorque: %.4f ", engineTorque);
+	ImGui::Text("wheelTorque: %.4f ", wheelTorque);
+	ImGui::Text("driveForce: %.4f ", driveForce);
+	ImGui::Text("acceleration: %.4f ", acceleration);
+	ImGui::Text("velocity_mps: %.4f ", velocity_mps);
+	ImGui::Text("speed_: %.4f ", speed_);
 	ImGui::End();
-#endif // _DEBUG
+#endif
 
 
+}
+
+void Car::Brake()
+{
 }

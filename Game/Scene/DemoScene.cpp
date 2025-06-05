@@ -45,7 +45,7 @@ void DemoScene::Init()
 	sprite_->SetTexture(spTx_);
 	camera_ = std::make_unique<Camera>();
 	camera_->Initialize();
-	levelData_ = Loder::LoadJsonFile("Resources/json","stage4");
+	levelData_ = Loder::LoadJsonFile("Resources/json","stage5");
 	GlobalVariables::GetInstance()->LoadFiles();
 	
 	
@@ -120,7 +120,7 @@ void DemoScene::PostDraw()
 
 void DemoScene::Draw2d()
 {
-	carSmoke_->Draw();
+	//carSmoke_->Draw();
 	//sprite_->Draw();
 	ui_->Draw();
 	//sprite_->Draw();
@@ -252,9 +252,9 @@ void DemoScene::ArrageObj(std::list<std::unique_ptr<map>>& maps)
 			ModelManager::GetInstance()->LoadModel("Resources/" + objectData.filename, objectData.filename + ".obj");
 			std::unique_ptr<map> enemy = std::make_unique<map>();
 			enemy->Init(objectData.transform.scale, {
-				objectData.transform.rotate .x * 3.1415f /180.0f,
-				objectData.transform.rotate.y * 3.1415f / 180.0f ,
-				objectData.transform.rotate.z * 3.1415f / 180.0f
+				objectData.transform.rotate .x,
+				objectData.transform.rotate.y,
+				objectData.transform.rotate.z
 				}, objectData.transform.translate, objectData.filename);
 			maps.push_back(std::move(enemy));
 		}
