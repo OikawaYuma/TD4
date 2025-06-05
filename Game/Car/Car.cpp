@@ -2,9 +2,12 @@
 #include <ModelManager.h>
 void Car::Initialize(const Vector3& scale, const Vector3& rotate, const Vector3& translate, const std::string filename)
 {
+	scale;
+	rotate;
 	// 車の核となる場所を設定　各クラスに送る座標
 	worldTransform_.Initialize();
 	worldTransform_.translation_ = translate;
+	worldTransform_.translation_.y =-0.125f;
 	// ステアリング生成（Tireにポインタを渡す処理があるためそれより前に記述）
 	steering_ = std::make_unique<CarSteering>();
 	steering_->Init();
@@ -114,7 +117,7 @@ void Car::BicycleModel()
 	float brakeForce = brake_ * maxBrakeForce;
 
 	// 駆動と逆向きに作用するので、減速として加速度に使う
-	float netForce = driveForce - brakeForce;
+	//float netForce = driveForce - brakeForce;
 
 
 	float brakeLimitForce = mu_ * weight_; // 最大摩擦力による制動限界
@@ -145,7 +148,7 @@ void Car::BicycleModel()
 	// ホイールベース
 	float wheelBase = frontLength + rearLength;
 	float steerAngle = *steering_->GetAngle();
-	float steerEffect = 1.2f;  // 曲がりやすさを強調する係数
+	//float steerEffect = 1.2f;  // 曲がりやすさを強調する係数
 	//float theta = (adustSpeed / wheelBase) * std::tan(steerAngle) * steerEffect;
 	// ステア角（既にラジアンと仮定）
 	//float steerAngle = *steering_->GetAngle();
