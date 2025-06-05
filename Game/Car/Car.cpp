@@ -86,6 +86,8 @@ void Car::Yawing()
 
 void Car::BicycleModel()
 {
+	// 1フレームあたりの時間（60FPS）
+	const float deltaTime = 1.0f / 60.0f;
 	/*-----------------------本来CarEngineから持ってくる値--------------------------------*/
 	if (Input::GetInstance()->GetJoystickState()) {
 		if (Input::GetInstance()->PushRTrigger(0.05f)) {
@@ -103,18 +105,30 @@ void Car::BicycleModel()
 	float wheelTorque = engineTorque * 1.0f * 1.0f;
 	// 駆動力[N] = トルク / 半径
 	float driveForce = wheelTorque / wheelRadius_;
-	// ブレーキ力を仮に速度に比例した原則として加える（単純化）
-	float brakeForce = brake_ * 400.0f;
+	const float maxBrakeForce = weight_ * 0.8f; // [N]
+	// ブレーキ力 [N]（最大制動力を係数として）
+	float brakeForce = brake_ * maxBrakeForce;
+
+	// 駆動と逆向きに作用するので、減速として加速度に使う
+	float netForce = driveForce - brakeForce;
+
+
+	float brakeLimitForce = mu_ * weight_; // 最大摩擦力による制動限界
+	brakeForce = std::min(brakeForce, brakeLimitForce);
 	// 加速度[m/s2]
 	float acceleration = (driveForce - brakeForce) / mass_;
 
+
+	if (throttle_ < 0.01f && brake_ == 0.0f) {
+		float engineBrakeForce = 0.2f * weight_; // 仮定値（調整可）
+		acceleration -= engineBrakeForce / mass_;
+	}
 	/*----------------------------------------------------------*/
-	// 1フレームあたりの時間（60FPS）
-	const float deltaTime = 1.0f / 60.0f;
+
 
 	// 入力：時速 [km/h] → 毎秒に変換
 	float velocity_mps = speed_ / 3.6f;
-	velocity_mps += acceleration ;
+	velocity_mps += acceleration * deltaTime;
 	// 速度下限は0（バックは考慮せず）
 	if (velocity_mps < 0.0f) {
 		velocity_mps = 0.0f;

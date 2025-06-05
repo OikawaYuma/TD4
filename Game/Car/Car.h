@@ -95,7 +95,7 @@ private:
 
 
 private: // エンジンの出力が完成まで以下を使う　にへー頼んだ
-	const float maxEngineTorque_ = 400.0f; // 最大トルク[Nm] (適宜調整)
+	const float maxEngineTorque_ = 4000.0f; // 最大トルク[Nm] (適宜調整)
 	const float wheelRadius_ = 0.3f; // ホイール半径[m]
 	
 	// アクセル
