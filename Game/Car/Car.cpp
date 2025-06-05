@@ -140,7 +140,9 @@ void Car::BicycleModel()
 
 	// ホイールベース
 	float wheelBase = frontLength + rearLength;
-
+	float steerAngle = *steering_->GetAngle();
+	float steerEffect = 1.2f;  // 曲がりやすさを強調する係数
+	float theta = (adustSpeed / wheelBase) * std::tan(steerAngle) * steerEffect;
 	// ステア角（既にラジアンと仮定）
 	float steerAngle = *steering_->GetAngle();
 

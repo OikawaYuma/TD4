@@ -43,7 +43,7 @@ void Particle::Init() {
 	materialResource->Map(0, nullptr, reinterpret_cast<void**>(&materialData_));
 	// 色のデータを変数から読み込み
 	materialData_->color = { 1.0f,1.0f,1.0f,0.7f };
-	materialData_->enableLighting = true;
+	materialData_->enableLighting = false;
 	materialData_->uvTransform = MakeIdentity4x4();
 	materialData_->shininess = 60.0f;
 

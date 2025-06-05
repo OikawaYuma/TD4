@@ -18,6 +18,8 @@ void DemoScene::Init()
 	ModelManager::GetInstance()->LoadModel("Resources/map", "map0.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/ball", "ball.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/floor", "floor.obj");
+	ModelManager::GetInstance()->LoadModel("Resources/TenQ", "TenQ.obj");
+
 	fade_ = std::make_unique<Fade>();
 	fade_->Init("Resources/fade.png");
 	fade_->SetTexture(TextureManager::GetInstance()->StoreTexture("Resources/fade.png"));
@@ -25,7 +27,14 @@ void DemoScene::Init()
 	sprite_ = std::make_unique<Sprite>();
 	sprite_->Init("Resources/load.png");
 	sprite_->SetTexture(TextureManager::GetInstance()->StoreTexture("Resources/load.png"));
-	Object3dManager::GetInstance()->StoreObject("floor",TextureManager::GetInstance()->StoreTexture("Resources/uvChecker.png"),0);
+	
+	std::weak_ptr<ObjectPram> objectpram = Object3dManager::GetInstance()->StoreObject("TenQ", TextureManager::GetInstance()->StoreTexture("Resources/TenQ/TenQ.png"), 0);
+	if (objectpram.lock()) {
+		objectpram.lock()->worldTransform.translation_ = { 0.0f,-1000000.0f,0.0f };
+		objectpram.lock()->worldTransform.scale_ = { -100000.0f,100000.0f,100000.0f };
+		objectpram.lock()->worldTransform.UpdateMatrix();
+	}
+	Object3dManager::GetInstance()->StoreObject("floor", TextureManager::GetInstance()->StoreTexture("Resources/kusa2.png"), 0);
 	ui_ = std::make_unique<UI>();
 	ui_->Initialize();
 	sprite_->Init("Resources/load2.png");
@@ -84,6 +93,7 @@ void DemoScene::Update()
 	Object3dManager::GetInstance()->Update();
 	postProcess_->Update();
 	
+
 	sprite_->Update();
 	carGear_->Update();
 	ui_->SetGear(carGear_->GetCurrentGear());
@@ -98,6 +108,7 @@ void DemoScene::Update()
 void DemoScene::Draw()
 {
 	Object3dManager::GetInstance()->Draw(followCamera_->GetCamera());
+
 	//carSmoke_->Draw();
 }
 
@@ -114,6 +125,7 @@ void DemoScene::Draw2d()
 	ui_->Draw();
 	//sprite_->Draw();
 	fade_->Draw();
+
 }
 
 void DemoScene::Release() {

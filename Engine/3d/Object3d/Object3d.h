@@ -85,6 +85,8 @@ public: // Setter
 	void SetDirectionLight(const DirectionalLight& direction) { *directionalLightData = direction; }
 	void SetSpotLight(const SpotLight& spotLight) { *spotLightData_ = spotLight; }
 	void SetSpotlightPos(const Vector3& pos) { spotLightData_->position = pos; }
+
+	void ModelDebug();
 public: // Getter
 	uint32_t GetTransparency() { return transparency_; }
 	std::string GetObjectName() { return object3dData_.objectName; }
