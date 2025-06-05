@@ -11,7 +11,7 @@ map::~map()
 }
 void map::Init(const Vector3& scale, const Vector3& rotate, const Vector3& translate, const std::string filename)
 {
-	floorTex_ = TextureManager::GetInstance()->StoreTexture("Resources/load3.png");
+	floorTex_ = TextureManager::GetInstance()->StoreTexture("Resources/load4.png");
 	color_ = { 1.0f,1.0f,1.0f,1.0f };
 
 	objectPram_ = Object3dManager::GetInstance()->StoreObject(filename, floorTex_, Transparency::Opaque);

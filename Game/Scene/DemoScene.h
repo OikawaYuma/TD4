@@ -16,6 +16,7 @@
 #include "Model.h"
 #include "PostProcess.h"
 #include "Skybox/Skybox.h"
+#include "Skydome/SkyDome.h"
 #include "WorldDesign/WorldDesign.h"
 #include "GameCamera/FollowCamera/FollowCamera.h"
 #include "map/map.h"
@@ -46,6 +47,7 @@ public:
 	void ArrageObj(std::list<std::unique_ptr<map>>& maps);
 
 private:
+
 	std::unique_ptr<FollowCamera> followCamera_;
 	std::unique_ptr<PostProcess> postProcess_;
 	// Clearシーン用Camera
@@ -55,6 +57,7 @@ private:
 	// 背景オブジェクト
 	std::list<std::unique_ptr<map>> maps_;
 	std::unique_ptr<Car> car_;
+	std::unique_ptr<Skydome> skydome_;
 	// 背景オブジェクト
 	std::unique_ptr<Particle> particle_;
 	Emitter emitter_{};

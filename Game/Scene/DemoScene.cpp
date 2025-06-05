@@ -18,6 +18,7 @@ void DemoScene::Init()
 	ModelManager::GetInstance()->LoadModel("Resources/map", "map0.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/ball", "ball.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/floor", "floor.obj");
+	ModelManager::GetInstance()->LoadModel("Resources/TenQ", "TenQ.obj");
 
 	fade_ = std::make_unique<Fade>();
 	fade_->Init("Resources/fade.png");
@@ -28,8 +29,15 @@ void DemoScene::Init()
 	sprite_ = std::make_unique<Sprite>();
 	sprite_->Init("Resources/load.png");
 	sprite_->SetTexture(TextureManager::GetInstance()->StoreTexture("Resources/load.png"));
-	Object3dManager::GetInstance()->StoreObject("floor",TextureManager::GetInstance()->StoreTexture("Resources/kusa.png"),0);
-
+  
+	std::weak_ptr<ObjectPram> objectpram = Object3dManager::GetInstance()->StoreObject("TenQ", TextureManager::GetInstance()->StoreTexture("Resources/TenQ/TenQ.png"), 0);
+	if (objectpram.lock()) {
+		objectpram.lock()->worldTransform.translation_ = { 0.0f,-1000000.0f,0.0f };
+		objectpram.lock()->worldTransform.scale_ = { -100000.0f,100000.0f,100000.0f };
+		objectpram.lock()->worldTransform.UpdateMatrix();
+	}
+	Object3dManager::GetInstance()->StoreObject("floor", TextureManager::GetInstance()->StoreTexture("Resources/kusa2.png"), 0);
+  
 	ui_ = std::make_unique<UI>();
 	ui_->Initialize();
 	sprite_->Init("Resources/load2.png");
@@ -40,7 +48,7 @@ void DemoScene::Init()
 	sprite_->SetTexture(spTx_);
 	camera_ = std::make_unique<Camera>();
 	camera_->Initialize();
-	levelData_ = Loder::LoadJsonFile("Resources/json","stage4");
+	levelData_ = Loder::LoadJsonFile("Resources/json","stage5");
 	GlobalVariables::GetInstance()->LoadFiles();
 
 	ArrageObj(maps_);
@@ -92,6 +100,7 @@ void DemoScene::Update()
 	Object3dManager::GetInstance()->Update();
 	postProcess_->Update();
 	
+
 	sprite_->Update();
 	carGear_->Update();
 	ui_->SetGear(carGear_->GetCurrentGear());
@@ -106,6 +115,7 @@ void DemoScene::Update()
 void DemoScene::Draw()
 {
 	Object3dManager::GetInstance()->Draw(followCamera_->GetCamera());
+
 	//carSmoke_->Draw();
 }
 
@@ -117,11 +127,12 @@ void DemoScene::PostDraw()
 
 void DemoScene::Draw2d()
 {
-	carSmoke_->Draw();
+	//carSmoke_->Draw();
 	//sprite_->Draw();
 	ui_->Draw();
 	//sprite_->Draw();
 	fade_->Draw();
+
 }
 
 void DemoScene::Release() {
@@ -248,9 +259,9 @@ void DemoScene::ArrageObj(std::list<std::unique_ptr<map>>& maps)
 			ModelManager::GetInstance()->LoadModel("Resources/" + objectData.filename, objectData.filename + ".obj");
 			std::unique_ptr<map> enemy = std::make_unique<map>();
 			enemy->Init(objectData.transform.scale, {
-				objectData.transform.rotate .x * 3.1415f /180.0f,
-				objectData.transform.rotate.y * 3.1415f / 180.0f ,
-				objectData.transform.rotate.z * 3.1415f / 180.0f
+				objectData.transform.rotate .x,
+				objectData.transform.rotate.y,
+				objectData.transform.rotate.z
 				}, objectData.transform.translate, objectData.filename);
 			maps.push_back(std::move(enemy));
 		}
