@@ -3,6 +3,7 @@
 
 void NeutralGearState::Update(Gear* gear)
 {
+	gear;
 }
 
 float NeutralGearState::GetSpeed() const

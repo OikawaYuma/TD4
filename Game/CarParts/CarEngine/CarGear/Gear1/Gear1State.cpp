@@ -3,6 +3,7 @@
 
 void Gear1State::Update(Gear* gear)
 {
+	gear;
 }
 
 float Gear1State::GetSpeed() const

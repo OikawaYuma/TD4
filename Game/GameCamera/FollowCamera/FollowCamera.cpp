@@ -21,7 +21,7 @@ void FollowCamera::Init()
     camera_ = std::make_unique<Camera>();
     camera_->Initialize();
     camera_->SetTranslate({ 0, 0, 0 });
-    camera_->SetFarClip(2000.0f);
+    camera_->SetFarClip(6000.0f);
     cameraTime_ = 1.0f;
     offsetZ_ = 0.0f;
     cameraDirection_ = NONEDIRECTION;
