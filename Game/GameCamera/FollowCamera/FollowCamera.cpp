@@ -67,8 +67,8 @@ void FollowCamera::Upadate()
         auto elapsed = std::chrono::duration_cast<std::chrono::seconds>(now - lastInputTime_).count();
         if (elapsed >= 3) {
             // 3秒経過後にLerpで0に戻す
-            manualYaw_ = LerpAngle(manualYaw_, 0.0f, 0.01f);
-            manualPitch_ = Lerp(manualPitch_, 0.0f, 0.01f);
+            manualYaw_ = LerpAngle(manualYaw_, 0.0f, 0.05f);
+            manualPitch_ = Lerp(manualPitch_, 0.0f, 0.05f);
         }
         // 3秒未満なら何もしない（角度を維持）
     }
@@ -80,7 +80,7 @@ void FollowCamera::Upadate()
     prevTargetAngle_ = targetAngle;
 
     float maxSideAngle = 0.7f;
-    float targetSideAngle = std::clamp(std::abs(angleDiff) * 1000.0f, 0.0f, maxSideAngle);
+    float targetSideAngle = std::clamp(std::abs(angleDiff) * 700.0f, 0.0f, maxSideAngle);
 
     if (angleDiff > 0) targetSideAngle = -targetSideAngle;
 
