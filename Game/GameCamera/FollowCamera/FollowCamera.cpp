@@ -73,14 +73,14 @@ void FollowCamera::Upadate()
         // 3秒未満なら何もしない（角度を維持）
     }
 
-    manualPitch_ = std::clamp(manualPitch_, -std::numbers::pi_v<float> / 4.0f, std::numbers::pi_v<float> / 4.0f);
+    manualPitch_ = std::clamp(manualPitch_, -0.025f, 0.5f);
 
     float targetAngle = target_->rotation_.y;
     float angleDiff = targetAngle - prevTargetAngle_;
     prevTargetAngle_ = targetAngle;
 
-    float maxSideAngle = 0.7f;
-    float targetSideAngle = std::clamp(std::abs(angleDiff) * 700.0f, 0.0f, maxSideAngle);
+    float maxSideAngle = 0.3f;
+    float targetSideAngle = std::clamp(std::abs(angleDiff) * 200.0f, 0.0f, maxSideAngle);
 
     if (angleDiff > 0) targetSideAngle = -targetSideAngle;
 
