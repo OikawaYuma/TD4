@@ -4,6 +4,7 @@ void Car::Initialize(const Vector3& scale, const Vector3& rotate, const Vector3&
 {
 	// 車の核となる場所を設定　各クラスに送る座標
 	worldTransform_.Initialize();
+	worldTransform_.translation_ = translate;
 	// ステアリング生成（Tireにポインタを渡す処理があるためそれより前に記述）
 	steering_ = std::make_unique<CarSteering>();
 	steering_->Init();

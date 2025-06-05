@@ -39,6 +39,7 @@ public: //Getter
 
 public: //Setter
 	void SetRotate(const Vector3& rotate) { transform_.rotate = rotate; }
+	void SetPos(const Vector3& pos_) { transform_.translate = pos_; }
 	void SetTranslate(const Vector3& translate) { transform_.translate = translate; }
 	void SetFovY() {}
 	void SetAspectRario() {}
