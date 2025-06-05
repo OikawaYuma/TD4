@@ -20,9 +20,6 @@ void Car::Initialize(const Vector3& scale, const Vector3& rotate, const Vector3&
 
 void Car::Update()
 {
-	
-
-
 	// 車体の更新
 	body_->Update();
 

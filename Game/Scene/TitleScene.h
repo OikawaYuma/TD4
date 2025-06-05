@@ -11,6 +11,7 @@
 #include "GameCamera/TitleCamera/TitleCamera.h"
 #include "Skydome/Skydome.h"
 #include "WorldDesign/WorldDesign.h"
+#include <Car/Car.h>
 class TitleScene : public IScene
 {
 public:
@@ -26,5 +27,7 @@ public:
 
 private:
 	PostProcess* postProcess_ = nullptr;
+	std::unique_ptr<Car> car_ = nullptr;
+	std::unique_ptr<Camera> camera_ = nullptr;
 };
 
