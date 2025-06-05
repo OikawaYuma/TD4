@@ -3,6 +3,18 @@
 #include <iostream>
 #include <cmath>
 #include <numbers>
+// 角度を -π～π に正規化
+float NormalizeAngle(float angle) {
+    while (angle > std::numbers::pi_v<float>) angle -= std::numbers::pi_v<float> *2.0f;
+    while (angle < -std::numbers::pi_v<float>) angle += std::numbers::pi_v<float> *2.0f;
+    return angle;
+}
+
+// 角度用Lerp（最短経路で補間）
+float LerpAngle(float from, float to, float t) {
+    float diff = NormalizeAngle(to - from);
+    return from + diff * t;
+}
 
 void FollowCamera::Init()
 {
@@ -27,30 +39,54 @@ void FollowCamera::StartCameraEffect()
     camera_->Update();
 }
 
-// FollowCamera.cpp の Upadate() を修正
 void FollowCamera::Upadate()
 {
     if (!target_) return;
 
-    // ターゲットの進行方向（Y回転角）を取得
-    float targetAngle = target_->rotation_.y;
+    float rightX = Input::GetInstance()->JoyStickParmRX(1.0f);
+    float rightY = Input::GetInstance()->JoyStickParmRY(1.0f);
 
-    // 前フレームとの差分（角速度）を計算
+    float sensitivityYaw = 0.03f;
+    float sensitivityPitch = 0.02f;
+
+    const float deadzone = 0.15f;
+    bool isRightStickActive = (std::abs(rightX) > deadzone) || (std::abs(rightY) > deadzone);
+
+    // 現在時刻を取得
+    auto now = std::chrono::steady_clock::now();
+
+    if (isRightStickActive) {
+        manualYaw_ += rightX * sensitivityYaw;
+        manualPitch_ += rightY * sensitivityPitch;
+        manualYaw_ = NormalizeAngle(manualYaw_);
+        // 最後の入力時刻を更新
+        lastInputTime_ = now;
+    }
+    else {
+        // 入力がなくなってからの経過時間を計算
+        auto elapsed = std::chrono::duration_cast<std::chrono::seconds>(now - lastInputTime_).count();
+        if (elapsed >= 3) {
+            // 3秒経過後にLerpで0に戻す
+            manualYaw_ = LerpAngle(manualYaw_, 0.0f, 0.01f);
+            manualPitch_ = Lerp(manualPitch_, 0.0f, 0.01f);
+        }
+        // 3秒未満なら何もしない（角度を維持）
+    }
+
+    manualPitch_ = std::clamp(manualPitch_, -std::numbers::pi_v<float> / 4.0f, std::numbers::pi_v<float> / 4.0f);
+
+    float targetAngle = target_->rotation_.y;
     float angleDiff = targetAngle - prevTargetAngle_;
     prevTargetAngle_ = targetAngle;
 
-    // 角速度の絶対値を使い、sideAngleの目標値を決定
-    float maxSideAngle = 0.7f; // 最大横オフセット（ラジアン、例: 40度くらい）
-    float targetSideAngle = std::clamp(std::abs(angleDiff) * 600.0f, 0.0f, maxSideAngle);
+    float maxSideAngle = 0.7f;
+    float targetSideAngle = std::clamp(std::abs(angleDiff) * 1000.0f, 0.0f, maxSideAngle);
 
-    // 進行方向に応じて左右どちらにオフセットするか決める（例: 右旋回なら右側から見る）
     if (angleDiff > 0) targetSideAngle = -targetSideAngle;
 
-    // 滑らかにLerp
     currentSideAngle_ = Lerp(currentSideAngle_, targetSideAngle, 0.01f);
 
-    // カメラ位置計算
-    float angle = targetAngle + currentSideAngle_;
+    float angle = targetAngle + currentSideAngle_ + manualYaw_;
     Vector3 forward = {
         std::sin(angle),
         0.0f,
@@ -62,16 +98,18 @@ void FollowCamera::Upadate()
     float maxCameraHeight = 5.0f;
     float behindY = std::min(target_->translation_.y + cameraHeight, maxCameraHeight);
 
+    float pitchOffset = std::sin(manualPitch_) * cameraDistance;
+
     Vector3 behind = {
         target_->translation_.x - forward.x * cameraDistance,
-        behindY,
+        behindY + pitchOffset,
         target_->translation_.z - forward.z * cameraDistance
     };
 
     camera_->SetTranslate(Lerp(camera_->GetTranslate(), behind, 0.8f));
 
     Vector3 cameraRotation = {
-        0.0f,
+        manualPitch_,
         angle,
         0.0f
     };
@@ -80,6 +118,7 @@ void FollowCamera::Upadate()
 
     camera_->Update();
 }
+
 void FollowCamera::SetTarget(const WorldTransform* target)
 {
     target_ = target;
