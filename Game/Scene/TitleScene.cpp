@@ -51,7 +51,12 @@ void TitleScene::Update()
 {
 	Object3dManager::GetInstance()->Update();
 	postProcess_->Update();
+	if (Input::GetInstance()->GetJoystickState()) {
+		if (Input::GetInstance()->PushJoyButton(XINPUT_GAMEPAD_Y)) {
+			sceneNo = DEMO;
+		}
 
+	}
 	for (std::list<std::unique_ptr<map>>::iterator itr = maps_.begin(); itr != maps_.end(); itr++) {
 		(*itr)->Update();
 	}
@@ -66,12 +71,7 @@ void TitleScene::Update()
 
 	camera_->Update();
 
-	if (Input::GetInstance()->GetJoystickState()) {
-		if (Input::GetInstance()->TriggerJoyButton(XINPUT_GAMEPAD_B)) {
-			sceneNo = DEMO;
-		}
-		
-	}
+	
 }
 void TitleScene::Draw()
 {

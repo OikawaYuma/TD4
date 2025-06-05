@@ -31,12 +31,15 @@ void Logo::Update()
 	if (objectPram_.lock()) {
 		objectPram_.lock()->worldTransform.UpdateMatrix();
 	}
-
+#ifdef _DEBUG
 	ImGui::Begin("Logo");
 	ImGui::DragFloat3("Scale", &objectPram_.lock()->worldTransform.scale_.x, 0.1f);
 	ImGui::DragFloat3("Rotate", &objectPram_.lock()->worldTransform.rotation_.x, 0.1f);
 	ImGui::DragFloat3("Transform", &objectPram_.lock()->worldTransform.translation_.x, 0.1f);
 	ImGui::End();
+#endif // _DEBUG
+
+
 
 	shadow_->Update();
 }
