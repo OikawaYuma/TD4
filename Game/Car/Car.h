@@ -104,5 +104,8 @@ private: // エンジンの出力が完成まで以下を使う　にへー頼�
 	
 	bool isDrift_ = false;
 
-};
+private: // 完成モーメント用変数
+	float yawAngularVelocity_ = 0.0f; // 車両の角速度（ヨー）
+	float momentOfInertia_ = 0.0f;    // 慣性モーメント
 
+};
