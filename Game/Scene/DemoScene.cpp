@@ -89,7 +89,12 @@ void DemoScene::Update()
 	PostEffectChange();
 	camera_->CameraDebug();
 #endif // _DEBUG
+	if (Input::GetInstance()->GetJoystickState()) {
+		if (Input::GetInstance()->PushJoyButton(XINPUT_GAMEPAD_B)) {
+			sceneNo = TITLE;
+		}
 
+	}
 	camera_->Update();
 	GlobalVariables::GetInstance()->Update();
 	for (std::list<std::unique_ptr<map>>::iterator itr = maps_.begin(); itr != maps_.end(); itr++) {

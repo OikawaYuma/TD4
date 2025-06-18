@@ -19,6 +19,8 @@ void Car::Initialize(const Vector3& scale, const Vector3& rotate, const Vector3&
 	shadow_ = std::make_unique<PlaneProjectionShadow>();
 	shadow_->Init(&worldTransform_,filename);
 	
+	// 慣性モーメントの初期化（仮定値、調整可能）
+	momentOfInertia_ = (1.0f / 12.0f) * mass_ * (carLength_ * carLength_ + carWidth_ * carWidth_);
 
 }
 
@@ -30,6 +32,13 @@ void Car::Update()
 	for (auto& tire : tires_) {
 		tire->Update();
 	}
+
+	// アクセル処理
+	Accel();
+	// ブレーキ処理
+	Brake();
+	// エンジントルク計算（必要なら）
+	CulculateEngineTorque();
 	// バイシクルモデルでの車の動き
 	BicycleModel();
 	// 平行影の更新
@@ -90,54 +99,25 @@ void Car::Yawing()
 
 void Car::BicycleModel()
 {
-	// 1フレームあたりの時間（60FPS）
-	const float deltaTime = 1.0f / 60.0f;
-	/*-----------------------本来CarEngineから持ってくる値--------------------------------*/
-	if (Input::GetInstance()->GetJoystickState()) {
-		if (Input::GetInstance()->TriggerJoyButton(XINPUT_GAMEPAD_A)) {
-
-		}
-		if (Input::GetInstance()->PushRTrigger(0.05f)) {
-			
-		}
-		throttle_ = Input::GetInstance()->GetRTValue();
-		if (Input::GetInstance()->PushLTrigger(0.05f)) {
-			
-		}
-		brake_ = Input::GetInstance()->GetLTValue();
-	}
-	// エンジントルク算出
-	float engineTorque = maxEngineTorque_ * throttle_;
-	// 駆動輪トルク（ギア比・ファイナル含む）
-	float wheelTorque = engineTorque * 1.0f * 1.0f;
-	// 駆動力[N] = トルク / 半径
-	float driveForce = wheelTorque / wheelRadius_;
-	// ブレーキの最大力
-	const float maxBrakeForce = weight_ * mu_; // [N]
-	// ブレーキ力 [N]（最大制動力を係数として）
-	float brakeForce = brake_ * maxBrakeForce;
-
-	float brakeLimitForce = mu_ * weight_; // 最大摩擦力による制動限界
-	brakeForce = std::min(brakeForce, brakeLimitForce);
+	
 	// 入力：時速 [km/h] → 毎秒に変換
 	float velocity_mps = speed_ / 3.6f;
 	// 制動距離 = v^2 / (2 * a)
-	float brakingDeceleration = brakeForce / mass_; // 加速度（正値でOK）
+	float brakingDeceleration = brakeForce_ / mass_; // 加速度（正値でOK）
 	float brakingDistance = (velocity_mps * velocity_mps) / (2.0f * brakingDeceleration);
 	brakingDistance;
 	// 加速度[m/s2]
-	float acceleration = (driveForce - brakeForce) / mass_;
-
-
+	float acceleration = (driveForce_ - brakeForce_) / mass_;
 	if (throttle_ < 0.01f && brake_ == 0.0f) {
 		float engineBrakeForce = 0.2f * weight_; // 仮定値（調整可）
 		acceleration -= engineBrakeForce / mass_;
 	}
 	/*----------------------------------------------------------*/
 
-
-	
-	velocity_mps += acceleration * deltaTime;
+	velocity_mps += acceleration * deltaTime_;
+	if (240 /3.6 <= velocity_mps) {
+		velocity_mps = 240 / 3.6f; // 最大速度制限（240km/hをm/sに変換）
+	}
 	// 速度下限は0（バックは考慮せず）
 	if (velocity_mps < 0.0f) {
 		velocity_mps = 0.0f;
@@ -145,7 +125,7 @@ void Car::BicycleModel()
 	// km/hに戻す
 	speed_ = velocity_mps * 3.6f;
 	
-	float frameSpeed = velocity_mps * deltaTime;
+	float frameSpeed = velocity_mps * deltaTime_;
 
 	// ホイールベース
 	float wheelBase = frontLength + rearLength;
@@ -172,8 +152,77 @@ void Car::BicycleModel()
 	// グリップ率が低いなら回転も減衰させる
 	theta *= gripRatio;
 
+
+	// スリップアングル計算も速度が十分なときだけ(ゼロ除算を避ける)
+	float frontSlipAngle = 0.0f;
+	float rearSlipAngle = 0.0f;
+	if (velocity_mps > 0.5f) {
+		frontSlipAngle = atan2(
+			(yawAngularVelocity_ * frontLength + velocity_mps * sin(steerAngle)),
+			(velocity_mps * cos(steerAngle))
+		) - steerAngle;
+
+		rearSlipAngle = atan2(
+			(yawAngularVelocity_ * -rearLength),
+			velocity_mps
+		);
+	}
+	// Car::BicycleModel の後半でヨー運動を追加
+// 前輪・後輪の横力を計算（簡易的にグリップ力×スリップアングルで近似）
+	float baseStiffness = 80000.0f;
+	float speed_kmh = speed_;
+	float tireCorneringStiffness = baseStiffness * std::exp(-0.01f * speed_kmh);
+	float slipAtPeak = 0.15f; // ピークのスリップアングル[rad]（調整可）
+	float peak = maxGripForce;
+
+	// 前輪横力
+	float slipF = std::abs(frontSlipAngle);
+	float signF = (frontSlipAngle >= 0.0f) ? 1.0f : -1.0f;
+	float frontLatForce = 0.0f;
+	if (slipF < slipAtPeak) {
+		frontLatForce = tireCorneringStiffness * slipF;
+	}
+	else {
+		// ピークを超えたら横力を減衰させる（指数減衰）
+		frontLatForce = peak * std::exp(-3.0f * (slipF - slipAtPeak));
+	}
+	frontLatForce *= signF;
+	// グリップ限界でclamp
+	frontLatForce = std::clamp(frontLatForce, -maxGripForce, maxGripForce);
+
+	// 後輪横力
+	float slipR = std::abs(rearSlipAngle);
+	float signR = (rearSlipAngle >= 0.0f) ? 1.0f : -1.0f;
+	float rearLatForce = 0.0f;
+	if (slipR < slipAtPeak) {
+		rearLatForce = tireCorneringStiffness * slipR;
+	}
+	else {
+		rearLatForce = peak * std::exp(-3.0f * (slipR - slipAtPeak));
+	}
+	rearLatForce *= signR;
+	rearLatForce = std::clamp(rearLatForce, -maxGripForce, maxGripForce);
+	// ヨーモーメント
+	float yawMoment = frontLatForce * frontLength - rearLatForce * rearLength;
+
+	// 角加速度
+	float yawAngularAccel = yawMoment / momentOfInertia_;
+
+	// ヨー角速度・車体向きの更新
+	yawAngularVelocity_ += yawAngularAccel * deltaTime_;
+
+	// 減衰（ダンピング）を追加
+	const float yawDamping = 0.98f; // 0.98～0.995くらいで調整
+	yawAngularVelocity_ *= yawDamping;
+
+	// 上限を最後にclamp
+	const float maxYawRate = 5.0f;
+	yawAngularVelocity_ = std::clamp(yawAngularVelocity_, -maxYawRate, maxYawRate);
+
+	//worldTransform_.rotation_.y += yawAngularVelocity_ * deltaTime_;
+
 	// 向き更新
-	worldTransform_.rotation_.y += theta * deltaTime;
+	worldTransform_.rotation_.y += theta * deltaTime_;
 
 	// 移動更新
 	worldTransform_.translation_.z += frameSpeed * std::cos(worldTransform_.rotation_.y);
@@ -187,21 +236,57 @@ void Car::BicycleModel()
 	ImGui::Text("Theta: %.4f rad/frame", theta);
 	ImGui::Text("Thorottle: %.4f ", throttle_);
 	ImGui::Text("Brake: %.4f ", brake_);
-	ImGui::Text("EngineTorque: %.4f ", engineTorque);
-	ImGui::Text("wheelTorque: %.4f ", wheelTorque);
-	ImGui::Text("driveForce: %.4f ", driveForce);
+	ImGui::Text("EngineTorque: %.4f ", engineTorque_);
+	ImGui::Text("wheelTorque: %.4f ", wheelTorque_);
+	ImGui::Text("driveForce: %.4f ", driveForce_);
 	ImGui::Text("acceleration: %.4f ", acceleration);
 	ImGui::Text("velocity_mps: %.4f ", velocity_mps);
 	ImGui::Text("speed_: %.4f ", speed_);
 	ImGui::Text("Braking Distance: %.2f m", brakingDistance);
-	ImGui::Text("BrakeForce: %.2f N", brakeForce);
+	ImGui::Text("BrakeForce: %.2f N", brakeForce_);
 	ImGui::Text("Acceleration: %.2f m/s^2", acceleration);
+	ImGui::DragFloat("Mu:", &mu_,0.01f);
+	// --- ヨーモーメント関連のデバッグ表示 ---
+	ImGui::Separator();
+	/*ImGui::Text("Yaw Moment: %.2f Nm", yawMoment);
+	ImGui::Text("Moment of Inertia: %.2f kg*m^2", momentOfInertia_);
+	ImGui::Text("Yaw Angular Accel: %.4f rad/s^2", yawAngularAccel);*/
+	ImGui::Text("Yaw Angular Velocity: %.4f rad/s", yawAngularVelocity_);
 	ImGui::End();
 #endif
 
 
 }
 
+void Car::Accel()
+{
+	if (Input::GetInstance()->GetJoystickState()) {
+		Input::GetInstance()->PushRTrigger(0.05f);
+		throttle_ = Input::GetInstance()->GetRTValue();
+	}
+}
+
 void Car::Brake()
 {
+	if (Input::GetInstance()->GetJoystickState()) {
+		Input::GetInstance()->PushLTrigger(0.05f);
+		brake_ = Input::GetInstance()->GetLTValue();
+	}
+
+	// ブレーキ力 [N]（最大制動力を係数として）
+	brakeForce_ = brake_ * maxBrakeForce;
+
+	float brakeLimitForce = mu_ * weight_; // 最大摩擦力による制動限界
+	// ブレーキ力が最大摩擦力を超えないように制限
+	brakeForce_ = std::min(brakeForce_, brakeLimitForce);
+}
+
+void Car::CulculateEngineTorque()
+{
+	// エンジントルク算出
+	engineTorque_ = maxEngineTorque_ * throttle_;
+	// 駆動輪トルク（ギア比・ファイナル含む）
+	wheelTorque_ = engineTorque_ * 1.0f * 1.0f;
+	// 駆動力[N] = トルク / 半径
+	driveForce_ = wheelTorque_ / wheelRadius_;
 }

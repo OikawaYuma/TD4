@@ -51,9 +51,19 @@ private: // 移動処理
 	void BicycleModel();
 
 	/// <summary>
+	/// アクセル処理
+	/// </summary>
+	void Accel();
+
+	/// <summary>
 	/// ブレーキ処理
 	/// </summary>
 	void Brake();
+
+	/// <summary>
+	/// エンジントルクの計算
+	/// </summary>
+	void CulculateEngineTorque();
 
 private: // 外部情報　本来はここに書くべきではない
 	// 摩擦係数
@@ -77,6 +87,10 @@ private:
 	// 中心からの距離
 	float frontLength = 1.31f;  // 重心から前輪まで
 	float rearLength = 1.31f;   // 重心から後輪まで
+	// 車の長さ
+	float carLength_ = 3.0f; // 車の長さ（インプレッサは4.4mくらい）
+	// 車の幅
+	float carWidth_ = 1.75f; // 車の幅（インプレッサは1.75mくらい）
 	// Object情報
 	uint32_t floorTex_ = 0;
 	Vector4 color_;
@@ -95,17 +109,36 @@ private:
 
 private: // エンジンの出力が完成まで以下を使う　にへー頼んだ
 	const float maxEngineTorque_ = 4000.0f; // 最大トルク[Nm] (適宜調整)
+
+	float engineTorque_ = 0.0f; // エンジンのトルク[Nm]
+
+	float wheelTorque_ = 0.0f; // 車輪のトルク[Nm] (エンジンのトルクをタイヤに伝える)
+
+	float driveForce_ = 0.0f; // 車輪の駆動力[N] (タイヤのトルクから計算される)
+
+private: // 車輪の情報
 	const float wheelRadius_ = 0.3f; // ホイール半径[m]
 	
-	// アクセル
-	float throttle_ = 0.0f;
-	// ブレーキ
-	float brake_ = 0.0f;
 	
+	float throttle_ = 0.0f; // アクセルの強さ（0.0~1.0）
+
+private: // 車のブレーキ処理に関する変数
+	
+	float brake_ = 0.0f; // ブレーキの強さ（0.0~1.0）
+
+	float brakeForce_ = 0.0f; // ブレーキ力[N] (ブレーキの強さから計算される)
+	
+	// ブレーキの最大力
+	const float maxBrakeForce = weight_ * mu_; // [N]
+
 	bool isDrift_ = false;
 
 private: // 完成モーメント用変数
 	float yawAngularVelocity_ = 0.0f; // 車両の角速度（ヨー）
 	float momentOfInertia_ = 0.0f;    // 慣性モーメント
 
+private: // frame情報
+	// 1フレームあたりの時間（60FPS）
+	const float deltaTime_ = 1.0f / 60.0f;
+	
 };
