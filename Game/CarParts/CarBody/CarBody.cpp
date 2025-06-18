@@ -23,15 +23,30 @@ void CarBody::Initialize(const Vector3& rotate, const Vector3& scale, const Vect
 
 void CarBody::Update()
 {
-	
-	// 押し出し
-	const auto& collisionInfo = collider_->GetCollisionInfo();
-	for (const auto& info : collisionInfo) {
-		 penetration_ = info.normal * info.penetration;
+	penetration_ = {};
+	normal_ = {};
+
+	const auto& collisionInfos = collider_->GetCollisionInfo();
+	if (!collisionInfos.empty()) {
+		Vector3 sumNormal{};
+		float maxPenetration = 0.0f;
+
+		for (const auto& info : collisionInfos) {
+			sumNormal = sumNormal + info.normal;
+			if (info.penetration > maxPenetration) {
+				maxPenetration = info.penetration;
+			}
+		}
+
+		// 法線の平均を正規化
+		Vector3 avgNormal = Normalize(sumNormal);
+		penetration_ = avgNormal * maxPenetration;
+		normal_ = avgNormal;
 	}
 
-	// 更新
-	BaseObject::Update();
+	/*if (isHit_) {
+		isHit_ = true;
+	}*/
 
 	// colliderに送る
 	if (collider_) {
@@ -40,14 +55,14 @@ void CarBody::Update()
 		collider_->SetMatWorld(objectParam_.lock()->worldTransform.matWorld_);
 	}
 
+	BaseObject::Update();
 	OnCollision();
 
 #ifdef _DEBUG
 	ImGui::Begin("hit");
 	ImGui::Text("hit : %d", isHit_);
 	ImGui::End();
-#endif // _DEBUG
-
+#endif
 }
 
 void CarBody::SetParent(WorldTransform* worldTransform)
@@ -72,6 +87,7 @@ Vector3 CarBody::Reflect(const Vector3& velocity, const Vector3& normal)
 Vector3 CarBody::Slide(const Vector3& velocity, const Vector3& normal)
 {
 	Vector3 result{};
-	result = velocity - Dot(velocity, normal) * normal;
+	Vector3 n = Normalize(normal);
+	result = velocity - Dot(velocity, n) * n;
 	return result;
 }

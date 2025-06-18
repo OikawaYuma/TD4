@@ -79,8 +79,15 @@ void CollisionManager::CheckCollisionPair(Collider* colliderA, Collider* collide
 		if (CheckCollision(obbA, obbB, &normal, &penetration)) {
 
 			// 衝突情報を追加
-			colliderA->AddCollisionInfo({ colliderB, normal, penetration });
-			colliderB->AddCollisionInfo({ colliderA, -1.0f * normal, penetration });
+			colliderA->AddCollisionInfo({ colliderB, -1.0f * normal, penetration });
+			colliderB->AddCollisionInfo({ colliderA, normal, penetration });
+
+#ifdef _DEBUG
+			ImGui::Begin("OBB Collision Debug");
+			ImGui::Text("penetration: %f", penetration);
+			ImGui::Text("normal: (%.3f, %.3f, %.3f)", normal.x, normal.y, normal.z);
+			ImGui::End();
+#endif
 
 			// コライダーAの衝突時コールバックを呼び出す
 			colliderA->SetOnCollision(true);
@@ -88,10 +95,13 @@ void CollisionManager::CheckCollisionPair(Collider* colliderA, Collider* collide
 			colliderB->SetOnCollision(true);
 		}
 		else {
-			// コライダーAの衝突時コールバックを呼び出す
-			colliderA->SetOnCollision(false);
-			// コライダーBの衝突時コールバックを呼び出す
-			colliderB->SetOnCollision(false);
+			// 衝突情報が空だったら false にする（複数の衝突に対応）
+			if (colliderA->GetCollisionInfo().empty()) {
+				colliderA->SetOnCollision(false);
+			}
+			if (colliderB->GetCollisionInfo().empty()) {
+				colliderB->SetOnCollision(false);
+			}
 		}
 	}
 

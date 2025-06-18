@@ -63,7 +63,7 @@ void DemoScene::Init()
 	collisionManager_ = std::make_unique<CollisionManager>();
 	// 壁
 	wall_ = std::make_unique<Wall>();
-	wall_->Initialize({},{ 5.0f,5.0f,5.0f}, { 10.0f,0.0f,10.0f }, "box");
+	wall_->Initialize({},{ 5.0f,5.0f,5.0f}, { 0.0f,0.0f,10.0f }, "box");
 
 }
 

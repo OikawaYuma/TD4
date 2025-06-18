@@ -20,8 +20,6 @@ void Car::Initialize(const Vector3& scale, const Vector3& rotate, const Vector3&
 
 void Car::Update()
 {
-	
-
 
 	// 車体の更新
 	body_->Update();
@@ -33,9 +31,7 @@ void Car::Update()
 	BicycleModel();
 	//shadow_->Update();
 	// UIクラスから出たスピードを足す
-	worldTransform_.translation_ = worldTransform_.translation_ + body_->GetPenetration();
 	worldTransform_.UpdateMatrix();
-	
 	// ステアリング更新
 	steering_->Update();
 }
@@ -153,9 +149,67 @@ void Car::BicycleModel()
 		std::cos(yaw)
 	};
 
-	//gripRatioを移動全体に影響させる（アンダーステア時は曲がりが浅く＝方向も前寄りに）
-	worldTransform_.translation_.x += forward.x * adustSpeed;
-	worldTransform_.translation_.z += forward.z * adustSpeed;
+	int maxCorrection = 0;
+	for (int i = 0; i < maxCorrection; ++i) {
+		if (!body_->GetIsHit()) break;
+		Vector3 penetration = body_->GetPenetration();
+		Vector3 normal = body_->GetNormal();
+		if (Length(normal) > 0.0001f) {
+			normal = Normalize(normal);
+		} else {
+			normal = {0, 1, 0};
+		}
+		float penetrationLength = std::abs(Dot(penetration, normal));
+		Vector3 pushOut = normal * penetrationLength;
+		worldTransform_.translation_ = worldTransform_.translation_ + pushOut;
+		body_->Update(); // 補正後に再度衝突判定を更新
+	}
+
+	if (body_->GetIsHit()) {
+		Vector3 penetration = body_->GetPenetration();
+		Vector3 normal = body_->GetNormal();
+		// normalの正規化
+		if (Length(normal) > 0.0001f) {
+			normal = Normalize(normal);
+		} else {
+			normal = {0, 1, 0}; // 万一のためのデフォルト
+		}
+		// penetrationLengthの絶対値を利用
+		float penetrationLength = std::abs(Dot(penetration, normal));
+		float penetrationAttenuation = 0.4f; // 100%補正
+		Vector3 pushOut = normal * penetrationLength * penetrationAttenuation;
+		worldTransform_.translation_ = worldTransform_.translation_ + pushOut;
+
+		// Slideで移動方向を補正
+		Vector3 slidVelocity = body_->Slide(forward * adustSpeed, normal);
+		// スライドベクトルの長さを制限
+		float slidLen = Length(slidVelocity);
+		if (slidLen > adustSpeed) {
+			slidVelocity = Normalize(slidVelocity) * adustSpeed;
+		}
+		worldTransform_.translation_ = worldTransform_.translation_ + slidVelocity;
+
+		// 速度減衰を強める
+		float dot = Dot(forward, normal);
+		if (dot > 0.0f) {
+			speed_ *= (1.0f - dot * 0.8f); // 減衰を強める
+			//if (speed_ < 0.5f) speed_ = 0.0f;
+		}
+
+#ifdef _DEBUG
+		ImGui::Begin("CollisionDebug");
+		ImGui::Text("penetration: (%.3f, %.3f, %.3f)", penetration.x, penetration.y, penetration.z);
+		ImGui::Text("normal: (%.3f, %.3f, %.3f)", normal.x, normal.y, normal.z);
+		ImGui::End();
+#endif
+
+	}
+	else {
+		// 通常の移動
+		worldTransform_.translation_.x += forward.x * adustSpeed;
+		worldTransform_.translation_.z += forward.z * adustSpeed;
+	}
+
 
 #ifdef _DEBUG
 	ImGui::Begin("CarGrip");
