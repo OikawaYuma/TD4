@@ -27,6 +27,9 @@
 #include "Particle.h"
 #include "CarParts/CarEngine/CarGear/CarGear.h"
 #include "CarSmoke/CarSmoke.h"
+#include "Collision/CollisionManager.h"
+#include "Obstacles/Wall.h"
+
 class DemoScene : public IScene
 {
 public:
@@ -50,6 +53,9 @@ public:
 
 private:
 
+	void Collision();
+
+private:
 	std::unique_ptr<FollowCamera> followCamera_;
 	std::unique_ptr<PostProcess> postProcess_;
 	// Clearシーン用Camera
@@ -77,5 +83,8 @@ private:
 	std::unique_ptr<Gear> carGear_;
 
 	int selectedIndex[1] = {0};
+
+	std::unique_ptr<CollisionManager> collisionManager_;
+	std::unique_ptr<Wall> wall_;
 };
 
