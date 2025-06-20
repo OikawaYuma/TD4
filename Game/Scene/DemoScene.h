@@ -16,6 +16,7 @@
 #include "Model.h"
 #include "PostProcess.h"
 #include "Skybox/Skybox.h"
+#include "Skydome/SkyDome.h"
 #include "WorldDesign/WorldDesign.h"
 #include "GameCamera/FollowCamera/FollowCamera.h"
 #include "map/map.h"
@@ -44,6 +45,8 @@ public:
 
 	void PostEffectChange();
 
+	void DepthOutlinePramChange();
+
 	void ParticleEmitter();
 
 	void ArrageObj(std::list<std::unique_ptr<map>>& maps);
@@ -62,6 +65,7 @@ private:
 	// 背景オブジェクト
 	std::list<std::unique_ptr<map>> maps_;
 	std::unique_ptr<Car> car_;
+	std::unique_ptr<Skydome> skydome_;
 	// 背景オブジェクト
 	std::unique_ptr<Particle> particle_;
 	Emitter emitter_{};
@@ -74,6 +78,7 @@ private:
 	uint32_t spTx_ = 0;
 	LevelData levelData_{};
 
+	DepthOutlineInfo depthOutlineInfo_{};
 	// Gear
 	std::unique_ptr<Gear> carGear_;
 

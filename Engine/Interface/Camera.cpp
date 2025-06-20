@@ -106,6 +106,8 @@ void Camera::HandleRightStick(const XINPUT_STATE& joyState)
 /// </summary>
 void Camera::CameraDebug()
 {
+#ifdef _DEBUG
+
     ImGui::PushStyleColor(ImGuiCol_TitleBgActive, ImVec4(0.2f, 0.0f, 0.7f, 0.8f));
     ImGui::PushStyleColor(ImGuiCol_TitleBg, ImVec4(0.1f, 0.0f, 0.3f, 0.5f));
     ImGui::Begin("camera");
@@ -128,11 +130,13 @@ void Camera::CameraDebug()
     transform_.rotate = { rotate[0],rotate[1],rotate[2] };
     transform_.scale = { scale[0],scale[1],scale[2] };
     ImGui::DragFloat("XZspeed", &baseSpeed, 0.01f);
-    ImGui::DragFloat("Yspeed", &Yspeed, 0.01f); 
+    ImGui::DragFloat("Yspeed", &Yspeed, 0.01f);
     ImGui::DragFloat("SEN", &lookSensitivity, 0.001f);
 
     ImGui::End();
     ImGui::PopStyleColor();
     ImGui::PopStyleColor();
+#endif // _DEBUG
+
 }
 

@@ -9,6 +9,7 @@
 #include "WorldTransform.h"
 #include <memory>
 #include <Car/Car.h>
+#include <chrono>
 
 enum CamreraDirection {
 	XP,
@@ -30,13 +31,14 @@ public:
 
 public: // Getter
 	Camera* GetCamera() { return camera_.get(); }
-
 public:
 	void SetTarget(const WorldTransform* target);
 	void SetLockOn(LockOn* lockOn) { lockOn_ = lockOn;};
 	void SetSpeed(float* speed_) { speed = speed_; }
+	bool IsFirstPerson() const { return isFirstPerson_; }
 
 private:
+	std::chrono::steady_clock::time_point lastInputTime_{ std::chrono::steady_clock::now() };
 	std::unique_ptr<Camera> camera_;
 	// Setter
 
@@ -62,6 +64,15 @@ private:
 
 	uint32_t cameraDirection_ = NONEDIRECTION;
 
+	// FollowCamera.h
+	bool isFirstPerson_ = false;
+	bool prevMenuBtnState_ = false;
+
+	float prevTargetAngle_ = 0.0f;
+	float currentSideAngle_ = 0.0f; // 現在のsideAngle
+	// 右スティックによるカメラ回転角
+	float manualYaw_ = 0.0f;   // Y軸（左右）
+	float manualPitch_ = 0.0f; // X軸（上下）
 	float cameraChanegeTimer_ = 0.0f;
 	Vector3 preCameraTranslate_ {};
 	// 速さ

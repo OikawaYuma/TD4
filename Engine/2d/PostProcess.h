@@ -83,7 +83,7 @@ public:
 	uint32_t GetNoisetex() { return noiseTexture_; }
 
 	DepthOutlineInfo GetDepthOutlineInfo() { return depthOutlineInfo_; }
-	void SerDepthOutlineInfo(const DepthOutlineInfo& DepthOutlineInfo) { depthOutlineInfo_ = DepthOutlineInfo; }
+	void SetDepthOutlineInfo(const DepthOutlineInfo& DepthOutlineInfo) { depthOutlineInfo_ = DepthOutlineInfo; }
 
 	LuminanceOutlineInfo GetLuminanceOutlineInfo() { return luminanceOutlineInfo_; }
 	void SerLuminanceOutlineInfo(const LuminanceOutlineInfo& luminanceOutlineInfo) { luminanceOutlineInfo_ = luminanceOutlineInfo; }
