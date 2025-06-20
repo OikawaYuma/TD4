@@ -92,6 +92,7 @@ void DemoScene::Update()
 	PostEffectChange();
 	camera_->CameraDebug();
 #endif // _DEBUG
+	// カメラの視点によってアウトラインのパラメータを変更
 	DepthOutlinePramChange();
 	camera_->Update();
 	GlobalVariables::GetInstance()->Update();
