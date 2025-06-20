@@ -19,6 +19,8 @@ PostProcess::~PostProcess()
 void PostProcess::Init()
 {
 	noiseTexture_ = TextureManager::StoreTexture("Resources/noise2.png");
+	depthOutlineInfo_.farClip = 55.0f;
+	depthOutlineInfo_.diffSize = { 0.0f, 1.0f };
 	
 }
 
