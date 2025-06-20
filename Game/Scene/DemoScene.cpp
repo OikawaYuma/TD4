@@ -58,6 +58,18 @@ void DemoScene::Init()
 	postProcess_->SetCamera(followCamera_->GetCamera());
 	postProcess_->SetEffectNo(PostEffectMode::kDepthOutline);
 	
+<<<<<<< Updated upstream
+=======
+	// collision
+	collisionManager_ = std::make_unique<CollisionManager>();
+	// 壁
+	for (int i = 0; i < 200; ++i) {
+		std::unique_ptr<Wall> wall = std::make_unique<Wall>();
+		wall->Initialize({0,0,0}, { 5.0f,5.0f,5.0f }, { 0.0f,0.0f,10.0f * (2.5f * i) + 20.0f }, "box");
+		wall_.push_back(std::move(wall));
+	}
+	
+>>>>>>> Stashed changes
 
 }
 
@@ -94,6 +106,16 @@ void DemoScene::Update()
 	fade_->Update();
 	fade_->UpdateFade();
 	carSmoke_->Update();
+<<<<<<< Updated upstream
+=======
+
+	// 壁
+	for (auto& wall : wall_) {
+		wall->Update();
+	}
+
+	Collision();
+>>>>>>> Stashed changes
 }
 void DemoScene::Draw()
 {
@@ -258,3 +280,19 @@ void DemoScene::ArrageObj(std::list<std::unique_ptr<map>>& maps)
 		}
 	}
 }
+<<<<<<< Updated upstream
+=======
+
+void DemoScene::Collision()
+{
+	collisionManager_->ColliderClear();
+
+	for (const auto& wall : wall_) {
+		collisionManager_->PushCollider(wall->GetCollider());
+	}
+	
+	collisionManager_->PushCollider(car_->GetBodyCollider());
+
+	collisionManager_->CheckAllCollision();
+}
+>>>>>>> Stashed changes

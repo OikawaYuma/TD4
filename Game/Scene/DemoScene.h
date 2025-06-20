@@ -26,6 +26,13 @@
 #include "Particle.h"
 #include "CarParts/CarEngine/CarGear/CarGear.h"
 #include "CarSmoke/CarSmoke.h"
+<<<<<<< Updated upstream
+=======
+#include "Collision/CollisionManager.h"
+#include "Obstacles/Wall.h"
+#include <vector>
+
+>>>>>>> Stashed changes
 class DemoScene : public IScene
 {
 public:
@@ -71,5 +78,11 @@ private:
 	std::unique_ptr<Gear> carGear_;
 
 	int selectedIndex[1] = {0};
+<<<<<<< Updated upstream
+=======
+
+	std::unique_ptr<CollisionManager> collisionManager_;
+	std::vector<std::unique_ptr<Wall>> wall_;
+>>>>>>> Stashed changes
 };
 
