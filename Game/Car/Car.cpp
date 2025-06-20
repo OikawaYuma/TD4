@@ -139,88 +139,15 @@ void Car::BicycleModel()
 
 	// 摩擦による最大横グリップ力（全車体で一括で考える）
 	float maxGripForce = mu_ * weight_; // = mu * m * g
-
 	// グリップ率
 	float gripRatio = 1.0f;
-	if (requiredLatForce > maxGripForce) {
-		gripRatio = maxGripForce / requiredLatForce;
-	}
-
-	// 回転角速度（ステアと速度により）
+	//if (requiredLatForce > maxGripForce) {
+	//	gripRatio = maxGripForce / requiredLatForce;
+	//}
+	//// 回転角速度（ステアと速度により）
 	float theta = (velocity_mps / wheelBase) * std::tan(steerAngle);
-
 	// グリップ率が低いなら回転も減衰させる
 	theta *= gripRatio;
-
-
-	// スリップアングル計算も速度が十分なときだけ(ゼロ除算を避ける)
-	float frontSlipAngle = 0.0f;
-	float rearSlipAngle = 0.0f;
-	if (velocity_mps > 0.5f) {
-		frontSlipAngle = atan2(
-			(yawAngularVelocity_ * frontLength + velocity_mps * sin(steerAngle)),
-			(velocity_mps * cos(steerAngle))
-		) - steerAngle;
-
-		rearSlipAngle = atan2(
-			(yawAngularVelocity_ * -rearLength),
-			velocity_mps
-		);
-	}
-	// Car::BicycleModel の後半でヨー運動を追加
-// 前輪・後輪の横力を計算（簡易的にグリップ力×スリップアングルで近似）
-	float baseStiffness = 80000.0f;
-	float speed_kmh = speed_;
-	float tireCorneringStiffness = baseStiffness * std::exp(-0.01f * speed_kmh);
-	float slipAtPeak = 0.15f; // ピークのスリップアングル[rad]（調整可）
-	float peak = maxGripForce;
-
-	// 前輪横力
-	float slipF = std::abs(frontSlipAngle);
-	float signF = (frontSlipAngle >= 0.0f) ? 1.0f : -1.0f;
-	float frontLatForce = 0.0f;
-	if (slipF < slipAtPeak) {
-		frontLatForce = tireCorneringStiffness * slipF;
-	}
-	else {
-		// ピークを超えたら横力を減衰させる（指数減衰）
-		frontLatForce = peak * std::exp(-3.0f * (slipF - slipAtPeak));
-	}
-	frontLatForce *= signF;
-	// グリップ限界でclamp
-	frontLatForce = std::clamp(frontLatForce, -maxGripForce, maxGripForce);
-
-	// 後輪横力
-	float slipR = std::abs(rearSlipAngle);
-	float signR = (rearSlipAngle >= 0.0f) ? 1.0f : -1.0f;
-	float rearLatForce = 0.0f;
-	if (slipR < slipAtPeak) {
-		rearLatForce = tireCorneringStiffness * slipR;
-	}
-	else {
-		rearLatForce = peak * std::exp(-3.0f * (slipR - slipAtPeak));
-	}
-	rearLatForce *= signR;
-	rearLatForce = std::clamp(rearLatForce, -maxGripForce, maxGripForce);
-	// ヨーモーメント
-	float yawMoment = frontLatForce * frontLength - rearLatForce * rearLength;
-
-	// 角加速度
-	float yawAngularAccel = yawMoment / momentOfInertia_;
-
-	// ヨー角速度・車体向きの更新
-	yawAngularVelocity_ += yawAngularAccel * deltaTime_;
-
-	// 減衰（ダンピング）を追加
-	const float yawDamping = 0.98f; // 0.98～0.995くらいで調整
-	yawAngularVelocity_ *= yawDamping;
-
-	// 上限を最後にclamp
-	const float maxYawRate = 5.0f;
-	yawAngularVelocity_ = std::clamp(yawAngularVelocity_, -maxYawRate, maxYawRate);
-
-	//worldTransform_.rotation_.y += yawAngularVelocity_ * deltaTime_;
-
 	// 向き更新
 	worldTransform_.rotation_.y += theta * deltaTime_;
 
