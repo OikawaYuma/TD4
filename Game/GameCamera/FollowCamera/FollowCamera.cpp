@@ -65,11 +65,16 @@ void FollowCamera::Upadate()
         // 一人称視点
         Vector3 eye = target_->translation_;
         eye.y += 1.0f;
-        // 長方形の半分の長さ
+        // 長方形の半分の長さ（前方オフセット）
         float halfLength = -0.25f;
-        // rotation_.y方向に半分の長さだけ前方へ
         eye.x += std::sin(target_->rotation_.y) * halfLength;
         eye.z += std::cos(target_->rotation_.y) * halfLength;
+
+        // 右ハンドル用: 車の右方向ベクトルを計算してオフセット
+        float rightOffset = 0.6f; // 車幅に合わせて調整
+        eye.x += std::cos(target_->rotation_.y) * rightOffset;
+        eye.z -= std::sin(target_->rotation_.y) * rightOffset;
+
         manualYaw_ = 0.0f;
         manualPitch_ = 0.0f;
         Vector3 look = {
