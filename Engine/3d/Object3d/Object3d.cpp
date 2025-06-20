@@ -359,3 +359,43 @@ void Object3d::AddListPram(std::shared_ptr<ObjectPram > objectParm)
 {
 	objectParms_.push_back(objectParm);
 }
+
+
+void Object3d::ModelDebug() {
+	ImGui::PushStyleColor(ImGuiCol_TitleBgActive, ImVec4(0.2f, 0.0f, 0.7f, 0.8f));
+	ImGui::PushStyleColor(ImGuiCol_TitleBg, ImVec4(0.1f, 0.0f, 0.3f, 0.5f));
+	ImGui::Begin("ModelDebug");
+
+	// 位置・回転・スケールの調整
+	float translate[3] = { worldTransform_.translation_.x, worldTransform_.translation_.y, worldTransform_.translation_.z };
+	bool changed = false;
+	if (ImGui::DragFloat3("transform", translate, 0.01f)) {
+		worldTransform_.translation_.x = translate[0];
+		worldTransform_.translation_.y = translate[1];
+		worldTransform_.translation_.z = translate[2];
+		changed = true;
+	}
+	float rotate[3] = { worldTransform_.rotation_.x, worldTransform_.rotation_.y, worldTransform_.rotation_.z };
+	if (ImGui::DragFloat3("rotate", rotate, 0.01f)) {
+		worldTransform_.rotation_.x = rotate[0];
+		worldTransform_.rotation_.y = rotate[1];
+		worldTransform_.rotation_.z = rotate[2];
+		changed = true;
+	}
+	float scale[3] = { worldTransform_.scale_.x, worldTransform_.scale_.y, worldTransform_.scale_.z };
+	if (ImGui::DragFloat3("scale", scale, 0.01f)) {
+		worldTransform_.scale_.x = scale[0];
+		worldTransform_.scale_.y = scale[1];
+		worldTransform_.scale_.z = scale[2];
+		changed = true;
+	}
+
+	// 値が変わったら行列を更新
+	if (changed) {
+		worldTransform_.UpdateMatrix();
+	}
+
+	ImGui::End();
+	ImGui::PopStyleColor();
+	ImGui::PopStyleColor();
+}

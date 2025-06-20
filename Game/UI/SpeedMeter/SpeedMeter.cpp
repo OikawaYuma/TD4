@@ -46,6 +46,7 @@ void SpeedMeterUI::Update()
 	SpeedMeterSprite_->SetSize(hariScale_);
 	SpeedMeterSprite_->SetRot(hariRotate_);
 
+#ifdef _DEBUG
 	ImGui::Begin("SpeedMetar");
 	ImGui::DragFloat("speed", speed, 1.0f);
 	if (ImGui::TreeNode("Meter")) {
@@ -63,6 +64,9 @@ void SpeedMeterUI::Update()
 		ImGui::TreePop();
 	}
 	ImGui::End();
+#endif // _DEBUG
+
+	
 }
 
 void SpeedMeterUI::Draw()

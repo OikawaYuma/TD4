@@ -24,7 +24,7 @@ public:
 public: //Getter
 	WorldTransform* GetWorldTransform() { return &worldTransform_; }
 	float* GetSpeed() { return &speed_; }
-
+	Collider* GetBodyCollider() { return body_->GetCollider(); }
 
 private: // 生成処理
 
@@ -50,9 +50,14 @@ private: // 移動処理
 	/// </summary>
 	void BicycleModel();
 
+	/// <summary>
+	/// ブレーキ処理
+	/// </summary>
+	void Brake();
+
 private: // 外部情報　本来はここに書くべきではない
 	// 摩擦係数
-	float mu_ = 1.0f; // とりあえず乾いたコンクリで考える（大体0.9~1.2くらいらしい、スポーツのタイヤだと1.1~1.2でもいいとか）
+	float mu_ = 1.5f; // とりあえず乾いたコンクリで考える（大体0.9~1.2くらいらしい、スポーツのタイヤだと1.1~1.2でもいいとか）
 	// 重力
 	float g_ = 9.8f;
 private:
@@ -85,8 +90,18 @@ private:
 	// 静止時の最大横グリップ
 	float maxGrip_ = 0.0f;
 	// 仮のスピード（後々エンジンから出力を受け取りタイヤの回転力とか合わせて考えたい）
+	// 下記をエンジンの仮出力として用いてスピードを決める
 	float speed_ = 0.0f;
 
+private: // エンジンの出力が完成まで以下を使う　にへー頼んだ
+	const float maxEngineTorque_ = 4000.0f; // 最大トルク[Nm] (適宜調整)
+	const float wheelRadius_ = 0.3f; // ホイール半径[m]
+	
+	// アクセル
+	float throttle_ = 0.0f;
+	// ブレーキ
+	float brake_ = 0.0f;
+	
 	bool isDrift_ = false;
 
 };

@@ -47,7 +47,7 @@ void GearUI::Update()
 	else if (gear_ == 5) {
 		gearStateSprite_->SetPosition(State5Pos_);
 	}
-
+#ifdef _DEBUG
 	ImGui::Begin("GearUI");
 	ImGui::DragInt("State", &gear_, 1.0f);
 	if (ImGui::TreeNode("GearUI")) {
@@ -61,6 +61,9 @@ void GearUI::Update()
 		ImGui::TreePop();
 	}
 	ImGui::End();
+#endif // _DEBUG
+
+	
 }
 
 void GearUI::Draw()
