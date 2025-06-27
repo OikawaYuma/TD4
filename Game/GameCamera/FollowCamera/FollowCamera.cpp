@@ -3,6 +3,8 @@
 #include <iostream>
 #include <cmath>
 #include <numbers>
+#include <Xinput.h>
+#define MENU_BUTTON XINPUT_GAMEPAD_START
 // 角度を -π～π に正規化
 float NormalizeAngle(float angle) {
     while (angle > std::numbers::pi_v<float>) angle -= std::numbers::pi_v<float> *2.0f;
@@ -43,6 +45,51 @@ void FollowCamera::Upadate()
 {
     if (!target_) return;
 
+    XINPUT_STATE xInputState;
+    ZeroMemory(&xInputState, sizeof(XINPUT_STATE));
+    DWORD result = XInputGetState(0, &xInputState);
+
+    bool menuBtnState = false;
+    if (result == ERROR_SUCCESS) {
+        menuBtnState = (xInputState.Gamepad.wButtons & XINPUT_GAMEPAD_START) != 0;
+    }
+
+    if (menuBtnState && !prevMenuBtnState_) {
+        isFirstPerson_ = !isFirstPerson_;
+    }
+
+    prevMenuBtnState_ = menuBtnState;
+
+    if (isFirstPerson_) {
+	
+        // 一人称視点
+        Vector3 eye = target_->translation_;
+        eye.y += 1.0f;
+        // 長方形の半分の長さ（前方オフセット）
+        float halfLength = -0.25f;
+        eye.x += std::sin(target_->rotation_.y) * halfLength;
+        eye.z += std::cos(target_->rotation_.y) * halfLength;
+
+        // 右ハンドル用: 車の右方向ベクトルを計算してオフセット
+        float rightOffset = 0.6f; // 車幅に合わせて調整
+        eye.x += std::cos(target_->rotation_.y) * rightOffset;
+        eye.z -= std::sin(target_->rotation_.y) * rightOffset;
+
+        manualYaw_ = 0.0f;
+        manualPitch_ = 0.0f;
+        Vector3 look = {
+            eye.x + std::sin(target_->rotation_.y),
+            eye.y,
+            eye.z + std::cos(target_->rotation_.y)
+        };
+        camera_->SetTranslate(look);
+        camera_->SetRotate({ manualPitch_, target_->rotation_.y + manualYaw_, 0.0f });
+        camera_->CameraDebug();
+        camera_->Update();
+        return;
+    }
+    // 以降は三人称視点の既存処理
+    prevMenuBtnState_ = menuBtnState;
     float rightX = Input::GetInstance()->JoyStickParmRX(1.0f);
     float rightY = Input::GetInstance()->JoyStickParmRY(1.0f);
 
@@ -73,7 +120,7 @@ void FollowCamera::Upadate()
         // 3秒未満なら何もしない（角度を維持）
     }
 
-    manualPitch_ = std::clamp(manualPitch_, -0.025f, 0.5f);
+    manualPitch_ = std::clamp(manualPitch_, 0.01f, 0.5f);
 
     float targetAngle = target_->rotation_.y;
     float angleDiff = targetAngle - prevTargetAngle_;
@@ -123,3 +170,5 @@ void FollowCamera::SetTarget(const WorldTransform* target)
 {
     target_ = target;
 }
+
+

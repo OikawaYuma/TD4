@@ -31,11 +31,12 @@ public:
 
 public: // Getter
 	Camera* GetCamera() { return camera_.get(); }
-
 public:
 	void SetTarget(const WorldTransform* target);
 	void SetLockOn(LockOn* lockOn) { lockOn_ = lockOn;};
 	void SetSpeed(float* speed_) { speed = speed_; }
+	bool IsFirstPerson() const { return isFirstPerson_; }
+
 private:
 	std::chrono::steady_clock::time_point lastInputTime_{ std::chrono::steady_clock::now() };
 	std::unique_ptr<Camera> camera_;
@@ -62,6 +63,10 @@ private:
 	float resetAngleTime_ = 0.0f;
 
 	uint32_t cameraDirection_ = NONEDIRECTION;
+
+	// FollowCamera.h
+	bool isFirstPerson_ = false;
+	bool prevMenuBtnState_ = false;
 
 	float prevTargetAngle_ = 0.0f;
 	float currentSideAngle_ = 0.0f; // 現在のsideAngle

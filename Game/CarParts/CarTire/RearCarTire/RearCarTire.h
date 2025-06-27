@@ -1,6 +1,6 @@
 #pragma once
 #include "CarParts/CarTire/ICarTire.h"
-
+#include "Car/Car.h"
 class RearCarTire : public ICarTire
 {
 public:
@@ -23,7 +23,6 @@ public:
 #pragma region setter
 
 	void SetParent(const WorldTransform* worldTransform)override;
-
 #pragma endregion
 
 #pragma region getter

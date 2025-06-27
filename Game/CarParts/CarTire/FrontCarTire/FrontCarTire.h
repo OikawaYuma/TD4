@@ -1,6 +1,6 @@
 #pragma once
 #include "CarParts/CarTire/ICarTire.h"
-
+#include "Car/Car.h"
 class FrontCarTire : public ICarTire 
 {
 public:

@@ -42,6 +42,8 @@ public:
 
 	void PostEffectChange();
 
+	void DepthOutlinePramChange();
+
 	void ParticleEmitter();
 
 	void ArrageObj(std::list<std::unique_ptr<map>>& maps);
@@ -70,6 +72,7 @@ private:
 	uint32_t spTx_ = 0;
 	LevelData levelData_{};
 
+	DepthOutlineInfo depthOutlineInfo_{};
 	// Gear
 	std::unique_ptr<Gear> carGear_;
 

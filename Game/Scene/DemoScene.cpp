@@ -69,6 +69,9 @@ void DemoScene::Init()
 
 	carSmoke_->SetParent(car_->GetWorldTransform());
 
+
+	depthOutlineInfo_.farClip = 55.0f;
+	depthOutlineInfo_.diffSize = { 0.0f,1.0f };
 	postProcess_ = std::make_unique<PostProcess>();
 	postProcess_->Init();
 	postProcess_->SetCamera(followCamera_->GetCamera());
@@ -95,6 +98,8 @@ void DemoScene::Update()
 		}
 
 	}
+	// カメラの視点によってアウトラインのパラメータを変更
+	DepthOutlinePramChange();
 	camera_->Update();
 	GlobalVariables::GetInstance()->Update();
 	for (std::list<std::unique_ptr<map>>::iterator itr = maps_.begin(); itr != maps_.end(); itr++) {
@@ -205,6 +210,8 @@ void DemoScene::PostEffectChange()
 		if (ImGui::Button("DepthOutline On")) {
 			postProcess_->SetEffectNo(PostEffectMode::kDepthOutline);
 		}
+		ImGui::DragFloat("farClip", &depthOutlineInfo_.farClip, 1.0f);
+		ImGui::DragFloat2("dissSize", &depthOutlineInfo_.diffSize.x, 0.1f);
 		ImGui::TreePop();
 	}
 
@@ -248,6 +255,22 @@ void DemoScene::PostEffectChange()
 	postProcess_->Setrandom(randaa);
 	postProcess_->SetBloomInfo(bloomInfo);
 	postProcess_->SetHSVInfo({ hsv.x,hsv.y,hsv.z });
+	postProcess_->SetDepthOutlineInfo(depthOutlineInfo_);
+}
+
+void DemoScene::DepthOutlinePramChange()
+{
+	if(followCamera_->IsFirstPerson()){
+		depthOutlineInfo_.farClip = 35.0f;
+		depthOutlineInfo_.diffSize = { 0.0f,1.0f };
+		postProcess_->SetDepthOutlineInfo(depthOutlineInfo_);
+	}
+	else {
+		depthOutlineInfo_.farClip = 55.0f;
+		depthOutlineInfo_.diffSize = { 0.0f,1.0f };
+		postProcess_->SetDepthOutlineInfo(depthOutlineInfo_);
+	}
+	
 }
 
 void DemoScene::ParticleEmitter()
