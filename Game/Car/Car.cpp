@@ -135,8 +135,8 @@ void Car::BicycleModel()
 
 	// 駆動・制動による加速
 	Vector2 accelVec = forwardVec * velocity_mps;
-	velocityVec_.x = accelVec.x;
-	velocityVec_.y = accelVec.y;
+	velocityVec_.x += accelVec.x / 3.6f;
+	velocityVec_.y += accelVec.y / 3.6f;
 
 	// 摩擦による速度の減衰（スライド抑制）
 	float dragCoef = 0.1f; // 調整可
