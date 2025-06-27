@@ -115,6 +115,9 @@ void Car::BicycleModel()
 	/*----------------------------------------------------------*/
 
 	velocity_mps += acceleration * deltaTime_;
+
+
+
 	if (240 /3.6 <= velocity_mps) {
 		velocity_mps = 240 / 3.6f; // 最大速度制限（240km/hをm/sに変換）
 	}
@@ -127,10 +130,23 @@ void Car::BicycleModel()
 	
 	float frameSpeed = velocity_mps * deltaTime_;
 
+	// 車体方向ベクトル（rotation_.yで向いてる方向）
+	Vector2 forwardVec = { std::sin(worldTransform_.rotation_.y), std::cos(worldTransform_.rotation_.y) };
+
+	// 駆動・制動による加速
+	Vector2 accelVec = forwardVec * velocity_mps;
+	velocityVec_.x = accelVec.x;
+	velocityVec_.y = accelVec.y;
+
+	// 摩擦による速度の減衰（スライド抑制）
+	float dragCoef = 0.1f; // 調整可
+	velocityVec_.x *= (1.0f - dragCoef);
+	velocityVec_.y *= (1.0f - dragCoef);
+
 	// ホイールベース
 	float wheelBase = frontLength + rearLength;
 	float steerAngle = *steering_->GetAngle();
-	
+	//
 	// 回転半径 R（ゼロ割防止）
 	float turningRadius = (std::abs(std::tan(steerAngle)) > 0.0001f) ? (wheelBase / std::abs(std::tan(steerAngle))) : FLT_MAX;
 
@@ -141,24 +157,72 @@ void Car::BicycleModel()
 	float maxGripForce = mu_ * weight_; // = mu * m * g
 	// グリップ率
 	float gripRatio = 1.0f;
-	//if (requiredLatForce > maxGripForce) {
-	//	gripRatio = maxGripForce / requiredLatForce;
-	//}
+	if (requiredLatForce > maxGripForce) {
+		gripRatio = maxGripForce / requiredLatForce;
+	}
 	//// 回転角速度（ステアと速度により）
 	float theta = (velocity_mps / wheelBase) * std::tan(steerAngle);
 	// グリップ率が低いなら回転も減衰させる
-	theta *= gripRatio;
-	// 向き更新
+	//theta *= gripRatio;
+
+	//theta *=  (1.0f + brake_); // グリップ率で減衰
+
+	// 実際の速度の方向
+	float velocityAngle = std::atan2(velocityVec_.x, velocityVec_.y);
+
+	// 車体の向き
+	float headingAngle = worldTransform_.rotation_.y;
+
+	// スリップ角（ズレ角）
+	float slipAngle = velocityAngle - headingAngle;
+
+	float speed_mps = std::sqrt(velocityVec_.x * velocityVec_.x + velocityVec_.y * velocityVec_.y);
+
+	
+	float cgHeight = 0.5f; // 車の重心高（m）←チューニング推奨
+	// ▼ 荷重移動（前後方向）
+	float weightTransfer = (acceleration * cgHeight * mass_) / wheelBase;
+	float frontWeight = (weight_ * (rearLength / wheelBase)) - weightTransfer;
+	float rearWeight = (weight_ * (frontLength / wheelBase)) + weightTransfer;
+
+	float frontGripMax = mu_ * frontWeight;
+	float rearGripMax = mu_ * rearWeight;
+	// 重み付けで前後の必要横力を近似（前：後 = rearLength：frontLength）
+	float frontLatReq = requiredLatForce * (rearLength / wheelBase);
+	float rearLatReq = requiredLatForce * (frontLength / wheelBase);
+
+	// グリップ率（0〜1）で表現
+	float frontGripRatio = std::min(1.0f, frontGripMax / frontLatReq);
+	float rearGripRatio = std::min(1.0f, rearGripMax / rearLatReq);
+
+
+	// 前輪の旋回影響が gripRatio により弱まる（アンダーステア）
+	float targetAngularVel = (speed_mps / wheelBase) * std::tan(steerAngle);
+	targetAngularVel *= frontGripRatio;
+
+	// 徐々に現在のヨー角速度に反映
+	float yawDamping = 4.0f; // 調整可
+	float yawDelta = (targetAngularVel - theta) * yawDamping * deltaTime_;
+	theta += yawDelta;
+
+
+	// 車体の回転更新
 	worldTransform_.rotation_.y += theta * deltaTime_;
 
-	// 移動更新
-	worldTransform_.translation_.z += frameSpeed * std::cos(worldTransform_.rotation_.y);
-	worldTransform_.translation_.x += frameSpeed * std::sin(worldTransform_.rotation_.y);
+	worldTransform_.translation_.x += velocityVec_.x * deltaTime_;
+	worldTransform_.translation_.z += velocityVec_.y * deltaTime_;
+
+	//// 向き更新
+	//worldTransform_.rotation_.y += theta * deltaTime_;
+
+	//// 移動更新
+	//worldTransform_.translation_.z += frameSpeed * std::cos(worldTransform_.rotation_.y);
+	//worldTransform_.translation_.x += frameSpeed * std::sin(worldTransform_.rotation_.y);
 
 #ifdef _DEBUG
 	ImGui::Begin("CarGripDebug");
-	ImGui::Text("Required Lat Force: %.2f N", requiredLatForce);
-	ImGui::Text("Max Grip Force: %.2f N", maxGripForce);
+	/*ImGui::Text("Required Lat Force: %.2f N", requiredLatForce);
+	ImGui::Text("Max Grip Force: %.2f N", maxGripForce);*/
 	ImGui::Text("Grip Ratio: %.2f", gripRatio);
 	ImGui::Text("Theta: %.4f rad/frame", theta);
 	ImGui::Text("Thorottle: %.4f ", throttle_);
