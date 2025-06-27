@@ -11,5 +11,7 @@ void ParticleManager::Initialize()
 
 void ParticleManager::CreateParticleGroup(const std::string name, const std::string textureFilePath)
 {
+	textureFilePath;
+	name;
 }
 

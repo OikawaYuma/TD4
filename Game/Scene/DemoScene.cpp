@@ -92,6 +92,12 @@ void DemoScene::Update()
 	PostEffectChange();
 	camera_->CameraDebug();
 #endif // _DEBUG
+	if (Input::GetInstance()->GetJoystickState()) {
+		if (Input::GetInstance()->PushJoyButton(XINPUT_GAMEPAD_B)) {
+			sceneNo = TITLE;
+		}
+
+	}
 	// カメラの視点によってアウトラインのパラメータを変更
 	DepthOutlinePramChange();
 	camera_->Update();

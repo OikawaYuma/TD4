@@ -10,6 +10,7 @@
 
 void TitleScene::Init()
 {
+	Object3dManager::GetInstance()->Init();
 	ModelManager::GetInstance()->LoadModel("Resources/carBody", "carBody.obj");
 	car_ = std::make_unique<Car>();
 	car_->Initialize({ 1.0f, 1.0f, 1.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 8.0f }, "carBody");
