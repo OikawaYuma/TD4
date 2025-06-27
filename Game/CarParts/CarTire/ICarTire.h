@@ -1,6 +1,8 @@
 #pragma once
 #include "BaseObject/BaseObject.h"
 
+class Car;
+
 class ICarTire : public BaseObject{
 public:
 	/// <summary>
@@ -29,6 +31,7 @@ public:
 
 	void SetSteeringAngle(float* angle) { steeringAngle_ = angle; }
 
+	void SetCar(Car* car) { car_ = car; }
 #pragma endregion
 
 protected:
@@ -38,4 +41,6 @@ protected:
 
 	// タイヤの摩耗度　0.0が新品、1.0で完全消耗
 	float wearRate_ = 0.0f;
+
+	Car* car_ = nullptr;
 };

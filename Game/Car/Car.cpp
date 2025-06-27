@@ -55,6 +55,7 @@ void Car::CreateCarTire()
 	// 車輪に座標を送り初期化
 	// 左前車輪
 	std::unique_ptr<ICarTire> frontLeftTire = std::make_unique<FrontCarTire>();
+	frontLeftTire->SetCar(this);
 	frontLeftTire->Initialize({ 0.0f,0.0f,0.0f }, {}, { -0.71f,0.4f,1.31f }, "carTire");
 	frontLeftTire->SetParent(&worldTransform_);
 	//　下記一行問題ICar参照
@@ -62,6 +63,7 @@ void Car::CreateCarTire()
 	tires_.push_back(std::move(frontLeftTire));
 	// 右前車輪
 	std::unique_ptr<ICarTire> frontRightTire = std::make_unique<FrontCarTire>();
+	frontRightTire->SetCar(this);
 	frontRightTire->Initialize({ 0.0f,0.0f,0.0f }, {}, { 0.71f,0.4f,1.31f }, "carTire");
 	frontRightTire->SetParent(&worldTransform_);
 	//　下記一行問題ICar参照
@@ -69,6 +71,7 @@ void Car::CreateCarTire()
 	tires_.push_back(std::move(frontRightTire));
 	// 左後車輪
 	std::unique_ptr<ICarTire> rearLeftTire = std::make_unique<RearCarTire>();
+	rearLeftTire->SetCar(this);
 	rearLeftTire->Initialize({ 0.0f,0.0f,0.0f }, {}, { -0.71f,0.4f,-1.31f }, "carTire");
 	rearLeftTire->SetParent(&worldTransform_);
 	//　下記一行問題ICar参照
@@ -76,6 +79,7 @@ void Car::CreateCarTire()
 	tires_.push_back(std::move(rearLeftTire));
 	// 左後車輪
 	std::unique_ptr<ICarTire> rearRightTire = std::make_unique<RearCarTire>();
+	rearRightTire->SetCar(this);
 	rearRightTire->Initialize({ 0.0f,0.0f,0.0f }, {}, { 0.71f,0.4f,-1.31f }, "carTire");
 	rearRightTire->SetParent(&worldTransform_);
 	//　下記一行問題ICar参照

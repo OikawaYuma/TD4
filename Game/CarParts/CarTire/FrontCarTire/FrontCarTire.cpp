@@ -17,12 +17,15 @@ void FrontCarTire::Update()
 
 void FrontCarTire::Rotate()
 {
-	// 計算が完成したらエンジンから回転もってこようかな
-	// とりあえず仮
-	float rtValue = Input::GetInstance()->GetRTValue();
-	const float kRotateSpeed = -5.0f; // 適当に調整して
+	if (!car_) return; // 安全チェック
+
+	float speed = *car_->GetSpeed(); // Carのスピードを取得
+	const float kRoolSpeed = 0.01f;  // 係数は調整してください
+
 	if (auto param = objectParam_.lock()) {
-		param->worldTransform.rotation_.x -= rtValue * kRotateSpeed;
+		// スピードに応じて回転
+		param->worldTransform.rotation_.x += speed * kRoolSpeed;
+		param->worldTransform.UpdateMatrix();
 	}
 	
 	// 受け取ったステアリング角度の更新

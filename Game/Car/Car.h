@@ -25,7 +25,6 @@ public: //Getter
 	WorldTransform* GetWorldTransform() { return &worldTransform_; }
 	float* GetSpeed() { return &speed_; }
 
-
 private: // 生成処理
 
 	/// <summary>
