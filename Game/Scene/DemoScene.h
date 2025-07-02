@@ -24,9 +24,11 @@
 #include "Car/Car.h"
 #include "Fade/Fade.h"
 #include "Loder.h"
-#include "Particle.h"
 #include "CarParts/CarEngine/CarGear/CarGear.h"
-#include "CarSmoke/CarSmoke.h"
+#include "CarSmoke/CarSmoke.h"	   
+#include "Obstacles/Wall.h"
+#include "Collision/CollisionManager.h"
+
 class DemoScene : public IScene
 {
 public:
@@ -49,6 +51,11 @@ public:
 	void ArrageObj(std::list<std::unique_ptr<map>>& maps);
 
 private:
+
+	void Collision();
+
+private:
+
 
 	std::unique_ptr<FollowCamera> followCamera_;
 	std::unique_ptr<PostProcess> postProcess_;
@@ -77,5 +84,10 @@ private:
 	std::unique_ptr<Gear> carGear_;
 
 	int selectedIndex[1] = {0};
+
+	// 試しの壁
+	std::unique_ptr<Wall> wall_;
+	// collisionManager
+	std::unique_ptr<CollisionManager> collisionManager_;
 };
 

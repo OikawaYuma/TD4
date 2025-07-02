@@ -1,3 +1,4 @@
+
 /**
 * @ file CollisionManager.h
 * @ brief Collisionを管理するクラス
@@ -10,6 +11,7 @@
 #include <memory>
 #include <iostream>
 #include <algorithm>
+#include <limits>
 #include"math/mathFunction.h"
 
 class CollisionManager {
@@ -52,10 +54,12 @@ private:
 	/// <summary>
 	/// OBB同士
 	/// </summary>
-	/// <param name="obb1"></param>
-	/// <param name="obb2"></param>
+	/// <param name="a"></param>
+	/// <param name="b"></param>
+	/// <param name="outNormal"></param>
+	/// <param name="outPenetration"></param>
 	/// <returns></returns>
-	bool CheckCollision(OBB a, OBB b);
+	bool CheckCollision(OBB a, OBB b, Vector3* outNormal, float* outPenetration);
 
 	/// <summary>
 	/// 球とOBBの当たり判定
@@ -64,9 +68,15 @@ private:
 	/// <param name="radius"></param>
 	/// <param name="obb"></param>
 	/// <returns></returns>
-	bool CheckCollision(Vector3 v1,float radius, OBB obb);
+	bool CheckCollision(Vector3 v1, float radius, OBB obb);
+
+	/// <summary>
+	/// obb生成
+	/// </summary>
+	/// <param name="collider"></param>
+	/// <returns></returns>
+	OBB CreateObb(Collider* collider);
 
 private:
 	std::list<Collider*> colliders_;
 };
-
