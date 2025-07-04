@@ -1,3 +1,4 @@
+
 #pragma once
 #include "Object3d.h"
 #include <list>
@@ -33,7 +34,7 @@ public:
 
 	Collider* GetCollider() { return collider_.get(); }
 
-    Vector3 GetWorldPosition()const;
+	Vector3 GetWorldPosition()const;
 
 	const Vector3& GetScale()const;
 
@@ -61,4 +62,3 @@ protected:
 	std::unique_ptr<Collider> collider_;
 	CollisionMode colliderMode_ = CollisionMode::None;
 };
-

@@ -132,7 +132,7 @@ int GameManager::Run() {
 		// シーン変更チェック
 		if (prevSceneNo_ != currentSceneNo_) {
 			sceneArr_ = sceneMap_[currentSceneNo_]();
-			sceneArr_->Init();
+				sceneArr_->Init();
 		}
 		
 
