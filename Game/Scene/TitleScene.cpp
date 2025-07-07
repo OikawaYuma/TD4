@@ -33,8 +33,6 @@ void TitleScene::Init()
 
 	ModelManager::GetInstance()->LoadModel("Resources/worldDesign", "worldDesign.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/map", "IROHAmap2.obj");
-	ModelManager::GetInstance()->LoadModel("Resources/map", "map.obj");
-	ModelManager::GetInstance()->LoadModel("Resources/map", "map0.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/floor", "floor.obj");
 
 	levelData_ = Loder::LoadJsonFile("Resources/json", "stage4");

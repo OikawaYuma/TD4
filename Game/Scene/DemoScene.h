@@ -23,8 +23,11 @@
 #include <UI/UI.h>
 #include "Car/Car.h"
 #include "Fade/Fade.h"
+#include "Fence/Fence.h"
 #include "Loder.h"
 #include "CarParts/CarEngine/CarGear/CarGear.h"
+#include "CarSmoke/CarSmoke.h"
+#include "CollisionType/Box/HitBoxWire.h"
 #include "CarSmoke/CarSmoke.h"	   
 #include "Obstacles/Wall.h"
 #include "Collision/CollisionManager.h"
@@ -65,7 +68,13 @@ private:
 
 	// 背景オブジェクト
 	std::list<std::unique_ptr<map>> maps_;
+	// HitBoxWireのリスト
+	std::list<std::unique_ptr<HitBoxWire>> hitBoxWires_;
+	// HitBoxWireのリスト
+	std::list<std::unique_ptr<Fence>> fences_;
+	// Carオブジェクト
 	std::unique_ptr<Car> car_;
+	// Skyboxオブジェクト
 	std::unique_ptr<Skydome> skydome_;
 	// 背景オブジェクト
 	std::unique_ptr<Particle> particle_;
@@ -79,6 +88,9 @@ private:
 	uint32_t spTx_ = 0;
 	LevelData levelData_{};
 
+	std::unique_ptr<HitBoxWire> boxWire_;
+
+	WorldTransform worldTransform_{};
 	DepthOutlineInfo depthOutlineInfo_{};
 	// Gear
 	std::unique_ptr<Gear> carGear_;
