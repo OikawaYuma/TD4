@@ -1,9 +1,14 @@
+
 #include "CollisionManager.h"
 #include "GameScene.h"
-#include "GameScene.h"
-//#include "AxisIndicator.h"
 
 void CollisionManager::CheckAllCollision() {
+
+	// すべてのコライダーの衝突情報をリセット
+	for (auto collider : colliders_) {
+		collider->ClearInfo();
+		collider->SetOnCollision(false);
+	}
 
 	//  リスト内のペアを総当たり
 	std::list<Collider*>::iterator itrA = colliders_.begin();
@@ -62,60 +67,47 @@ void CollisionManager::CheckCollisionPair(Collider* colliderA, Collider* collide
 	// OBB同士の当たり判定
 	if (colliderA->GetCollisionMode() == CollisionMode::OBBc && colliderB->GetCollisionMode() == CollisionMode::OBBc) {
 		OBB obbA{};
-		obbA.center = colliderA->GetWorldPosition();
-		obbA.halfSize.x = colliderA->GetScale().x / 2.0f;
-		obbA.halfSize.y = colliderA->GetScale().y / 2.0f;
-		obbA.halfSize.z = colliderA->GetScale().z / 2.0f;
-		Matrix4x4 matWorldA{};
-		matWorldA = colliderA->GetMatWorld();
-
-		// 各ローカル軸を正規化して格納（行ベース）
-		obbA.axis[0] = Normalize(Vector3(matWorldA.m[0][0], matWorldA.m[0][1], matWorldA.m[0][2])); // X軸
-		obbA.axis[1] = Normalize(Vector3(matWorldA.m[1][0], matWorldA.m[1][1], matWorldA.m[1][2])); // Y軸
-		obbA.axis[2] = Normalize(Vector3(matWorldA.m[2][0], matWorldA.m[2][1], matWorldA.m[2][2])); // Z軸
+		obbA = CreateObb(colliderA);
 
 		OBB obbB{};
-		obbB.center = colliderB->GetWorldPosition();
-		obbB.halfSize.x = colliderB->GetScale().x / 2.0f;
-		obbB.halfSize.y = colliderB->GetScale().y / 2.0f;
-		obbB.halfSize.z = colliderB->GetScale().z / 2.0f;
-		Matrix4x4 matWorldB{};
-		matWorldB = colliderB->GetMatWorld();
+		obbB = CreateObb(colliderB);
 
-		// 各ローカル軸を正規化して格納（行ベース）
-		obbB.axis[0] = Normalize(Vector3(matWorldB.m[0][0], matWorldB.m[0][1], matWorldB.m[0][2])); // X軸
-		obbB.axis[1] = Normalize(Vector3(matWorldB.m[1][0], matWorldB.m[1][1], matWorldB.m[1][2])); // Y軸
-		obbB.axis[2] = Normalize(Vector3(matWorldB.m[2][0], matWorldB.m[2][1], matWorldB.m[2][2])); // Z軸
+		Vector3 normal{};
+		float penetration = 0.0f;
 
-		if (CheckCollision(obbA, obbB)) {
+		if (CheckCollision(obbA, obbB, &normal, &penetration)) {
+
+			// 衝突情報を追加
+			colliderA->AddCollisionInfo({ colliderB, -1.0f * normal, penetration });
+			colliderB->AddCollisionInfo({ colliderA, normal, penetration });
+
+#ifdef _DEBUG
+			ImGui::Begin("OBB Collision Debug");
+			ImGui::Text("penetration: %f", penetration);
+			ImGui::Text("normal: (%.3f, %.3f, %.3f)", normal.x, normal.y, normal.z);
+			ImGui::End();
+#endif
+
 			// コライダーAの衝突時コールバックを呼び出す
 			colliderA->SetOnCollision(true);
 			// コライダーBの衝突時コールバックを呼び出す
 			colliderB->SetOnCollision(true);
 		}
 		else {
-			// コライダーAの衝突時コールバックを呼び出す
-			colliderA->SetOnCollision(false);
-			// コライダーBの衝突時コールバックを呼び出す
-			colliderB->SetOnCollision(false);
+			// 衝突情報が空だったら false にする（複数の衝突に対応）
+			if (colliderA->GetCollisionInfo().empty()) {
+				colliderA->SetOnCollision(false);
+			}
+			if (colliderB->GetCollisionInfo().empty()) {
+				colliderB->SetOnCollision(false);
+			}
 		}
 	}
 
 	// 球とOBBの当たり判定
 	if (colliderA->GetCollisionMode() == CollisionMode::Ballc && colliderB->GetCollisionMode() == CollisionMode::OBBc) {
 		OBB obb{};
-		obb.center = colliderB->GetWorldPosition();
-		obb.halfSize.x = colliderB->GetScale().x / 2.0f;
-		obb.halfSize.y = colliderB->GetScale().y / 2.0f;
-		obb.halfSize.z = colliderB->GetScale().z / 2.0f;
-		Matrix4x4 matWorld{};
-		matWorld = colliderB->GetMatWorld();
-
-		// 各ローカル軸を正規化して格納（行ベース）
-		obb.axis[0] = Normalize(Vector3(matWorld.m[0][0], matWorld.m[0][1], matWorld.m[0][2])); // X軸
-		obb.axis[1] = Normalize(Vector3(matWorld.m[1][0], matWorld.m[1][1], matWorld.m[1][2])); // Y軸
-		obb.axis[2] = Normalize(Vector3(matWorld.m[2][0], matWorld.m[2][1], matWorld.m[2][2])); // Z軸
-
+		obb = CreateObb(colliderB);
 
 		// colliderBの座標
 		Vector3 center{};
@@ -124,7 +116,7 @@ void CollisionManager::CheckCollisionPair(Collider* colliderA, Collider* collide
 		radius = colliderA->GetRadius();
 
 		// 弾と弾の考交差判定
-		if (CheckCollision(center, radius,obb)) {
+		if (CheckCollision(center, radius, obb)) {
 			// コライダーAの衝突時コールバックを呼び出す
 			colliderA->SetOnCollision(true);
 			// コライダーBの衝突時コールバックを呼び出す
@@ -164,9 +156,9 @@ void CollisionManager::CheckCollisionPair(Collider* colliderA, Collider* collide
 		// 弾と弾の考交差判定
 		if (CheckCollision(center, radius, obb)) {
 			// コライダーAの衝突時コールバックを呼び出す
-			colliderA->SetOnCollision(true);
-			// コライダーBの衝突時コールバックを呼び出す
-			colliderB->SetOnCollision(true);
+			//colliderA->SetOnCollision(true);
+			//// コライダーBの衝突時コールバックを呼び出す
+			//colliderB->SetOnCollision(true);
 		}
 		else {
 			// コライダーAの衝突時コールバックを呼び出す
@@ -196,63 +188,63 @@ bool CollisionManager::CheckCollision(Vector3 v1, float v1Radious, Vector3 v2, f
 	}
 }
 
-bool CollisionManager::CheckCollision(OBB a, OBB b)
+bool CollisionManager::CheckCollision(OBB a, OBB b, Vector3* outNormal, float* outPenetration)
 {
 	const float ep = std::numeric_limits<float>::epsilon();
-	// 各軸：aの3軸 + bの3軸 + a×bの交差軸 = 15本
 	Vector3 axis[15];
 
-	// aのローカル軸
-	for (int i = 0; i < 3; i++) {
-		axis[i] = a.axis[i];
-	}
-
-	// bのローカル軸
-	for (int i = 0; i < 3; i++) {
-		axis[i + 3] = b.axis[i];
-	}
-
-	// a×b の交差軸
+	// 各軸：aの軸3 + bの軸3 + 交差軸9 = 計15
+	for (int i = 0; i < 3; ++i) axis[i] = a.axis[i];
+	for (int i = 0; i < 3; ++i) axis[i + 3] = b.axis[i];
 	int index = 6;
-	for (int i = 0; i < 3; i++) {
-		for (int j = 0; j < 3; j++) {
+	for (int i = 0; i < 3; ++i) {
+		for (int j = 0; j < 3; ++j) {
 			axis[index++] = Normalize(Cross(a.axis[i], b.axis[j]));
 		}
 	}
 
 	// 中心間ベクトル
-	Vector3 t;
-	t.x = b.center.x - a.center.x;
-	t.y = b.center.y - a.center.y;
-	t.z = b.center.z - a.center.z;
+	Vector3 t = b.center - a.center;
 
-	// 全軸で投影をチェック
-	for (int i = 0; i < 15; i++) {
+	// 最小の貫通量とその軸を記録
+	float minOverlap = FLT_MAX;
+	Vector3 bestAxis = {};
+
+	for (int i = 0; i < 15; ++i) {
 		const Vector3& L = axis[i];
-		if (Length(L) < ep) continue; // 無効軸スキップ
+		if (Length(L) < ep) continue;
 
-		// aの投影幅
-		float ra =
-			std::abs(Dot(a.axis[0], L)) * a.halfSize.x +
+		// 投影幅
+		float ra = std::abs(Dot(a.axis[0], L)) * a.halfSize.x +
 			std::abs(Dot(a.axis[1], L)) * a.halfSize.y +
 			std::abs(Dot(a.axis[2], L)) * a.halfSize.z;
 
-		// bの投影幅
-		float rb =
-			std::abs(Dot(b.axis[0], L)) * b.halfSize.x +
+		float rb = std::abs(Dot(b.axis[0], L)) * b.halfSize.x +
 			std::abs(Dot(b.axis[1], L)) * b.halfSize.y +
 			std::abs(Dot(b.axis[2], L)) * b.halfSize.z;
 
-		// 中心差の投影
 		float dist = std::abs(Dot(t, L));
 
 		if (dist > ra + rb) {
-			// この軸で分離がある → 衝突してない
+			// この軸で分離 → 衝突していない
 			return false;
+		}
+
+		// 今の軸での貫通量
+		float overlap = (ra + rb) - dist;
+		if (overlap < minOverlap) {
+			minOverlap = overlap;
+			bestAxis = Normalize(L);
+			// 中心間ベクトルと軸の向きが逆なら法線も逆にする
+			if (Dot(t, bestAxis) < 0.0f) {
+				bestAxis = -1.0f * bestAxis;
+			}
 		}
 	}
 
-	// 全軸で分離がなかった → 衝突している
+	// 衝突 → 法線と貫通量を出力
+	if (outNormal) *outNormal = bestAxis;
+	if (outPenetration) *outPenetration = minOverlap;
 	return true;
 }
 
@@ -288,3 +280,16 @@ bool CollisionManager::CheckCollision(Vector3 v1, float radius, OBB obb)
 	return distSq <= radius * radius;
 }
 
+OBB CollisionManager::CreateObb(Collider* collider)
+{
+	OBB obb{};
+	obb.center = collider->GetWorldPosition();
+	obb.halfSize = collider->GetScale();
+
+	Matrix4x4 matWorld = collider->GetMatWorld();
+	obb.axis[0] = Normalize(Vector3(matWorld.m[0][0], matWorld.m[0][1], matWorld.m[0][2]));
+	obb.axis[1] = Normalize(Vector3(matWorld.m[1][0], matWorld.m[1][1], matWorld.m[1][2]));
+	obb.axis[2] = Normalize(Vector3(matWorld.m[2][0], matWorld.m[2][1], matWorld.m[2][2]));
+
+	return obb;
+}

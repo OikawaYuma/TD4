@@ -18,6 +18,7 @@ void DemoScene::Init()
 	ModelManager::GetInstance()->LoadModel("Resources/floor", "floor.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/TenQ", "TenQ.obj");
 
+
 	fade_ = std::make_unique<Fade>();
 	fade_->Init("Resources/fade.png");
 
@@ -76,10 +77,16 @@ void DemoScene::Init()
 	postProcess_->Init();
 	postProcess_->SetCamera(followCamera_->GetCamera());
 	postProcess_->SetEffectNo(PostEffectMode::kDepthOutline);
-	
+
+
+	// 仮壁
+	wall_ = std::make_unique<Wall>();
+	wall_->Initialize({}, { 5.0f,5.0f,5.0f }, { 0.0f,0.0f,10.0f }, "box");
 	boxWire_ = std::make_unique<HitBoxWire>();
 	boxWire_->Init();
 	boxWire_->SetCamera(followCamera_->GetCamera());
+	// collisionManager
+	collisionManager_ = std::make_unique<CollisionManager>();
 
 }
 
@@ -127,6 +134,10 @@ void DemoScene::Update()
 	fade_->Update();
 	fade_->UpdateFade();
 	carSmoke_->Update();
+
+	wall_->Update();
+
+	Collision(); 
 }
 void DemoScene::Draw()
 {
@@ -323,3 +334,14 @@ void DemoScene::ArrageObj(std::list<std::unique_ptr<map>>& maps)
 		}
 	}
 }
+
+void DemoScene::Collision()
+{
+	collisionManager_->ColliderClear();
+
+	collisionManager_->PushCollider(wall_->GetCollider());
+	collisionManager_->PushCollider(car_->GetBodyCollider());
+
+	collisionManager_->CheckAllCollision();
+}
+

@@ -52,6 +52,7 @@ void Car::Update()
 void Car::CreateCarBody()
 {
 	ModelManager::GetInstance()->LoadModel("Resources/carBody", "carBody.obj");
+	ModelManager::GetInstance()->LoadModel("Resources/box", "box.obj");
 	// 車体に座標を送り初期化
 	body_ = std::make_unique<CarBody>();
 	body_->Initialize({}, {}, {}, "carBody");
@@ -220,6 +221,63 @@ void Car::BicycleModel()
 	
 	worldTransform_.translation_.x += velocityVec_.x * deltaTime_;
 	worldTransform_.translation_.z += velocityVec_.y * deltaTime_;
+
+	// 押し出しの処理（めんどいから後で関数分ける）
+	int maxCorrection = 0; // 何回計算するか（調整して）正直あんま変わんない気がする精度に関わる
+	for (int i = 0; i < maxCorrection; ++i) {
+		if (!body_->GetIsHit()) break;
+		Vector3 penetration = body_->GetPenetration();
+		Vector3 normal = body_->GetNormal();
+		// 法線の正規化
+		if (Length(normal) > 0.0001f) {
+			normal = Normalize(normal);
+		}
+		else {
+			normal = { 0, 1, 0 };
+		}
+		float penetrationLength = std::abs(Dot(penetration, normal)); // 取得した法線と押し出し量から押し出す長さ決める
+		Vector3 pushOut = normal * penetrationLength; // 押し出したい方向決める
+		worldTransform_.translation_ = worldTransform_.translation_ + pushOut; // 押し出し
+		body_->Update(); // 補正後に衝突判定を更新する
+	}
+
+	// スライドさせる処理
+	if (body_->GetIsHit()) {
+		Vector3 penetration = body_->GetPenetration();
+		Vector3 normal = body_->GetNormal();
+		// normalの正規化
+		if (Length(normal) > 0.0001f) {
+			normal = Normalize(normal);
+		}
+		else {
+			normal = { 0, 1, 0 }; // 万一のためのデフォルト
+		}
+		// penetrationLengthの絶対値を利用
+		float penetrationLength = std::abs(Dot(penetration, normal));
+		float penetrationAttenuation = 0.4f; // 100%補正
+		Vector3 pushOut = normal * penetrationLength * penetrationAttenuation;
+		worldTransform_.translation_ = worldTransform_.translation_ + pushOut;
+
+		// Slideで移動方向を補正
+		// なんか知らんけどベクトルが二次元だから無理やり入れます
+		Vector3 vector3 = { velocityVec_.x,0.0f,velocityVec_.y };
+		Vector3 slidVelocity = body_->Slide(deltaTime_ * vector3, normal);
+		// スライドベクトルの長さを制限
+		float slidLen = Length(slidVelocity);
+		float veloLen = Length(deltaTime_ * vector3);
+		if (slidLen > veloLen) {
+			slidVelocity = Normalize(slidVelocity) + deltaTime_ * vector3;
+		}
+		worldTransform_.translation_ = worldTransform_.translation_ + slidVelocity;
+
+		// 速度減衰を強める
+		float dot = Dot(deltaTime_ * vector3, normal);
+		if (dot > 0.0f) {
+			speed_ *= (1.0f - dot * 0.8f); // 減衰を強める
+			//if (speed_ < 0.5f) speed_ = 0.0f;
+		}
+	}
+
 
 #ifdef _DEBUG
 	ImGui::Begin("CarGripDebug");

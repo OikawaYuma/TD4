@@ -14,10 +14,11 @@ void BaseObject::Initialize(const Vector3& rotate, const Vector3& scale, const V
 		obj->worldTransform.rotation_ = rotate;
 		obj->color = color_;
 	}
-
 	// 衝突判定取るモードなら作る
 	if (colliderMode_ != CollisionMode::None) {
+
 		collider_ = std::make_unique<Collider>();
+		collider_->SetCollisionMode(colliderMode_);
 	}
 }
 
@@ -25,12 +26,6 @@ void BaseObject::Update()
 {
 	if (objectParam_.lock()) {
 		objectParam_.lock()->worldTransform.UpdateMatrix();
-	}
-
-	// colliderに送る
-	if (collider_) {
-		collider_->SetWorldPosition(GetWorldPosition());
-		collider_->SetScale(GetScale());
 	}
 }
 
