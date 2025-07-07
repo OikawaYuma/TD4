@@ -133,7 +133,7 @@ void Car::BicycleModel()
 	speed_ = velocity_mps * 3.6f;
 	
 	float frameSpeed = velocity_mps * deltaTime_;
-
+	frameSpeed;
 	// 車体方向ベクトル（rotation_.yで向いてる方向）
 	Vector2 forwardVec = { std::sin(worldTransform_.rotation_.y), std::cos(worldTransform_.rotation_.y) };
 
@@ -175,7 +175,7 @@ void Car::BicycleModel()
 
 	// スリップ角（ズレ角）
 	float slipAngle = velocityAngle - headingAngle;
-
+	slipAngle;
 	float speed_mps = std::sqrt(velocityVec_.x * velocityVec_.x + velocityVec_.y * velocityVec_.y);
 
 	// 車の重心位置（前後方向）
@@ -187,19 +187,27 @@ void Car::BicycleModel()
 	float rearWeight = (weight_ * (frontLength / wheelBase)) + weightTransfer;
 
 	float frontGripMax = mu_ * frontWeight;
-	float rearGripMax = mu_ * rearWeight;
 	// 重み付けで前後の必要横力を近似（前：後 = rearLength：frontLength）
 	float frontLatReq = requiredLatForce * (rearLength / wheelBase);
 	float rearLatReq = requiredLatForce * (frontLength / wheelBase);
-
+	rearLatReq;
+		frontLatReq;
 	// グリップ率（0〜1）で表現
 	float frontGripRatio = std::min(1.0f, frontGripMax / frontLatReq);
-	float rearGripRatio = std::min(1.0f, rearGripMax / rearLatReq);
-
+	// --- 後輪グリップをブレーキで減らす ---
+	float rearGripMax = mu_ * rearWeight;
+	// ブレーキがかかっている場合、後輪のグリップを減少させる
+	float rearGripMultiplier = 1.0f;
+	if (brake_ > 0.1f && velocity_mps > 10.0f) {
+		rearGripMultiplier = std::clamp(1.0f - brake_ * 0.8f, 0.4f, 1.0f);
+	}
+	rearGripMax *= rearGripMultiplier;
 
 	// 前輪の旋回影響が gripRatio により弱まる（アンダーステア）
 	float targetAngularVel = (speed_mps / wheelBase) * std::tan(steerAngle);
 	targetAngularVel *= frontGripRatio;
+	float rearGripRatio = std::min(1.0f, rearGripMax / ((mass_ * velocity_mps * velocity_mps) / (wheelBase / std::abs(std::tan(steerAngle)) + 0.0001f)));
+	targetAngularVel *= rearGripRatio;
 
 	// 徐々に現在のヨー角速度に反映
 	float yawDamping = 4.0f; // 調整可
@@ -259,7 +267,7 @@ void Car::Brake()
 	}
 
 	// ブレーキ力 [N]（最大制動力を係数として）
-	brakeForce_ = (brake_ * maxBrakeForce)* (brake_ * maxBrakeForce);
+	brakeForce_ = (brake_ * maxBrakeForce);
 
 	float brakeLimitForce = mu_ * weight_; // 最大摩擦力による制動限界
 	// ブレーキ力が最大摩擦力を超えないように制限

@@ -1,0 +1,4191 @@
+{
+    "name": "scene",
+    "objects": [
+        {
+            "type": "LIGHT",
+            "name": "Light",
+            "transform": {
+                "translation": [
+                    3.4177212715148926,
+                    294.18829345703125,
+                    5.903861999511719
+                ],
+                "rotation": [
+                    0.6503279805183411,
+                    0.05521710216999054,
+                    -1.2752015590667725
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            }
+        },
+        {
+            "type": "CAMERA",
+            "name": "Camera",
+            "transform": {
+                "translation": [
+                    7.358891487121582,
+                    -6.925790786743164,
+                    4.958309173583984
+                ],
+                "rotation": [
+                    1.1093189716339111,
+                    4.011331711240018e-09,
+                    0.8149281740188599
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "平面.001",
+            "transform": {
+                "translation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    4.0,
+                    10.0,
+                    1.0
+                ]
+            },
+            "file_name": "load",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "s15-body",
+            "transform": {
+                "translation": [
+                    0.019999999552965164,
+                    -0.12999999523162842,
+                    0.15000000596046448
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -3.141592502593994
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "car",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "children": [
+                {
+                    "type": "MESH",
+                    "name": "carTire",
+                    "transform": {
+                        "translation": [
+                            0.770000159740448,
+                            -1.309999942779541,
+                            0.1899999976158142
+                        ],
+                        "rotation": [
+                            -1.7086776494979858,
+                            -3.957669747478576e-10,
+                            -0.010471886023879051
+                        ],
+                        "scaling": [
+                            1.0,
+                            1.0,
+                            0.9999999403953552
+                        ]
+                    }
+                },
+                {
+                    "type": "MESH",
+                    "name": "carTire.001",
+                    "transform": {
+                        "translation": [
+                            0.7699998617172241,
+                            1.2500001192092896,
+                            0.1899999976158142
+                        ],
+                        "rotation": [
+                            1.5707964897155762,
+                            -0.0,
+                            4.1326424593535194e-07
+                        ],
+                        "scaling": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    }
+                },
+                {
+                    "type": "MESH",
+                    "name": "carTire.002",
+                    "transform": {
+                        "translation": [
+                            -0.7699998617172241,
+                            -1.3100000619888306,
+                            0.1899999976158142
+                        ],
+                        "rotation": [
+                            1.5707964897155762,
+                            -0.0,
+                            4.1326424593535194e-07
+                        ],
+                        "scaling": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    }
+                },
+                {
+                    "type": "MESH",
+                    "name": "carTire.003",
+                    "transform": {
+                        "translation": [
+                            -0.7700001001358032,
+                            1.2499998807907104,
+                            0.1899999976158142
+                        ],
+                        "rotation": [
+                            1.5707964897155762,
+                            -0.0,
+                            4.1326424593535194e-07
+                        ],
+                        "scaling": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "type": "MESH",
+            "name": "平面.002",
+            "transform": {
+                "translation": [
+                    0.0,
+                    20.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    4.0,
+                    10.0,
+                    1.0
+                ]
+            },
+            "file_name": "load",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "平面.003",
+            "transform": {
+                "translation": [
+                    0.0,
+                    40.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    4.0,
+                    10.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "平面.004",
+            "transform": {
+                "translation": [
+                    0.0,
+                    60.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    4.0,
+                    10.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "平面.005",
+            "transform": {
+                "translation": [
+                    0.0,
+                    80.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    4.0,
+                    10.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "平面.006",
+            "transform": {
+                "translation": [
+                    0.0,
+                    100.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    4.0,
+                    10.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "平面.007",
+            "transform": {
+                "translation": [
+                    0.0,
+                    120.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    4.0,
+                    10.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "平面.008",
+            "transform": {
+                "translation": [
+                    0.0,
+                    140.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    4.0,
+                    10.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "平面.009",
+            "transform": {
+                "translation": [
+                    0.0,
+                    160.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    4.0,
+                    10.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "平面.010",
+            "transform": {
+                "translation": [
+                    0.0,
+                    180.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    4.0,
+                    10.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "平面.011",
+            "transform": {
+                "translation": [
+                    0.0,
+                    200.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    4.0,
+                    10.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "平面.012",
+            "transform": {
+                "translation": [
+                    0.0,
+                    220.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    4.0,
+                    10.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "平面.013",
+            "transform": {
+                "translation": [
+                    0.0,
+                    240.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    4.0,
+                    10.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "平面.014",
+            "transform": {
+                "translation": [
+                    0.0,
+                    260.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    4.0,
+                    10.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "平面.015",
+            "transform": {
+                "translation": [
+                    0.0,
+                    280.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    4.0,
+                    10.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "平面.016",
+            "transform": {
+                "translation": [
+                    0.0,
+                    300.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    4.0,
+                    10.0,
+                    1.0
+                ]
+            },
+            "file_name": "load"
+        },
+        {
+            "type": "MESH",
+            "name": "fence.001",
+            "transform": {
+                "translation": [
+                    -3.5999999046325684,
+                    10.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence",
+            "transform": {
+                "translation": [
+                    -3.5999999046325684,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.002",
+            "transform": {
+                "translation": [
+                    -3.5999999046325684,
+                    5.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.003",
+            "transform": {
+                "translation": [
+                    -3.5999999046325684,
+                    15.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.004",
+            "transform": {
+                "translation": [
+                    -3.5999999046325684,
+                    20.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.005",
+            "transform": {
+                "translation": [
+                    -3.5999999046325684,
+                    25.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.006",
+            "transform": {
+                "translation": [
+                    -3.5999999046325684,
+                    30.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.007",
+            "transform": {
+                "translation": [
+                    -3.5999999046325684,
+                    35.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.008",
+            "transform": {
+                "translation": [
+                    -3.5999999046325684,
+                    40.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.009",
+            "transform": {
+                "translation": [
+                    -3.5999999046325684,
+                    45.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.010",
+            "transform": {
+                "translation": [
+                    -3.5999999046325684,
+                    50.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.011",
+            "transform": {
+                "translation": [
+                    -3.5999999046325684,
+                    55.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.012",
+            "transform": {
+                "translation": [
+                    -3.5999999046325684,
+                    60.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.013",
+            "transform": {
+                "translation": [
+                    -3.5999999046325684,
+                    120.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.014",
+            "transform": {
+                "translation": [
+                    -3.5999999046325684,
+                    115.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.015",
+            "transform": {
+                "translation": [
+                    -3.5999999046325684,
+                    110.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.016",
+            "transform": {
+                "translation": [
+                    -3.5999999046325684,
+                    105.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.017",
+            "transform": {
+                "translation": [
+                    -3.5999999046325684,
+                    100.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.018",
+            "transform": {
+                "translation": [
+                    -3.5999999046325684,
+                    95.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.019",
+            "transform": {
+                "translation": [
+                    -3.5999999046325684,
+                    90.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.020",
+            "transform": {
+                "translation": [
+                    -3.5999999046325684,
+                    85.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.021",
+            "transform": {
+                "translation": [
+                    -3.5999999046325684,
+                    80.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.022",
+            "transform": {
+                "translation": [
+                    -3.5999999046325684,
+                    75.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.023",
+            "transform": {
+                "translation": [
+                    -3.5999999046325684,
+                    65.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.024",
+            "transform": {
+                "translation": [
+                    -3.5999999046325684,
+                    70.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.025",
+            "transform": {
+                "translation": [
+                    -3.5999999046325684,
+                    125.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.026",
+            "transform": {
+                "translation": [
+                    -3.5999999046325684,
+                    130.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.027",
+            "transform": {
+                "translation": [
+                    -3.5999999046325684,
+                    135.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.028",
+            "transform": {
+                "translation": [
+                    -3.5999999046325684,
+                    140.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.029",
+            "transform": {
+                "translation": [
+                    -3.5999999046325684,
+                    145.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.030",
+            "transform": {
+                "translation": [
+                    -3.5999999046325684,
+                    150.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.031",
+            "transform": {
+                "translation": [
+                    -3.5999999046325684,
+                    155.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.032",
+            "transform": {
+                "translation": [
+                    -3.5999999046325684,
+                    160.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.033",
+            "transform": {
+                "translation": [
+                    -3.5999999046325684,
+                    165.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.034",
+            "transform": {
+                "translation": [
+                    -3.5999999046325684,
+                    200.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.035",
+            "transform": {
+                "translation": [
+                    -3.5999999046325684,
+                    195.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.036",
+            "transform": {
+                "translation": [
+                    -3.5999999046325684,
+                    190.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.037",
+            "transform": {
+                "translation": [
+                    -3.5999999046325684,
+                    185.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.038",
+            "transform": {
+                "translation": [
+                    -3.5999999046325684,
+                    180.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.039",
+            "transform": {
+                "translation": [
+                    -3.5999999046325684,
+                    175.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.040",
+            "transform": {
+                "translation": [
+                    -3.5999999046325684,
+                    170.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.041",
+            "transform": {
+                "translation": [
+                    -3.5999999046325684,
+                    250.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.042",
+            "transform": {
+                "translation": [
+                    -3.5999999046325684,
+                    245.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.043",
+            "transform": {
+                "translation": [
+                    -3.5999999046325684,
+                    240.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.044",
+            "transform": {
+                "translation": [
+                    -3.5999999046325684,
+                    235.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.045",
+            "transform": {
+                "translation": [
+                    -3.5999999046325684,
+                    230.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.046",
+            "transform": {
+                "translation": [
+                    -3.5999999046325684,
+                    225.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.047",
+            "transform": {
+                "translation": [
+                    -3.5999999046325684,
+                    220.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.048",
+            "transform": {
+                "translation": [
+                    -3.5999999046325684,
+                    215.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.049",
+            "transform": {
+                "translation": [
+                    -3.5999999046325684,
+                    205.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.050",
+            "transform": {
+                "translation": [
+                    -3.5999999046325684,
+                    210.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.051",
+            "transform": {
+                "translation": [
+                    -3.5999999046325684,
+                    260.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.052",
+            "transform": {
+                "translation": [
+                    -3.5999999046325684,
+                    255.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.053",
+            "transform": {
+                "translation": [
+                    -3.5999999046325684,
+                    265.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.054",
+            "transform": {
+                "translation": [
+                    -3.5999999046325684,
+                    270.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.055",
+            "transform": {
+                "translation": [
+                    -3.5999999046325684,
+                    275.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.056",
+            "transform": {
+                "translation": [
+                    -3.5999999046325684,
+                    280.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.057",
+            "transform": {
+                "translation": [
+                    -3.5999999046325684,
+                    285.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.058",
+            "transform": {
+                "translation": [
+                    -3.5999999046325684,
+                    290.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.059",
+            "transform": {
+                "translation": [
+                    -3.5999999046325684,
+                    295.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.060",
+            "transform": {
+                "translation": [
+                    -3.5999999046325684,
+                    300.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.061",
+            "transform": {
+                "translation": [
+                    3.7523751258850098,
+                    295.1937255859375,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -3.141592264175415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.062",
+            "transform": {
+                "translation": [
+                    3.752401351928711,
+                    -4.8062744140625,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -3.141592264175415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.063",
+            "transform": {
+                "translation": [
+                    3.7524008750915527,
+                    0.1937255859375,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -3.141592264175415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.064",
+            "transform": {
+                "translation": [
+                    3.7524003982543945,
+                    5.1937255859375,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -3.141592264175415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.065",
+            "transform": {
+                "translation": [
+                    3.7523999214172363,
+                    10.1937255859375,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -3.141592264175415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.066",
+            "transform": {
+                "translation": [
+                    3.7523996829986572,
+                    15.1937255859375,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -3.141592264175415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.067",
+            "transform": {
+                "translation": [
+                    3.752399206161499,
+                    20.1937255859375,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -3.141592264175415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.068",
+            "transform": {
+                "translation": [
+                    3.752398729324341,
+                    25.1937255859375,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -3.141592264175415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.069",
+            "transform": {
+                "translation": [
+                    3.7523982524871826,
+                    30.1937255859375,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -3.141592264175415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.070",
+            "transform": {
+                "translation": [
+                    3.752397298812866,
+                    40.1937255859375,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -3.141592264175415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.071",
+            "transform": {
+                "translation": [
+                    3.7523977756500244,
+                    35.1937255859375,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -3.141592264175415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.072",
+            "transform": {
+                "translation": [
+                    3.7523934841156006,
+                    85.1937255859375,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -3.141592264175415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.073",
+            "transform": {
+                "translation": [
+                    3.7523930072784424,
+                    90.1937255859375,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -3.141592264175415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.074",
+            "transform": {
+                "translation": [
+                    3.752393960952759,
+                    80.1937255859375,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -3.141592264175415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.075",
+            "transform": {
+                "translation": [
+                    3.752394437789917,
+                    75.1937255859375,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -3.141592264175415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.076",
+            "transform": {
+                "translation": [
+                    3.752394676208496,
+                    70.1937255859375,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -3.141592264175415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.077",
+            "transform": {
+                "translation": [
+                    3.7523951530456543,
+                    65.1937255859375,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -3.141592264175415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.078",
+            "transform": {
+                "translation": [
+                    3.7523956298828125,
+                    60.1937255859375,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -3.141592264175415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.079",
+            "transform": {
+                "translation": [
+                    3.7523961067199707,
+                    55.1937255859375,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -3.141592264175415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.080",
+            "transform": {
+                "translation": [
+                    3.752396583557129,
+                    50.1937255859375,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -3.141592264175415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.081",
+            "transform": {
+                "translation": [
+                    3.752397060394287,
+                    45.1937255859375,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -3.141592264175415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.082",
+            "transform": {
+                "translation": [
+                    3.752389907836914,
+                    125.1937255859375,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -3.141592264175415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.083",
+            "transform": {
+                "translation": [
+                    3.7523903846740723,
+                    120.1937255859375,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -3.141592264175415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.084",
+            "transform": {
+                "translation": [
+                    3.7523908615112305,
+                    115.1937255859375,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -3.141592264175415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.085",
+            "transform": {
+                "translation": [
+                    3.7523913383483887,
+                    110.1937255859375,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -3.141592264175415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.086",
+            "transform": {
+                "translation": [
+                    3.752391815185547,
+                    105.1937255859375,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -3.141592264175415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.087",
+            "transform": {
+                "translation": [
+                    3.752392053604126,
+                    100.1937255859375,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -3.141592264175415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.088",
+            "transform": {
+                "translation": [
+                    3.752392530441284,
+                    95.1937255859375,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -3.141592264175415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.089",
+            "transform": {
+                "translation": [
+                    3.752389430999756,
+                    130.1937255859375,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -3.141592264175415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.090",
+            "transform": {
+                "translation": [
+                    3.7523891925811768,
+                    135.1937255859375,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -3.141592264175415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.091",
+            "transform": {
+                "translation": [
+                    3.7523887157440186,
+                    140.1937255859375,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -3.141592264175415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.092",
+            "transform": {
+                "translation": [
+                    3.7523882389068604,
+                    145.1937255859375,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -3.141592264175415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.093",
+            "transform": {
+                "translation": [
+                    3.752387762069702,
+                    150.1937255859375,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -3.141592264175415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.094",
+            "transform": {
+                "translation": [
+                    3.752387285232544,
+                    155.1937255859375,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -3.141592264175415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.095",
+            "transform": {
+                "translation": [
+                    3.7523868083953857,
+                    160.1937255859375,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -3.141592264175415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.096",
+            "transform": {
+                "translation": [
+                    3.7523865699768066,
+                    165.1937255859375,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -3.141592264175415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.097",
+            "transform": {
+                "translation": [
+                    3.7523860931396484,
+                    170.1937255859375,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -3.141592264175415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.098",
+            "transform": {
+                "translation": [
+                    3.7523813247680664,
+                    225.1937255859375,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -3.141592264175415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.099",
+            "transform": {
+                "translation": [
+                    3.752380847930908,
+                    230.1937255859375,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -3.141592264175415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.100",
+            "transform": {
+                "translation": [
+                    3.7523815631866455,
+                    220.1937255859375,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -3.141592264175415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.101",
+            "transform": {
+                "translation": [
+                    3.7523820400238037,
+                    215.1937255859375,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -3.141592264175415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.102",
+            "transform": {
+                "translation": [
+                    3.752382516860962,
+                    210.1937255859375,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -3.141592264175415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.103",
+            "transform": {
+                "translation": [
+                    3.75238299369812,
+                    205.1937255859375,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -3.141592264175415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.104",
+            "transform": {
+                "translation": [
+                    3.7523834705352783,
+                    200.1937255859375,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -3.141592264175415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.105",
+            "transform": {
+                "translation": [
+                    3.7523839473724365,
+                    195.1937255859375,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -3.141592264175415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.106",
+            "transform": {
+                "translation": [
+                    3.7523841857910156,
+                    190.1937255859375,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -3.141592264175415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.107",
+            "transform": {
+                "translation": [
+                    3.752384662628174,
+                    185.1937255859375,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -3.141592264175415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.108",
+            "transform": {
+                "translation": [
+                    3.752385139465332,
+                    180.1937255859375,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -3.141592264175415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.109",
+            "transform": {
+                "translation": [
+                    3.7523856163024902,
+                    175.1937255859375,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -3.141592264175415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.110",
+            "transform": {
+                "translation": [
+                    3.75238037109375,
+                    235.1937255859375,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -3.141592264175415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.111",
+            "transform": {
+                "translation": [
+                    3.752379894256592,
+                    240.1937255859375,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -3.141592264175415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.112",
+            "transform": {
+                "translation": [
+                    3.7523794174194336,
+                    245.1937255859375,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -3.141592264175415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.113",
+            "transform": {
+                "translation": [
+                    3.7523789405822754,
+                    250.1937255859375,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -3.141592264175415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.114",
+            "transform": {
+                "translation": [
+                    3.7523787021636963,
+                    255.1937255859375,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -3.141592264175415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.115",
+            "transform": {
+                "translation": [
+                    3.752378225326538,
+                    260.1937255859375,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -3.141592264175415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.116",
+            "transform": {
+                "translation": [
+                    3.75237774848938,
+                    265.1937255859375,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -3.141592264175415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.117",
+            "transform": {
+                "translation": [
+                    3.7523772716522217,
+                    270.1937255859375,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -3.141592264175415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.118",
+            "transform": {
+                "translation": [
+                    3.7523767948150635,
+                    275.1937255859375,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -3.141592264175415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.119",
+            "transform": {
+                "translation": [
+                    3.7523763179779053,
+                    280.1937255859375,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -3.141592264175415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.120",
+            "transform": {
+                "translation": [
+                    3.752375602722168,
+                    290.1937255859375,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -3.141592264175415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "fence.121",
+            "transform": {
+                "translation": [
+                    3.752376079559326,
+                    285.1937255859375,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    -3.141592264175415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Fence",
+            "collider": {
+                "type": "",
+                "center": [
+                    -1.9499999284744263,
+                    0.0,
+                    0.0
+                ]
+            }
+        }
+    ]
+}

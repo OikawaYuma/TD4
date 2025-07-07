@@ -14,8 +14,6 @@ void DemoScene::Init()
 	Object3dManager::GetInstance()->Init();
 	ModelManager::GetInstance()->LoadModel("Resources/worldDesign", "worldDesign.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/map", "IROHAmap2.obj");
-	ModelManager::GetInstance()->LoadModel("Resources/map", "map.obj");
-	ModelManager::GetInstance()->LoadModel("Resources/map", "map0.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/ball", "ball.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/floor", "floor.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/TenQ", "TenQ.obj");
@@ -37,7 +35,9 @@ void DemoScene::Init()
 		objectpram.lock()->worldTransform.UpdateMatrix();
 	}
 	Object3dManager::GetInstance()->StoreObject("floor", TextureManager::GetInstance()->StoreTexture("Resources/kusa2.png"), 0);
-  
+	Object3dManager::GetInstance()->StoreObject("map1", TextureManager::GetInstance()->StoreTexture("Resources/load4.png"), 0);
+	worldTransform_.Initialize();
+
 	ui_ = std::make_unique<UI>();
 	ui_->Initialize();
 	sprite_->Init("Resources/load2.png");
@@ -48,7 +48,7 @@ void DemoScene::Init()
 	sprite_->SetTexture(spTx_);
 	camera_ = std::make_unique<Camera>();
 	camera_->Initialize();
-	levelData_ = Loder::LoadJsonFile("Resources/json","stage5");
+	levelData_ = Loder::LoadJsonFile("Resources/json","stage8");
 	GlobalVariables::GetInstance()->LoadFiles();
 
 	ArrageObj(maps_);
@@ -77,6 +77,9 @@ void DemoScene::Init()
 	postProcess_->SetCamera(followCamera_->GetCamera());
 	postProcess_->SetEffectNo(PostEffectMode::kDepthOutline);
 	
+	boxWire_ = std::make_unique<HitBoxWire>();
+	boxWire_->Init();
+	boxWire_->SetCamera(followCamera_->GetCamera());
 
 }
 
@@ -105,6 +108,9 @@ void DemoScene::Update()
 	for (std::list<std::unique_ptr<map>>::iterator itr = maps_.begin(); itr != maps_.end(); itr++) {
 		(*itr)->Update();
 	}
+	for (std::list<std::unique_ptr<Fence>>::iterator itr = fences_.begin(); itr != fences_.end(); itr++) {
+		(*itr)->Update();
+	}
 	car_->Update();
 	//particle_->CreateParticle();
 	Object3dManager::GetInstance()->Update();
@@ -124,8 +130,9 @@ void DemoScene::Update()
 }
 void DemoScene::Draw()
 {
-	Object3dManager::GetInstance()->Draw(followCamera_->GetCamera());
 
+	Object3dManager::GetInstance()->Draw(followCamera_->GetCamera());
+	boxWire_->Draw();
 	//carSmoke_->Draw();
 }
 
@@ -280,7 +287,7 @@ void DemoScene::ParticleEmitter()
 
 void DemoScene::ArrageObj(std::list<std::unique_ptr<map>>& maps)
 {
-
+	maps;
 	for (auto& objectData : levelData_.objects) {
 		if (objectData.filename.compare("load") == 0) {
 
@@ -302,6 +309,17 @@ void DemoScene::ArrageObj(std::list<std::unique_ptr<map>>& maps)
 				objectData.transform.rotate.y,
 				objectData.transform.rotate.z
 				}, objectData.transform.translate, "carBody");
+		}
+		if (objectData.filename.compare("Fence") == 0) {
+
+			ModelManager::GetInstance()->LoadModel("Resources/" + objectData.filename, objectData.filename + ".obj");
+			std::unique_ptr<Fence> fence = std::make_unique<Fence>();
+			fence->Init(objectData.transform.scale, {
+				objectData.transform.rotate.x,
+				objectData.transform.rotate.y,
+				objectData.transform.rotate.z
+				}, objectData.transform.translate, objectData.filename);
+			fences_.push_back(std::move(fence));
 		}
 	}
 }

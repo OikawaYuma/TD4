@@ -76,8 +76,16 @@ LevelData Loder::LoadJsonFile(const std::string kDefaultBaseDirectory, const std
 				objectData.transform.scale.x = (float)transform["scaling"][0];
 				objectData.transform.scale.y = (float)transform["scaling"][2];
 				objectData.transform.scale.z = (float)transform["scaling"][1];
+
+				if (object.contains("collider")) {
+					nlohmann::json& collider = object["collider"];
+					objectData.collisionMode = collider["type"];
+				}
+
 				continue;
 			}
+
+			
 		}
 
 		// TODO: オブジェクト走査を再帰関数にまとめ、再帰呼出で枝を走査する

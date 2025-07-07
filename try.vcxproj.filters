@@ -323,6 +323,10 @@
     <ClCompile Include="Game\CarSmoke\CarSmoke.cpp" />
     <ClCompile Include="Game\CarParts\CarSteering\CarSteering.cpp" />
     <ClCompile Include="Game\Logo\Logo.cpp" />
+    <ClCompile Include="Engine\3d\Line\Line.cpp" />
+    <ClCompile Include="Engine\Interface\PSO\PSOLine.cpp" />
+    <ClCompile Include="Engine\3d\CollisionType\Box\HitBoxWire.cpp" />
+    <ClCompile Include="Game\Fence\Fence.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Utility\function.h">
@@ -593,6 +597,10 @@
     <ClInclude Include="Game\CarSmoke\CarSmoke.h" />
     <ClInclude Include="Game\CarParts\CarSteering\CarSteering.h" />
     <ClInclude Include="Game\Logo\Logo.h" />
+    <ClInclude Include="Engine\3d\Line\Line.h" />
+    <ClInclude Include="Engine\Interface\PSO\PSOLine.h" />
+    <ClInclude Include="Engine\3d\CollisionType\Box\HitBoxWire.h" />
+    <ClInclude Include="Game\Fence\Fence.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shader\Particle.PS.hlsl">
@@ -676,6 +684,7 @@
       <Filter>Resources\shader</Filter>
     </None>
     <None Include="Engine\Externals\imgui\imgui.ini" />
+    <None Include="Resources\shader\Line.hlsli" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Engine\Externals\imgui\LICENSE.txt" />

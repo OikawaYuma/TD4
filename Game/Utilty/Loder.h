@@ -12,7 +12,7 @@
 #include "Object3d.h"
 #include "Camera.h"
 #include <list>
-
+#include "Collider.h"
 
 
 class LevelData {
@@ -20,7 +20,9 @@ public:
 	struct ObjectData {
 		std::string filename;
 		Transform transform;
+		std::string collisionMode; // 0:なし, 1:ボックス
 	};
+	
 	std::list<ObjectData> objects;
 private:
 	
