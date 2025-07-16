@@ -88,7 +88,7 @@ private:
 	uint32_t spTx_ = 0;
 	LevelData levelData_{};
 
-	std::unique_ptr<HitBoxWire> boxWire_;
+	std::vector<std::unique_ptr<HitBoxWire>> boxWires_;
 
 	WorldTransform worldTransform_{};
 	DepthOutlineInfo depthOutlineInfo_{};

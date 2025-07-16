@@ -1,6 +1,6 @@
 #include "HitBoxWire.h"
 
-void HitBoxWire::Init() {
+void HitBoxWire::Init(Vector3& scale, Vector3 translate) {
 	
 	// 8頂点の定義
 	Vector3 v0 = { -0.5f, -0.5f, -0.5f };
@@ -20,8 +20,8 @@ void HitBoxWire::Init() {
 	};
 
 	worldTransform_.Initialize();
-	worldTransform_.translation_ = { 0.0f, 2.0f, 5.0f };
-	worldTransform_.scale_ = { 2.0f, 2.0f, 2.0f };
+	worldTransform_.translation_ = translate;
+	worldTransform_.scale_ = scale;
 	worldTransform_.UpdateMatrix();
 	// 追加
 	for (const auto& [start, end] : edges) {
@@ -44,4 +44,12 @@ void HitBoxWire::Draw() {
 		(*itr)->Draw(camera_);
 	}
 			
+}
+
+void HitBoxWire::Release() {
+
+}
+
+void HitBoxWire::AddListPram(std::shared_ptr<WireObjectPram > objectParm) {
+	objectParm;
 }

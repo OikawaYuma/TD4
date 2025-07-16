@@ -11,29 +11,39 @@
 #include "WorldTransform.h"
 #include "Camera.h"
 #include "PlaneProjectionShadow.h"
+#include "BaseObject/BaseObject.h"
 
-class Fence
+class Fence : public BaseObject
 {
 public:
-	~Fence();
-	void Init(const Vector3& scale, const Vector3& rotate, const Vector3& translate, const std::string filename);
-	void Update();
+	
+	/// <summary>
+	/// 初期化
+	/// </summary>
+	/// <param name="scale"></param>
+	/// <param name="translate"></param>
+	/// <param name="filename"></param>
+	void Initialize(const Vector3& rotate, const Vector3& scale, const Vector3& translate, const std::string filename)override;
+
+	/// <summary>
+	/// 更新
+	/// </summary>
+	void Update()override;
+
+private: // Collision
+	/// <summary>
+	/// 衝突
+	/// </summary>
+	void OnCollision();
+
 public: // Getter
+	void SetCollisionScale(const Vector3& scale) { collisionScale_ = scale; }// 衝突スケールの設定
 
 
-	void SetSpotLight(const SpotLight& spotLight) { spotLight_ = spotLight; }
-
-	void SetObjectPram();
 private:
-	std::weak_ptr<ObjectPram> objectPram_{};
-	uint32_t floorTex_ = 0;
-	Camera* camera_ = nullptr;
-
-	Vector4 color_;
-
-	Material material_{};
-	DirectionalLight direLight_{};
-	SpotLight spotLight_{};
+	Vector3 collisionScale_ = { 1,1,1 };
+	// ヒットフラグ
+	bool isHit_ = false;
 };
 
 

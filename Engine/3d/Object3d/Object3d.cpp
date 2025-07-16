@@ -82,39 +82,16 @@ void Object3d::Init()
 
 void Object3d::Update()
 {
-
-
-
-	/*if (instancingWorld_[0]) {
-		for (uint32_t index = 0; index < objectNum_; ++index) {
-			instancingData_[index].World =instancingWorld_[index]->matWorld_;
-			instancingData_[index].WVP = instancingData_[index].World;
-			instancingData_[index].WorldInverseTranspose = MakeIdentity4x4();
-			instancingData_[index].color =
-				Vector4(
-					instancingColor_[index]->x,
-					instancingColor_[index]->y,
-					instancingColor_[index]->z,
-					instancingColor_[index]->w);
-		}
-	}
-	else if (!instancingWorld_[0]) {
-
-			instancingData_[0].World = worldTransform_.matWorld_;
-			instancingData_[0].WVP = instancingData_[0].World;
-			instancingData_[0].WorldInverseTranspose = MakeIdentity4x4();
-			instancingData_[0].color = { 1.0f,1.0f,1.0f,1.0f };
-
-	}*/
-
+	// 3Dモデルの更新処理を行う
 	numInstance_ = 0;
+	
 	for (std::list<std::shared_ptr<ObjectPram>>::iterator objectPtamIterator = objectParms_.begin(); objectPtamIterator != objectParms_.end();) {
 		if ((*objectPtamIterator)->isAlive == false) {
 			objectPtamIterator = objectParms_.erase(objectPtamIterator);
 			continue;
 		}
+		// インスタンス数が最大数を超えないようにする
 		if (numInstance_ < kNumMaxInstance_) {
-
 			instancingData_[numInstance_].World = (*objectPtamIterator)->worldTransform.matWorld_;
 			instancingData_[numInstance_].WVP = instancingData_[numInstance_].World;
 			instancingData_[numInstance_].WorldInverseTranspose = MakeIdentity4x4();
@@ -123,7 +100,6 @@ void Object3d::Update()
 		numInstance_++;
 		++objectPtamIterator;
 	}
-
 
 
 	worldTransform_.UpdateMatrix();

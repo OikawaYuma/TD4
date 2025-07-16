@@ -17,6 +17,7 @@ void DemoScene::Init()
 	ModelManager::GetInstance()->LoadModel("Resources/ball", "ball.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/floor", "floor.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/TenQ", "TenQ.obj");
+	ModelManager::GetInstance()->LoadModel("Resources/Fence", "Fence.obj");
 
 
 	fade_ = std::make_unique<Fade>();
@@ -49,13 +50,13 @@ void DemoScene::Init()
 	sprite_->SetTexture(spTx_);
 	camera_ = std::make_unique<Camera>();
 	camera_->Initialize();
-	levelData_ = Loder::LoadJsonFile("Resources/json","stage8");
+	levelData_ = Loder::LoadJsonFile("Resources/json","map");
 	GlobalVariables::GetInstance()->LoadFiles();
-
-	ArrageObj(maps_);
-
 	followCamera_ = std::make_unique<FollowCamera>();
 	followCamera_->Init();
+	ArrageObj(maps_);
+
+	
 
 	carSmoke_ = std::make_unique<CarSmoke>();
 	carSmoke_->SetCamera(followCamera_->GetCamera());
@@ -79,12 +80,7 @@ void DemoScene::Init()
 	postProcess_->SetEffectNo(PostEffectMode::kDepthOutline);
 
 
-	// 仮壁
-	wall_ = std::make_unique<Wall>();
-	wall_->Initialize({}, { 5.0f,5.0f,5.0f }, { 0.0f,0.0f,10.0f }, "box");
-	boxWire_ = std::make_unique<HitBoxWire>();
-	boxWire_->Init();
-	boxWire_->SetCamera(followCamera_->GetCamera());
+
 	// collisionManager
 	collisionManager_ = std::make_unique<CollisionManager>();
 
@@ -135,15 +131,15 @@ void DemoScene::Update()
 	fade_->UpdateFade();
 	carSmoke_->Update();
 
-	wall_->Update();
-
 	Collision(); 
 }
 void DemoScene::Draw()
 {
 
 	Object3dManager::GetInstance()->Draw(followCamera_->GetCamera());
-	boxWire_->Draw();
+	for (const auto& hitBoxWire : hitBoxWires_) {
+		hitBoxWire->Draw();
+	}
 	//carSmoke_->Draw();
 }
 
@@ -325,11 +321,28 @@ void DemoScene::ArrageObj(std::list<std::unique_ptr<map>>& maps)
 
 			ModelManager::GetInstance()->LoadModel("Resources/" + objectData.filename, objectData.filename + ".obj");
 			std::unique_ptr<Fence> fence = std::make_unique<Fence>();
-			fence->Init(objectData.transform.scale, {
-				objectData.transform.rotate.x,
-				objectData.transform.rotate.y,
-				objectData.transform.rotate.z
-				}, objectData.transform.translate, objectData.filename);
+			fence->Initialize(objectData.transform.rotate / 180, 
+				objectData.transform.scale
+				, objectData.transform.translate, objectData.filename);
+			fence->SetCollisionScale(objectData.collisionSize);
+			std::unique_ptr<HitBoxWire> hitBoxWire = std::make_unique<HitBoxWire>();
+			hitBoxWire->Init(objectData.collisionSize,objectData.transform.translate);
+			hitBoxWire->SetCamera(followCamera_->GetCamera());
+			hitBoxWires_.push_back(std::move(hitBoxWire));
+			fences_.push_back(std::move(fence));
+		}
+		if (objectData.filename.compare("guardrail") == 0) {
+
+			ModelManager::GetInstance()->LoadModel("Resources/" + objectData.filename, objectData.filename + ".obj");
+			std::unique_ptr<Fence> fence = std::make_unique<Fence>();
+			fence->Initialize({ (objectData.transform.rotate.x + (3.1415f /2)),(objectData.transform.rotate.y),(objectData.transform.rotate.z) },
+				objectData.transform.scale
+				, objectData.transform.translate, objectData.filename);
+			fence->SetCollisionScale(objectData.collisionSize);
+			std::unique_ptr<HitBoxWire> hitBoxWire = std::make_unique<HitBoxWire>();
+			hitBoxWire->Init(objectData.collisionSize,objectData.transform.translate);
+			hitBoxWire->SetCamera(followCamera_->GetCamera());
+			hitBoxWires_.push_back(std::move(hitBoxWire));
 			fences_.push_back(std::move(fence));
 		}
 	}
@@ -339,9 +352,10 @@ void DemoScene::Collision()
 {
 	collisionManager_->ColliderClear();
 
-	collisionManager_->PushCollider(wall_->GetCollider());
 	collisionManager_->PushCollider(car_->GetBodyCollider());
-
+	for (const auto& fence : fences_) {
+		collisionManager_->PushCollider(fence->GetCollider());
+	}
 	collisionManager_->CheckAllCollision();
 }
 
