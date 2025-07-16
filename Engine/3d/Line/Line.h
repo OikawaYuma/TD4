@@ -40,6 +40,13 @@ struct LineData {
 
 };
 
+struct LineParam {
+	bool isAlive;
+	WorldTransform worldTransform;
+	Vector4 color;
+
+};
+
 struct LineForGPU {
 	Matrix4x4 WVP;
 	Matrix4x4 World;

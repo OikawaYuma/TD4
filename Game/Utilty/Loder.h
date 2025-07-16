@@ -21,6 +21,7 @@ public:
 		std::string filename;
 		Transform transform;
 		std::string collisionMode; // 0:なし, 1:ボックス
+		Vector3 collisionSize; // ボックスのサイズ	
 	};
 	
 	std::list<ObjectData> objects;

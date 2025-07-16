@@ -7,6 +7,7 @@
 #include <fstream>
 #include <cassert>
 #include "ModelManager.h"
+#include <iostream>
 
 
 LevelData Loder::LoadJsonFile(const std::string kDefaultBaseDirectory, const std::string fileName)
@@ -79,7 +80,11 @@ LevelData Loder::LoadJsonFile(const std::string kDefaultBaseDirectory, const std
 
 				if (object.contains("collider")) {
 					nlohmann::json& collider = object["collider"];
+				
 					objectData.collisionMode = collider["type"];
+					objectData.collisionSize.x = collider["size"][0].get<float>();
+					objectData.collisionSize.y = collider["size"][2].get<float>();
+					objectData.collisionSize.z = collider["size"][1].get<float>();
 				}
 
 				continue;

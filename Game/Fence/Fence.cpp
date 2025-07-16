@@ -5,42 +5,38 @@
 #include "Model.h"
 #include "Object3dManager.h"
 #include "Input.h"
-Fence::~Fence()
+
+void Fence::Initialize(const Vector3& rotate, const Vector3& scale, const Vector3& translate, const std::string filename)
 {
-	SetObjectPram();
-
-}
-void Fence::Init(const Vector3& scale, const Vector3& rotate, const Vector3& translate, const std::string filename)
-{
-	floorTex_ = TextureManager::GetInstance()->StoreTexture("Resources/white.png");
-	color_ = { 1.0f,1.0f,1.0f,1.0f };
-
-	objectPram_ = Object3dManager::GetInstance()->StoreObject(filename, floorTex_, Transparency::Opaque);
-	objectPram_.lock()->worldTransform.scale_ = scale;
-	objectPram_.lock()->worldTransform.rotation_ = rotate;
-	objectPram_.lock()->worldTransform.translation_ = translate;
-	objectPram_.lock()->color = color_;
-
-
-	material_.color = { 1.0f,1.0f,1.0f,1.0f };
-	material_.enableLighting = false;
-	material_.uvTransform = MakeIdentity4x4();
-	material_.shininess = 60.0f;
-
+	// texture
+	texture_ = TextureManager::GetInstance()->StoreTexture("Resources/white.png");
+	// collider
+	colliderMode_ = CollisionMode::OBBc;
+	// 初期化
+	BaseObject::Initialize(rotate, scale, translate, filename);
+	collider_->SetCollisonAttribute(kCollisionAttributeEnemy);
+	collider_->SetCollisionMask(kCollisionAttributePlayer);
 }
 
 void Fence::Update()
 {
-	if (objectPram_.lock()) {
-		objectPram_.lock()->worldTransform.UpdateMatrix();
+	
+
+	// colliderに送る
+	if (collider_) {
+		collider_->SetWorldPosition(GetWorldPosition());
+		collider_->SetScale(GetScale());
+		collider_->SetMatWorld(objectParam_.lock()->worldTransform.matWorld_);
 	}
+	BaseObject::Update();
+	OnCollision();
+
+	/*if (isHit_) {
+		objectParam_.lock()->color.w = 0.0f;
+	}*/
 }
 
-
-
-void Fence::SetObjectPram()
+void Fence::OnCollision()
 {
-	if (auto locked = objectPram_.lock()) {  // weak_ptrからshared_ptrに変換
-		locked->isAlive = false;
-	}
+	isHit_ = collider_->OnCollision();
 }
