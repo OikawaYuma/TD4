@@ -21,7 +21,14 @@ void Car::Initialize(const Vector3& scale, const Vector3& rotate, const Vector3&
 	
 	// 慣性モーメントの初期化（仮定値、調整可能）
 	momentOfInertia_ = (1.0f / 12.0f) * mass_ * (carLength_ * carLength_ + carWidth_ * carWidth_);
-
+	// 物理設定
+	rigidBody_.worldTransform = &worldTransform_;
+	rigidBody_.mass = 1.0f;
+	rigidBody_.useGravity = true;
+	if(physicsSystem_){
+		physicsSystem_->AddObject(&rigidBody_);
+	}
+	
 }
 
 void Car::Update()

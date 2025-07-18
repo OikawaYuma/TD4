@@ -20,6 +20,8 @@ void DemoScene::Init()
 	ModelManager::GetInstance()->LoadModel("Resources/Fence", "Fence.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/box", "box.obj");
 
+	// 物理
+	physicsSystem_ = std::make_unique<PhysicsSystem>();
 
 	fade_ = std::make_unique<Fade>();
 	fade_->Init("Resources/fade.png");
@@ -134,6 +136,8 @@ void DemoScene::Update()
 	carSmoke_->Update();
 
 	wall_->Update();
+
+	physicsSystem_->Apply(1.0f / 60.0f);
 
 	Collision(); 
 }
@@ -315,6 +319,7 @@ void DemoScene::ArrageObj(std::list<std::unique_ptr<map>>& maps)
 
 			ModelManager::GetInstance()->LoadModel("Resources/carBody",   "carBody.obj");
 			car_ = std::make_unique<Car>();
+			car_->SetPhysicsSystem(physicsSystem_.get());
 			car_->Initialize(objectData.transform.scale, {
 				objectData.transform.rotate.x,
 				objectData.transform.rotate.y,
