@@ -18,6 +18,7 @@ void DemoScene::Init()
 	ModelManager::GetInstance()->LoadModel("Resources/floor", "floor.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/TenQ", "TenQ.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/Fence", "Fence.obj");
+	ModelManager::GetInstance()->LoadModel("Resources/box", "box.obj");
 
 
 	fade_ = std::make_unique<Fade>();
@@ -79,7 +80,8 @@ void DemoScene::Init()
 	postProcess_->SetCamera(followCamera_->GetCamera());
 	postProcess_->SetEffectNo(PostEffectMode::kDepthOutline);
 
-
+	wall_ = std::make_unique<Wall>();
+	wall_->Initialize({ -0.523599f ,0,0 }, { 10.0f,0.5f,10.0f }, { 0,0,20.0f }, "box");
 
 	// collisionManager
 	collisionManager_ = std::make_unique<CollisionManager>();
@@ -131,15 +133,17 @@ void DemoScene::Update()
 	fade_->UpdateFade();
 	carSmoke_->Update();
 
+	wall_->Update();
+
 	Collision(); 
 }
 void DemoScene::Draw()
 {
 
 	Object3dManager::GetInstance()->Draw(followCamera_->GetCamera());
-	for (const auto& hitBoxWire : hitBoxWires_) {
+	/*for (const auto& hitBoxWire : hitBoxWires_) {
 		hitBoxWire->Draw();
-	}
+	}*/
 	//carSmoke_->Draw();
 }
 
@@ -356,6 +360,10 @@ void DemoScene::Collision()
 	for (const auto& fence : fences_) {
 		collisionManager_->PushCollider(fence->GetCollider());
 	}
+
+	collisionManager_->PushCollider(wall_->GetCollider());
 	collisionManager_->CheckAllCollision();
+
+	
 }
 
