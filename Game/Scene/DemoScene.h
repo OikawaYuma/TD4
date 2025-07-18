@@ -27,8 +27,7 @@
 #include "Loder.h"
 #include "CarParts/CarEngine/CarGear/CarGear.h"
 #include "CarSmoke/CarSmoke.h"
-#include "CollisionType/Box/HitBoxWire.h"
-#include "CarSmoke/CarSmoke.h"	   
+#include "CollisionType/Box/HitBoxWire.h"	   
 #include "Obstacles/Wall.h"
 #include "Collision/CollisionManager.h"
 

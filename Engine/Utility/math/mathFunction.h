@@ -79,7 +79,8 @@ bool IsCollisionAABB(const Vector3& AABBPos, const Vector3& AABBMin, const Vecto
 
 // 最短角度補間
 float LerpShortAngle(float a, float b, float t);
-
+Matrix4x4 MakeRotateMatrixFromTo(const Vector3& from, const Vector3& to);
+Vector3 ExtractEulerAngles(const Matrix4x4& m);
 struct OBB {
 	Vector3 center;      // 中心座標
 	Vector3 halfSize;    // 各軸方向の半分サイズ

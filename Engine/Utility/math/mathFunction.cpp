@@ -725,6 +725,84 @@ float LerpShortAngle(float a, float b, float t)
 	return afterAngle;
 }
 
+// from, toは正規化済みベクトルを想定
+Matrix4x4 MakeRotateMatrixFromTo(const Vector3& from, const Vector3& to) {
+	Vector3 v = {
+		from.y * to.z - from.z * to.y,
+		from.z * to.x - from.x * to.z,
+		from.x * to.y - from.y * to.x
+	};
+	float s = sqrtf((1 + from.x * to.x + from.y * to.y + from.z * to.z) * 2.0f);
+	if (s < 1e-6f) {
+		// ほぼ逆向きの場合は180度回転
+		// 任意の直交ベクトルで回転
+		Vector3 ortho = { 1, 0, 0 };
+		if (fabsf(from.x) > 0.99f) ortho = { 0, 1, 0 };
+		v = {
+			from.y * ortho.z - from.z * ortho.y,
+			from.z * ortho.x - from.x * ortho.z,
+			from.x * ortho.y - from.y * ortho.x
+		};
+		float vx = v.x, vy = v.y, vz = v.z;
+		float vx2 = vx * vx, vy2 = vy * vy, vz2 = vz * vz;
+		Matrix4x4 m = {};
+		m.m[0][0] = 1 - 2 * (vy2 + vz2);
+		m.m[0][1] = 2 * (vx * vy);
+		m.m[0][2] = 2 * (vx * vz);
+		m.m[0][3] = 0;
+		m.m[1][0] = 2 * (vx * vy);
+		m.m[1][1] = 1 - 2 * (vx2 + vz2);
+		m.m[1][2] = 2 * (vy * vz);
+		m.m[1][3] = 0;
+		m.m[2][0] = 2 * (vx * vz);
+		m.m[2][1] = 2 * (vy * vz);
+		m.m[2][2] = 1 - 2 * (vx2 + vy2);
+		m.m[2][3] = 0;
+		m.m[3][0] = m.m[3][1] = m.m[3][2] = 0;
+		m.m[3][3] = 1;
+		return m;
+	}
+	float invs = 1.0f / s;
+	float vx = v.x * invs, vy = v.y * invs, vz = v.z * invs;
+	float c = (1 + from.x * to.x + from.y * to.y + from.z * to.z) * 0.5f;
+	float k = 1.0f - c;
+	Matrix4x4 m = {};
+	m.m[0][0] = c + vx * vx * k;
+	m.m[0][1] = vx * vy * k - vz * s * 0.5f;
+	m.m[0][2] = vx * vz * k + vy * s * 0.5f;
+	m.m[0][3] = 0;
+	m.m[1][0] = vy * vx * k + vz * s * 0.5f;
+	m.m[1][1] = c + vy * vy * k;
+	m.m[1][2] = vy * vz * k - vx * s * 0.5f;
+	m.m[1][3] = 0;
+	m.m[2][0] = vz * vx * k - vy * s * 0.5f;
+	m.m[2][1] = vz * vy * k + vx * s * 0.5f;
+	m.m[2][2] = c + vz * vz * k;
+	m.m[2][3] = 0;
+	m.m[3][0] = m.m[3][1] = m.m[3][2] = 0;
+	m.m[3][3] = 1;
+	return m;
+}
+
+// 回転行列からXYZ順のオイラー角を抽出
+Vector3 ExtractEulerAngles(const Matrix4x4& m) {
+	Vector3 angles;
+	// Y軸が±90度付近でGimbal Lock
+	if (fabsf(m.m[2][0]) < 1.0f - 1e-6f) {
+		angles.y = asinf(-m.m[2][0]);
+		angles.x = atan2f(m.m[2][1], m.m[2][2]);
+		angles.z = atan2f(m.m[1][0], m.m[0][0]);
+	}
+	else {
+		// Gimbal Lock
+		angles.y = asinf(-m.m[2][0]);
+		angles.x = 0;
+		angles.z = atan2f(-m.m[0][1], m.m[1][1]);
+	}
+	return angles;
+}
+
+
 // 演算子のオーバーロード
 Matrix4x4 operator*(const Matrix4x4& a, const Matrix4x4& b)
 {

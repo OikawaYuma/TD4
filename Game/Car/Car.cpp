@@ -1,5 +1,6 @@
 #include "Car.h"
 #include <ModelManager.h>
+
 void Car::Initialize(const Vector3& scale, const Vector3& rotate, const Vector3& translate, const std::string filename)
 {
 	scale;
@@ -57,6 +58,10 @@ void Car::CreateCarBody()
 	body_ = std::make_unique<CarBody>();
 	body_->Initialize({}, {}, {}, "carBody");
 	body_->SetParent(&worldTransform_);
+	body_->SetCollisionScale({ 1.7599999904632568f,
+		4.5f,
+		1.3000000715255737f });
+
 }
 
 void Car::CreateCarTire()
@@ -330,6 +335,10 @@ void Car::Brake()
 	float brakeLimitForce = mu_ * weight_; // 最大摩擦力による制動限界
 	// ブレーキ力が最大摩擦力を超えないように制限
 	brakeForce_ = std::min(brakeForce_, brakeLimitForce);
+}
+
+void Car::Drift()
+{
 }
 
 void Car::CulculateEngineTorque()
