@@ -8,7 +8,7 @@ void Car::Initialize(const Vector3& scale, const Vector3& rotate, const Vector3&
 	// 車の核となる場所を設定　各クラスに送る座標
 	worldTransform_.Initialize();
 	worldTransform_.translation_ = translate;
-	worldTransform_.translation_.y =-0.125f;
+	worldTransform_.translation_.y = 0.345f;
 	// ステアリング生成（Tireにポインタを渡す処理があるためそれより前に記述）
 	steering_ = std::make_unique<CarSteering>();
 	steering_->Init();
@@ -27,12 +27,7 @@ void Car::Initialize(const Vector3& scale, const Vector3& rotate, const Vector3&
 
 void Car::Update()
 {
-	// 車体の更新
-	body_->Update();
-	// 車輪の更新
-	for (auto& tire : tires_) {
-		tire->Update();
-	}
+	
 
 	// アクセル処理
 	Accel();
@@ -42,6 +37,12 @@ void Car::Update()
 	CulculateEngineTorque();
 	// バイシクルモデルでの車の動き
 	BicycleModel();
+	// 車体の更新
+	body_->Update();
+	// 車輪の更新
+	for (auto& tire : tires_) {
+		tire->Update();
+	}
 	// 平行影の更新
 	shadow_->Update();
 	// UIクラスから出たスピードを足す
@@ -59,8 +60,7 @@ void Car::CreateCarBody()
 	body_->Initialize({}, {}, {}, "carBody");
 	body_->SetParent(&worldTransform_);
 	body_->SetCollisionScale({ 1.7599999904632568f,
-		4.5f,
-		1.3000000715255737f });
+		1.3000000715255737f,4.5f });
 
 }
 
@@ -71,7 +71,7 @@ void Car::CreateCarTire()
 	// 左前車輪
 	std::unique_ptr<ICarTire> frontLeftTire = std::make_unique<FrontCarTire>();
 	frontLeftTire->SetCar(this);
-	frontLeftTire->Initialize({ 0.0f,0.0f,0.0f }, {}, { -0.71f,0.4f,1.31f }, "carTire");
+	frontLeftTire->Initialize({ 0.0f,0.0f,0.0f }, {}, { -0.71f,-0.0f,1.31f }, "carTire");
 	frontLeftTire->SetParent(&worldTransform_);
 	//　下記一行問題ICar参照
 	frontLeftTire->SetSteeringAngle(steering_->GetAngle());
@@ -79,7 +79,7 @@ void Car::CreateCarTire()
 	// 右前車輪
 	std::unique_ptr<ICarTire> frontRightTire = std::make_unique<FrontCarTire>();
 	frontRightTire->SetCar(this);
-	frontRightTire->Initialize({ 0.0f,0.0f,0.0f }, {}, { 0.71f,0.4f,1.31f }, "carTire");
+	frontRightTire->Initialize({ 0.0f,0.0f,0.0f }, {}, { 0.71f,-0.00f,1.31f }, "carTire");
 	frontRightTire->SetParent(&worldTransform_);
 	//　下記一行問題ICar参照
 	frontRightTire->SetSteeringAngle(steering_->GetAngle());
@@ -87,7 +87,7 @@ void Car::CreateCarTire()
 	// 左後車輪
 	std::unique_ptr<ICarTire> rearLeftTire = std::make_unique<RearCarTire>();
 	rearLeftTire->SetCar(this);
-	rearLeftTire->Initialize({ 0.0f,0.0f,0.0f }, {}, { -0.71f,0.4f,-1.31f }, "carTire");
+	rearLeftTire->Initialize({ 0.0f,0.0f,0.0f }, {}, { -0.71f,-0.00f,-1.31f }, "carTire");
 	rearLeftTire->SetParent(&worldTransform_);
 	//　下記一行問題ICar参照
 	rearLeftTire->SetSteeringAngle(steering_->GetAngle());
@@ -95,7 +95,7 @@ void Car::CreateCarTire()
 	// 左後車輪
 	std::unique_ptr<ICarTire> rearRightTire = std::make_unique<RearCarTire>();
 	rearRightTire->SetCar(this);
-	rearRightTire->Initialize({ 0.0f,0.0f,0.0f }, {}, { 0.71f,0.4f,-1.31f }, "carTire");
+	rearRightTire->Initialize({ 0.0f,0.0f,0.0f }, {}, { 0.71f,-0.00f,-1.31f }, "carTire");
 	rearRightTire->SetParent(&worldTransform_);
 	//　下記一行問題ICar参照
 	rearRightTire->SetSteeringAngle(steering_->GetAngle());

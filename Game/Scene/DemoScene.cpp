@@ -52,17 +52,17 @@ void DemoScene::Init()
 
 	carGear_ = std::make_unique<Gear>();
 	carGear_->Initialize();
-	
+
 	sprite_->SetTexture(spTx_);
 	camera_ = std::make_unique<Camera>();
 	camera_->Initialize();
-	levelData_ = Loder::LoadJsonFile("Resources/json","map");
+	levelData_ = Loder::LoadJsonFile("Resources/json", "map");
 	GlobalVariables::GetInstance()->LoadFiles();
 	followCamera_ = std::make_unique<FollowCamera>();
 	followCamera_->Init();
 	ArrageObj(maps_);
 
-	
+
 
 	carSmoke_ = std::make_unique<CarSmoke>();
 	carSmoke_->SetCamera(followCamera_->GetCamera());
@@ -122,10 +122,14 @@ void DemoScene::Update()
 	}
 	car_->Update();
 	//particle_->CreateParticle();
+
 	Object3dManager::GetInstance()->Update();
+	for (std::list<std::unique_ptr<HitBoxWire>>::iterator itr = hitBoxWires_.begin(); itr != hitBoxWires_.end(); itr++) {
+		(*itr)->Update();
+	}
 	LineManager::GetInstance()->Update();
 	postProcess_->Update();
-	
+
 
 	sprite_->Update();
 	carGear_->Update();
@@ -138,7 +142,7 @@ void DemoScene::Update()
 	fade_->UpdateFade();
 	carSmoke_->Update();
 
-	Collision(); 
+	Collision();
 }
 void DemoScene::Draw()
 {
@@ -151,7 +155,7 @@ void DemoScene::Draw()
 void DemoScene::PostDraw()
 {
 	postProcess_->Draw();
-	
+
 }
 
 void DemoScene::Draw2d()
@@ -279,7 +283,7 @@ void DemoScene::PostEffectChange()
 
 void DemoScene::DepthOutlinePramChange()
 {
-	if(followCamera_->IsFirstPerson()){
+	if (followCamera_->IsFirstPerson()) {
 		depthOutlineInfo_.farClip = 35.0f;
 		depthOutlineInfo_.diffSize = { 0.0f,1.0f };
 		postProcess_->SetDepthOutlineInfo(depthOutlineInfo_);
@@ -289,7 +293,7 @@ void DemoScene::DepthOutlinePramChange()
 		depthOutlineInfo_.diffSize = { 0.0f,1.0f };
 		postProcess_->SetDepthOutlineInfo(depthOutlineInfo_);
 	}
-	
+
 }
 
 void DemoScene::ParticleEmitter()
@@ -306,7 +310,7 @@ void DemoScene::ArrageObj(std::list<std::unique_ptr<map>>& maps)
 			ModelManager::GetInstance()->LoadModel("Resources/" + objectData.filename, objectData.filename + ".obj");
 			std::unique_ptr<map> enemy = std::make_unique<map>();
 			enemy->Init(objectData.transform.scale, {
-				objectData.transform.rotate .x,
+				objectData.transform.rotate.x,
 				objectData.transform.rotate.y,
 				objectData.transform.rotate.z
 				}, objectData.transform.translate, objectData.filename);
@@ -314,26 +318,31 @@ void DemoScene::ArrageObj(std::list<std::unique_ptr<map>>& maps)
 		}
 		if (objectData.filename.compare("car") == 0) {
 
-			ModelManager::GetInstance()->LoadModel("Resources/carBody",   "carBody.obj");
+			ModelManager::GetInstance()->LoadModel("Resources/carBody", "carBody.obj");
 			car_ = std::make_unique<Car>();
 			car_->Initialize(objectData.transform.scale, {
 				objectData.transform.rotate.x,
 				objectData.transform.rotate.y,
 				objectData.transform.rotate.z
 				}, objectData.transform.translate, "carBody");
+
+			std::unique_ptr<HitBoxWire> hitBoxWire = std::make_unique<HitBoxWire>();
+			Vector3 rotateVec = { objectData.transform.rotate.x, objectData.transform.rotate.y, objectData.transform.rotate.z };
+			Vector3 collisionSize = { 1.7599999904632568f,  1.3000000715255737f,4.5f };
+			hitBoxWire->Init(collisionSize, rotateVec, {0.0f,0.335f,0.0f});
+			hitBoxWire->SetWorldTransformParent(car_->GetWorldTransform());
+			hitBoxWires_.push_back(std::move(hitBoxWire));
+
 		}
 		if (objectData.filename.compare("Fence") == 0) {
 
 			ModelManager::GetInstance()->LoadModel("Resources/" + objectData.filename, objectData.filename + ".obj");
 			std::unique_ptr<Fence> fence = std::make_unique<Fence>();
-			fence->Initialize(objectData.transform.rotate / 180, 
+			fence->Initialize(objectData.transform.rotate / 180,
 				objectData.transform.scale
 				, objectData.transform.translate, objectData.filename);
-			fence->SetCollisionScale(objectData.collisionSize);
+			fence->SetCollisionScale(objectData.collisionSize + 2);
 			std::unique_ptr<HitBoxWire> hitBoxWire = std::make_unique<HitBoxWire>();
-		/*	hitBoxWire->Init(objectData.collisionSize,
-				{objectData.transform.rotate.x ,objectData.transform.rotate.y, objectData.transform.rotate.z }
-			, objectData.transform.translate);*/
 			fences_.push_back(std::move(fence));
 		}
 		if (objectData.filename.compare("guardrail") == 0) {
@@ -347,8 +356,10 @@ void DemoScene::ArrageObj(std::list<std::unique_ptr<map>>& maps)
 			fence->SetCollisionScale(objectData.collisionSize);
 			std::unique_ptr<HitBoxWire> hitBoxWire = std::make_unique<HitBoxWire>();
 			Vector3 rotateVec = { objectData.transform.rotate.x + 3.1415f / 2 , objectData.transform.rotate.y, objectData.transform.rotate.z };
-			hitBoxWire->Init(objectData.collisionSize, rotateVec, objectData.transform.translate);
+			Vector3 collisionSize = objectData.collisionSize;
+			hitBoxWire->Init(collisionSize, rotateVec, objectData.transform.translate);
 			fences_.push_back(std::move(fence));
+			hitBoxWires_.push_back(std::move(hitBoxWire));
 		}
 	}
 }

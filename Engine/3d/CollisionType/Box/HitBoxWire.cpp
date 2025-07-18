@@ -8,6 +8,7 @@ void HitBoxWire::Init(Vector3& scale, Vector3& rotate, Vector3 translate) {
     worldTransform_.scale_ = scale;
     worldTransform_.rotation_ = rotate;
 	worldTransform_.translation_ = translate;
+
 	worldTransform_.UpdateMatrix();
 
     // 登録
@@ -127,7 +128,12 @@ void HitBoxWire::Init(Vector3& scale, Vector3& rotate, Vector3 translate) {
 }
 
 void HitBoxWire::Update() {
-
+    worldTransform_.UpdateMatrix();
+    for (auto& lineParam : lineParams_) {
+        if (auto lp = lineParam.lock()) {
+            lp->worldTransform.UpdateMatrix();
+        }
+	}
 }
 
 
