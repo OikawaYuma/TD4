@@ -3,7 +3,7 @@
 #include "SRVManager.h"
 #include "TextureManager.h"
 #include "PSO/PSOLine.h"
-void Line::Initialize(Vector3 startPos, Vector3 endPos) {
+void Line::Initialize() {
 
 	sDirectXCommon_ = DirectXCommon::GetInstance();
 	//バッファリソース
@@ -19,20 +19,20 @@ void Line::Initialize(Vector3 startPos, Vector3 endPos) {
 	// 書き込むためのアドレスを取得
 	vertexResource->Map(0, nullptr, reinterpret_cast<void**>(&vertexData_));
 
-	//左下
-	vertexData_[0].position = { startPos.x,startPos.y,startPos.z,1.0f };
+	//左
+	vertexData_[0].position = { 0.0f,0.0f,0.0f,1.0f };
 	vertexData_[0].normal = {
 		vertexData_[0].position.x,
 		vertexData_[0].position.y,
 		vertexData_[0].position.z };
 	vertexData_[0].texcorrd = { 0.0f,1.0f };
 	//上
-	vertexData_[1].position = { endPos.x,endPos.y,endPos.z,1.0f };
+	vertexData_[1].position = { 0.0f, 0.0f, 1.0f ,1.0f };
 	vertexData_[1].normal = {
 		vertexData_[1].position.x,
 		vertexData_[1].position.y,
 		vertexData_[1].position.z };
-	vertexData_[1].texcorrd = { 0.5f,0.0f };
+	vertexData_[1].texcorrd = { 1.0f,1.0f };
 	
 
 	// 実際に頂点リソースを作る
@@ -61,12 +61,12 @@ void Line::Initialize(Vector3 startPos, Vector3 endPos) {
 
 	// instancing
 	// Sprite用のTransformationMatrix用のリソースを作る。Matrix4x4 1つ分のサイズを用意する
-	lineData_.instancingResource = Mesh::CreateBufferResource(sDirectXCommon_->GetDevice(), sizeof(LineForGPU));
+	lineData_.instancingResource = Mesh::CreateBufferResource(sDirectXCommon_->GetDevice(), sizeof(LineForGPU) * kNumMaxInstance_);
 	// 書き込むためのアドレスを取得
 	lineData_.instancingResource->Map(0, nullptr, reinterpret_cast<void**>(&instancingData_));
 	// 単位行列を書き込んでおく
 	SRVIndex_ = SRVManager::Allocate();
-	SRVManager::CreateSRVforStructuredBuffer(SRVIndex_, lineData_.instancingResource.Get(), 1, sizeof(LineForGPU));
+	SRVManager::CreateSRVforStructuredBuffer(SRVIndex_, lineData_.instancingResource.Get(), kNumMaxInstance_, sizeof(LineForGPU ));
 	lineData_.instancingSrvHandleCPU = SRVManager::GetCPUDescriptorHandle(SRVIndex_);
 	lineData_.instancingSrvHandleGPU = SRVManager::GetGPUDescriptorHandle(SRVIndex_);
 	//for (uint32_t index = 0; index < kNumMaxInstance_; ++index) {
@@ -78,6 +78,22 @@ void Line::Initialize(Vector3 startPos, Vector3 endPos) {
 };
 
 void Line::Update() {
+	numInstance_ = 0;
+	for (std::list<std::shared_ptr<LineParam>>::iterator objectPtamIterator = lineParams_.begin(); objectPtamIterator != lineParams_.end();) {
+		if ((*objectPtamIterator)->isAlive == false) {
+			objectPtamIterator = lineParams_.erase(objectPtamIterator);
+			continue;
+		}
+		// インスタンス数が最大数を超えないようにする
+		if (numInstance_ < kNumMaxInstance_) {
+			instancingData_[numInstance_].World = (*objectPtamIterator)->worldTransform.matWorld_;
+			instancingData_[numInstance_].WVP = instancingData_[numInstance_].World;
+			instancingData_[numInstance_].WorldInverseTranspose = MakeIdentity4x4();
+			instancingData_[numInstance_].color = (*objectPtamIterator)->color;
+		}
+		numInstance_++;
+		++objectPtamIterator;
+	}
 };
 
 
@@ -85,12 +101,26 @@ void Line::Draw(Camera* camera) {
 	PSOLine* pso = PSOLine::GatInstance();
 
 	camera_ = camera;
-	Matrix4x4 worldViewProjectionMatrix = Multiply(worldTransform_.matWorld_, camera->GetViewprojectionMatrix());
+	//Matrix4x4 worldViewProjectionMatrix = Multiply(worldTransform_.matWorld_, camera->GetViewprojectionMatrix());
 
-	instancingData_[0].WVP = worldViewProjectionMatrix;
-	instancingData_[0].World = MakeIdentity4x4();
-	instancingData_[0].WorldInverseTranspose = MakeIdentity4x4();
-	instancingData_[0].color = { 1.0f,1.0f,1.0f,1.0f };
+	numInstance_ = 0;
+	for (std::list<std::shared_ptr<LineParam>>::iterator objectPtamIterator = lineParams_.begin(); objectPtamIterator != lineParams_.end();) {
+		if ((*objectPtamIterator)->isAlive == false) {
+			objectPtamIterator = lineParams_.erase(objectPtamIterator);
+			continue;
+		}
+		if (numInstance_ < kNumMaxInstance_) {
+			instancingData_[numInstance_].World = (*objectPtamIterator)->worldTransform.matWorld_;
+			instancingData_[numInstance_].WVP = Multiply(instancingData_[numInstance_].World, camera->GetViewprojectionMatrix());;
+			instancingData_[numInstance_].WorldInverseTranspose = Inverse(Transpose((*objectPtamIterator)->worldTransform.matWorld_));
+			instancingData_[numInstance_].color = (*objectPtamIterator)->color;
+			instancingData_[numInstance_].color.w = 1.0f;
+		}
+		numInstance_++;
+		++objectPtamIterator;
+	}
+
+
 	// 色のデータを変数から読み込み
 	// RootSignatureを設定。PSOに設定しているけど別途設定が必要
 	sDirectXCommon_->GetCommandList()->SetGraphicsRootSignature(pso->GetProperty().rootSignature.Get());
@@ -105,7 +135,7 @@ void Line::Draw(Camera* camera) {
 	// SRV のDescriptorTableの先頭を設定。2はrootParameter[2]である。
 	sDirectXCommon_->GetCommandList()->SetGraphicsRootDescriptorTable(2, SRVManager::GetGPUDescriptorHandle(TextureManager::GetInstance()->StoreTexture("Resources/kusa2.png")));
 	// 描画！（DrawCall/ドローコール）・3頂点で1つのインスタンス。インスタンスについては今後
-	sDirectXCommon_->GetCommandList()->DrawInstanced(2, 1, 0, 0);
+	sDirectXCommon_->GetCommandList()->DrawIndexedInstanced(2, numInstance_, 0, 0,0);
 };
 
 D3D12_VERTEX_BUFFER_VIEW Line::CreateBufferView() {
@@ -120,4 +150,14 @@ D3D12_VERTEX_BUFFER_VIEW Line::CreateBufferView() {
 
 
 	return view;
+}
+D3D12_RESOURCE_DESC Line::CreateBufferResourceDesc(size_t sizeInBytes)
+{
+	sizeInBytes;
+	return D3D12_RESOURCE_DESC();
 };
+
+
+void Line::AddListPram(std::shared_ptr<LineParam > LineParam) {
+	lineParams_.push_back(LineParam);
+}

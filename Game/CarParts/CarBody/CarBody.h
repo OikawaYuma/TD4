@@ -37,6 +37,7 @@ public:
 #pragma region setter
 
 	void SetParent(WorldTransform* worldTransform);
+	void SetCollisionScale(const Vector3& scale) { collisionScale_ = scale; }
 #pragma endregion
 
 #pragma region getter
@@ -61,4 +62,5 @@ private:
 	bool isHit_ = false;
 	Vector3 penetration_{}; // めり込み量
 	Vector3 normal_{};
+	Vector3 collisionScale_{ 1.0f, 1.0f, 1.0f }; // 衝突判定のスケール
 };

@@ -2,6 +2,7 @@
 #include "ImGuiCommon.h"
 #include "TextureManager.h"
 #include "ModelManager.h"
+#include "Line/LineManager.h"
 #include "IPostEffectState.h"
 #include "Loder.h"
 #include<stdio.h>
@@ -12,12 +13,14 @@
 void DemoScene::Init()
 {
 	Object3dManager::GetInstance()->Init();
+	LineManager::GetInstance()->Init();
 	ModelManager::GetInstance()->LoadModel("Resources/worldDesign", "worldDesign.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/map", "IROHAmap2.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/ball", "ball.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/floor", "floor.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/TenQ", "TenQ.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/Fence", "Fence.obj");
+	ModelManager::GetInstance()->LoadModel("Resources/road2", "road2.obj");
 
 
 	fade_ = std::make_unique<Fade>();
@@ -29,15 +32,18 @@ void DemoScene::Init()
 	sprite_ = std::make_unique<Sprite>();
 	sprite_->Init("Resources/load.png");
 	sprite_->SetTexture(TextureManager::GetInstance()->StoreTexture("Resources/load.png"));
-  
-	std::weak_ptr<ObjectPram> objectpram = Object3dManager::GetInstance()->StoreObject("TenQ", TextureManager::GetInstance()->StoreTexture("Resources/TenQ/TenQ.png"), 0);
-	if (objectpram.lock()) {
-		objectpram.lock()->worldTransform.translation_ = { 0.0f,-1000000.0f,0.0f };
-		objectpram.lock()->worldTransform.scale_ = { -100000.0f,100000.0f,100000.0f };
-		objectpram.lock()->worldTransform.UpdateMatrix();
+	{
+		std::weak_ptr<ObjectPram> objectpram = Object3dManager::GetInstance()->StoreObject("TenQ", TextureManager::GetInstance()->StoreTexture("Resources/TenQ/TenQ.png"), 0);
+		if (objectpram.lock()) {
+			objectpram.lock()->worldTransform.translation_ = { 0.0f,-1000000.0f,0.0f };
+			objectpram.lock()->worldTransform.scale_ = { -100000.0f,100000.0f,100000.0f };
+			objectpram.lock()->worldTransform.UpdateMatrix();
+		}
 	}
 	Object3dManager::GetInstance()->StoreObject("floor", TextureManager::GetInstance()->StoreTexture("Resources/kusa2.png"), 0);
 	Object3dManager::GetInstance()->StoreObject("map1", TextureManager::GetInstance()->StoreTexture("Resources/load4.png"), 0);
+	Object3dManager::GetInstance()->StoreObject("road2", TextureManager::GetInstance()->StoreTexture("Resources/load4.png"), 0);
+
 	worldTransform_.Initialize();
 
 	ui_ = std::make_unique<UI>();
@@ -117,6 +123,7 @@ void DemoScene::Update()
 	car_->Update();
 	//particle_->CreateParticle();
 	Object3dManager::GetInstance()->Update();
+	LineManager::GetInstance()->Update();
 	postProcess_->Update();
 	
 
@@ -137,9 +144,7 @@ void DemoScene::Draw()
 {
 
 	Object3dManager::GetInstance()->Draw(followCamera_->GetCamera());
-	for (const auto& hitBoxWire : hitBoxWires_) {
-		hitBoxWire->Draw();
-	}
+	LineManager::GetInstance()->Draw(followCamera_->GetCamera());
 	//carSmoke_->Draw();
 }
 
@@ -326,23 +331,23 @@ void DemoScene::ArrageObj(std::list<std::unique_ptr<map>>& maps)
 				, objectData.transform.translate, objectData.filename);
 			fence->SetCollisionScale(objectData.collisionSize);
 			std::unique_ptr<HitBoxWire> hitBoxWire = std::make_unique<HitBoxWire>();
-			hitBoxWire->Init(objectData.collisionSize,objectData.transform.translate);
-			hitBoxWire->SetCamera(followCamera_->GetCamera());
-			hitBoxWires_.push_back(std::move(hitBoxWire));
+		/*	hitBoxWire->Init(objectData.collisionSize,
+				{objectData.transform.rotate.x ,objectData.transform.rotate.y, objectData.transform.rotate.z }
+			, objectData.transform.translate);*/
 			fences_.push_back(std::move(fence));
 		}
 		if (objectData.filename.compare("guardrail") == 0) {
 
 			ModelManager::GetInstance()->LoadModel("Resources/" + objectData.filename, objectData.filename + ".obj");
 			std::unique_ptr<Fence> fence = std::make_unique<Fence>();
-			fence->Initialize({ (objectData.transform.rotate.x + (3.1415f /2)),(objectData.transform.rotate.y),(objectData.transform.rotate.z) },
+
+			fence->Initialize({ (objectData.transform.rotate.x + 3.1415f / 2),(objectData.transform.rotate.y),(objectData.transform.rotate.z) },
 				objectData.transform.scale
 				, objectData.transform.translate, objectData.filename);
 			fence->SetCollisionScale(objectData.collisionSize);
 			std::unique_ptr<HitBoxWire> hitBoxWire = std::make_unique<HitBoxWire>();
-			hitBoxWire->Init(objectData.collisionSize,objectData.transform.translate);
-			hitBoxWire->SetCamera(followCamera_->GetCamera());
-			hitBoxWires_.push_back(std::move(hitBoxWire));
+			Vector3 rotateVec = { objectData.transform.rotate.x + 3.1415f / 2 , objectData.transform.rotate.y, objectData.transform.rotate.z };
+			hitBoxWire->Init(objectData.collisionSize, rotateVec, objectData.transform.translate);
 			fences_.push_back(std::move(fence));
 		}
 	}

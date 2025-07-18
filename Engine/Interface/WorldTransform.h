@@ -55,4 +55,8 @@ struct WorldTransform {
 	/// 行列を計算・転送する
 	/// </summary>
 	void UpdateMatrix();
+	/// <summary>
+	/// MatrixからSRTに変換
+	/// </summary>
+	void TransferMatrixToSRT();
 };
