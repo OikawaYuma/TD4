@@ -64,7 +64,7 @@ void FollowCamera::Upadate()
 	
         // 一人称視点
         Vector3 eye = target_->translation_;
-        eye.y += 1.0f;
+        eye.y += (1.0f - 0.44f);
         // 長方形の半分の長さ（前方オフセット）
         float halfLength = -0.25f;
         eye.x += std::sin(target_->rotation_.y) * halfLength;

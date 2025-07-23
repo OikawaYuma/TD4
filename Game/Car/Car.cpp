@@ -59,8 +59,8 @@ void Car::CreateCarBody()
 	body_ = std::make_unique<CarBody>();
 	body_->Initialize({}, {}, {}, "carBody");
 	body_->SetParent(&worldTransform_);
-	body_->SetCollisionScale({ 1.7599999904632568f,
-		1.3000000715255737f,4.5f });
+	body_->SetCollisionScale({ 0.88f,
+		0.69f,2.3f });
 
 }
 
