@@ -129,11 +129,7 @@ void Line::Draw(Camera* camera) {
 	//形状を設定。PSOに設定しているものとはまた別。同じものを設定すると考えておけば良い
 	sDirectXCommon_->GetCommandList()->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_LINELIST);
 	// マテリアルCBufferの場所を設定
-	sDirectXCommon_->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResource->GetGPUVirtualAddress());
-	sDirectXCommon_->GetCommandList()->SetGraphicsRootDescriptorTable(1, lineData_.instancingSrvHandleGPU);
-
-	// SRV のDescriptorTableの先頭を設定。2はrootParameter[2]である。
-	sDirectXCommon_->GetCommandList()->SetGraphicsRootDescriptorTable(2, SRVManager::GetGPUDescriptorHandle(TextureManager::GetInstance()->StoreTexture("Resources/kusa2.png")));
+	sDirectXCommon_->GetCommandList()->SetGraphicsRootDescriptorTable(0, lineData_.instancingSrvHandleGPU);
 	// 描画！（DrawCall/ドローコール）・3頂点で1つのインスタンス。インスタンスについては今後
 	sDirectXCommon_->GetCommandList()->DrawIndexedInstanced(2, numInstance_, 0, 0,0);
 };
