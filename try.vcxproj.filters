@@ -328,7 +328,6 @@
     <ClCompile Include="Engine\3d\CollisionType\Box\HitBoxWire.cpp" />
     <ClCompile Include="Game\Fence\Fence.cpp" />
     <ClCompile Include="Game\Obstacles\Wall.cpp" />
-    <ClCompile Include="Engine\3d\CollisionType\LineColliderManager.cpp" />
     <ClCompile Include="Engine\3d\Line\LineManager.cpp" />
     <ClCompile Include="Game\PhysicsSystem\PhysicsSystem.cpp" />
   </ItemGroup>
@@ -606,7 +605,6 @@
     <ClInclude Include="Engine\3d\CollisionType\Box\HitBoxWire.h" />
     <ClInclude Include="Game\Fence\Fence.h" />
     <ClInclude Include="Game\Obstacles\Wall.h" />
-    <ClInclude Include="Engine\3d\CollisionType\LineColliderManager.h" />
     <ClInclude Include="Engine\3d\Line\LineManager.h" />
     <ClInclude Include="Game\PhysicsSystem\PhysicsSystem.h" />
   </ItemGroup>

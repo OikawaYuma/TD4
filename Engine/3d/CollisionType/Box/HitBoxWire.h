@@ -3,6 +3,8 @@
 #include <vector>
 #include "WorldTransform.h"
 #include "Line/Line.h"
+#include <cmath>
+
 
 // object1個分のデータ
 struct WireObject3dData {
@@ -22,27 +24,20 @@ struct WireObjectPram {
 class HitBoxWire
 {
 public:
-	void Init(Vector3& scale,Vector3 translate);
+	void Init(Vector3& scale, Vector3& rotate ,Vector3 translate);
 	void Update();
-	void Draw();
 	void Release();
 
 public:
-	void SetCamera(Camera* camera) { camera_ = camera; }
 	void SetWorldTransformParent(const WorldTransform* worldTransform) { worldTransform_.parent_ = worldTransform; }
 
 public: // Getter
 
 	std::string GetObjectName() { return wireObject3dData_.objectName; }
 
-public:
-	void AddListPram(std::shared_ptr<WireObjectPram > objectParm);
-
 private:
 	WorldTransform worldTransform_;
-	std::vector<std::unique_ptr<Line>> lines_;
-	Camera* camera_ = nullptr;
-
+	std::list<std::weak_ptr<LineParam>> lineParams_;
 	// object1個分のデータ
 	WireObject3dData wireObject3dData_;
 };

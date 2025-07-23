@@ -57,7 +57,7 @@ class Line
 {
 public:
 
-	void Initialize(Vector3 startPos, Vector3 endPos);
+	void Initialize();
 	void Update();
 	void Draw(Camera* camera);
 	void Release();
@@ -69,6 +69,8 @@ public:
 	void SetColor(Vector4 color) {
 		materialData->color = color;
 	}
+
+	void AddListPram(std::shared_ptr<LineParam > LineParam);
 private:
 
 	HRESULT hr;
@@ -80,7 +82,9 @@ private:
 	// 頂点リソースにデータを書き込む
 	VertexData* vertexData_;
 
-
+	std::list<std::shared_ptr<LineParam>> lineParams_;
+	uint32_t numInstance_ = 0; // インスタンス数
+	uint32_t kNumMaxInstance_ = 1000000; // インスタンス数
 	/*色用*/
 	//頂点リソースの設定
 	// 実際に頂点リソースを作る

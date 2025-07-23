@@ -25,7 +25,7 @@ void Fence::Update()
 	// colliderに送る
 	if (collider_) {
 		collider_->SetWorldPosition(GetWorldPosition());
-		collider_->SetScale(GetScale());
+		collider_->SetScale(collisionScale_);
 		collider_->SetMatWorld(objectParam_.lock()->worldTransform.matWorld_);
 	}
 	BaseObject::Update();

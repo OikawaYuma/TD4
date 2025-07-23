@@ -83,8 +83,8 @@ LevelData Loder::LoadJsonFile(const std::string kDefaultBaseDirectory, const std
 				
 					objectData.collisionMode = collider["type"];
 					objectData.collisionSize.x = collider["size"][0].get<float>();
-					objectData.collisionSize.y = collider["size"][2].get<float>();
-					objectData.collisionSize.z = collider["size"][1].get<float>();
+					objectData.collisionSize.y = collider["size"][1].get<float>();
+					objectData.collisionSize.z = collider["size"][2].get<float>();
 				}
 
 				continue;
