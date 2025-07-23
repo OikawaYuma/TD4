@@ -137,7 +137,7 @@ void DemoScene::Update()
 
 	wall_->Update();
 
-	physicsSystem_->Apply(1.0f / 60.0f);
+	//physicsSystem_->Apply(1.0f / 60.0f);
 
 	Collision(); 
 }
