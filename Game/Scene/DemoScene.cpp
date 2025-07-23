@@ -20,8 +20,11 @@ void DemoScene::Init()
 	ModelManager::GetInstance()->LoadModel("Resources/floor", "floor.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/TenQ", "TenQ.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/Fence", "Fence.obj");
+	ModelManager::GetInstance()->LoadModel("Resources/box", "box.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/road2", "road2.obj");
 
+	// 物理
+	physicsSystem_ = std::make_unique<PhysicsSystem>();
 
 	fade_ = std::make_unique<Fade>();
 	fade_->Init("Resources/fade.png");
@@ -85,7 +88,8 @@ void DemoScene::Init()
 	postProcess_->SetCamera(followCamera_->GetCamera());
 	postProcess_->SetEffectNo(PostEffectMode::kDepthOutline);
 
-
+	wall_ = std::make_unique<Wall>();
+	wall_->Initialize({ -0.523599f ,0,0 }, { 10.0f,0.5f,10.0f }, { 0,0,20.0f }, "box");
 
 	// collisionManager
 	collisionManager_ = std::make_unique<CollisionManager>();
@@ -142,7 +146,11 @@ void DemoScene::Update()
 	fade_->UpdateFade();
 	carSmoke_->Update();
 
-	Collision();
+	wall_->Update();
+
+	//physicsSystem_->Apply(1.0f / 60.0f);
+
+	Collision(); 
 }
 void DemoScene::Draw()
 {
@@ -320,6 +328,7 @@ void DemoScene::ArrageObj(std::list<std::unique_ptr<map>>& maps)
 
 			ModelManager::GetInstance()->LoadModel("Resources/carBody", "carBody.obj");
 			car_ = std::make_unique<Car>();
+			car_->SetPhysicsSystem(physicsSystem_.get());
 			car_->Initialize(objectData.transform.scale, {
 				objectData.transform.rotate.x,
 				objectData.transform.rotate.y,
@@ -372,6 +381,10 @@ void DemoScene::Collision()
 	for (const auto& fence : fences_) {
 		collisionManager_->PushCollider(fence->GetCollider());
 	}
+
+	collisionManager_->PushCollider(wall_->GetCollider());
 	collisionManager_->CheckAllCollision();
+
+	
 }
 

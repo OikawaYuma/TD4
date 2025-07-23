@@ -30,6 +30,7 @@
 #include "CollisionType/Box/HitBoxWire.h"	   
 #include "Obstacles/Wall.h"
 #include "Collision/CollisionManager.h"
+#include "PhysicsSystem/PhysicsSystem.h"
 
 class DemoScene : public IScene
 {
@@ -100,5 +101,7 @@ private:
 	std::unique_ptr<Wall> wall_;
 	// collisionManager
 	std::unique_ptr<CollisionManager> collisionManager_;
+	// 自然法則とかの計算クラス
+	std::unique_ptr<PhysicsSystem> physicsSystem_;
 };
 

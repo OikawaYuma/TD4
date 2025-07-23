@@ -22,7 +22,14 @@ void Car::Initialize(const Vector3& scale, const Vector3& rotate, const Vector3&
 	
 	// 慣性モーメントの初期化（仮定値、調整可能）
 	momentOfInertia_ = (1.0f / 12.0f) * mass_ * (carLength_ * carLength_ + carWidth_ * carWidth_);
-
+	// 物理設定
+	rigidBody_.worldTransform = &worldTransform_;
+	rigidBody_.mass = 1.0f;
+	rigidBody_.useGravity = true;
+	if(physicsSystem_){
+		physicsSystem_->AddObject(&rigidBody_);
+	}
+	
 }
 
 void Car::Update()
@@ -265,18 +272,18 @@ void Car::BicycleModel()
 
 		// Slideで移動方向を補正
 		// なんか知らんけどベクトルが二次元だから無理やり入れます
-		Vector3 vector3 = { velocityVec_.x,0.0f,velocityVec_.y };
-		Vector3 slidVelocity = body_->Slide(deltaTime_ * vector3, normal);
+		Vector3 move = { velocityVec_.x,0.0f,velocityVec_.y };
+		Vector3 slidVelocity = body_->Slide(deltaTime_ * move, normal);
 		// スライドベクトルの長さを制限
 		float slidLen = Length(slidVelocity);
-		float veloLen = Length(deltaTime_ * vector3);
+		float veloLen = Length(deltaTime_ * move);
 		if (slidLen > veloLen) {
-			slidVelocity = Normalize(slidVelocity) + deltaTime_ * vector3;
+			slidVelocity = Normalize(slidVelocity) + deltaTime_ * move;
 		}
 		worldTransform_.translation_ = worldTransform_.translation_ + slidVelocity;
 
 		// 速度減衰を強める
-		float dot = Dot(deltaTime_ * vector3, normal);
+		float dot = Dot(deltaTime_ * move, normal);
 		if (dot > 0.0f) {
 			speed_ *= (1.0f - dot * 0.8f); // 減衰を強める
 			//if (speed_ < 0.5f) speed_ = 0.0f;

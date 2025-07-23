@@ -7,6 +7,8 @@
 #include "CarParts/CarTire/RearCarTire/RearCarTire.h"
 #include <vector>
 #include "PlaneProjectionShadow.h"
+#include "PhysicsSystem/PhysicsSystem.h"
+
 class Car
 {
 public:
@@ -25,6 +27,8 @@ public: //Getter
 	WorldTransform* GetWorldTransform() { return &worldTransform_; }
 	float* GetSpeed() { return &speed_; }
 	Collider* GetBodyCollider() {return  body_->GetCollider(); }
+public: // setter
+	void SetPhysicsSystem(PhysicsSystem* ptr) { physicsSystem_ = ptr; }
 
 private: // 生成処理
 
@@ -75,7 +79,8 @@ private: // 外部情報　本来はここに書くべきではない
 private:
 	WorldTransform worldTransform_{};
 	std::vector<std::unique_ptr<BaseObject>> parts_;
-
+	PhysicsSystem* physicsSystem_ = nullptr;
+	RigidBody rigidBody_{};
 	// 車体
 	std::unique_ptr<CarBody> body_;
 	// 車輪
