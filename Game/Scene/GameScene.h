@@ -5,29 +5,33 @@
 */
 
 #pragma once
-#include "IScene.h"
-#include "PostProcess.h"
-#include "CollisionManager.h"	
-#include <vector>
 #include <memory>
+#include "IScene.h"
+#include "Triangle.h"
+#include "WorldTransform.h"
+#include "Input.h"
+#include "Particle.h"
+#include <list>
+#include "Sprite.h"
+#include "Object3d.h"
+#include "Model.h"
+#include "PostProcess.h"
+#include "Skybox/Skybox.h"
+#include "Skydome/SkyDome.h"
 #include "WorldDesign/WorldDesign.h"
-#include "Skydome/Skydome.h"
 #include "GameCamera/FollowCamera/FollowCamera.h"
-#include "Camera.h"
-#include "Score/Score.h"
-#include "GameTimer/GameTimer.h"
-/*--------------------------------------------
-ゲームのスタート演出のための待ちを管理するためのenum
----------------------------------------------*/
-enum GameState {
-	WAITGAME,
-	STARTGAME,
-	PLAYGAME,
-	CLEARGAME,
-	DEADGAME,
-	POSEMENUGAME,
-	TITLEGAME,
-};
+#include "map/map.h"
+#include <UI/UI.h>
+#include "Car/Car.h"
+#include "Fade/Fade.h"
+#include "Fence/Fence.h"
+#include "Loder.h"
+#include "CarParts/CarEngine/CarGear/CarGear.h"
+#include "CarSmoke/CarSmoke.h"
+#include "CollisionType/Box/HitBoxWire.h"	   
+#include "Obstacles/Wall.h"
+#include "Collision/CollisionManager.h"
+#include "PhysicsSystem/PhysicsSystem.h"
 
 
 class GameScene :public IScene
@@ -43,9 +47,63 @@ public:
 	void DeleteObject();
 
 public:
+	void PostEffectChange();
+
+	void DepthOutlinePramChange();
+
+	void ParticleEmitter();
+
+	void ArrageObj(std::list<std::unique_ptr<map>>& maps);
 
 private:
-	// ポストエフェクト
-	PostProcess* postProcess_ = nullptr;
+
+	void Collision();
+
+private:
+
+
+	std::unique_ptr<FollowCamera> followCamera_;
+	std::unique_ptr<PostProcess> postProcess_;
+	// Clearシーン用Camera
+	std::unique_ptr<Camera> camera_ = nullptr;
+	Vector3 hsv = { 1.0f,1.0f,1.0f };
+
+	// 背景オブジェクト
+	std::list<std::unique_ptr<map>> maps_;
+	// HitBoxWireのリスト
+	std::list<std::unique_ptr<HitBoxWire>> hitBoxWires_;
+	// HitBoxWireのリスト
+	std::list<std::unique_ptr<Fence>> fences_;
+	// Carオブジェクト
+	std::unique_ptr<Car> car_;
+	// Skyboxオブジェクト
+	std::unique_ptr<Skydome> skydome_;
+	// 背景オブジェクト
+	std::unique_ptr<Particle> particle_;
+	Emitter emitter_{};
+	RandRangePro randRangePro_{};
+	std::unique_ptr<Fade> fade_;
+	std::unique_ptr<CarSmoke> carSmoke_;
+	// Sprite
+	std::unique_ptr<Sprite> sprite_;
+	std::unique_ptr<UI> ui_;
+	uint32_t spTx_ = 0;
+	LevelData levelData_{};
+
+	std::vector<std::unique_ptr<HitBoxWire>> boxWires_;
+
+	WorldTransform worldTransform_{};
+	DepthOutlineInfo depthOutlineInfo_{};
+	// Gear
+	std::unique_ptr<Gear> carGear_;
+
+	int selectedIndex[1] = { 0 };
+
+	// 試しの壁
+	std::unique_ptr<Wall> wall_;
+	// collisionManager
+	std::unique_ptr<CollisionManager> collisionManager_;
+	// 自然法則とかの計算クラス
+	std::unique_ptr<PhysicsSystem> physicsSystem_;
 };
 

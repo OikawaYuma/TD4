@@ -11,6 +11,7 @@
 #include "IScene.h"
 #include "GameScene.h"
 #include "TitleScene.h"
+#include "SelectScene.h"
 #include "ClearScene.h"
 #include "DemoScene.h"
 #include "GameOverScene.h"

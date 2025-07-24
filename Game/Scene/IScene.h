@@ -6,7 +6,7 @@
 
 #pragma once
 //シーン名を列挙型(Enum)で定義
-enum SCENE { TITLE, STAGE, CLEAR,GAMEOVER,DEMO };
+enum SCENE { TITLE,SELECT, STAGE, CLEAR,GAMEOVER,DEMO };
 
 // シーン内での処理を行う基底クラス
 class IScene{
