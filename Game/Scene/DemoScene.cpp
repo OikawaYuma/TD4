@@ -61,7 +61,7 @@ void DemoScene::Init()
 	sprite_->SetTexture(spTx_);
 	camera_ = std::make_unique<Camera>();
 	camera_->Initialize();
-	levelData_ = Loder::LoadJsonFile("Resources/json", "driftmap");
+	levelData_ = Loder::LoadJsonFile("Resources/json", "stage10");
 	GlobalVariables::GetInstance()->LoadFiles();
 	followCamera_ = std::make_unique<FollowCamera>();
 	followCamera_->Init();

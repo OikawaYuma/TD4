@@ -52,9 +52,15 @@ void TitleScene::Update()
 	postProcess_->Update();
 	if (Input::GetInstance()->GetJoystickState()) {
 		if (Input::GetInstance()->PushJoyButton(XINPUT_GAMEPAD_Y)) {
-			sceneNo = DEMO;
+			sceneNo = SELECT;
 		}
 
+	}
+	if (Input::GetInstance()->TriggerKey(DIK_D)) {
+		sceneNo = DEMO;
+	}
+	else if (Input::GetInstance()->TriggerKey(DIK_S)) {
+		sceneNo = STAGE;
 	}
 	for (std::list<std::unique_ptr<map>>::iterator itr = maps_.begin(); itr != maps_.end(); itr++) {
 		(*itr)->Update();

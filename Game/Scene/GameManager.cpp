@@ -37,6 +37,7 @@
 GameManager::GameManager() {
 	// 各シーンの登録
 	sceneMap_[TITLE] = [] () { return  std::make_unique<TitleScene>(); };
+	sceneMap_[SELECT] = []() { return std::make_unique<SelectScene>(); };
 	sceneMap_[STAGE] = []() { return std::make_unique<GameScene>(); };
 	sceneMap_[CLEAR] = []() { return std::make_unique<ClearScene>(); };
 	sceneMap_[GAMEOVER] = []() { return  std::make_unique<GameOverScene>(); };
