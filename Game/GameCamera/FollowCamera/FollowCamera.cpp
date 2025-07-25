@@ -141,7 +141,7 @@ void FollowCamera::Upadate()
     };
 
     float cameraDistance = 10.0f;
-    float cameraHeight = 2.0f;
+    float cameraHeight = 1.655f;
     float maxCameraHeight = 2000.0f;
     float behindY = std::min(target_->translation_.y + cameraHeight, maxCameraHeight);
 
