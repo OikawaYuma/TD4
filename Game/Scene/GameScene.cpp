@@ -111,7 +111,7 @@ void GameScene::Update()
 	camera_->CameraDebug();
 #endif // _DEBUG
 	if (Input::GetInstance()->GetJoystickState()) {
-		if (Input::GetInstance()->PushJoyButton(XINPUT_GAMEPAD_B)) {
+		if (Input::GetInstance()->TriggerJoyButton(XINPUT_GAMEPAD_Y)) {
 			sceneNo = TITLE;
 		}
 
