@@ -43,7 +43,9 @@ private: // Object
 	std::unique_ptr<Skydome> skydome_;
 
 private: // 選択用の情報
-	uint32_t selectedStageNum_ = 0; // 選択されたステージ番号
+	int selectedStageNum_ = 0; // 選択されたステージ番号
+	// ステージの最大数
+	uint32_t maxStageNum_ = 0; // 最大ステージ数
 	
 	// padの入力待機時間
 	float inputWaitTime_ = 0.0f; // 入力待機時間
