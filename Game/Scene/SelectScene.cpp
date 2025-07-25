@@ -27,6 +27,7 @@ void SelectScene::Init()
 	}
 	// 選択画面のスプライトの初期化
 	selectSprite_ = std::make_unique<Sprite>();
+	selectSprite_->SetTexture(TextureManager::GetInstance()->StoreTexture("Resources/white.png"));
 	selectSprite_->Init("Resources/white.png");
 	selectSprite_->SetPosition({ 0.0f, 400.0f });
 	selectSprite_->SetSize({ 1280.0f, 128.0f });
@@ -71,7 +72,7 @@ void SelectScene::DeleteObject()
 {
 }
 
-void SelectScene::StageSelect()
+void SelectScene::StageSelect() 
 {
 	DebugDraw(); // デバッグ用の描画を呼び出し
 	inputWaitTime_ += 0.016f; // フレームごとに入力待機時間を増加

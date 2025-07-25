@@ -158,7 +158,7 @@ void GameScene::Update()
 void GameScene::Draw()
 {
 
-	Object3dManager::GetInstance()->Draw(followCamera_->GetCamera());
+	//Object3dManager::GetInstance()->Draw(followCamera_->GetCamera());
 	LineManager::GetInstance()->Draw(followCamera_->GetCamera());
 	//carSmoke_->Draw();
 }
@@ -350,12 +350,16 @@ void GameScene::ArrageObj(std::list<std::unique_ptr<map>>& maps)
 
 			ModelManager::GetInstance()->LoadModel("Resources/" + objectData.filename, objectData.filename + ".obj");
 			std::unique_ptr<Fence> fence = std::make_unique<Fence>();
-			fence->Initialize(objectData.transform.rotate / 180,
+			fence->Initialize(objectData.transform.rotate,
 				objectData.transform.scale
 				, objectData.transform.translate, objectData.filename);
-			fence->SetCollisionScale(objectData.collisionSize + 2);
-			std::unique_ptr<HitBoxWire> hitBoxWire = std::make_unique<HitBoxWire>();
+			fence->SetCollisionScale({ 0.4f,2.0f,5.0f });
 			fences_.push_back(std::move(fence));
+			std::unique_ptr<HitBoxWire> hitBoxWire = std::make_unique<HitBoxWire>();
+			Vector3 rotateVec = { objectData.transform.rotate.x , objectData.transform.rotate.y, objectData.transform.rotate.z };
+			Vector3 collisionSize = { 0.4f,2.0f,5.0f };
+			hitBoxWire->Init(collisionSize, rotateVec, objectData.transform.translate);
+			hitBoxWires_.push_back(std::move(hitBoxWire));
 		}
 		if (objectData.filename.compare("guardrail") == 0) {
 
