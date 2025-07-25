@@ -10,6 +10,7 @@
 #include "Object3dManager.h"
 #include "GlobalVariables/GlobalVariables.h"
 #include <Audio.h>
+#include "SharedGameData/SharedGameData.h"
 void GameScene::Init()
 {
 	Object3dManager::GetInstance()->Init();
@@ -61,7 +62,7 @@ void GameScene::Init()
 	sprite_->SetTexture(spTx_);
 	camera_ = std::make_unique<Camera>();
 	camera_->Initialize();
-	levelData_ = Loder::LoadJsonFile("Resources/json", "driftmap");
+	levelData_ = Loder::LoadJsonFile("Resources/json/stage", "stage" + std::to_string(SharedGameData::GetInstance()->GetSelectedStageNo() + 1));
 	GlobalVariables::GetInstance()->LoadFiles();
 	followCamera_ = std::make_unique<FollowCamera>();
 	followCamera_->Init();
