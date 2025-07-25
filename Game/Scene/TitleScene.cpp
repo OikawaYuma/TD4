@@ -50,12 +50,11 @@ void TitleScene::Update()
 {
 	Object3dManager::GetInstance()->Update();
 	postProcess_->Update();
-	if (Input::GetInstance()->GetJoystickState()) {
-		if (Input::GetInstance()->PushJoyButton(XINPUT_GAMEPAD_Y)) {
-			sceneNo = SELECT;
-		}
+	Input::GetInstance()->GetJoystickState();
+	if (Input::GetInstance()->TriggerJoyButton(XINPUT_GAMEPAD_Y)) {
+		sceneNo = SELECT;
 	}
-	if (Input::GetInstance()->TriggerKey(DIK_D)) {
+	else if (Input::GetInstance()->TriggerKey(DIK_D)) {
 		sceneNo = DEMO;
 	}
 	else if (Input::GetInstance()->TriggerKey(DIK_S)) {

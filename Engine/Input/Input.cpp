@@ -54,9 +54,6 @@ void Input::Update() {
 	// 前回のキー入力を保存
 	memcpy(preKeys, keys, sizeof(keys));
 
-	// ジョイスティックの状態更新
-	XInputGetState(0, &joyState);
-
 	// 前回のキー入力を保存
 	memcpy(&preJoyState, &joyState, sizeof(joyState));
 
@@ -89,7 +86,7 @@ bool Input::GetJoystickState2(XINPUT_STATE& state)
 
 bool Input::GetJoystickState()
 {
-	
+	ZeroMemory(&joyState, sizeof(XINPUT_STATE));
 	// コントローラーの状態を取得
 	result = XInputGetState(0, &joyState);
 

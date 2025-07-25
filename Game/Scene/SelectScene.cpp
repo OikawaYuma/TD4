@@ -68,9 +68,10 @@ void SelectScene::StageSelect()
 			selectedStageNum_--; // ステージ番号をデクリメント
 		}
 
-		if (Input::GetInstance()->PushJoyButton(XINPUT_GAMEPAD_Y)) {
-			sceneNo = STAGE; // ステージシーンに遷移
-		}
+		
+	}
+	if (Input::GetInstance()->TriggerJoyButton(XINPUT_GAMEPAD_Y)) {
+		sceneNo = STAGE; // ステージシーンに遷移
 	}
 }
 void SelectScene::DebugDraw()
