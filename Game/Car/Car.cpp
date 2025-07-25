@@ -235,7 +235,8 @@ void Car::BicycleModel()
 	worldTransform_.translation_.z += velocityVec_.y * deltaTime_;
 
 	// 押し出しの処理（めんどいから後で関数分ける）
-	int maxCorrection = 0; // 何回計算するか（調整して）正直あんま変わんない気がする精度に関わる
+	int maxCorrection = 10; // 最大補正回数を増やす
+	const float margin = 0.01f; // マージン
 	for (int i = 0; i < maxCorrection; ++i) {
 		if (!body_->GetIsHit()) break;
 		Vector3 penetration = body_->GetPenetration();
@@ -244,13 +245,16 @@ void Car::BicycleModel()
 		if (Length(normal) > 0.0001f) {
 			normal = Normalize(normal);
 		}
-		else {
-			normal = { 0, 1, 0 };
+		else if (Length(penetration) > 0.0001f) {
+			normal = Normalize(penetration); // penetration方向を使う
 		}
-		float penetrationLength = std::abs(Dot(penetration, normal)); // 取得した法線と押し出し量から押し出す長さ決める
-		Vector3 pushOut = normal * penetrationLength; // 押し出したい方向決める
-		worldTransform_.translation_ = worldTransform_.translation_ + pushOut; // 押し出し
-		body_->Update(); // 補正後に衝突判定を更新する
+		else {
+			normal = { 0, 1, 0 }; // 最後の手段
+		}
+		float penetrationLength = std::abs(Dot(penetration, normal)) + margin; // マージンを加える
+		Vector3 pushOut = normal * penetrationLength;
+		worldTransform_.translation_ = worldTransform_.translation_ + pushOut;
+		body_->Update();
 	}
 
 	// スライドさせる処理
@@ -282,12 +286,12 @@ void Car::BicycleModel()
 		}
 		worldTransform_.translation_ = worldTransform_.translation_ + slidVelocity;
 
-		// 速度減衰を強める
-		float dot = Dot(deltaTime_ * move, normal);
-		if (dot > 0.0f) {
-			speed_ *= (1.0f - dot * 0.8f); // 減衰を強める
-			//if (speed_ < 0.5f) speed_ = 0.0f;
-		}
+		 //速度減衰を強める
+		//float dot = Dot(deltaTime_ * move, normal);
+		//if (dot > 0.0f) {
+		//	speed_ *= (1.0f - dot * 0.8f); // 減衰を強める
+		//	//if (speed_ < 0.5f) speed_ = 0.0f;
+		//}
 	}
 
 

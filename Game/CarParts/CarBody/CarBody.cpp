@@ -1,4 +1,3 @@
-
 #include "CarBody.h"
 
 void CarBody::Initialize(const Vector3& rotate, const Vector3& scale, const Vector3& translate, const std::string filename)
@@ -24,6 +23,7 @@ void CarBody::Initialize(const Vector3& rotate, const Vector3& scale, const Vect
 
 void CarBody::Update()
 {
+	// 初期化
 	penetration_ = {};
 	normal_ = {};
 
@@ -54,9 +54,13 @@ void CarBody::Update()
 	// colliderに送る
 	if (collider_) {
 		collider_->SetWorldPosition(GetWorldPosition());
+		collider_->SetPrevWorldPosition(prevPosition_);
 		collider_->SetScale(collisionScale_);
 		collider_->SetMatWorld(objectParam_.lock()->worldTransform.matWorld_);
 	}
+
+	// 前フレームの座標記録しておく
+	prevPosition_ = GetWorldPosition();
 
 	BaseObject::Update();
 	OnCollision();

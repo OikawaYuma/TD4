@@ -50,6 +50,7 @@ public:
 
 	float GetRadius() { return radius_; }
 	const Vector3& GetWorldPosition()const { return worldPosition_; }
+	const Vector3& GetPrevWorldPosition()const { return prevWorldPosition_; }
 	// 衝突属性（自分）を取得
 	uint32_t GetCollisonAttribute() { return collisionAttribute_; }
 	// 衝突マスク（相手）を取得
@@ -74,6 +75,7 @@ public:
 	void SetCollisionMask(uint32_t CollisionMask);
 	void SetCollisionMode(CollisionMode collisionMode) { collisionMode_ = collisionMode; }
 	void SetMatWorld(const Matrix4x4& mat) { matWorld_ = mat; }
+	void SetPrevWorldPosition(const Vector3& prevPosition) { prevWorldPosition_ = prevPosition; }
 
 #pragma endregion
 
@@ -90,6 +92,8 @@ private:
 	uint32_t CollisionMask_ = 0xffffffff;
 	// ワールド座標
 	Vector3 worldPosition_{};
+	// 前フレームのワールド座標
+	Vector3 prevWorldPosition_{};
 	// collisionのフラグ
 	bool onCollision_ = false;
 	// matWorld

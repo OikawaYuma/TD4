@@ -63,4 +63,5 @@ private:
 	Vector3 penetration_{}; // めり込み量
 	Vector3 normal_{};
 	Vector3 collisionScale_{ 1.0f, 1.0f, 1.0f }; // 衝突判定のスケール
+	Vector3 prevPosition_{}; // 前フレーム座標保持用の変数
 };

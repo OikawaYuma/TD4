@@ -1,5 +1,4 @@
 #include"mathFunction.h"
-
 #include <limits>
 #include <algorithm>
 #include <numbers>
@@ -477,11 +476,12 @@ Vector2 Normalize(const Vector2& v)
 
 // 正規化
 Vector3 Normalize(const Vector3& v) {
-	Vector3 m3;
-	float mag = 1 / sqrtf(v.x * v.x + v.y * v.y + v.z * v.z);
-	m3 = { v.x * mag, v.y * mag, v.z * mag };
-
-	return m3;
+	float len = sqrtf(v.x * v.x + v.y * v.y + v.z * v.z);
+	if (len < 1e-8f) { // ゼロベクトル対策
+		return { 0.0f, 0.0f, 0.0f };
+	}
+	float mag = 1.0f / len;
+	return { v.x * mag, v.y * mag, v.z * mag };
 }
 
 Quaternion Normalize(Quaternion quaternion) {

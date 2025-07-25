@@ -1,6 +1,4 @@
-
 #include "CollisionManager.h"
-#include "GameScene.h"
 
 void CollisionManager::CheckAllCollision() {
 
@@ -72,11 +70,13 @@ void CollisionManager::CheckCollisionPair(Collider* colliderA, Collider* collide
 		OBB obbB{};
 		obbB = CreateObb(colliderB);
 
+
 		Vector3 normal{};
 		float penetration = 0.0f;
 
 		if (CheckCollision(obbA, obbB, &normal, &penetration)) {
 
+			normal.y = 0.0f;
 			// 衝突情報を追加
 			colliderA->AddCollisionInfo({ colliderB, -1.0f * normal, penetration });
 			colliderB->AddCollisionInfo({ colliderA, normal, penetration });
@@ -94,7 +94,7 @@ void CollisionManager::CheckCollisionPair(Collider* colliderA, Collider* collide
 			colliderB->SetOnCollision(true);
 		}
 		else {
-			// 衝突情報が空だったら false にする（複数の衝突に対応）
+			// 衝突情報が空だったら
 			if (colliderA->GetCollisionInfo().empty()) {
 				colliderA->SetOnCollision(false);
 			}
@@ -280,10 +280,94 @@ bool CollisionManager::CheckCollision(Vector3 v1, float radius, OBB obb)
 	return distSq <= radius * radius;
 }
 
+bool CollisionManager::CheckSweptCollision(OBB a, OBB b, Vector3* outNormal, float* outPenetration)
+{
+	constexpr float epsilon = std::numeric_limits<float>::epsilon();
+	Vector3 axis[15] = {}; 
+
+	// 軸の生成
+	for (int i = 0; i < 3; ++i) axis[i] = a.axis[i];
+	for (int i = 0; i < 3; ++i) axis[i + 3] = b.axis[i];
+	int index = 6;
+	for (int i = 0; i < 3; ++i)
+		for (int j = 0; j < 3; ++j)
+			axis[index++] = Normalize(Cross(a.axis[i], b.axis[j]));
+
+	Vector3 moveVec = a.center - a.prevCenter;
+	Vector3 t = b.center - a.prevCenter; // 前位置基準
+
+	float tEnter = 0.0f;
+	float tExit = 1.0f;
+	Vector3 bestAxis = {};
+	float minPenetration = FLT_MAX;
+	int bestAxisIndex = -1;
+
+	for (int i = 0; i < 15; ++i) {
+		Vector3 L = axis[i];
+		if (Length(L) < epsilon) continue;
+
+		float ra = std::abs(Dot(a.axis[0], L)) * a.halfSize.x +
+			std::abs(Dot(a.axis[1], L)) * a.halfSize.y +
+			std::abs(Dot(a.axis[2], L)) * a.halfSize.z;
+
+		float rb = std::abs(Dot(b.axis[0], L)) * b.halfSize.x +
+			std::abs(Dot(b.axis[1], L)) * b.halfSize.y +
+			std::abs(Dot(b.axis[2], L)) * b.halfSize.z;
+
+		float dist = Dot(t, L);
+		float v = Dot(moveVec, L);
+
+		if (std::abs(v) < epsilon) {
+			if (std::abs(dist) > ra + rb) {
+				return false;
+			} else {
+				float overlap = (ra + rb) - std::abs(dist);
+				if (overlap < minPenetration) {
+					minPenetration = overlap;
+					bestAxis = Normalize(L);
+					bestAxisIndex = i;
+					if (Dot(t, bestAxis) < 0.0f)
+						bestAxis = -1.0f * bestAxis;
+				}
+				continue;
+			}
+		}
+
+		float t0 = (dist - (ra + rb)) / v;
+		float t1 = (dist + (ra + rb)) / v;
+		if (t0 > t1) std::swap(t0, t1);
+
+		if (t0 > tExit || t1 < tEnter)
+			return false;
+
+		if (t0 > tEnter) {
+			tEnter = t0;
+			bestAxis = Normalize(L);
+			bestAxisIndex = i;
+			if (Dot(moveVec, bestAxis) < 0.0f)
+				bestAxis = -1.0f * bestAxis;
+		}
+		tExit = std::min(tExit, t1);
+	}
+
+	// 衝突発生！
+	if (tEnter > 1.0f || tEnter < 0.0f)
+		return false;
+
+	// bestAxisがゼロベクトルやNaNの場合は衝突なし
+	if (Length(bestAxis) < epsilon || std::isnan(bestAxis.x) || std::isnan(bestAxis.y) || std::isnan(bestAxis.z))
+		return false;
+
+	if (outNormal) *outNormal = bestAxis;
+	if (outPenetration) *outPenetration = minPenetration;
+	return true;
+}
+
 OBB CollisionManager::CreateObb(Collider* collider)
 {
 	OBB obb{};
 	obb.center = collider->GetWorldPosition();
+	obb.prevCenter = collider->GetPrevWorldPosition();
 	obb.halfSize = collider->GetScale();
 
 	Matrix4x4 matWorld = collider->GetMatWorld();

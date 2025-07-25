@@ -5,6 +5,7 @@
 */
 
 #pragma once
+#define NOMINMAX
 #include "Vector3.h"
 #include "Matrix4x4.h"
 #include "Quaternion.h"
@@ -17,6 +18,7 @@
 #include <array>
 #include <wrl.h>
 #include <d3d12.h>
+
 struct EulerTransform {
 	Vector3 Tscale;
 	Vector3 rotate; //Eulerでの回転

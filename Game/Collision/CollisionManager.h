@@ -13,6 +13,7 @@
 #include <algorithm>
 #include <limits>
 #include"math/mathFunction.h"
+#include "ImGuiCommon.h"
 
 class CollisionManager {
 public:
@@ -71,11 +72,23 @@ private:
 	bool CheckCollision(Vector3 v1, float radius, OBB obb);
 
 	/// <summary>
+	/// スイープ
+	/// </summary>
+	/// <param name="a"></param>
+	/// <param name="b"></param>
+	/// <param name="outNormal"></param>
+	/// <param name="outPenetration"></param>
+	/// <returns></returns>
+	bool CheckSweptCollision(OBB a, OBB b, Vector3* outNormal, float* outPenetration);
+
+	/// <summary>
 	/// obb生成
 	/// </summary>
 	/// <param name="collider"></param>
 	/// <returns></returns>
 	OBB CreateObb(Collider* collider);
+
+
 
 private:
 	std::list<Collider*> colliders_;
