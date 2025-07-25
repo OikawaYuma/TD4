@@ -54,7 +54,6 @@ void TitleScene::Update()
 		if (Input::GetInstance()->PushJoyButton(XINPUT_GAMEPAD_Y)) {
 			sceneNo = SELECT;
 		}
-
 	}
 	if (Input::GetInstance()->TriggerKey(DIK_D)) {
 		sceneNo = DEMO;

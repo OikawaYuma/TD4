@@ -1,14 +1,9 @@
 #include "function.h"
-#include<Windows.h>
 #include <string>
 #include<format>
 #include<cassert>
 #include "Matrix4x4.h"
 #include "ImGuiCommon.h"
-//#include"imgui.h"
-//#include"imgui_impl_dx12.h"
-//#include"imgui_impl_win32.h"
-
 // Logger
 std::wstring ConvertString(const std::string& str)
 {

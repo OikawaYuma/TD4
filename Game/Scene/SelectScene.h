@@ -29,13 +29,27 @@ public:
 
 	void DeleteObject();
 
+private:
+	// ステージ選択の処理
+	void StageSelect();
+
+	// Debug用の関数
+	void DebugDraw();
+
 private: // Object
 	// Clearシーン用Camera
 	std::unique_ptr<ClearCamera> camera_ = nullptr;
-	// 木
-	std::list<std::unique_ptr<WorldDesign>> worldDesigns_;
 	// 天球
 	std::unique_ptr<Skydome> skydome_;
+
+private: // 選択用の情報
+	uint32_t selectedStageNum_ = 0; // 選択されたステージ番号
+	
+	// padの入力待機時間
+	float inputWaitTime_ = 0.0f; // 入力待機時間
+	// padの入力待機時間の最大値
+	const float maxInputWaitTime_ = 0.5f; // 入力待機時間の最大値
+
 
 private:
 	// ポストエフェクト
