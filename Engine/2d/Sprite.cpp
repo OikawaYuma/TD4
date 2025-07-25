@@ -88,7 +88,7 @@ void Sprite::Init(const std::string& filePath) {
 		{0.0f,0.0f,0.0f},
 		{0.0f,0.0f,0.0f}
 	};
-	texIndex_ =  TextureManager::GetInstance()->StoreTexture(filePath);
+	//texIndex_ =  TextureManager::GetInstance()->StoreTexture(filePath);
 	const DirectX::TexMetadata &metadata_ =
 		TextureManager::GetInstance()->GetMetaData(filePath);
 	originSize_ = {static_cast<float>(metadata_.width),static_cast<float>(metadata_.height) };
