@@ -25,15 +25,26 @@ void SelectScene::Init()
 			maxStageNum_++;
 		}
 	}
+	// 選択画面のスプライトの初期化
+	selectSprite_ = std::make_unique<Sprite>();
+	selectSprite_->Init("Resources/white.png");
+	selectSprite_->SetPosition({ 0.0f, 400.0f });
+	selectSprite_->SetSize({ 1280.0f, 128.0f });
+
 }
 void SelectScene::Update()
 {
 
 	// ステージ選択の処理
 	StageSelect();
+	selectSprite_->Update();
+	selectSprite_->SetPosition({ 0.0f, 450.0f });
+	selectSprite_->SetSize({ 1280.0f, 128.0f });
+	selectSprite_->SetColor({0.0f,0.0f,0.0f,0.7f});
 }
 void SelectScene::Draw()
 {
+	selectSprite_->Draw();
 }
 
 void SelectScene::Draw2d()

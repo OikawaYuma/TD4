@@ -15,6 +15,7 @@
 #include "Skydome/Skydome.h"
 #include "WorldDesign/WorldDesign.h"
 #include "Score/Score.h"
+#include "Sprite.h"
 
 class SelectScene : public IScene
 {
@@ -43,9 +44,9 @@ private: // Object
 	std::unique_ptr<Skydome> skydome_;
 
 private: // 選択用の情報
-	int selectedStageNum_ = 0; // 選択されたステージ番号
+	int32_t selectedStageNum_ = 0; // 選択されたステージ番号
 	// ステージの最大数
-	uint32_t maxStageNum_ = 0; // 最大ステージ数
+	int32_t maxStageNum_ = 0; // 最大ステージ数
 	
 	// padの入力待機時間
 	float inputWaitTime_ = 0.0f; // 入力待機時間
@@ -56,4 +57,8 @@ private: // 選択用の情報
 private:
 	// ポストエフェクト
 	PostProcess* postProcess_ = nullptr;
+
+private:
+	// 選択画面のスプライト
+	std::unique_ptr<Sprite> selectSprite_ = nullptr; // 選択画面のスプライト
 };
