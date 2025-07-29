@@ -90,10 +90,6 @@ void GameScene::Init()
 	postProcess_->Init();
 	postProcess_->SetCamera(followCamera_->GetCamera());
 	postProcess_->SetEffectNo(PostEffectMode::kDepthOutline);
-
-	wall_ = std::make_unique<Wall>();
-	wall_->Initialize({ -0.523599f ,0,0 }, { 10.0f,0.5f,10.0f }, { 0,0,20.0f }, "box");
-
 	// collisionManager
 	collisionManager_ = std::make_unique<CollisionManager>();
 
@@ -149,8 +145,6 @@ void GameScene::Update()
 	fade_->UpdateFade();
 	carSmoke_->Update();
 
-	wall_->Update();
-
 	//physicsSystem_->Apply(1.0f / 60.0f);
 
 	Collision();
@@ -158,7 +152,7 @@ void GameScene::Update()
 void GameScene::Draw()
 {
 
-	//Object3dManager::GetInstance()->Draw(followCamera_->GetCamera());
+	Object3dManager::GetInstance()->Draw(followCamera_->GetCamera());
 	LineManager::GetInstance()->Draw(followCamera_->GetCamera());
 	//carSmoke_->Draw();
 }
@@ -389,7 +383,6 @@ void GameScene::Collision()
 		collisionManager_->PushCollider(fence->GetCollider());
 	}
 
-	collisionManager_->PushCollider(wall_->GetCollider());
 	collisionManager_->CheckAllCollision();
 
 

@@ -99,8 +99,6 @@ private:
 
 	int selectedIndex[1] = { 0 };
 
-	// 試しの壁
-	std::unique_ptr<Wall> wall_;
 	// collisionManager
 	std::unique_ptr<CollisionManager> collisionManager_;
 	// 自然法則とかの計算クラス
