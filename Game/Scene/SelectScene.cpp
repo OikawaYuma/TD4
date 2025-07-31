@@ -27,11 +27,16 @@ void SelectScene::Init()
 	}
 	// 選択画面のスプライトの初期化
 	selectSprite_ = std::make_unique<Sprite>();
-	selectSprite_->SetTexture(TextureManager::GetInstance()->StoreTexture("Resources/white.png"));
 	selectSprite_->Init("Resources/white.png");
 	selectSprite_->SetPosition({ 0.0f, 400.0f });
 	selectSprite_->SetSize({ 1280.0f, 128.0f });
+	selectSprite_->SetColor({ 0.0f,0.0f,0.0f,0.7f });
 
+	//fadeの初期化
+	fade_ = std::make_unique<Fade>();
+	fade_->Init("Resources/Black.png");
+	//fade_->SetAlpha(1.0f); // 初期アルファ値を1に設定
+	fade_->StartFadeOut();
 }
 void SelectScene::Update()
 {
@@ -39,9 +44,16 @@ void SelectScene::Update()
 	// ステージ選択の処理
 	StageSelect();
 	selectSprite_->Update();
-	selectSprite_->SetPosition({ 0.0f, 450.0f });
-	selectSprite_->SetSize({ 1280.0f, 128.0f });
-	selectSprite_->SetColor({0.0f,0.0f,0.0f,0.7f});
+
+	// シーン切り替え用のフェード処理
+	fade_->UpdateFade();
+	fade_->Update();
+
+	if (fade_->GetAlpha() >= 1.0f) {
+		sceneNo = STAGE; // ステージシーンに遷移
+		SharedGameData::GetInstance()->SetSelectedStageNo(selectedStageNum_); // 選択されたステージ番号を保存
+	}
+	
 }
 void SelectScene::Draw()
 {
@@ -50,6 +62,7 @@ void SelectScene::Draw()
 
 void SelectScene::Draw2d()
 {
+	fade_->Draw();
 }
 
 void SelectScene::PostDraw()
@@ -79,7 +92,7 @@ void SelectScene::StageSelect()
 	if (inputWaitTime_ >= maxInputWaitTime_) {
 		inputWaitTime_ = maxInputWaitTime_; // 入力待機時間の上限を設定
 	}
-	if (Input::GetInstance()->GetJoystickState()) {
+	if (Input::GetInstance()->GetJoystickState() && fade_->GetAlpha() <= 0.0f) {
 		if (Input::GetInstance()->JoyStickParmLX(1.0f) > 0.0f && inputWaitTime_ >= maxInputWaitTime_) {
 			inputWaitTime_ = 0.0f; // 入力待機時間をリセット
 			selectedStageNum_++; // ステージ番号をインクリメント
@@ -99,10 +112,8 @@ void SelectScene::StageSelect()
 
 		
 	}
-	if (Input::GetInstance()->TriggerJoyButton(XINPUT_GAMEPAD_Y)) {
-		sceneNo = STAGE; // ステージシーンに遷移
-		SharedGameData::GetInstance()->SetSelectedStageNo(selectedStageNum_); // 選択されたステージ番号を保存
-
+	if (Input::GetInstance()->TriggerJoyButton(XINPUT_GAMEPAD_Y)&& fade_->GetAlpha() <= 0.0f) {
+		fade_->StartFadeIn(); // フェードインを開始
 	}
 }
 void SelectScene::DebugDraw()

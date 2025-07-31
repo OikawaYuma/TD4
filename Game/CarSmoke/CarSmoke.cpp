@@ -1,9 +1,9 @@
 #include "CarSmoke.h"
 #include <ModelManager.h>
-
+#include "ParticleManager.h"
 void CarSmoke::Init()
 {
-	particle_ = std::make_unique<Particle>();
+	particle_ = std::make_shared<Particle>();
 	particle_->SetModel("ball.obj");
 	particle_->Init();
 	particle_->SetName("bomb");
@@ -24,18 +24,16 @@ void CarSmoke::Init()
 	};
 	tex_ = TextureManager::GetInstance()->StoreTexture("Resources/white.png");
 	emitter_.size = 0.5f;
-	particle_->SetCamera(camera_);
 	particle_->SetEmitter(emitter_);
 	particle_->SetTexture(tex_);
 	particle_->SetScleChangeFlag(false);
+
+	ParticleManager::GetInstance()->AddParticle(particle_);
+
 }
 
 void CarSmoke::Update()
 {
-	particle_->Update();
+	particle_->Update(camera_);
 }
 
-void CarSmoke::Draw()
-{
-	particle_->Draw();
-}

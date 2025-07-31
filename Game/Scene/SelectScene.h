@@ -16,6 +16,7 @@
 #include "WorldDesign/WorldDesign.h"
 #include "Score/Score.h"
 #include "Sprite.h"
+#include "Fade/Fade.h"
 
 class SelectScene : public IScene
 {
@@ -61,4 +62,8 @@ private:
 private:
 	// 選択画面のスプライト
 	std::unique_ptr<Sprite> selectSprite_ = nullptr; // 選択画面のスプライト
+
+private:
+	//フェード用のクラス
+	std::unique_ptr<Fade> fade_;
 };

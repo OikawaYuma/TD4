@@ -91,7 +91,7 @@ public:
 	~Particle();
 
 	void Init();
-	void Update();
+	void Update(Camera* camera);
 	void Draw();
 	void Release();
 	ParticlePro MakeNewParticle(std::mt19937& randomEngine);
@@ -113,7 +113,6 @@ public: // Setter
 
 	void SetParent(WorldTransform* worldTransform){worldTransform_.parent_ = worldTransform;}
 
-	void SetCamera(Camera* camera) { camera_ = camera; }
 
 	void SetEmitter(Emitter emitter) { emitter_ = emitter; }
 
@@ -130,8 +129,6 @@ private:
 	WinAPI* sWinAPI = nullptr;
 	DirectXCommon* sDirectXCommon = nullptr;
 	PSOParticle* pso_ = nullptr;
-
-	Camera* camera_ = nullptr;
 
 	Model* model_ = nullptr;
 

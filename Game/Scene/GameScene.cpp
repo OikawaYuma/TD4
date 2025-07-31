@@ -28,15 +28,11 @@ void GameScene::Init()
 	// 物理
 	physicsSystem_ = std::make_unique<PhysicsSystem>();
 
+
 	fade_ = std::make_unique<Fade>();
-	fade_->Init("Resources/fade.png");
+	fade_->Init("Resources/Black.png");
+	fade_->StartFadeOut();
 
-	fade_->SetTexture(TextureManager::GetInstance()->StoreTexture("Resources/fade.png"));
-	spTx_ = TextureManager::GetInstance()->StoreTexture("Resources/load3.png");
-
-	sprite_ = std::make_unique<Sprite>();
-	sprite_->Init("Resources/load.png");
-	sprite_->SetTexture(TextureManager::GetInstance()->StoreTexture("Resources/load.png"));
 	{
 		std::weak_ptr<ObjectPram> objectpram = Object3dManager::GetInstance()->StoreObject("TenQ", TextureManager::GetInstance()->StoreTexture("Resources/TenQ/TenQ.png"), 0);
 		if (objectpram.lock()) {
@@ -46,20 +42,16 @@ void GameScene::Init()
 		}
 	}
 	Object3dManager::GetInstance()->StoreObject("floor", TextureManager::GetInstance()->StoreTexture("Resources/kusa2.png"), 0);
-	//Object3dManager::GetInstance()->StoreObject("map1", TextureManager::GetInstance()->StoreTexture("Resources/load4.png"), 0);
-	//Object3dManager::GetInstance()->StoreObject("road2", TextureManager::GetInstance()->StoreTexture("Resources/load4.png"), 0);
 	Object3dManager::GetInstance()->StoreObject("driftmap", TextureManager::GetInstance()->StoreTexture("Resources/driftmap/driftmap.png"), 0);
 
 	worldTransform_.Initialize();
 
 	ui_ = std::make_unique<UI>();
 	ui_->Initialize();
-	sprite_->Init("Resources/load2.png");
 
 	carGear_ = std::make_unique<Gear>();
 	carGear_->Initialize();
 
-	sprite_->SetTexture(spTx_);
 	camera_ = std::make_unique<Camera>();
 	camera_->Initialize();
 	levelData_ = Loder::LoadJsonFile("Resources/json/stage", "stage" + std::to_string(SharedGameData::GetInstance()->GetSelectedStageNo() + 1));
@@ -67,12 +59,7 @@ void GameScene::Init()
 	followCamera_ = std::make_unique<FollowCamera>();
 	followCamera_->Init();
 	ArrageObj(maps_);
-
-
-
-	carSmoke_ = std::make_unique<CarSmoke>();
-	carSmoke_->SetCamera(followCamera_->GetCamera());
-	carSmoke_->Init();
+	car_->SetCamera(followCamera_->GetCamera());
 
 	// 速度メーターにスピードのポインタを渡す
 	ui_->SetSpeed(car_->GetSpeed());
@@ -80,9 +67,6 @@ void GameScene::Init()
 	followCamera_->SetSpeed(car_->GetSpeed());
 	WorldTransform* wt = car_->GetWorldTransform();
 	followCamera_->SetTarget(wt);
-
-	carSmoke_->SetParent(car_->GetWorldTransform());
-
 
 	depthOutlineInfo_.farClip = 55.0f;
 	depthOutlineInfo_.diffSize = { 0.0f,1.0f };
@@ -108,11 +92,12 @@ void GameScene::Update()
 	camera_->CameraDebug();
 #endif // _DEBUG
 	if (Input::GetInstance()->GetJoystickState()) {
-		if (Input::GetInstance()->TriggerJoyButton(XINPUT_GAMEPAD_Y)) {
-			sceneNo = TITLE;
+		if (Input::GetInstance()->TriggerJoyButton(XINPUT_GAMEPAD_Y) && fade_->GetAlpha() <= 0.0f) {
+			fade_->StartFadeIn(); // フェードインを開始
 		}
 
 	}
+	
 	// カメラの視点によってアウトラインのパラメータを変更
 	DepthOutlinePramChange();
 	camera_->Update();
@@ -124,7 +109,6 @@ void GameScene::Update()
 		(*itr)->Update();
 	}
 	car_->Update();
-	//particle_->CreateParticle();
 
 	Object3dManager::GetInstance()->Update();
 	for (std::list<std::unique_ptr<HitBoxWire>>::iterator itr = hitBoxWires_.begin(); itr != hitBoxWires_.end(); itr++) {
@@ -133,17 +117,17 @@ void GameScene::Update()
 	LineManager::GetInstance()->Update();
 	postProcess_->Update();
 
-
-	sprite_->Update();
 	carGear_->Update();
 	ui_->SetGear(carGear_->GetCurrentGear());
 	ui_->Update();
-	//ui_->SetSpeed(carGear_->GetCurrentSpeed());
-	//particle_->Update();
-
-	fade_->Update();
+	
+	// fadeの更新
 	fade_->UpdateFade();
-	carSmoke_->Update();
+	fade_->Update();
+
+	if (fade_->GetAlpha() >= 1.0f) {
+		sceneNo = TITLE; // ステージシーンに遷移
+	}
 
 	//physicsSystem_->Apply(1.0f / 60.0f);
 
@@ -154,7 +138,6 @@ void GameScene::Draw()
 
 	Object3dManager::GetInstance()->Draw(followCamera_->GetCamera());
 	LineManager::GetInstance()->Draw(followCamera_->GetCamera());
-	//carSmoke_->Draw();
 }
 
 void GameScene::PostDraw()
@@ -165,10 +148,7 @@ void GameScene::PostDraw()
 
 void GameScene::Draw2d()
 {
-	//carSmoke_->Draw();
-	//sprite_->Draw();
 	ui_->Draw();
-	//sprite_->Draw();
 	fade_->Draw();
 
 }

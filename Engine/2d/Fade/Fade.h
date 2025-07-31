@@ -53,6 +53,14 @@ public:
     /// <returns>フェードアウトが完了している場合は true、そうでない場合は false</returns>
     bool IsFadeOutComplete() const { return fadeOutComplete; }
 
+public: // Getter
+
+	/// <summary>
+	/// 現在のアルファ値を取得する
+	/// </summary>
+	/// <returns></returns>
+	float GetAlpha() const { return alpha; }
+
 private:
     /// <summary>
     /// フェードアウトの更新処理

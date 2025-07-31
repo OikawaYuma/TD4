@@ -6,22 +6,24 @@
 #include "Audio.h"
 #include "Object3dManager.h"
 #include <ModelManager.h>
+#include "ParticleManager.h"
 #include <GlobalVariables/GlobalVariables.h>
 
 void TitleScene::Init()
 {
 	Object3dManager::GetInstance()->Init();
 	ModelManager::GetInstance()->LoadModel("Resources/carBody", "carBody.obj");
+	ModelManager::GetInstance()->LoadModel("Resources/ball", "ball.obj");
+	GlobalVariables::GetInstance()->LoadFiles();
 	car_ = std::make_unique<Car>();
 	car_->Initialize({ 1.0f, 1.0f, 1.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 8.0f }, "carBody");
-
+	
 	camera_ = std::make_unique<Camera>();
 	camera_->Initialize();
 	camera_->SetPos({ -12.0f, 3.0f, 22.0f });
 	camera_->SetRotate({ 0.0f, 2.3f, 0.0f });
-
-	ModelManager::GetInstance()->LoadModel("Resources/ball", "ball.obj");
-	GlobalVariables::GetInstance()->LoadFiles();
+	car_->SetCamera(camera_.get());
+	
 	carSmoke_ = std::make_unique<CarSmoke>();
 	carSmoke_->SetCamera(camera_.get());
 	carSmoke_->Init();
@@ -40,6 +42,11 @@ void TitleScene::Init()
 
 	Object3dManager::GetInstance()->StoreObject("floor", TextureManager::GetInstance()->StoreTexture("Resources/kusa.png"), 0);
 
+	//fadeの初期化
+	fade_ = std::make_unique<Fade>();
+	fade_->Init("Resources/Black.png");
+	fade_->StartFadeOut();
+
 	postProcess_ = std::make_unique<PostProcess>();
 	postProcess_->Init();
 	postProcess_->SetCamera(camera_.get());
@@ -51,7 +58,10 @@ void TitleScene::Update()
 	Object3dManager::GetInstance()->Update();
 	postProcess_->Update();
 	Input::GetInstance()->GetJoystickState();
-	if (Input::GetInstance()->TriggerJoyButton(XINPUT_GAMEPAD_Y)) {
+	if (Input::GetInstance()->TriggerJoyButton(XINPUT_GAMEPAD_Y) && fade_->GetAlpha() == 0.0f) {
+		fade_->StartFadeIn();
+	}
+	if (fade_->GetAlpha() >= 1.0f&& fade_->IsFadeOutComplete()) {
 		sceneNo = SELECT;
 	}
 	else if (Input::GetInstance()->TriggerKey(DIK_D)) {
@@ -63,6 +73,8 @@ void TitleScene::Update()
 	for (std::list<std::unique_ptr<map>>::iterator itr = maps_.begin(); itr != maps_.end(); itr++) {
 		(*itr)->Update();
 	}
+
+
 	camera_->Update();
 	car_->Update();
 	logo_->Update();
@@ -74,11 +86,17 @@ void TitleScene::Update()
 
 	camera_->Update();
 
-	
+	// シーン切り替え用のフェード処理
+	fade_->UpdateFade();
+	fade_->Update();
+
+	ParticleManager::GetInstance()->Update(camera_.get());
+
 }
 void TitleScene::Draw()
 {
 	Object3dManager::GetInstance()->Draw(camera_.get());
+	ParticleManager::GetInstance()->Draw();
 }
 
 void TitleScene::PostDraw()
@@ -89,7 +107,7 @@ void TitleScene::PostDraw()
 
 void TitleScene::Draw2d()
 {
-	carSmoke_->Draw();
+	fade_->Draw();
 }
 
 void TitleScene::Release() {

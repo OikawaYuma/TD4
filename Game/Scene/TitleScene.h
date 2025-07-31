@@ -16,6 +16,7 @@
 #include <CarSmoke/CarSmoke.h>
 #include <map/map.h>
 #include "Loder.h"
+#include "Fade/Fade.h"
 
 class TitleScene : public IScene
 {
@@ -39,5 +40,8 @@ private:
 	std::unique_ptr<Logo> logo_;
 	LevelData levelData_{};
 	std::list<std::unique_ptr<map>> maps_;
+	
+	//フェード用のクラス
+	std::unique_ptr<Fade> fade_;
 };
 
