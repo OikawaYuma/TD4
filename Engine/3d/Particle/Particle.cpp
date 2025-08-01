@@ -106,27 +106,14 @@ void Particle::Init() {
 	};
 	numInstance_ = 0;
 }
-void Particle::Update()
+void Particle::Update(Camera* camera)
 {
 
 	
-	worldTransform_.UpdateMatrix();
-	emitter_.transform.translate = {
-		emitter_.transform.translate.x = worldTransform_.matWorld_.m[3][0],
-		emitter_.transform.translate.y = worldTransform_.matWorld_.m[3][1],
-		emitter_.transform.translate.z = worldTransform_.matWorld_.m[3][2]
-
-
-	};
-	for (uint32_t index = 0; index < kNumMaxInstance; ++index) {
-		instancingData[index].WVP = worldTransform_.matWorld_;
-		instancingData[index].World = worldTransform_.matWorld_;
-		instancingData[index].color = Vector4(1.0f, 1.0f, 1.0f, 0.8f);
-	}	
 
 	//materialData->color = {1.0f,1.0f,1.0f,1.0f};
 	Matrix4x4 backToFrontMatrix = MakeRotateYMatrix(std::numbers::pi_v<float>);
-	Matrix4x4 billboardMatrix = Multiply(backToFrontMatrix, Inverse(camera_->GetViewMatrix()));
+	Matrix4x4 billboardMatrix = Multiply(backToFrontMatrix, Inverse(camera->GetViewMatrix()));
 	billboardMatrix.m[3][0] = 0.0f;
 	billboardMatrix.m[3][1] = 0.0f;
 	billboardMatrix.m[3][2] = 0.0f;
@@ -151,7 +138,7 @@ void Particle::Update()
 		(*particleIterator).transform.translate.z += (*particleIterator).velocity.z * kDeltaTime;
 		// フラグが立つとでかくなる
 		if (scaleChangeFlag_) {
-			(*particleIterator).transform.scale = Add((*particleIterator).transform.scale, { 0.1f ,0.1f,0.1f });
+			(*particleIterator).transform.scale = Add((*particleIterator).transform.scale, { 0.001f ,0.001f,0.001f });
 		}
 		(*particleIterator).currentTime += kDeltaTime;
 		// (*particleIterator).color = { 1.0f,1.0f,1.0f,1.0f };
@@ -160,12 +147,12 @@ void Particle::Update()
 		//transforms_[index].rotate.x += 0.1f;
 		Matrix4x4 worldMatrix = Multiply(MakeScaleMatrix((*particleIterator).transform.scale), Multiply(billboardMatrix, MakeTranslateMatrix((*particleIterator).transform.translate)));
 		//Matrix4x4 worldViewProjectionMatrixSprite = Multiply(worldMatrixSprite, Multiply(viewMatrixSprite, projectionMatrixSprite));
-		Matrix4x4 worldViewProjectionMatrix = Multiply(worldMatrix, Multiply(camera_->GetViewMatrix(), camera_->GetProjectionMatrix()));
+		Matrix4x4 worldViewProjectionMatrix = Multiply(worldMatrix, Multiply(camera->GetViewMatrix(), camera->GetProjectionMatrix()));
 		if (numInstance_ < kNumMaxInstance) {
 			instancingData[numInstance_].WVP = worldViewProjectionMatrix;
 			instancingData[numInstance_].World = worldMatrix;
 			instancingData[numInstance_].color = (*particleIterator).color;
-			instancingData[numInstance_].color.w = 0.5f;
+			//instancingData[numInstance_].color.w = 0.5f;
 		}
 		++numInstance_; // 生きているparticluの数を1使うんとする
 		++particleIterator;
@@ -215,7 +202,12 @@ Particle::ParticlePro Particle::MakeNewParticle(std::mt19937& randomEngine)
 
 	// 位置と速度を[-1,1]でランダムに初期化
 	Vector3 randomTranslate = { distriposX(randomEngine), distriposY(randomEngine), distriposZ(randomEngine) };
-	particle.transform.translate = Add(emitter_.transform.translate, randomTranslate);
+	worldTransform_.translation_ = Add(emitter_.transform.translate, randomTranslate);
+	worldTransform_.UpdateMatrix();
+	particle.transform.translate.x =worldTransform_.matWorld_.m[3][0];
+	particle.transform.translate.y =worldTransform_.matWorld_.m[3][1];
+	particle.transform.translate.z =worldTransform_.matWorld_.m[3][2];
+
 	particle.velocity = { distriposX(randomEngine), distriposY(randomEngine), distriposZ(randomEngine) };
 	particle.color = { 1.0f,1.0f ,1.0f,0.7f };
 	particle.lifeTime = distTime(randomEngine);
@@ -244,17 +236,23 @@ void Particle::CreateParticle()
 
 void Particle::SetJsonPram()
 {
-	GlobalVariables::GetInstance()->SetValue(name_,"scale",worldTransform_.scale_);
-	GlobalVariables::GetInstance()->SetValue(name_, "rotate", worldTransform_.rotation_);
+	GlobalVariables::GetInstance()->SetValue(name_,"scale", emitter_.transform.scale);
+	GlobalVariables::GetInstance()->SetValue(name_, "rotate", emitter_.transform.rotate);
 	GlobalVariables::GetInstance()->SetValue(name_, "translate", worldTransform_.translation_);
+	GlobalVariables::GetInstance()->SetValue(name_, "randRangeX", emitter_.randRangeXYZ.rangeX);
+	GlobalVariables::GetInstance()->SetValue(name_, "randRangeY", emitter_.randRangeXYZ.rangeY);
+	GlobalVariables::GetInstance()->SetValue(name_, "randRangeZ", emitter_.randRangeXYZ.rangeZ);
 }
 
 
 void Particle::ApplyGlovalVariables()
 {
-	worldTransform_.scale_ = GlobalVariables::GetInstance()->GetVector3Value(name_, "scale");
-	worldTransform_.rotation_ = GlobalVariables::GetInstance()->GetVector3Value(name_, "rotate");
-	worldTransform_.translation_ = GlobalVariables::GetInstance()->GetVector3Value(name_, "translate");
+	emitter_.transform.scale = GlobalVariables::GetInstance()->GetVector3Value(name_, "scale");
+	emitter_.transform.rotate = GlobalVariables::GetInstance()->GetVector3Value(name_, "rotate");
+	emitter_.transform.translate = GlobalVariables::GetInstance()->GetVector3Value(name_, "translate");
+	emitter_.randRangeXYZ.rangeX = GlobalVariables::GetInstance()->GetVector2Value(name_, "randRangeX");
+	emitter_.randRangeXYZ.rangeY = GlobalVariables::GetInstance()->GetVector2Value(name_, "randRangeY");
+	emitter_.randRangeXYZ.rangeZ = GlobalVariables::GetInstance()->GetVector2Value(name_, "randRangeZ");
 }
 
 

@@ -11,24 +11,19 @@ void GearUI::Initialize()
 	gearSprite_ = std::make_unique<Sprite>();
 	gearSprite_->SetTexture(TextureManager::GetInstance()->StoreTexture("Resources/UI/gear.png"));
 	gearSprite_->Init("Resources/UI/gear.png");
-
+	gearSprite_->SetPosition(pos_);
+	gearSprite_->SetSize(scale_);
+	// ギアの状態
 	gearStateSprite_ = std::make_unique<Sprite>();
 	gearStateSprite_->SetTexture(TextureManager::GetInstance()->StoreTexture("Resources/UI/gearState.png"));
 	gearStateSprite_->Init("Resources/UI/gearState.png");
-
+	gearStateSprite_->SetPosition(State0Pos_);
+	gearStateSprite_->SetSize(StateScale_);
 	gear_ = 0;
 }
 
 void GearUI::Update()
 {
-	gearSprite_->Update();
-	gearSprite_->SetPosition(pos_);
-	gearSprite_->SetSize(scale_);
-
-	gearStateSprite_->Update();
-	gearStateSprite_->SetPosition(State0Pos_);
-	gearStateSprite_->SetSize(StateScale_);
-
 	if (gear_ == 0) {
 		gearStateSprite_->SetPosition(State0Pos_);
 	}
@@ -47,6 +42,13 @@ void GearUI::Update()
 	else if (gear_ == 5) {
 		gearStateSprite_->SetPosition(State5Pos_);
 	}
+	gearSprite_->Update();
+
+
+	gearStateSprite_->Update();
+
+
+
 #ifdef _DEBUG
 	ImGui::Begin("GearUI");
 	ImGui::DragInt("State", &gear_, 1.0f);

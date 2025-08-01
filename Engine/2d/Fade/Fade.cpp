@@ -5,7 +5,6 @@ void Fade::Init(const std::string& filePath)
 {
     fadeSprite = new Sprite();
     fadeSprite->Init(filePath);
-    fadeSprite->SetTexture(TextureManager::GetInstance()->StoreTexture("Resources/Black.png"));
     fadeSprite->SetPosition({ 0.0f,0.0f });
     fadeSprite->SetTextureSize({ 1920.0f,1280.0f });
     fadeSprite->SetSize({ 1920.0f,1280.0f });
@@ -64,7 +63,7 @@ void Fade::UpdateFadeOut()
 {
     if (alpha > 0.0f)
     {
-        alpha -= 0.0013f; // フェード速度
+        alpha -= 0.013f; // フェード速度
         if (alpha < 0.0f)
         {
             alpha = 0.0f;

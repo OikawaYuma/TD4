@@ -23,6 +23,7 @@
 #include "ModelManager.h"
 #include "Object3d.h"
 #include "Object3dCommon.h"
+#include "ParticleManager.h"
 #include "Triangle.h"
 
 #include "VertexData.h"
@@ -69,6 +70,7 @@ int GameManager::Run() {
 
 	ModelManager* sModelManager = ModelManager::GetInstance();
 	sModelManager->init();
+
 
 	TextureManager* sTextureManager = TextureManager::GetInstance();
 	sTextureManager->Init();

@@ -37,13 +37,13 @@ public:
 
 public: // base 
 	void Initialize();
-	void Update();
+	void Update(Camera* camera);
 	void Draw();
 
-public:
-	void CreateParticleGroup(const std::string name,const std::string textureFilePath);
-
+	void AddParticle(const std::shared_ptr<Particle>& particle);
 private:
-	std::unordered_map<std::string, particleGroup> particleGrops_;
+
+	
+	std::list<std::weak_ptr<Particle>> particles_;
 };
 

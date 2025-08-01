@@ -16,6 +16,8 @@ void Car::Initialize(const Vector3& scale, const Vector3& rotate, const Vector3&
 	CreateCarBody();
 	// tire生成
 	CreateCarTire();
+	// 車の煙生成
+	CreateCarSmoke();
 	//// 影生成
 	shadow_ = std::make_unique<PlaneProjectionShadow>();
 	shadow_->Init(&worldTransform_,filename);
@@ -56,7 +58,11 @@ void Car::Update()
 	worldTransform_.UpdateMatrix();
 	// ステアリング更新
 	steering_->Update();
+
+	carSmoke_->Update();
 }
+
+
 
 void Car::CreateCarBody()
 {
@@ -107,6 +113,14 @@ void Car::CreateCarTire()
 	//　下記一行問題ICar参照
 	rearRightTire->SetSteeringAngle(steering_->GetAngle());
 	tires_.push_back(std::move(rearRightTire));
+}
+
+void Car::CreateCarSmoke()
+{
+	carSmoke_ =  std::make_unique<CarSmoke>();
+	carSmoke_->Init();
+	carSmoke_->SetParent(&worldTransform_);
+
 }
 
 void Car::Yawing()
