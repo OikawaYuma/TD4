@@ -22,7 +22,7 @@ void DemoScene::Init()
 	ModelManager::GetInstance()->LoadModel("Resources/Fence", "Fence.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/box", "box.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/road2", "road2.obj");
-	ModelManager::GetInstance()->LoadModel("Resources/driftmap", "driftmap.obj");
+	ModelManager::GetInstance()->LoadModel("Resources/driftmap", "driftmap3.obj");
 
 	// 物理
 	physicsSystem_ = std::make_unique<PhysicsSystem>();
@@ -35,7 +35,7 @@ void DemoScene::Init()
 		}
 	}
 	Object3dManager::GetInstance()->StoreObject("floor", TextureManager::GetInstance()->StoreTexture("Resources/kusa2.png"), 0);
-	Object3dManager::GetInstance()->StoreObject("driftmap", TextureManager::GetInstance()->StoreTexture("Resources/driftmap/driftmap.png"), 0);
+	Object3dManager::GetInstance()->StoreObject("driftmap3", TextureManager::GetInstance()->StoreTexture("Resources/driftmap/driftmap.png"), 0);
 
 	worldTransform_.Initialize();
 

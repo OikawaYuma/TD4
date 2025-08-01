@@ -10,7 +10,7 @@ ModelData Model::LoadObjFile(const std::string& directoryPath, const std::string
 {
 	Assimp::Importer importer;
 	std::string filePathA = directoryPath + "/" + filePath;
-	const aiScene* scene = importer.ReadFile(filePathA.c_str(), aiProcess_FlipWindingOrder | aiProcess_FlipUVs);
+	const aiScene* scene = importer.ReadFile(filePathA.c_str(),aiProcess_Triangulate | aiProcess_FlipWindingOrder | aiProcess_FlipUVs);
 	assert(scene->HasMaterials());
 
 	// 頂点重複を防ぐための map
@@ -23,7 +23,10 @@ ModelData Model::LoadObjFile(const std::string& directoryPath, const std::string
 
 		for (uint32_t faceIndex = 0; faceIndex < mesh->mNumFaces; ++faceIndex) {
 			aiFace& face = mesh->mFaces[faceIndex];
-			assert(face.mNumIndices == 3);
+			if (face.mNumIndices != 3) {
+				// 三角形じゃないポリゴンはスキップする
+				continue;
+			}
 
 			for (uint32_t element = 0; element < face.mNumIndices; ++element) {
 				uint32_t vertexIndex = face.mIndices[element];
