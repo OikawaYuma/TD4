@@ -57,11 +57,12 @@ void SelectScene::Update()
 }
 void SelectScene::Draw()
 {
-	selectSprite_->Draw();
+	
 }
 
 void SelectScene::Draw2d()
 {
+	selectSprite_->Draw();
 	fade_->Draw();
 }
 
