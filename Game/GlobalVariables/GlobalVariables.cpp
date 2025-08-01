@@ -53,12 +53,12 @@ void GlobalVariables::Update()
 			// Vector2型の値を保持してれば
 			else if (std::holds_alternative<Vector2>(item.value)) {
 				Vector2* ptr = std::get_if<Vector2>(&item.value);
-				ImGui::SliderFloat2(itemName.c_str(), &ptr->x, -100.0f, 100.0f);
+				ImGui::DragFloat2(itemName.c_str(), &ptr->x, 0.01f);
 			}
 			// Vector3型の値を保持してれば
 			else if (std::holds_alternative<Vector3>(item.value)) {
 				Vector3* ptr = std::get_if<Vector3>(&item.value);
-				ImGui::SliderFloat3(itemName.c_str(), &ptr->x, -100.0f, 100.0f);
+				ImGui::DragFloat3(itemName.c_str(), &ptr->x, 0.01f);
 			}
 		}
 		ImGui::Text("\n");

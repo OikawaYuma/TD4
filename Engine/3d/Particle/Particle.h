@@ -100,7 +100,7 @@ public:
 
 	void CreateParticle();
 	// SetJson
-	void SetJsonPram();
+	void AddJsonPram();
 	// ApplyGlovalvariables
 	void ApplyGlovalVariables();
 

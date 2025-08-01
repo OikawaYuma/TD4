@@ -234,14 +234,14 @@ void Particle::CreateParticle()
 	particles_.splice(particles_.end(), Emission(randomEngine));
 }
 
-void Particle::SetJsonPram()
+void Particle::AddJsonPram()
 {
-	GlobalVariables::GetInstance()->SetValue(name_,"scale", emitter_.transform.scale);
-	GlobalVariables::GetInstance()->SetValue(name_, "rotate", emitter_.transform.rotate);
-	GlobalVariables::GetInstance()->SetValue(name_, "translate", worldTransform_.translation_);
-	GlobalVariables::GetInstance()->SetValue(name_, "randRangeX", emitter_.randRangeXYZ.rangeX);
-	GlobalVariables::GetInstance()->SetValue(name_, "randRangeY", emitter_.randRangeXYZ.rangeY);
-	GlobalVariables::GetInstance()->SetValue(name_, "randRangeZ", emitter_.randRangeXYZ.rangeZ);
+	GlobalVariables::GetInstance()->AddItme(name_,"scale", emitter_.transform.scale);
+	GlobalVariables::GetInstance()->AddItme(name_, "rotate", emitter_.transform.rotate);
+	GlobalVariables::GetInstance()->AddItme(name_, "translate", worldTransform_.translation_);
+	GlobalVariables::GetInstance()->AddItme(name_, "randRangeX", emitter_.randRangeXYZ.rangeX);
+	GlobalVariables::GetInstance()->AddItme(name_, "randRangeY", emitter_.randRangeXYZ.rangeY);
+	GlobalVariables::GetInstance()->AddItme(name_, "randRangeZ", emitter_.randRangeXYZ.rangeZ);
 }
 
 
