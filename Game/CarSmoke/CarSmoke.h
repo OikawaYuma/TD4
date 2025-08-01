@@ -10,6 +10,7 @@ public: // Getter
 	void SetCamera(Camera* camera) { camera_ = camera;}
 	void SetParent(WorldTransform* worldTransform) { particle_->SetParent(worldTransform); }
 
+	void DebugEmitter();
 
 private:
 	std::shared_ptr<Particle> particle_;

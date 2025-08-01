@@ -58,6 +58,8 @@ void Car::Update()
 	worldTransform_.UpdateMatrix();
 	// ステアリング更新
 	steering_->Update();
+
+	carSmoke_->Update();
 }
 
 
@@ -118,6 +120,7 @@ void Car::CreateCarSmoke()
 	carSmoke_ =  std::make_unique<CarSmoke>();
 	carSmoke_->Init();
 	carSmoke_->SetParent(&worldTransform_);
+
 }
 
 void Car::Yawing()

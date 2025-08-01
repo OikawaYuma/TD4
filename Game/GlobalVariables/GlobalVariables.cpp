@@ -50,6 +50,11 @@ void GlobalVariables::Update()
 				float* ptr = std::get_if<float>(&item.value);
 				ImGui::SliderFloat(itemName.c_str(), ptr, 0, 100);
 			}
+			// Vector2型の値を保持してれば
+			else if (std::holds_alternative<Vector2>(item.value)) {
+				Vector2* ptr = std::get_if<Vector2>(&item.value);
+				ImGui::SliderFloat2(itemName.c_str(), &ptr->x, -100.0f, 100.0f);
+			}
 			// Vector3型の値を保持してれば
 			else if (std::holds_alternative<Vector3>(item.value)) {
 				Vector3* ptr = std::get_if<Vector3>(&item.value);
@@ -110,6 +115,11 @@ void GlobalVariables::SaveFile(const std::string& groupName)
 		else if (std::holds_alternative<float>(item.value)) {
 			// float型の値を登録
 			root[groupName][itemName] = std::get<float>(item.value);
+		}
+		else if (std::holds_alternative<Vector2>(item.value)) {
+			// Vector2型の値を登録
+			Vector2 value = std::get<Vector2>(item.value);
+			root[groupName][itemName] = json::array({ value.x , value.y});
 		}
 		else if (std::holds_alternative<Vector3>(item.value)) {
 			// Vector3型の値を登録
@@ -205,6 +215,11 @@ void GlobalVariables::LoadFile(const std::string& groupName)
 			double value = itItem->get<double>();
 			SetValue(groupName, itemName, static_cast<float>(value));
 		}
+		// Vector2型の値を保持していれば
+		else if (itItem->is_array() && itItem->size() == 2) {
+			Vector2 value = { itItem->at(0), itItem->at(1) };
+			SetValue(groupName, itemName, value);
+		}
 		// Vector3型の値を保持していれば
 		else if (itItem->is_array() && itItem->size() == 3) {
 			Vector3 value = { itItem->at(0), itItem->at(1) ,itItem->at(2) };
@@ -235,6 +250,17 @@ void GlobalVariables::SetValue(const std::string& groupName, const std::string& 
 	group.items[key] = newItem;
 }
 
+void GlobalVariables::SetValue(const std::string& groupName, const std::string& key, const Vector2& value)
+{
+	// グループの参照を取得
+	Group& group = datas_[groupName];
+	// 新しい項目のデータを設定
+	Item newItem{};
+	newItem.value = value;
+	// 設定した項目をstd::mapに追加
+	group.items[key] = newItem;
+}
+
 void GlobalVariables::SetValue(const std::string& groupName, const std::string& key, const Vector3& value)
 {
 	// グループの参照を取得
@@ -254,6 +280,13 @@ void GlobalVariables::AddItme(const std::string& groupName, const std::string& k
 }
 
 void GlobalVariables::AddItme(const std::string& groupName, const std::string& key, const float& value)
+{
+	if (!std::filesystem::exists(key)) {
+		SetValue(groupName, key, value);
+	}
+}
+
+void GlobalVariables::AddItme(const std::string& groupName, const std::string& key, const Vector2& value)
 {
 	if (!std::filesystem::exists(key)) {
 		SetValue(groupName, key, value);
@@ -325,6 +358,34 @@ float GlobalVariables::GetFloatValue(const std::string& groupName, const std::st
 	}
 	else {
 		throw std::runtime_error("Item is not of type float");
+	}
+}
+
+Vector2 GlobalVariables::GetVector2Value(const std::string& groupName, const std::string& key) const
+{
+	// グループが存在するか確認
+	auto itGroup = datas_.find(groupName);
+	if (itGroup == datas_.end()) {
+		throw std::runtime_error("Group not found");
+	}
+
+	const Group& group = itGroup->second;
+
+	// アイテムが存在するか確認
+	auto itItem = group.items.find(key);
+	if (itItem == group.items.end()) {
+		throw std::runtime_error("Item not found");
+	}
+
+	// アイテムの値を取得
+	const Item& item = itItem->second;
+
+	// Vector3 型の値を保持していれば返す
+	if (std::holds_alternative<Vector2>(item.value)) {
+		return std::get<Vector2>(item.value);
+	}
+	else {
+		throw std::runtime_error("Item is not of type Vector3");
 	}
 }
 

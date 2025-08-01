@@ -24,10 +24,7 @@ void TitleScene::Init()
 	camera_->SetRotate({ 0.0f, 2.3f, 0.0f });
 	car_->SetCamera(camera_.get());
 	
-	carSmoke_ = std::make_unique<CarSmoke>();
-	carSmoke_->SetCamera(camera_.get());
-	carSmoke_->Init();
-	carSmoke_->SetParent(car_->GetWorldTransform());
+
 
 	ModelManager::GetInstance()->LoadModel("Resources", "logo.obj");
 	logo_ = std::make_unique<Logo>();
@@ -78,7 +75,6 @@ void TitleScene::Update()
 	camera_->Update();
 	car_->Update();
 	logo_->Update();
-	carSmoke_->Update();
 
 #ifdef _DEBUG
 	camera_->CameraDebug();
@@ -96,7 +92,7 @@ void TitleScene::Update()
 void TitleScene::Draw()
 {
 	Object3dManager::GetInstance()->Draw(camera_.get());
-	ParticleManager::GetInstance()->Draw();
+
 }
 
 void TitleScene::PostDraw()
@@ -107,6 +103,7 @@ void TitleScene::PostDraw()
 
 void TitleScene::Draw2d()
 {
+	ParticleManager::GetInstance()->Draw();
 	fade_->Draw();
 }
 

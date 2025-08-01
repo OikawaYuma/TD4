@@ -2,6 +2,7 @@
 #include "ImGuiCommon.h"
 #include "TextureManager.h"
 #include "ModelManager.h"
+#include "ParticleManager.h"
 #include "Line/LineManager.h"
 #include "IPostEffectState.h"
 #include "Loder.h"
@@ -81,6 +82,7 @@ void GameScene::Init()
 
 void GameScene::Update()
 {
+	GlobalVariables::GetInstance()->Update();
 	followCamera_->Upadate();
 
 	camera_->Move();
@@ -101,7 +103,6 @@ void GameScene::Update()
 	// カメラの視点によってアウトラインのパラメータを変更
 	DepthOutlinePramChange();
 	camera_->Update();
-	GlobalVariables::GetInstance()->Update();
 	for (std::list<std::unique_ptr<map>>::iterator itr = maps_.begin(); itr != maps_.end(); itr++) {
 		(*itr)->Update();
 	}
@@ -130,7 +131,7 @@ void GameScene::Update()
 	}
 
 	//physicsSystem_->Apply(1.0f / 60.0f);
-
+	ParticleManager::GetInstance()->Update(followCamera_->GetCamera());
 	Collision();
 }
 void GameScene::Draw()
@@ -138,6 +139,7 @@ void GameScene::Draw()
 
 	Object3dManager::GetInstance()->Draw(followCamera_->GetCamera());
 	LineManager::GetInstance()->Draw(followCamera_->GetCamera());
+
 }
 
 void GameScene::PostDraw()
@@ -148,8 +150,10 @@ void GameScene::PostDraw()
 
 void GameScene::Draw2d()
 {
+	ParticleManager::GetInstance()->Draw();
 	ui_->Draw();
 	fade_->Draw();
+
 
 }
 

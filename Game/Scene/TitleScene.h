@@ -35,7 +35,6 @@ public:
 private:
 	std::unique_ptr<PostProcess> postProcess_;
 	std::unique_ptr<Car> car_;
-	std::unique_ptr<CarSmoke> carSmoke_;
 	std::unique_ptr<Camera> camera_;
 	std::unique_ptr<Logo> logo_;
 	LevelData levelData_{};

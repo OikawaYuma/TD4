@@ -133,6 +133,7 @@ private:
 	Model* model_ = nullptr;
 
 private:
+	
 	// 使用するパーティクル名
 	std::string name_;
 
