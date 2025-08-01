@@ -71,20 +71,18 @@ void CollisionManager::CheckCollisionPair(Collider* colliderA, Collider* collide
 		obbB = CreateObb(colliderB);
 
 
-		Vector3 normal{};
-		float penetration = 0.0f;
+		CollisionInfo info{};
 
-		if (CheckCollision(obbA, obbB, &normal, &penetration)) {
+		if (CheckSweptCollision(obbA, obbB, &info)) {
 
-			normal.y = 0.0f;
+			info.normal.y = 0.0f;
 			// 衝突情報を追加
-			colliderA->AddCollisionInfo({ colliderB, -1.0f * normal, penetration });
-			colliderB->AddCollisionInfo({ colliderA, normal, penetration });
+			colliderA->AddCollisionInfo({ colliderB, -1.0f * info.normal,info.penetration,info.time });
+			colliderB->AddCollisionInfo({ colliderA, info.normal,info.penetration,info.time });
 
 #ifdef _DEBUG
 			ImGui::Begin("OBB Collision Debug");
-			ImGui::Text("penetration: %f", penetration);
-			ImGui::Text("normal: (%.3f, %.3f, %.3f)", normal.x, normal.y, normal.z);
+			ImGui::Text("time : %.2f", info.time);
 			ImGui::End();
 #endif
 
@@ -280,31 +278,36 @@ bool CollisionManager::CheckCollision(Vector3 v1, float radius, OBB obb)
 	return distSq <= radius * radius;
 }
 
-bool CollisionManager::CheckSweptCollision(OBB a, OBB b, Vector3* outNormal, float* outPenetration)
+bool CollisionManager::CheckSweptCollision(OBB a, OBB b, CollisionInfo* info)
 {
+	
 	constexpr float epsilon = std::numeric_limits<float>::epsilon();
-	Vector3 axis[15] = {}; 
 
-	// 軸の生成
+	Vector3 axis[15] = {};
+
+	// 軸生成
 	for (int i = 0; i < 3; ++i) axis[i] = a.axis[i];
 	for (int i = 0; i < 3; ++i) axis[i + 3] = b.axis[i];
 	int index = 6;
 	for (int i = 0; i < 3; ++i)
-		for (int j = 0; j < 3; ++j)
-			axis[index++] = Normalize(Cross(a.axis[i], b.axis[j]));
+		for (int j = 0; j < 3; ++j) {
+			Vector3 cross = Cross(a.axis[i], b.axis[j]);
+			if (Length(cross) > epsilon) axis[index++] = Normalize(cross);
+		}
 
 	Vector3 moveVec = a.center - a.prevCenter;
-	Vector3 t = b.center - a.prevCenter; // 前位置基準
+	Vector3 t = b.center - a.prevCenter;
 
 	float tEnter = 0.0f;
 	float tExit = 1.0f;
+
 	Vector3 bestAxis = {};
 	float minPenetration = FLT_MAX;
-	int bestAxisIndex = -1;
 
 	for (int i = 0; i < 15; ++i) {
 		Vector3 L = axis[i];
 		if (Length(L) < epsilon) continue;
+		L = Normalize(L);
 
 		float ra = std::abs(Dot(a.axis[0], L)) * a.halfSize.x +
 			std::abs(Dot(a.axis[1], L)) * a.halfSize.y +
@@ -318,50 +321,43 @@ bool CollisionManager::CheckSweptCollision(OBB a, OBB b, Vector3* outNormal, flo
 		float v = Dot(moveVec, L);
 
 		if (std::abs(v) < epsilon) {
-			if (std::abs(dist) > ra + rb) {
-				return false;
-			} else {
-				float overlap = (ra + rb) - std::abs(dist);
-				if (overlap < minPenetration) {
-					minPenetration = overlap;
-					bestAxis = Normalize(L);
-					bestAxisIndex = i;
-					if (Dot(t, bestAxis) < 0.0f)
-						bestAxis = -1.0f * bestAxis;
-				}
-				continue;
+			if (std::abs(dist) > ra + rb) return false;
+
+			float overlap = (ra + rb) - std::abs(dist);
+			if (overlap < minPenetration) {
+				minPenetration = overlap;
+				bestAxis = (dist < 0.0f) ? -1.0f * L : L;
 			}
+			continue;
 		}
 
 		float t0 = (dist - (ra + rb)) / v;
 		float t1 = (dist + (ra + rb)) / v;
 		if (t0 > t1) std::swap(t0, t1);
 
-		if (t0 > tExit || t1 < tEnter)
-			return false;
+		if (t0 > tExit || t1 < tEnter) return false;
 
 		if (t0 > tEnter) {
 			tEnter = t0;
-			bestAxis = Normalize(L);
-			bestAxisIndex = i;
-			if (Dot(moveVec, bestAxis) < 0.0f)
-				bestAxis = -1.0f * bestAxis;
+			bestAxis = (v < 0.0f) ? -1.0f * L : L;
 		}
 		tExit = std::min(tExit, t1);
 	}
 
-	// 衝突発生！
-	if (tEnter > 1.0f || tEnter < 0.0f)
-		return false;
+	if (tEnter < 0.0f || tEnter > 1.0f) return false;
 
-	// bestAxisがゼロベクトルやNaNの場合は衝突なし
 	if (Length(bestAxis) < epsilon || std::isnan(bestAxis.x) || std::isnan(bestAxis.y) || std::isnan(bestAxis.z))
 		return false;
 
-	if (outNormal) *outNormal = bestAxis;
-	if (outPenetration) *outPenetration = minPenetration;
+	if (info) {
+		info->time = tEnter;
+		info->normal = bestAxis;
+		info->penetration = minPenetration;
+	}
+
 	return true;
 }
+
 
 OBB CollisionManager::CreateObb(Collider* collider)
 {

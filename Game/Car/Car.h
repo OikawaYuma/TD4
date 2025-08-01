@@ -71,6 +71,16 @@ private: // 移動処理
 	/// </summary>
 	void CulculateEngineTorque();
 
+	/// <summary>
+	/// 位置補正
+	/// </summary>
+	void CorrectPosition();
+
+	/// <summary>
+	/// スライドの処理
+	/// </summary>
+	void SlideDampen();
+
 private: // 外部情報　本来はここに書くべきではない
 	// 摩擦係数
 	float mu_ = 2.0f; // とりあえず乾いたコンクリで考える（大体0.9~1.2くらいらしい、スポーツのタイヤだと1.1~1.2でもいいとか）
@@ -81,6 +91,7 @@ private:
 	std::vector<std::unique_ptr<BaseObject>> parts_;
 	PhysicsSystem* physicsSystem_ = nullptr;
 	RigidBody rigidBody_{};
+	Vector3 prePosition_{}; // 前のポジション
 	// 車体
 	std::unique_ptr<CarBody> body_;
 	// 車輪

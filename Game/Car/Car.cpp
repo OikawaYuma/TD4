@@ -18,24 +18,23 @@ void Car::Initialize(const Vector3& scale, const Vector3& rotate, const Vector3&
 	CreateCarTire();
 	//// 影生成
 	shadow_ = std::make_unique<PlaneProjectionShadow>();
-	shadow_->Init(&worldTransform_,filename);
-	
+	shadow_->Init(&worldTransform_, filename);
+
 	// 慣性モーメントの初期化（仮定値、調整可能）
 	momentOfInertia_ = (1.0f / 12.0f) * mass_ * (carLength_ * carLength_ + carWidth_ * carWidth_);
 	// 物理設定
 	rigidBody_.worldTransform = &worldTransform_;
 	rigidBody_.mass = 1.0f;
 	rigidBody_.useGravity = true;
-	if(physicsSystem_){
+	if (physicsSystem_) {
 		physicsSystem_->AddObject(&rigidBody_);
 	}
-	
+
 }
 
 void Car::Update()
 {
-	
-
+	prePosition_ = worldTransform_.translation_;
 	// アクセル処理
 	Accel();
 	// ブレーキ処理
@@ -44,6 +43,10 @@ void Car::Update()
 	CulculateEngineTorque();
 	// バイシクルモデルでの車の動き
 	BicycleModel();
+	// 位置補正
+	CorrectPosition();
+	// スライドさせる処理
+	SlideDampen();
 	// 車体の更新
 	body_->Update();
 	// 車輪の更新
@@ -116,7 +119,7 @@ void Car::Yawing()
 
 void Car::BicycleModel()
 {
-	
+
 	// 入力：時速 [km/h] → 毎秒に変換
 	float velocity_mps = speed_ / 3.6f;
 	// 制動距離 = v^2 / (2 * a)
@@ -135,7 +138,7 @@ void Car::BicycleModel()
 
 
 
-	if (240 /3.6 <= velocity_mps) {
+	if (240 / 3.6 <= velocity_mps) {
 		velocity_mps = 240 / 3.6f; // 最大速度制限（240km/hをm/sに変換）
 	}
 	// 速度下限は0（バックは考慮せず）
@@ -144,7 +147,7 @@ void Car::BicycleModel()
 	}
 	// km/hに戻す
 	speed_ = velocity_mps * 3.6f;
-	
+
 	float frameSpeed = velocity_mps * deltaTime_;
 	frameSpeed;
 	// 車体方向ベクトル（rotation_.yで向いてる方向）
@@ -204,7 +207,7 @@ void Car::BicycleModel()
 	float frontLatReq = requiredLatForce * (rearLength / wheelBase);
 	float rearLatReq = requiredLatForce * (frontLength / wheelBase);
 	rearLatReq;
-		frontLatReq;
+	frontLatReq;
 	// グリップ率（0〜1）で表現
 	float frontGripRatio = std::min(1.0f, frontGripMax / frontLatReq);
 	// --- 後輪グリップをブレーキで減らす ---
@@ -230,69 +233,9 @@ void Car::BicycleModel()
 
 	// 車体の回転更新
 	worldTransform_.rotation_.y += theta * deltaTime_;
-	
+
 	worldTransform_.translation_.x += velocityVec_.x * deltaTime_;
 	worldTransform_.translation_.z += velocityVec_.y * deltaTime_;
-
-	// 押し出しの処理（めんどいから後で関数分ける）
-	int maxCorrection = 10; // 最大補正回数を増やす
-	const float margin = 0.01f; // マージン
-	for (int i = 0; i < maxCorrection; ++i) {
-		if (!body_->GetIsHit()) break;
-		Vector3 penetration = body_->GetPenetration();
-		Vector3 normal = body_->GetNormal();
-		// 法線の正規化
-		if (Length(normal) > 0.0001f) {
-			normal = Normalize(normal);
-		}
-		else if (Length(penetration) > 0.0001f) {
-			normal = Normalize(penetration); // penetration方向を使う
-		}
-		else {
-			normal = { 0, 1, 0 }; // 最後の手段
-		}
-		float penetrationLength = std::abs(Dot(penetration, normal)) + margin; // マージンを加える
-		Vector3 pushOut = normal * penetrationLength;
-		worldTransform_.translation_ = worldTransform_.translation_ + pushOut;
-		body_->Update();
-	}
-
-	// スライドさせる処理
-	if (body_->GetIsHit()) {
-		Vector3 penetration = body_->GetPenetration();
-		Vector3 normal = body_->GetNormal();
-		// normalの正規化
-		if (Length(normal) > 0.0001f) {
-			normal = Normalize(normal);
-		}
-		else {
-			normal = { 0, 1, 0 }; // 万一のためのデフォルト
-		}
-		// penetrationLengthの絶対値を利用
-		float penetrationLength = std::abs(Dot(penetration, normal));
-		float penetrationAttenuation = 0.4f; // 100%補正
-		Vector3 pushOut = normal * penetrationLength * penetrationAttenuation;
-		worldTransform_.translation_ = worldTransform_.translation_ + pushOut;
-
-		// Slideで移動方向を補正
-		// なんか知らんけどベクトルが二次元だから無理やり入れます
-		Vector3 move = { velocityVec_.x,0.0f,velocityVec_.y };
-		Vector3 slidVelocity = body_->Slide(deltaTime_ * move, normal);
-		// スライドベクトルの長さを制限
-		float slidLen = Length(slidVelocity);
-		float veloLen = Length(deltaTime_ * move);
-		if (slidLen > veloLen) {
-			slidVelocity = Normalize(slidVelocity) + deltaTime_ * move;
-		}
-		worldTransform_.translation_ = worldTransform_.translation_ + slidVelocity;
-
-		 //速度減衰を強める
-		//float dot = Dot(deltaTime_ * move, normal);
-		//if (dot > 0.0f) {
-		//	speed_ *= (1.0f - dot * 0.8f); // 減衰を強める
-		//	//if (speed_ < 0.5f) speed_ = 0.0f;
-		//}
-	}
 
 
 #ifdef _DEBUG
@@ -312,7 +255,7 @@ void Car::BicycleModel()
 	ImGui::Text("Braking Distance: %.2f m", brakingDistance);
 	ImGui::Text("BrakeForce: %.2f N", brakeForce_);
 	ImGui::Text("Acceleration: %.2f m/s^2", acceleration);
-	ImGui::DragFloat("Mu:", &mu_,0.01f);
+	ImGui::DragFloat("Mu:", &mu_, 0.01f);
 	// --- ヨーモーメント関連のデバッグ表示 ---
 	ImGui::Separator();
 	/*ImGui::Text("Yaw Moment: %.2f Nm", yawMoment);
@@ -360,4 +303,47 @@ void Car::CulculateEngineTorque()
 	wheelTorque_ = engineTorque_ * 1.0f * 1.0f;
 	// 駆動力[N] = トルク / 半径
 	driveForce_ = wheelTorque_ / wheelRadius_;
+}
+
+void Car::CorrectPosition()
+{
+	if (!body_->GetIsHit()) return;
+	if (body_->GetCollisionTime() > 0.001f) {
+		// 衝突開始位置まで戻す処理
+		Vector3 moveVec = worldTransform_.translation_ - prePosition_;
+		Vector3 newPosition = prePosition_ + moveVec * body_->GetCollisionTime();
+		worldTransform_.translation_ = newPosition;
+	}
+	else {
+		// 既に貫通しているのでpenetration分だけ押し出す
+		float penetration = body_->GetPenetration();
+		Vector3 normal = body_->GetNormal();
+
+		if (Length(normal) > 0.0001f) {
+			normal = Normalize(normal);
+		}
+		else {
+			normal = { 0, 1, 0 };
+		}
+
+		Vector3 pushOut = normal * -penetration;
+		worldTransform_.translation_ = worldTransform_.translation_ + pushOut;
+	}
+	body_->Update();
+	
+}
+
+void Car::SlideDampen()
+{
+	if (!body_->GetIsHit()) return;
+
+	Vector3 move = { velocityVec_.x, 0.0f, velocityVec_.y };
+	Vector3 slidVelocity = body_->Slide(deltaTime_ * move, body_->GetNormal());
+	worldTransform_.translation_ = worldTransform_.translation_ +  slidVelocity;
+
+	// 速度の減衰も継続して行う
+	float dot = Dot(deltaTime_ * move, body_->GetNormal());
+	if (dot > 0.0f) {
+		speed_ *= (1.0f - std::clamp(dot * 0.8f, 0.0f, 1.0f));
+	}
 }

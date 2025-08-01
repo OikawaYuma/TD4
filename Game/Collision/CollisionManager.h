@@ -79,7 +79,7 @@ private:
 	/// <param name="outNormal"></param>
 	/// <param name="outPenetration"></param>
 	/// <returns></returns>
-	bool CheckSweptCollision(OBB a, OBB b, Vector3* outNormal, float* outPenetration);
+	bool CheckSweptCollision(OBB a, OBB b,CollisionInfo* info);
 
 	/// <summary>
 	/// obb生成

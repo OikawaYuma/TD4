@@ -607,6 +607,7 @@
     <ClInclude Include="Game\Obstacles\Wall.h" />
     <ClInclude Include="Engine\3d\Line\LineManager.h" />
     <ClInclude Include="Game\PhysicsSystem\PhysicsSystem.h" />
+    <ClInclude Include="Game\Collision\CollisionInfo.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shader\Particle.PS.hlsl">

@@ -31,24 +31,21 @@ void CarBody::Update()
 	// 衝突情報が空じゃなかったら
 	if (!collisionInfos.empty()) {
 
-		Vector3 sumNormal{}; // 法線の合計
-		float maxPenetration = 0.0f;  // 押し出し量
+		float maxTEnter = 0.0f;
+		Vector3 pushBackNormal = {};
+		float penetration = 0.0f;
 
-		// 当たってる情報の数だけ回す（例えば二面当たってたら二つ）
 		for (const auto& info : collisionInfos) {
-			// 実際に足す処理
-			sumNormal = sumNormal + info.normal;
-			if (info.penetration > maxPenetration) {
-				maxPenetration = info.penetration;
+			if (info.time > maxTEnter) {
+				maxTEnter = info.time;
+				pushBackNormal = info.normal;
+				penetration = info.penetration;
 			}
 		}
 
-		// 法線の平均を正規化
-		Vector3 avgNormal = Normalize(sumNormal);
-		// 押し出したい方向と押し出し量をかける
-		penetration_ = avgNormal * maxPenetration;
-		// 法線の向きを入れる
-		normal_ = avgNormal;
+		collisionTime_ = maxTEnter;
+		normal_ = Normalize(pushBackNormal);
+		penetration_ = penetration;
 	}
 
 	// colliderに送る

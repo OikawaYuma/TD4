@@ -42,11 +42,15 @@ public:
 
 #pragma region getter
 
-	const Vector3& GetPenetration()const { return penetration_; }
+	const float& GetPenetration()const { return penetration_; }
 
 	bool GetIsHit()const { return isHit_; }
 
 	const Vector3& GetNormal()const { return normal_; }
+
+	const float& GetCollisionTime()const { return collisionTime_; }
+
+	const Vector3& GetPrevPosition()const { return prevPosition_; }
 
 #pragma endregion
 
@@ -60,8 +64,9 @@ private:
 private:
 
 	bool isHit_ = false;
-	Vector3 penetration_{}; // めり込み量
+	float penetration_{}; // めり込み量
 	Vector3 normal_{};
+	float collisionTime_ = 0.0f;
 	Vector3 collisionScale_{ 1.0f, 1.0f, 1.0f }; // 衝突判定のスケール
 	Vector3 prevPosition_{}; // 前フレーム座標保持用の変数
 };

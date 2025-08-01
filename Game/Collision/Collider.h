@@ -11,6 +11,7 @@
 #include"math/Matrix4x4.h"
 #include <vector>
 #include "Collision/CollisionConfig.h"
+#include "CollisionInfo.h"
 
 enum class CollisionMode {
 	AABBc,
@@ -22,11 +23,6 @@ enum class CollisionMode {
 class Collider {
 public:
 
-	struct CollisionInfo {
-		Collider* other = nullptr;
-		Vector3 normal;
-		float penetration = 0.0f;
-	};
 
 	bool OnCollision() { return onCollision_; }
 	void SetOnCollision(bool onCollision) { onCollision_ = onCollision; }
