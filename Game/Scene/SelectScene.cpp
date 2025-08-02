@@ -8,8 +8,10 @@
 #include "Object3dManager.h"
 #include "GlobalVariables/GlobalVariables.h"
 #include "SharedGameData/SharedGameData.h"
+
 void SelectScene::Init()
 {
+	Object3dManager::GetInstance()->Init();
 	camera_ = std::make_unique<ClearCamera>();
 	camera_->Init();
 	// PostEffect初期化
@@ -25,13 +27,35 @@ void SelectScene::Init()
 			maxStageNum_++;
 		}
 	}
+	
+	ModelManager::GetInstance()->LoadModel("Resources/TenQ", "TenQ.obj");
+	{
+		std::weak_ptr<ObjectPram> objectpram = Object3dManager::GetInstance()->StoreObject("TenQ", TextureManager::GetInstance()->StoreTexture("Resources/white.png"), 0);
+		if (objectpram.lock()) {
+			objectpram.lock()->worldTransform.translation_ = { 0.0f,-1000000.0f,0.0f };
+			objectpram.lock()->worldTransform.scale_ = { -100000.0f,100000.0f,100000.0f };
+			objectpram.lock()->worldTransform.UpdateMatrix();
+			objectpram.lock()->color = { 0.6f,0.6f,0.6f,1.0f };
+		}
+	}
+	carView_ = std::make_unique<CarView>();
+	carView_->Init();
 	// 選択画面のスプライトの初期化
 	selectSprite_ = std::make_unique<Sprite>();
 	selectSprite_->Init("Resources/white.png");
-	selectSprite_->SetPosition({ 0.0f, 400.0f });
+	selectSprite_->SetPosition({ 640.0f, 464.0f });
 	selectSprite_->SetSize({ 1280.0f, 128.0f });
+	selectSprite_->SetAnchorPoint({ 0.5f, 0.5f });
 	selectSprite_->SetColor({ 0.0f,0.0f,0.0f,0.7f });
 
+	// 選択ステージのスプライトの初期化
+	for (int i = 0; i < maxStageNum_; i++) {
+		std::unique_ptr<SelectStage> selectStage_ = std::make_unique<SelectStage>();
+		selectStage_->Init(i);
+		selectStages_.push_back(std::move(selectStage_));
+
+	}
+	
 	//fadeの初期化
 	fade_ = std::make_unique<Fade>();
 	fade_->Init("Resources/Black.png");
@@ -40,10 +64,13 @@ void SelectScene::Init()
 }
 void SelectScene::Update()
 {
-
+	carView_->Update();
 	// ステージ選択の処理
 	StageSelect();
 	selectSprite_->Update();
+	for(auto& selectStage : selectStages_){
+		selectStage->Update(selectedStageNum_);
+	}
 
 	// シーン切り替え用のフェード処理
 	fade_->UpdateFade();
@@ -57,12 +84,15 @@ void SelectScene::Update()
 }
 void SelectScene::Draw()
 {
-	
+	Object3dManager::GetInstance()->Draw(camera_->GetCamera());
 }
 
 void SelectScene::Draw2d()
 {
 	selectSprite_->Draw();
+	for (auto& selectStage : selectStages_) {
+		selectStage->Draw();
+	}
 	fade_->Draw();
 }
 
