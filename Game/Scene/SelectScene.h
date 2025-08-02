@@ -6,6 +6,7 @@
 
 
 #pragma once
+#include <list>
 #include "IScene.h"
 #include "Sprite.h"
 #include "PostProcess.h"
@@ -17,7 +18,8 @@
 #include "Score/Score.h"
 #include "Sprite.h"
 #include "Fade/Fade.h"
-
+#include "SceneEffect/SelectScene/SelectStage/SelectStage.h"
+#include "SceneEffect/SelectScene/CarView/CarView.h"
 class SelectScene : public IScene
 {
 public:
@@ -43,6 +45,8 @@ private: // Object
 	std::unique_ptr<ClearCamera> camera_ = nullptr;
 	// 天球
 	std::unique_ptr<Skydome> skydome_;
+	// カーのビュー
+	std::unique_ptr<CarView> carView_ = nullptr; // カーのビュー
 
 private: // 選択用の情報
 	int32_t selectedStageNum_ = 0; // 選択されたステージ番号
@@ -62,6 +66,8 @@ private:
 private:
 	// 選択画面のスプライト
 	std::unique_ptr<Sprite> selectSprite_ = nullptr; // 選択画面のスプライト
+
+	std::list<std::unique_ptr<SelectStage>> selectStages_; // 選択ステージのスプライト
 
 private:
 	//フェード用のクラス
