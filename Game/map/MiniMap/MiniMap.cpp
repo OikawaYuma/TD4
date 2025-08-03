@@ -7,7 +7,7 @@ MiniMap::~MiniMap()
 void MiniMap::Initialize(const Vector3& scale, const Vector3& rotate, const Vector3& translate, const std::string filename)
 {
 	// texture
-	texture_ = TextureManager::GetInstance()->StoreTexture("Resources/uvChecker.png");
+	texture_ = TextureManager::GetInstance()->StoreTexture("Resources/load3.png");
 	color_ = { 1.0f,1.0f,1.0f,1.0f };
 
 	// 初期化
