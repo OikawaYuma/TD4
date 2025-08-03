@@ -336,8 +336,8 @@
     <ClCompile Include="Game\SceneEffect\SelectScene\SelectStage\SelectStage.cpp" />
     <ClCompile Include="Game\SceneEffect\SelectScene\CarView\CarView.cpp" />
     <ClCompile Include="Game\CarBrakeSmoke\CarBrakeSmoke.cpp" />
-    <ClCompile Include="Game\CheckPoint\CheckPoint.cpp" />
     <ClCompile Include="Game\map\MiniMap\MiniPlayer.cpp" />
+    <ClCompile Include="Game\CheckPoint\CheckPoint.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Utility\function.h">
