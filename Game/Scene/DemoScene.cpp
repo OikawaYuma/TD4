@@ -362,10 +362,10 @@ void DemoScene::ArrageObj(std::list<std::unique_ptr<map>>& maps)
 			fence->Initialize({ (objectData.transform.rotate.x + 3.1415f / 2),(objectData.transform.rotate.y),(objectData.transform.rotate.z) },
 				objectData.transform.scale
 				, objectData.transform.translate, objectData.filename);
-			fence->SetCollisionScale(objectData.collisionSize);
+			Vector3 collisionSize = { objectData.collisionSize.x, objectData.collisionSize.y, objectData.collisionSize.z + 2 };
+			fence->SetCollisionScale(collisionSize);
 			std::unique_ptr<HitBoxWire> hitBoxWire = std::make_unique<HitBoxWire>();
 			Vector3 rotateVec = { objectData.transform.rotate.x + 3.1415f / 2 , objectData.transform.rotate.y, objectData.transform.rotate.z };
-			Vector3 collisionSize = objectData.collisionSize;
 			hitBoxWire->Init(collisionSize, rotateVec, objectData.transform.translate);
 			fences_.push_back(std::move(fence));
 			hitBoxWires_.push_back(std::move(hitBoxWire));

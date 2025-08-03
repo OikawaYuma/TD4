@@ -21,14 +21,14 @@ void Fence::Initialize(const Vector3& rotate, const Vector3& scale, const Vector
 void Fence::Update()
 {
 	
-
+	BaseObject::Update();
 	// colliderに送る
 	if (collider_) {
 		collider_->SetWorldPosition(GetWorldPosition());
 		collider_->SetScale(collisionScale_);
 		collider_->SetMatWorld(objectParam_.lock()->worldTransform.matWorld_);
 	}
-	BaseObject::Update();
+	
 	OnCollision();
 
 	/*if (isHit_) {

@@ -899,3 +899,5 @@ Vector2 operator*(const float& a, const Vector2& v1)
 
 	return c;
 }
+
+

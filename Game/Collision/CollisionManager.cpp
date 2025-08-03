@@ -77,12 +77,19 @@ void CollisionManager::CheckCollisionPair(Collider* colliderA, Collider* collide
 
 			info.normal.y = 0.0f;
 			// 衝突情報を追加
-			colliderA->AddCollisionInfo({ colliderB, -1.0f * info.normal,info.penetration,info.time });
+			colliderA->AddCollisionInfo({ colliderB, info.normal,info.penetration,info.time });
 			colliderB->AddCollisionInfo({ colliderA, info.normal,info.penetration,info.time });
 
 #ifdef _DEBUG
 			ImGui::Begin("OBB Collision Debug");
-			ImGui::Text("time : %.2f", info.time);
+			// 衝突時刻（0.0〜1.0：移動中にいつ衝突したか）
+			ImGui::Text("Time: %.2f", info.time);
+
+			// ペネトレーション量
+			ImGui::Text("Penetration: %.3f", info.penetration);
+
+			// 法線ベクトル
+			ImGui::Text("Normal: (%.2f, %.2f, %.2f)", info.normal.x, info.normal.y, info.normal.z);
 			ImGui::End();
 #endif
 

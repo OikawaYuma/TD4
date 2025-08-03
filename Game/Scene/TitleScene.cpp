@@ -60,7 +60,7 @@ void TitleScene::Update()
 		(*itr)->Update();
 	}
 	camera_->Update();
-	car_->Update();
+	//car_->Update();
 	logo_->Update();
 	carSmoke_->Update();
 

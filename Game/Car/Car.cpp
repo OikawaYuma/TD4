@@ -308,17 +308,16 @@ void Car::CulculateEngineTorque()
 void Car::CorrectPosition()
 {
 	if (!body_->GetIsHit()) return;
-	if (body_->GetCollisionTime() > 0.001f) {
-		// 衝突開始位置まで戻す処理
+
+	if (body_->GetCollisionTime() < 1.0f) {
+		// 巻き戻し
 		Vector3 moveVec = worldTransform_.translation_ - prePosition_;
 		Vector3 newPosition = prePosition_ + moveVec * body_->GetCollisionTime();
 		worldTransform_.translation_ = newPosition;
 	}
 	else {
-		// 既に貫通しているのでpenetration分だけ押し出す
-		float penetration = body_->GetPenetration();
+		// 貫通押し出し
 		Vector3 normal = body_->GetNormal();
-
 		if (Length(normal) > 0.0001f) {
 			normal = Normalize(normal);
 		}
@@ -326,11 +325,24 @@ void Car::CorrectPosition()
 			normal = { 0, 1, 0 };
 		}
 
-		Vector3 pushOut = normal * -penetration;
+		// 押し出し方向が進行方向と逆なら無視する（押し戻されないように）
+		Vector3 pushOut = normal * body_->GetPenetration();
+
+		Vector3 forward = { velocityVec_.x, 0.0f, velocityVec_.y };
+		if (Length(forward) > 0.0001f) {
+			forward = Normalize(forward);
+
+			// 進行方向との内積がマイナス（逆向き）なら押し出さない
+			if (Dot(pushOut, forward) < 0.0f) {
+				// 押し戻しになるので無視
+				pushOut = {};
+			}
+		}
+
 		worldTransform_.translation_ = worldTransform_.translation_ + pushOut;
 	}
+
 	body_->Update();
-	
 }
 
 void Car::SlideDampen()
@@ -338,11 +350,19 @@ void Car::SlideDampen()
 	if (!body_->GetIsHit()) return;
 
 	Vector3 move = { velocityVec_.x, 0.0f, velocityVec_.y };
-	Vector3 slidVelocity = body_->Slide(deltaTime_ * move, body_->GetNormal());
-	worldTransform_.translation_ = worldTransform_.translation_ +  slidVelocity;
+	Vector3 n = body_->GetNormal();
 
-	// 速度の減衰も継続して行う
-	float dot = Dot(deltaTime_ * move, body_->GetNormal());
+	if (Length(n) > 0.0001f) {
+		n = Normalize(n);
+		// 法線方向の移動成分を除去（スライド処理）
+		move = move - Dot(move, n) * n;
+	}
+
+	// 移動の反映
+	worldTransform_.translation_ = worldTransform_.translation_ + deltaTime_ * move;
+
+	// 速度ベクトルの法線方向成分に応じて速度を減衰させる
+	float dot = Dot(deltaTime_ * move, n);
 	if (dot > 0.0f) {
 		speed_ *= (1.0f - std::clamp(dot * 0.8f, 0.0f, 1.0f));
 	}

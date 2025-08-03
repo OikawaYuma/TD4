@@ -23,6 +23,9 @@ void CarBody::Initialize(const Vector3& rotate, const Vector3& scale, const Vect
 
 void CarBody::Update()
 {
+
+	BaseObject::Update();
+
 	// 初期化
 	penetration_ = {};
 	normal_ = {};
@@ -31,21 +34,16 @@ void CarBody::Update()
 	// 衝突情報が空じゃなかったら
 	if (!collisionInfos.empty()) {
 
-		float maxTEnter = 0.0f;
-		Vector3 pushBackNormal = {};
-		float penetration = 0.0f;
+		// time の最大で選ぶ
+		float maxTime = 0; for (auto& i : collisionInfos) maxTime = max(maxTime, i.time);
+		collisionTime_ = maxTime;
 
+		Vector3 accum = {};
 		for (const auto& info : collisionInfos) {
-			if (info.time > maxTEnter) {
-				maxTEnter = info.time;
-				pushBackNormal = info.normal;
-				penetration = info.penetration;
-			}
+			accum = accum + info.normal * info.penetration;
 		}
-
-		collisionTime_ = maxTEnter;
-		normal_ = Normalize(pushBackNormal);
-		penetration_ = penetration;
+		penetration_ = Length(accum);
+		normal_ = (penetration_ > 0.0001f ? Normalize(accum) : Vector3{ 0,1,0 });
 	}
 
 	// colliderに送る
@@ -59,7 +57,6 @@ void CarBody::Update()
 	// 前フレームの座標記録しておく
 	prevPosition_ = GetWorldPosition();
 
-	BaseObject::Update();
 	OnCollision();
 
 #ifdef _DEBUG
