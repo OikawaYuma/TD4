@@ -32,7 +32,7 @@
 #include "Obstacles/Wall.h"
 #include "Collision/CollisionManager.h"
 #include "PhysicsSystem/PhysicsSystem.h"
-
+#include <map/MiniMap/MiniMap.h>
 
 class GameScene :public IScene
 {
@@ -80,6 +80,9 @@ private:
 	std::unique_ptr<Skydome> skydome_;
 	// 背景オブジェクト
 	std::unique_ptr<Particle> particle_;
+	// ミニマップ
+	std::unique_ptr<MiniMap> minimap_;
+
 	Emitter emitter_{};
 	RandRangePro randRangePro_{};
 	std::unique_ptr<Fade> fade_;

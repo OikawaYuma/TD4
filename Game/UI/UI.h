@@ -4,6 +4,7 @@
 #include <memory>
 #include <Sprite.h>
 #include <algorithm>
+#include <ModelManager.h>
 
 class UI {
 public:

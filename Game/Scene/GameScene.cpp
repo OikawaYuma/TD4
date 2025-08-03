@@ -36,6 +36,12 @@ void GameScene::Init()
 	sprite_ = std::make_unique<Sprite>();
 	sprite_->Init("Resources/load.png");
 	sprite_->SetTexture(TextureManager::GetInstance()->StoreTexture("Resources/load.png"));
+
+	// miniMap
+	ModelManager::GetInstance()->LoadModel("Resources/road2", "road2.obj");
+	minimap_ = std::make_unique<MiniMap>();
+	minimap_->Initialize({ 0.005f, 0.005f, 0.005f }, { 1.6f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, "road2");
+
 	{
 		std::weak_ptr<ObjectPram> objectpram = Object3dManager::GetInstance()->StoreObject("TenQ", TextureManager::GetInstance()->StoreTexture("Resources/TenQ/TenQ.png"), 0);
 		if (objectpram.lock()) {
@@ -147,7 +153,7 @@ void GameScene::Update()
 	fade_->Update();
 	fade_->UpdateFade();
 	carSmoke_->Update();
-
+	minimap_->Update(followCamera_->GetCamera());
 	wall_->Update();
 
 	//physicsSystem_->Apply(1.0f / 60.0f);

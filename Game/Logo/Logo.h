@@ -1,7 +1,6 @@
 #pragma once
 #include "Object3d.h"
 #include <list>
-#include "Object3d.h"
 #include "WorldTransform.h"
 #include "Camera.h"
 #include "PlaneProjectionShadow.h"

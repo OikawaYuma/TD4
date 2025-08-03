@@ -802,6 +802,16 @@ Vector3 ExtractEulerAngles(const Matrix4x4& m) {
 	return angles;
 }
 
+Matrix4x4 MakeRotationMatrix(const Vector3& rotate)
+{
+	Matrix4x4 rotX = MakeRotateXMatrix(rotate.x);
+	Matrix4x4 rotY = MakeRotateYMatrix(rotate.y);
+	Matrix4x4 rotZ = MakeRotateZMatrix(rotate.z);
+
+	// 回転順 Z→X→Y（例：Roll→Pitch→Yaw）
+	return rotZ * rotX * rotY;
+}
+
 
 // 演算子のオーバーロード
 Matrix4x4 operator*(const Matrix4x4& a, const Matrix4x4& b)
