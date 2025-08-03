@@ -331,6 +331,7 @@
     <ClCompile Include="Engine\3d\Line\LineManager.cpp" />
     <ClCompile Include="Game\PhysicsSystem\PhysicsSystem.cpp" />
     <ClCompile Include="Game\Scene\SelectScene.cpp" />
+    <ClCompile Include="Game\map\MiniMap\MiniMap.cpp" />
     <ClCompile Include="Game\SharedGameData\SharedGameData.cpp" />
     <ClCompile Include="Game\SceneEffect\SelectScene\SelectStage\SelectStage.cpp" />
     <ClCompile Include="Game\SceneEffect\SelectScene\CarView\CarView.cpp" />
@@ -613,6 +614,7 @@
     <ClInclude Include="Engine\3d\Line\LineManager.h" />
     <ClInclude Include="Game\PhysicsSystem\PhysicsSystem.h" />
     <ClInclude Include="Game\Scene\SelectScene.h" />
+    <ClInclude Include="Game\map\MiniMap\MiniMap.h" />
     <ClInclude Include="Game\SharedGameData\SharedGameData.h" />
     <ClInclude Include="Game\SceneEffect\SelectScene\SelectStage\SelectStage.h" />
     <ClInclude Include="Game\SceneEffect\SelectScene\CarView\CarView.h" />
