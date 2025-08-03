@@ -18,4 +18,6 @@ private:
 	Vector4 color_;
 
 	Camera* camera_ = nullptr;
+
+	Vector3 offset = {};
 };

@@ -35,6 +35,7 @@ void UI::Draw()
 void UI::SetSpeed(float* speed_)
 {
 	speedMeterUI_->SetSpeed(speed_);
+	//miniUI_->SetSpeed(speed_);
 }
 
 void UI::SetGear(int gear)
