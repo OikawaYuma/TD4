@@ -133,3 +133,46 @@ private:
 	
 };
 
+constexpr float EPSILON = 0.0001f;
+
+inline bool NearlyEqual(float a, float b) {
+	return std::fabs(a - b) < EPSILON;
+}
+
+inline bool operator==(const VertexData& lhs, const VertexData& rhs) {
+	return
+		NearlyEqual(lhs.position.x, rhs.position.x) &&
+		NearlyEqual(lhs.position.y, rhs.position.y) &&
+		NearlyEqual(lhs.position.z, rhs.position.z) &&
+		NearlyEqual(lhs.position.w, rhs.position.w) &&
+
+		NearlyEqual(lhs.normal.x, rhs.normal.x) &&
+		NearlyEqual(lhs.normal.y, rhs.normal.y) &&
+		NearlyEqual(lhs.normal.z, rhs.normal.z) &&
+
+		NearlyEqual(lhs.texcorrd.x, rhs.texcorrd.x) &&
+		NearlyEqual(lhs.texcorrd.y, rhs.texcorrd.y);
+}
+
+struct VertexDataHasher {
+	size_t operator()(const VertexData& v) const {
+		size_t h = 0;
+		auto hash_f = [](float f) {
+			return std::hash<int>()(static_cast<int>(f * 10000)); // 精度調整
+			};
+
+		h ^= hash_f(v.position.x) + 0x9e3779b9 + (h << 6) + (h >> 2);
+		h ^= hash_f(v.position.y) + 0x9e3779b9 + (h << 6) + (h >> 2);
+		h ^= hash_f(v.position.z) + 0x9e3779b9 + (h << 6) + (h >> 2);
+		h ^= hash_f(v.position.w) + 0x9e3779b9 + (h << 6) + (h >> 2);
+
+		h ^= hash_f(v.normal.x) + 0x9e3779b9 + (h << 6) + (h >> 2);
+		h ^= hash_f(v.normal.y) + 0x9e3779b9 + (h << 6) + (h >> 2);
+		h ^= hash_f(v.normal.z) + 0x9e3779b9 + (h << 6) + (h >> 2);
+
+		h ^= hash_f(v.texcorrd.x) + 0x9e3779b9 + (h << 6) + (h >> 2);
+		h ^= hash_f(v.texcorrd.y) + 0x9e3779b9 + (h << 6) + (h >> 2);
+		return h;
+	}
+};
+

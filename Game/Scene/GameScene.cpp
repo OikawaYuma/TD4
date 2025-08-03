@@ -2,6 +2,7 @@
 #include "ImGuiCommon.h"
 #include "TextureManager.h"
 #include "ModelManager.h"
+#include "ParticleManager.h"
 #include "Line/LineManager.h"
 #include "IPostEffectState.h"
 #include "Loder.h"
@@ -10,6 +11,7 @@
 #include "Object3dManager.h"
 #include "GlobalVariables/GlobalVariables.h"
 #include <Audio.h>
+#include "SharedGameData/SharedGameData.h"
 void GameScene::Init()
 {
 	Object3dManager::GetInstance()->Init();
@@ -27,12 +29,11 @@ void GameScene::Init()
 	// 物理
 	physicsSystem_ = std::make_unique<PhysicsSystem>();
 
+
 	fade_ = std::make_unique<Fade>();
-	fade_->Init("Resources/fade.png");
-
-	fade_->SetTexture(TextureManager::GetInstance()->StoreTexture("Resources/fade.png"));
-	spTx_ = TextureManager::GetInstance()->StoreTexture("Resources/load3.png");
-
+	fade_->Init("Resources/Black.png");
+	fade_->StartFadeOut();
+  
 	sprite_ = std::make_unique<Sprite>();
 	sprite_->Init("Resources/load.png");
 	sprite_->SetTexture(TextureManager::GetInstance()->StoreTexture("Resources/load.png"));
@@ -41,7 +42,7 @@ void GameScene::Init()
 	ModelManager::GetInstance()->LoadModel("Resources/map", "map.obj");
 	minimap_ = std::make_unique<MiniMap>();
 	minimap_->Initialize({ 0.005f, 0.005f, 0.005f }, { 1.6f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, "map");
-
+  
 	{
 		std::weak_ptr<ObjectPram> objectpram = Object3dManager::GetInstance()->StoreObject("TenQ", TextureManager::GetInstance()->StoreTexture("Resources/TenQ/TenQ.png"), 0);
 		if (objectpram.lock()) {
@@ -51,33 +52,24 @@ void GameScene::Init()
 		}
 	}
 	Object3dManager::GetInstance()->StoreObject("floor", TextureManager::GetInstance()->StoreTexture("Resources/kusa2.png"), 0);
-	//Object3dManager::GetInstance()->StoreObject("map1", TextureManager::GetInstance()->StoreTexture("Resources/load4.png"), 0);
-	//Object3dManager::GetInstance()->StoreObject("road2", TextureManager::GetInstance()->StoreTexture("Resources/load4.png"), 0);
 	Object3dManager::GetInstance()->StoreObject("driftmap", TextureManager::GetInstance()->StoreTexture("Resources/driftmap/driftmap.png"), 0);
 
 	worldTransform_.Initialize();
 
 	ui_ = std::make_unique<UI>();
 	ui_->Initialize();
-	sprite_->Init("Resources/load2.png");
 
 	carGear_ = std::make_unique<Gear>();
 	carGear_->Initialize();
 
-	sprite_->SetTexture(spTx_);
 	camera_ = std::make_unique<Camera>();
 	camera_->Initialize();
-	levelData_ = Loder::LoadJsonFile("Resources/json", "driftmap");
+	levelData_ = Loder::LoadJsonFile("Resources/json/stage", "stage" + std::to_string(SharedGameData::GetInstance()->GetSelectedStageNo() + 1));
 	GlobalVariables::GetInstance()->LoadFiles();
 	followCamera_ = std::make_unique<FollowCamera>();
 	followCamera_->Init();
 	ArrageObj(maps_);
-
-
-
-	carSmoke_ = std::make_unique<CarSmoke>();
-	carSmoke_->SetCamera(followCamera_->GetCamera());
-	carSmoke_->Init();
+	car_->SetCamera(followCamera_->GetCamera());
 
 	// 速度メーターにスピードのポインタを渡す
 	ui_->SetSpeed(car_->GetSpeed());
@@ -86,19 +78,12 @@ void GameScene::Init()
 	WorldTransform* wt = car_->GetWorldTransform();
 	followCamera_->SetTarget(wt);
 
-	carSmoke_->SetParent(car_->GetWorldTransform());
-
-
 	depthOutlineInfo_.farClip = 55.0f;
 	depthOutlineInfo_.diffSize = { 0.0f,1.0f };
 	postProcess_ = std::make_unique<PostProcess>();
 	postProcess_->Init();
 	postProcess_->SetCamera(followCamera_->GetCamera());
 	postProcess_->SetEffectNo(PostEffectMode::kDepthOutline);
-
-	wall_ = std::make_unique<Wall>();
-	wall_->Initialize({ -0.523599f ,0,0 }, { 10.0f,0.5f,10.0f }, { 0,0,20.0f }, "box");
-
 	// collisionManager
 	collisionManager_ = std::make_unique<CollisionManager>();
 
@@ -106,6 +91,7 @@ void GameScene::Init()
 
 void GameScene::Update()
 {
+	GlobalVariables::GetInstance()->Update();
 	followCamera_->Upadate();
 
 	camera_->Move();
@@ -117,15 +103,15 @@ void GameScene::Update()
 	camera_->CameraDebug();
 #endif // _DEBUG
 	if (Input::GetInstance()->GetJoystickState()) {
-		if (Input::GetInstance()->PushJoyButton(XINPUT_GAMEPAD_B)) {
-			sceneNo = TITLE;
+		if (Input::GetInstance()->TriggerJoyButton(XINPUT_GAMEPAD_Y) && fade_->GetAlpha() <= 0.0f) {
+			fade_->StartFadeIn(); // フェードインを開始
 		}
 
 	}
+	
 	// カメラの視点によってアウトラインのパラメータを変更
 	DepthOutlinePramChange();
 	camera_->Update();
-	GlobalVariables::GetInstance()->Update();
 	for (std::list<std::unique_ptr<map>>::iterator itr = maps_.begin(); itr != maps_.end(); itr++) {
 		(*itr)->Update();
 	}
@@ -133,7 +119,6 @@ void GameScene::Update()
 		(*itr)->Update();
 	}
 	car_->Update();
-	//particle_->CreateParticle();
 
 	Object3dManager::GetInstance()->Update();
 	for (std::list<std::unique_ptr<HitBoxWire>>::iterator itr = hitBoxWires_.begin(); itr != hitBoxWires_.end(); itr++) {
@@ -142,22 +127,24 @@ void GameScene::Update()
 	LineManager::GetInstance()->Update();
 	postProcess_->Update();
 
-
-	sprite_->Update();
 	carGear_->Update();
 	ui_->SetGear(carGear_->GetCurrentGear());
 	ui_->Update();
-	//ui_->SetSpeed(carGear_->GetCurrentSpeed());
-	//particle_->Update();
-
-	fade_->Update();
+	
+	// fadeの更新
 	fade_->UpdateFade();
+
 	carSmoke_->Update();
 	minimap_->Update(followCamera_->GetCamera());
 	wall_->Update();
+	fade_->Update();
+
+	if (fade_->GetAlpha() >= 1.0f) {
+		sceneNo = TITLE; // ステージシーンに遷移
+	}
 
 	//physicsSystem_->Apply(1.0f / 60.0f);
-
+	ParticleManager::GetInstance()->Update(followCamera_->GetCamera());
 	Collision();
 }
 void GameScene::Draw()
@@ -165,7 +152,7 @@ void GameScene::Draw()
 
 	Object3dManager::GetInstance()->Draw(followCamera_->GetCamera());
 	LineManager::GetInstance()->Draw(followCamera_->GetCamera());
-	//carSmoke_->Draw();
+
 }
 
 void GameScene::PostDraw()
@@ -176,11 +163,10 @@ void GameScene::PostDraw()
 
 void GameScene::Draw2d()
 {
-	//carSmoke_->Draw();
-	//sprite_->Draw();
+	ParticleManager::GetInstance()->Draw();
 	ui_->Draw();
-	//sprite_->Draw();
 	fade_->Draw();
+
 
 }
 
@@ -355,12 +341,16 @@ void GameScene::ArrageObj(std::list<std::unique_ptr<map>>& maps)
 
 			ModelManager::GetInstance()->LoadModel("Resources/" + objectData.filename, objectData.filename + ".obj");
 			std::unique_ptr<Fence> fence = std::make_unique<Fence>();
-			fence->Initialize(objectData.transform.rotate / 180,
+			fence->Initialize(objectData.transform.rotate,
 				objectData.transform.scale
 				, objectData.transform.translate, objectData.filename);
-			fence->SetCollisionScale(objectData.collisionSize + 2);
-			std::unique_ptr<HitBoxWire> hitBoxWire = std::make_unique<HitBoxWire>();
+			fence->SetCollisionScale({ 0.4f,2.0f,5.0f });
 			fences_.push_back(std::move(fence));
+			std::unique_ptr<HitBoxWire> hitBoxWire = std::make_unique<HitBoxWire>();
+			Vector3 rotateVec = { objectData.transform.rotate.x , objectData.transform.rotate.y, objectData.transform.rotate.z };
+			Vector3 collisionSize = { 0.4f,2.0f,5.0f };
+			hitBoxWire->Init(collisionSize, rotateVec, objectData.transform.translate);
+			hitBoxWires_.push_back(std::move(hitBoxWire));
 		}
 		if (objectData.filename.compare("guardrail") == 0) {
 
@@ -390,7 +380,6 @@ void GameScene::Collision()
 		collisionManager_->PushCollider(fence->GetCollider());
 	}
 
-	collisionManager_->PushCollider(wall_->GetCollider());
 	collisionManager_->CheckAllCollision();
 
 

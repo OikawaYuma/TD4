@@ -88,6 +88,8 @@ void Sprite::Init(const std::string& filePath) {
 		{0.0f,0.0f,0.0f},
 		{0.0f,0.0f,0.0f}
 	};
+	
+	texIndex_ = TextureManager::GetInstance()->StoreTexture(filePath);
 
 	const DirectX::TexMetadata &metadata_ =
 		TextureManager::GetInstance()->GetMetaData(filePath);

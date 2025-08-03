@@ -5,15 +5,16 @@ class CarSmoke
 public:
 	void Init();
 	void Update();
-	void Draw();
 
 public: // Getter
-	void SetCamera(Camera* camera) { camera_ = camera; }
+	void SetCamera(Camera* camera) { camera_ = camera;}
 	void SetParent(WorldTransform* worldTransform) { particle_->SetParent(worldTransform); }
 
+	void SetIsEmission(const bool& isEmission) { particle_->SetIsEmission(isEmission); }
+	void DebugEmitter();
 
 private:
-	std::unique_ptr<Particle> particle_;
+	std::shared_ptr<Particle> particle_;
 	Emitter emitter_{};
 	RandRangePro randRangePro_{};
 	Camera* camera_ = nullptr;

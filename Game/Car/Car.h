@@ -5,6 +5,8 @@
 #include "CarParts/CarSteering/CarSteering.h"
 #include "CarParts/CarTire/FrontCarTire/FrontCarTire.h"
 #include "CarParts/CarTire/RearCarTire/RearCarTire.h"
+#include "CarSmoke/CarSmoke.h"
+#include "CarBrakeSmoke/CarBrakeSmoke.h"
 #include <vector>
 #include "PlaneProjectionShadow.h"
 #include "PhysicsSystem/PhysicsSystem.h"
@@ -23,12 +25,18 @@ public:
 	/// </summary>
 	void Update();
 
+
+
 public: //Getter
 	WorldTransform* GetWorldTransform() { return &worldTransform_; }
 	float* GetSpeed() { return &speed_; }
 	Collider* GetBodyCollider() {return  body_->GetCollider(); }
 public: // setter
 	void SetPhysicsSystem(PhysicsSystem* ptr) { physicsSystem_ = ptr; }
+
+	void SetCamera(Camera* camera) {
+		camera_ = camera;
+	}
 
 private: // 生成処理
 
@@ -41,6 +49,11 @@ private: // 生成処理
 	/// タイヤ生成
 	/// </summary>
 	void CreateCarTire();
+
+	/// <summary>
+	/// 車の煙を生成
+	/// </summary>
+	void CreateCarSmoke();
 
 private: // 移動処理
 
@@ -91,6 +104,16 @@ private:
 	std::weak_ptr<ObjectPram> objectPram_{};
 	// 平行影
 	std::unique_ptr<PlaneProjectionShadow> shadow_;
+	// 車の煙
+	std::unique_ptr<CarSmoke> carSmoke_;
+
+	// 車の煙
+	std::unique_ptr<CarBrakeSmoke> carBrakeSmoke_;
+	// Cameraの情報
+	Camera* camera_ = nullptr;
+private: // 車のエンジン
+
+private:
 	// 中心からの距離
 	float frontLength = 1.31f;  // 重心から前輪まで
 	float rearLength = 1.31f;   // 重心から後輪まで

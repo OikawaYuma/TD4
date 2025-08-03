@@ -27,7 +27,6 @@
 #include "Fence/Fence.h"
 #include "Loder.h"
 #include "CarParts/CarEngine/CarGear/CarGear.h"
-#include "CarSmoke/CarSmoke.h"
 #include "CollisionType/Box/HitBoxWire.h"	   
 #include "Obstacles/Wall.h"
 #include "Collision/CollisionManager.h"
@@ -86,7 +85,6 @@ private:
 	Emitter emitter_{};
 	RandRangePro randRangePro_{};
 	std::unique_ptr<Fade> fade_;
-	std::unique_ptr<CarSmoke> carSmoke_;
 	// Sprite
 	std::unique_ptr<Sprite> sprite_;
 	std::unique_ptr<UI> ui_;
@@ -102,11 +100,10 @@ private:
 
 	int selectedIndex[1] = { 0 };
 
-	// 試しの壁
-	std::unique_ptr<Wall> wall_;
 	// collisionManager
 	std::unique_ptr<CollisionManager> collisionManager_;
 	// 自然法則とかの計算クラス
 	std::unique_ptr<PhysicsSystem> physicsSystem_;
+
 };
 

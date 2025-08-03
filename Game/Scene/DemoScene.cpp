@@ -22,20 +22,10 @@ void DemoScene::Init()
 	ModelManager::GetInstance()->LoadModel("Resources/Fence", "Fence.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/box", "box.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/road2", "road2.obj");
-	ModelManager::GetInstance()->LoadModel("Resources/driftmap", "driftmap.obj");
+	ModelManager::GetInstance()->LoadModel("Resources/driftmap", "driftmap3.obj");
 
 	// 物理
 	physicsSystem_ = std::make_unique<PhysicsSystem>();
-
-	fade_ = std::make_unique<Fade>();
-	fade_->Init("Resources/fade.png");
-
-	fade_->SetTexture(TextureManager::GetInstance()->StoreTexture("Resources/fade.png"));
-	spTx_ = TextureManager::GetInstance()->StoreTexture("Resources/load3.png");
-
-	sprite_ = std::make_unique<Sprite>();
-	sprite_->Init("Resources/load.png");
-	sprite_->SetTexture(TextureManager::GetInstance()->StoreTexture("Resources/load.png"));
 	{
 		std::weak_ptr<ObjectPram> objectpram = Object3dManager::GetInstance()->StoreObject("TenQ", TextureManager::GetInstance()->StoreTexture("Resources/TenQ/TenQ.png"), 0);
 		if (objectpram.lock()) {
@@ -45,20 +35,16 @@ void DemoScene::Init()
 		}
 	}
 	Object3dManager::GetInstance()->StoreObject("floor", TextureManager::GetInstance()->StoreTexture("Resources/kusa2.png"), 0);
-	//Object3dManager::GetInstance()->StoreObject("map1", TextureManager::GetInstance()->StoreTexture("Resources/load4.png"), 0);
-	//Object3dManager::GetInstance()->StoreObject("road2", TextureManager::GetInstance()->StoreTexture("Resources/load4.png"), 0);
-	Object3dManager::GetInstance()->StoreObject("driftmap", TextureManager::GetInstance()->StoreTexture("Resources/driftmap/driftmap.png"), 0);
+	Object3dManager::GetInstance()->StoreObject("driftmap3", TextureManager::GetInstance()->StoreTexture("Resources/driftmap/driftmap.png"), 0);
 
 	worldTransform_.Initialize();
 
 	ui_ = std::make_unique<UI>();
 	ui_->Initialize();
-	sprite_->Init("Resources/load2.png");
 
 	carGear_ = std::make_unique<Gear>();
 	carGear_->Initialize();
 
-	sprite_->SetTexture(spTx_);
 	camera_ = std::make_unique<Camera>();
 	camera_->Initialize();
 	levelData_ = Loder::LoadJsonFile("Resources/json", "stage10");
@@ -111,7 +97,7 @@ void DemoScene::Update()
 	camera_->CameraDebug();
 #endif // _DEBUG
 	if (Input::GetInstance()->GetJoystickState()) {
-		if (Input::GetInstance()->PushJoyButton(XINPUT_GAMEPAD_B)) {
+		if (Input::GetInstance()->TriggerJoyButton(XINPUT_GAMEPAD_Y)) {
 			sceneNo = TITLE;
 		}
 
@@ -136,16 +122,12 @@ void DemoScene::Update()
 	LineManager::GetInstance()->Update();
 	postProcess_->Update();
 
-
-	sprite_->Update();
 	carGear_->Update();
 	ui_->SetGear(carGear_->GetCurrentGear());
 	ui_->Update();
 	//ui_->SetSpeed(carGear_->GetCurrentSpeed());
 	//particle_->Update();
 
-	fade_->Update();
-	fade_->UpdateFade();
 	carSmoke_->Update();
 
 	wall_->Update();
@@ -170,12 +152,7 @@ void DemoScene::PostDraw()
 
 void DemoScene::Draw2d()
 {
-	//carSmoke_->Draw();
-	//sprite_->Draw();
 	ui_->Draw();
-	//sprite_->Draw();
-	fade_->Draw();
-
 }
 
 void DemoScene::Release() {
@@ -349,14 +326,18 @@ void DemoScene::ArrageObj(std::list<std::unique_ptr<map>>& maps)
 
 			ModelManager::GetInstance()->LoadModel("Resources/" + objectData.filename, objectData.filename + ".obj");
 			std::unique_ptr<Fence> fence = std::make_unique<Fence>();
-			fence->Initialize(objectData.transform.rotate / 180,
+			fence->Initialize(objectData.transform.rotate,
 				objectData.transform.scale
 				, objectData.transform.translate, objectData.filename);
-			fence->SetCollisionScale(objectData.collisionSize + 2);
-			std::unique_ptr<HitBoxWire> hitBoxWire = std::make_unique<HitBoxWire>();
+			fence->SetCollisionScale({0.4f,2.0f,5.0f});
 			fences_.push_back(std::move(fence));
+			std::unique_ptr<HitBoxWire> hitBoxWire = std::make_unique<HitBoxWire>();
+			Vector3 rotateVec = { objectData.transform.rotate.x , objectData.transform.rotate.y, objectData.transform.rotate.z };
+			Vector3 collisionSize = { 0.4f,2.0f,5.0f };
+			hitBoxWire->Init(collisionSize, rotateVec, objectData.transform.translate);
+			hitBoxWires_.push_back(std::move(hitBoxWire));
 		}
-		if (objectData.filename.compare("guardrail") == 0) {
+		else if (objectData.filename.compare("guardrail") == 0) {
 
 			ModelManager::GetInstance()->LoadModel("Resources/" + objectData.filename, objectData.filename + ".obj");
 			std::unique_ptr<Fence> fence = std::make_unique<Fence>();

@@ -91,7 +91,7 @@ public:
 	~Particle();
 
 	void Init();
-	void Update();
+	void Update(Camera* camera);
 	void Draw();
 	void Release();
 	ParticlePro MakeNewParticle(std::mt19937& randomEngine);
@@ -100,7 +100,7 @@ public:
 
 	void CreateParticle();
 	// SetJson
-	void SetJsonPram();
+	void AddJsonPram();
 	// ApplyGlovalvariables
 	void ApplyGlovalVariables();
 
@@ -113,7 +113,6 @@ public: // Setter
 
 	void SetParent(WorldTransform* worldTransform){worldTransform_.parent_ = worldTransform;}
 
-	void SetCamera(Camera* camera) { camera_ = camera; }
 
 	void SetEmitter(Emitter emitter) { emitter_ = emitter; }
 
@@ -125,17 +124,22 @@ public: // Setter
 
 	void SetName(const std::string& name) { name_ = name; }
 
+	void SetIsEmission(const bool isEmission) { isEmission_ = isEmission; }
+
+public: // Getter
+	bool GetIsEmission() const { return isEmission_; }
 private:
 	// 借りてくる
 	WinAPI* sWinAPI = nullptr;
 	DirectXCommon* sDirectXCommon = nullptr;
 	PSOParticle* pso_ = nullptr;
 
-	Camera* camera_ = nullptr;
-
 	Model* model_ = nullptr;
 
 private:
+	// 発生させるかどうかのフラグ
+	bool isEmission_ = false;
+
 	// 使用するパーティクル名
 	std::string name_;
 

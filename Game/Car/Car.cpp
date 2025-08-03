@@ -16,6 +16,8 @@ void Car::Initialize(const Vector3& scale, const Vector3& rotate, const Vector3&
 	CreateCarBody();
 	// tire生成
 	CreateCarTire();
+	// 車の煙生成
+	CreateCarSmoke();
 	//// 影生成
 	shadow_ = std::make_unique<PlaneProjectionShadow>();
 	shadow_->Init(&worldTransform_,filename);
@@ -56,7 +58,11 @@ void Car::Update()
 	worldTransform_.UpdateMatrix();
 	// ステアリング更新
 	steering_->Update();
+
+	carSmoke_->Update();
 }
+
+
 
 void Car::CreateCarBody()
 {
@@ -107,6 +113,21 @@ void Car::CreateCarTire()
 	//　下記一行問題ICar参照
 	rearRightTire->SetSteeringAngle(steering_->GetAngle());
 	tires_.push_back(std::move(rearRightTire));
+}
+
+void Car::CreateCarSmoke()
+{
+	carSmoke_ =  std::make_unique<CarSmoke>();
+	carSmoke_->Init();
+	carSmoke_->SetIsEmission(false);
+	carSmoke_->SetParent(&worldTransform_);
+
+	carBrakeSmoke_ = std::make_unique<CarBrakeSmoke>();
+	carBrakeSmoke_->Init();
+	// 車のブレーキ煙の初期化
+	carBrakeSmoke_->SetIsEmission(false);
+	carBrakeSmoke_->SetParent(&worldTransform_);
+
 }
 
 void Car::Yawing()
@@ -213,6 +234,17 @@ void Car::BicycleModel()
 	float rearGripMultiplier = 1.0f;
 	if (brake_ > 0.1f && velocity_mps > 10.0f) {
 		rearGripMultiplier = std::clamp(1.0f - brake_ * 0.8f, 0.4f, 1.0f);
+		carBrakeSmoke_->SetIsEmission(true); // ブレーキ煙を出す
+	}
+	else {
+		carBrakeSmoke_->SetIsEmission(false); // ブレーキ煙を出さない
+	}
+
+	if (velocity_mps < 10.0f) {
+		carSmoke_->SetIsEmission(true); // 車の煙を出す
+	}
+	else {
+		carSmoke_->SetIsEmission(false); // 車の煙を出さない
 	}
 	rearGripMax *= rearGripMultiplier;
 

@@ -10,41 +10,51 @@ ModelData Model::LoadObjFile(const std::string& directoryPath, const std::string
 {
 	Assimp::Importer importer;
 	std::string filePathA = directoryPath + "/" + filePath;
-	const aiScene* scene = importer.ReadFile(filePathA.c_str(), aiProcess_FlipWindingOrder | aiProcess_FlipUVs);
-	assert(scene->HasMaterials()); // メッシュがないのは対応しない
+	const aiScene* scene = importer.ReadFile(filePathA.c_str(),aiProcess_Triangulate | aiProcess_FlipWindingOrder | aiProcess_FlipUVs);
+	assert(scene->HasMaterials());
+
+	// 頂点重複を防ぐための map
+	std::unordered_map<VertexData, uint32_t, VertexDataHasher> vertexMap;
+
 	for (uint32_t meshIndex = 0; meshIndex < scene->mNumMeshes; ++meshIndex) {
 		aiMesh* mesh = scene->mMeshes[meshIndex];
-		assert(mesh->HasNormals()); // 法線がないMeshは今回は非対応
-		assert(mesh->HasTextureCoords(0)); // TexcoordがないMeshは今回は非対応
-		
-		uint32_t baseVertexIndex = static_cast<uint32_t>(modelData_.vertices.size());
-		baseVertexIndex;
-		// ここからMeshの中身(Face)の解析を行っていく
+		assert(mesh->HasNormals());
+		assert(mesh->HasTextureCoords(0));
+
 		for (uint32_t faceIndex = 0; faceIndex < mesh->mNumFaces; ++faceIndex) {
 			aiFace& face = mesh->mFaces[faceIndex];
-			assert(face.mNumIndices == 3);
+			if (face.mNumIndices != 3) {
+				// 三角形じゃないポリゴンはスキップする
+				continue;
+			}
 
 			for (uint32_t element = 0; element < face.mNumIndices; ++element) {
 				uint32_t vertexIndex = face.mIndices[element];
-				
+
 				aiVector3D& position = mesh->mVertices[vertexIndex];
 				aiVector3D& normal = mesh->mNormals[vertexIndex];
 				aiVector3D& texcoord = mesh->mTextureCoords[0][vertexIndex];
-				
+
 				VertexData vertexData;
-				vertexData.position = { -position.x,position.y,position.z,1.0f };
+				vertexData.position = { -position.x, position.y, position.z, 1.0f };
 				vertexData.normal = { -normal.x, normal.y ,normal.z };
-				vertexData.texcorrd = { texcoord.x,texcoord.y };
-				modelData_.vertices.push_back(vertexData);
-				modelData_.indices.push_back(static_cast<uint32_t>(modelData_.vertices.size()) -1);
+				vertexData.texcorrd = { texcoord.x, texcoord.y };
 
-
+				auto it = vertexMap.find(vertexData);
+				if (it != vertexMap.end()) {
+					modelData_.indices.push_back(it->second);
+				}
+				else {
+					uint32_t newIndex = static_cast<uint32_t>(modelData_.vertices.size());
+					modelData_.vertices.push_back(vertexData);
+					modelData_.indices.push_back(newIndex);
+					vertexMap[vertexData] = newIndex;
+				}
 			}
 		}
-
-
-
 	}
+
+	// テクスチャ
 	for (uint32_t materialIndex = 0; materialIndex < scene->mNumMaterials; ++materialIndex) {
 		aiMaterial* material = scene->mMaterials[materialIndex];
 		if (material->GetTextureCount(aiTextureType_DIFFUSE) != 0) {
@@ -55,7 +65,7 @@ ModelData Model::LoadObjFile(const std::string& directoryPath, const std::string
 	}
 
 	modelData_.rootNode = ReadNode(scene->mRootNode);
-	
+
 	return modelData_;
 
 }

@@ -331,8 +331,11 @@
     <ClCompile Include="Engine\3d\Line\LineManager.cpp" />
     <ClCompile Include="Game\PhysicsSystem\PhysicsSystem.cpp" />
     <ClCompile Include="Game\Scene\SelectScene.cpp" />
-    <ClCompile Include="Game\SceneEffect\SelectScene\SharedGameData.cpp" />
     <ClCompile Include="Game\map\MiniMap\MiniMap.cpp" />
+    <ClCompile Include="Game\SharedGameData\SharedGameData.cpp" />
+    <ClCompile Include="Game\SceneEffect\SelectScene\SelectStage\SelectStage.cpp" />
+    <ClCompile Include="Game\SceneEffect\SelectScene\CarView\CarView.cpp" />
+    <ClCompile Include="Game\CarBrakeSmoke\CarBrakeSmoke.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Utility\function.h">
@@ -611,8 +614,11 @@
     <ClInclude Include="Engine\3d\Line\LineManager.h" />
     <ClInclude Include="Game\PhysicsSystem\PhysicsSystem.h" />
     <ClInclude Include="Game\Scene\SelectScene.h" />
-    <ClInclude Include="Game\SceneEffect\SelectScene\SharedGameData.h" />
     <ClInclude Include="Game\map\MiniMap\MiniMap.h" />
+    <ClInclude Include="Game\SharedGameData\SharedGameData.h" />
+    <ClInclude Include="Game\SceneEffect\SelectScene\SelectStage\SelectStage.h" />
+    <ClInclude Include="Game\SceneEffect\SelectScene\CarView\CarView.h" />
+    <ClInclude Include="Game\CarBrakeSmoke\CarBrakeSmoke.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shader\Particle.PS.hlsl">
