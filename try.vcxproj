@@ -118,7 +118,6 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
       <AdditionalIncludeDirectories>$(ProjectDir)Resources\shaders;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </FxCompile>
   </ItemDefinitionGroup>
-  <ItemGroup>
 <ItemGroup>
   <ClCompile Include="Game\CarBrakeSmoke\CarBrakeSmoke.cpp" />
   <ClCompile Include="Game\SceneEffect\SelectScene\CarView\CarView.cpp" />

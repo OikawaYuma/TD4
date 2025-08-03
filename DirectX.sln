@@ -10,9 +10,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ソリューション項目
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DirectXTex", "Engine\Externals\DirectXTex\DirectXTex_Desktop_2022_Win10.vcxproj", "{371B9FA9-4C90-4AC6-A123-ACED756D6C77}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "imgui", "Engine\Externals\imgui\imgui.vcxproj", "{03E6E164-2080-4629-BDA9-76DF9ED2F75F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DirectXTex", "Engine\Externals\DirectXTex\DirectXTex_Desktop_2022_Win10.vcxproj", "{371B9FA9-4C90-4AC6-A123-ACED756D6C77}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,18 +27,18 @@ Global
 		{78FF4879-C18E-4DED-89E8-CF5A97D2FDFA}.Profile|x64.Build.0 = Release|x64
 		{78FF4879-C18E-4DED-89E8-CF5A97D2FDFA}.Release|x64.ActiveCfg = Release|x64
 		{78FF4879-C18E-4DED-89E8-CF5A97D2FDFA}.Release|x64.Build.0 = Release|x64
-		{371B9FA9-4C90-4AC6-A123-ACED756D6C77}.Debug|x64.ActiveCfg = Debug|x64
-		{371B9FA9-4C90-4AC6-A123-ACED756D6C77}.Debug|x64.Build.0 = Debug|x64
-		{371B9FA9-4C90-4AC6-A123-ACED756D6C77}.Profile|x64.ActiveCfg = Profile|x64
-		{371B9FA9-4C90-4AC6-A123-ACED756D6C77}.Profile|x64.Build.0 = Profile|x64
-		{371B9FA9-4C90-4AC6-A123-ACED756D6C77}.Release|x64.ActiveCfg = Release|x64
-		{371B9FA9-4C90-4AC6-A123-ACED756D6C77}.Release|x64.Build.0 = Release|x64
 		{03E6E164-2080-4629-BDA9-76DF9ED2F75F}.Debug|x64.ActiveCfg = Debug|x64
 		{03E6E164-2080-4629-BDA9-76DF9ED2F75F}.Debug|x64.Build.0 = Debug|x64
 		{03E6E164-2080-4629-BDA9-76DF9ED2F75F}.Profile|x64.ActiveCfg = Debug|x64
 		{03E6E164-2080-4629-BDA9-76DF9ED2F75F}.Profile|x64.Build.0 = Debug|x64
 		{03E6E164-2080-4629-BDA9-76DF9ED2F75F}.Release|x64.ActiveCfg = Release|x64
 		{03E6E164-2080-4629-BDA9-76DF9ED2F75F}.Release|x64.Build.0 = Release|x64
+		{371B9FA9-4C90-4AC6-A123-ACED756D6C77}.Debug|x64.ActiveCfg = Debug|x64
+		{371B9FA9-4C90-4AC6-A123-ACED756D6C77}.Debug|x64.Build.0 = Debug|x64
+		{371B9FA9-4C90-4AC6-A123-ACED756D6C77}.Profile|x64.ActiveCfg = Profile|x64
+		{371B9FA9-4C90-4AC6-A123-ACED756D6C77}.Profile|x64.Build.0 = Profile|x64
+		{371B9FA9-4C90-4AC6-A123-ACED756D6C77}.Release|x64.ActiveCfg = Release|x64
+		{371B9FA9-4C90-4AC6-A123-ACED756D6C77}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

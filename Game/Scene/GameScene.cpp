@@ -33,10 +33,6 @@ void GameScene::Init()
 	fade_ = std::make_unique<Fade>();
 	fade_->Init("Resources/Black.png");
 	fade_->StartFadeOut();
-  
-	sprite_ = std::make_unique<Sprite>();
-	sprite_->Init("Resources/load.png");
-	sprite_->SetTexture(TextureManager::GetInstance()->StoreTexture("Resources/load.png"));
 
 	// miniMap
 	ModelManager::GetInstance()->LoadModel("Resources/map", "map.obj");
@@ -133,10 +129,7 @@ void GameScene::Update()
 	
 	// fadeの更新
 	fade_->UpdateFade();
-
-	carSmoke_->Update();
 	minimap_->Update(followCamera_->GetCamera());
-	wall_->Update();
 	fade_->Update();
 
 	if (fade_->GetAlpha() >= 1.0f) {
