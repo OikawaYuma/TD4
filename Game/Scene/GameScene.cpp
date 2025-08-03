@@ -24,7 +24,7 @@ void GameScene::Init()
 	ModelManager::GetInstance()->LoadModel("Resources/Fence", "Fence.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/box", "box.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/road2", "road2.obj");
-	ModelManager::GetInstance()->LoadModel("Resources/driftmap", "driftmap.obj");
+	ModelManager::GetInstance()->LoadModel("Resources/driftmap", "driftmap6.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/map", "map.obj");
 
 	// 物理
@@ -59,9 +59,10 @@ void GameScene::Init()
 	}
 	else if (SharedGameData::GetInstance()->GetSelectedStageNo() == 1) {
 		Object3dManager::GetInstance()->StoreObject("map", TextureManager::GetInstance()->StoreTexture("Resources/load4.png"), 0);
+		std::weak_ptr<ObjectPram> objectpram = Object3dManager::GetInstance()->StoreObject("floor", TextureManager::GetInstance()->StoreTexture("Resources/kusa2.png"), 0);
 	}
 	else if (SharedGameData::GetInstance()->GetSelectedStageNo() == 2) {
-		Object3dManager::GetInstance()->StoreObject("driftmap", TextureManager::GetInstance()->StoreTexture("Resources/driftmap/driftmap.png"), 0);
+		Object3dManager::GetInstance()->StoreObject("driftmap6", TextureManager::GetInstance()->StoreTexture("Resources/driftmap/driftmap.png"), 0);
 		Object3dManager::GetInstance()->StoreObject("wood2", TextureManager::GetInstance()->StoreTexture("Resources/worldDesign/wood.png"), 0);
 	}
 
@@ -368,10 +369,10 @@ void GameScene::ArrageObj(std::list<std::unique_ptr<map>>& maps)
 			fence->Initialize({ (objectData.transform.rotate.x + 3.1415f / 2),(objectData.transform.rotate.y),(objectData.transform.rotate.z) },
 				objectData.transform.scale
 				, objectData.transform.translate, objectData.filename);
-			fence->SetCollisionScale(objectData.collisionSize);
+			fence->SetCollisionScale({ objectData.collisionSize.x, objectData.collisionSize.y,objectData.collisionSize.z+2 });
 			std::unique_ptr<HitBoxWire> hitBoxWire = std::make_unique<HitBoxWire>();
 			Vector3 rotateVec = { objectData.transform.rotate.x + 3.1415f / 2 , objectData.transform.rotate.y, objectData.transform.rotate.z };
-			Vector3 collisionSize = objectData.collisionSize;
+			Vector3 collisionSize = { objectData.collisionSize.x, objectData.collisionSize.y,objectData.collisionSize.z + 2 };
 			hitBoxWire->Init(collisionSize, rotateVec, objectData.transform.translate);
 			fences_.push_back(std::move(fence));
 			hitBoxWires_.push_back(std::move(hitBoxWire));
