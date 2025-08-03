@@ -63,7 +63,6 @@ void GameScene::Init()
 	}
 	else if (SharedGameData::GetInstance()->GetSelectedStageNo() == 2) {
 		Object3dManager::GetInstance()->StoreObject("driftmap6", TextureManager::GetInstance()->StoreTexture("Resources/driftmap/driftmap.png"), 0);
-		Object3dManager::GetInstance()->StoreObject("wood2", TextureManager::GetInstance()->StoreTexture("Resources/worldDesign/wood.png"), 0);
 	}
 
 	worldTransform_.Initialize();
@@ -102,7 +101,10 @@ void GameScene::Init()
 	// ミニプレイヤー
 	miniUI_ = std::make_unique<MiniPlayer>();
 	miniUI_->Initialize();
+	timer_.start();
 
+	checkPoint_ = std::make_unique<CheckPoint>();
+	checkPoint_->Initialize({ 0.0f, 0.0f, 0.0f }, { 1.0f, 1.0f, 1.0f }, { 0.0f, 0.0f, 40.0f }, "box");
 }
 
 void GameScene::Update()
@@ -156,7 +158,7 @@ void GameScene::Update()
 	if (fade_->GetAlpha() >= 1.0f) {
 		sceneNo = TITLE; // ステージシーンに遷移
 	}
-
+	checkPoint_->Update();
 	// ミニプレイヤー
 	Vector2 playerPos = { car_->GetWorldTransform()->translation_.x, car_->GetWorldTransform()->translation_ .z};     // プレイヤーのワールド座標
 	// プレイヤーの回転角（0〜360°）
@@ -179,6 +181,11 @@ void GameScene::Update()
 	ImGui::Begin("a");
 	ImGui::DragFloat2("Transform", &miniMapOrigin.x, 0.1f);
 	ImGui::DragFloat("scale", &mapScale, 0.1f);
+	// タイマー
+	ImGui::Text("DeltaTimess: %d ms", timer_.elapsedTensOfMinutes());
+	ImGui::Text("DeltaTimes: %d ms", timer_.elapsedMinutesOnly());
+	ImGui::Text("DeltaTimem: %d ms", timer_.elapsedTensOfSeconds());
+	ImGui::Text("DeltaTimem: %d ms", timer_.elapsedSecondsOnly());
 	ImGui::End();
 #endif // _DEBUG
 }
@@ -187,7 +194,7 @@ void GameScene::Draw()
 {
 
 	Object3dManager::GetInstance()->Draw(followCamera_->GetCamera());
-	LineManager::GetInstance()->Draw(followCamera_->GetCamera());
+	//LineManager::GetInstance()->Draw(followCamera_->GetCamera());
 	// ミニプレイヤー
 	miniUI_->Draw();
 
@@ -367,12 +374,12 @@ void GameScene::ArrageObj(std::list<std::unique_ptr<map>>& maps)
 				objectData.transform.rotate.z
 				}, objectData.transform.translate, "carBody");
 
-			std::unique_ptr<HitBoxWire> hitBoxWire = std::make_unique<HitBoxWire>();
+			//std::unique_ptr<HitBoxWire> hitBoxWire = std::make_unique<HitBoxWire>();
 			Vector3 rotateVec = { objectData.transform.rotate.x, objectData.transform.rotate.y, objectData.transform.rotate.z };
 			Vector3 collisionSize = { 1.7599999904632568f,  1.3000000715255737f,4.5f };
-			hitBoxWire->Init(collisionSize, rotateVec, { 0.0f,0.335f,0.0f });
-			hitBoxWire->SetWorldTransformParent(car_->GetWorldTransform());
-			hitBoxWires_.push_back(std::move(hitBoxWire));
+			//hitBoxWire->Init(collisionSize, rotateVec, { 0.0f,0.335f,0.0f });
+			//hitBoxWire->SetWorldTransformParent(car_->GetWorldTransform());
+			//hitBoxWires_.push_back(std::move(hitBoxWire));
 
 		}
 		if (objectData.filename.compare("Fence") == 0) {
@@ -384,11 +391,11 @@ void GameScene::ArrageObj(std::list<std::unique_ptr<map>>& maps)
 				, objectData.transform.translate, objectData.filename);
 			fence->SetCollisionScale({ 0.4f,2.0f,5.0f });
 			fences_.push_back(std::move(fence));
-			std::unique_ptr<HitBoxWire> hitBoxWire = std::make_unique<HitBoxWire>();
+			//std::unique_ptr<HitBoxWire> hitBoxWire = std::make_unique<HitBoxWire>();
 			Vector3 rotateVec = { objectData.transform.rotate.x , objectData.transform.rotate.y, objectData.transform.rotate.z };
 			Vector3 collisionSize = { 0.4f,2.0f,5.0f };
-			hitBoxWire->Init(collisionSize, rotateVec, objectData.transform.translate);
-			hitBoxWires_.push_back(std::move(hitBoxWire));
+			//hitBoxWire->Init(collisionSize, rotateVec, objectData.transform.translate);
+			//hitBoxWires_.push_back(std::move(hitBoxWire));
 		}
 		if (objectData.filename.compare("guardrail") == 0) {
 
@@ -399,12 +406,12 @@ void GameScene::ArrageObj(std::list<std::unique_ptr<map>>& maps)
 				objectData.transform.scale
 				, objectData.transform.translate, objectData.filename);
 			fence->SetCollisionScale({ objectData.collisionSize.x, objectData.collisionSize.y,objectData.collisionSize.z+2 });
-			std::unique_ptr<HitBoxWire> hitBoxWire = std::make_unique<HitBoxWire>();
+			//std::unique_ptr<HitBoxWire> hitBoxWire = std::make_unique<HitBoxWire>();
 			Vector3 rotateVec = { objectData.transform.rotate.x + 3.1415f / 2 , objectData.transform.rotate.y, objectData.transform.rotate.z };
 			Vector3 collisionSize = { objectData.collisionSize.x, objectData.collisionSize.y,objectData.collisionSize.z + 2 };
-			hitBoxWire->Init(collisionSize, rotateVec, objectData.transform.translate);
+		//	hitBoxWire->Init(collisionSize, rotateVec, objectData.transform.translate);
 			fences_.push_back(std::move(fence));
-			hitBoxWires_.push_back(std::move(hitBoxWire));
+			//hitBoxWires_.push_back(std::move(hitBoxWire));
 		}
 	}
 }
@@ -417,7 +424,7 @@ void GameScene::Collision()
 	for (const auto& fence : fences_) {
 		collisionManager_->PushCollider(fence->GetCollider());
 	}
-
+	collisionManager_->PushCollider(checkPoint_->GetCollider());
 	collisionManager_->CheckAllCollision();
 
 

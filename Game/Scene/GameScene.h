@@ -33,6 +33,8 @@
 #include "PhysicsSystem/PhysicsSystem.h"
 #include <map/MiniMap/MiniMap.h>
 #include <map/MiniMap/MiniPlayer.h>
+#include "Timer/Timer.h"
+#include "CheckPoint/CheckPoint.h"
 
 class GameScene :public IScene
 {
@@ -60,7 +62,7 @@ private:
 	void Collision();
 
 private:
-
+	Timer timer_;
 
 	std::unique_ptr<FollowCamera> followCamera_;
 	std::unique_ptr<PostProcess> postProcess_;
@@ -84,6 +86,8 @@ private:
 	std::unique_ptr<MiniMap> minimap_;
 	// ミニプレイヤー
 	std::unique_ptr<MiniPlayer> miniUI_;
+	// ミニプレイヤー
+	std::unique_ptr<CheckPoint> checkPoint_;
 
 	Emitter emitter_{};
 	RandRangePro randRangePro_{};

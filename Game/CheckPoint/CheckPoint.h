@@ -19,5 +19,7 @@ public:
 	void OnCollision();
 private:
 	Vector3 collisionScale_{ 1.0f, 1.0f, 1.0f }; // 衝突判定のスケール
+
+	bool isGameClear_ = false; // ゲームクリアフラグ
 };
 
