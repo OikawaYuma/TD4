@@ -16,7 +16,7 @@ void GameScene::Init()
 {
 	Object3dManager::GetInstance()->Init();
 	LineManager::GetInstance()->Init();
-	ModelManager::GetInstance()->LoadModel("Resources/worldDesign", "worldDesign.obj");
+	ModelManager::GetInstance()->LoadModel("Resources/worldDesign", "wood2.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/map", "IROHAmap2.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/ball", "ball.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/floor", "floor.obj");
@@ -25,6 +25,7 @@ void GameScene::Init()
 	ModelManager::GetInstance()->LoadModel("Resources/box", "box.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/road2", "road2.obj");
 	ModelManager::GetInstance()->LoadModel("Resources/driftmap", "driftmap.obj");
+	ModelManager::GetInstance()->LoadModel("Resources/map", "map.obj");
 
 	// 物理
 	physicsSystem_ = std::make_unique<PhysicsSystem>();
@@ -42,8 +43,22 @@ void GameScene::Init()
 			objectpram.lock()->worldTransform.UpdateMatrix();
 		}
 	}
-	Object3dManager::GetInstance()->StoreObject("floor", TextureManager::GetInstance()->StoreTexture("Resources/kusa2.png"), 0);
-	Object3dManager::GetInstance()->StoreObject("driftmap", TextureManager::GetInstance()->StoreTexture("Resources/driftmap/driftmap.png"), 0);
+	
+	
+	if (SharedGameData::GetInstance()->GetSelectedStageNo() == 0) {
+		std::weak_ptr<ObjectPram> objectpram = Object3dManager::GetInstance()->StoreObject("floor", TextureManager::GetInstance()->StoreTexture("Resources/kusa2.png"), 0);
+		if (objectpram.lock()) {
+			objectpram.lock()->worldTransform.translation_ = { 0.0f,0.0f,128.0f };
+			objectpram.lock()->worldTransform.UpdateMatrix();
+		}
+	}
+	else if (SharedGameData::GetInstance()->GetSelectedStageNo() == 1) {
+		Object3dManager::GetInstance()->StoreObject("map", TextureManager::GetInstance()->StoreTexture("Resources/load4.png"), 0);
+	}
+	else if (SharedGameData::GetInstance()->GetSelectedStageNo() == 2) {
+		Object3dManager::GetInstance()->StoreObject("driftmap", TextureManager::GetInstance()->StoreTexture("Resources/driftmap/driftmap.png"), 0);
+		Object3dManager::GetInstance()->StoreObject("wood2", TextureManager::GetInstance()->StoreTexture("Resources/worldDesign/wood.png"), 0);
+	}
 
 	worldTransform_.Initialize();
 
