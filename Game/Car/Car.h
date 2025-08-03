@@ -6,6 +6,7 @@
 #include "CarParts/CarTire/FrontCarTire/FrontCarTire.h"
 #include "CarParts/CarTire/RearCarTire/RearCarTire.h"
 #include "CarSmoke/CarSmoke.h"
+#include "CarBrakeSmoke/CarBrakeSmoke.h"
 #include <vector>
 #include "PlaneProjectionShadow.h"
 #include "PhysicsSystem/PhysicsSystem.h"
@@ -105,6 +106,9 @@ private:
 	std::unique_ptr<PlaneProjectionShadow> shadow_;
 	// 車の煙
 	std::unique_ptr<CarSmoke> carSmoke_;
+
+	// 車の煙
+	std::unique_ptr<CarBrakeSmoke> carBrakeSmoke_;
 	// Cameraの情報
 	Camera* camera_ = nullptr;
 private: // 車のエンジン

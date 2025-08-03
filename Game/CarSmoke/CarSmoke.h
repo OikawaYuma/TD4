@@ -10,6 +10,7 @@ public: // Getter
 	void SetCamera(Camera* camera) { camera_ = camera;}
 	void SetParent(WorldTransform* worldTransform) { particle_->SetParent(worldTransform); }
 
+	void SetIsEmission(const bool& isEmission) { particle_->SetIsEmission(isEmission); }
 	void DebugEmitter();
 
 private:

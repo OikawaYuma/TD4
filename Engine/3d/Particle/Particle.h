@@ -124,6 +124,10 @@ public: // Setter
 
 	void SetName(const std::string& name) { name_ = name; }
 
+	void SetIsEmission(const bool isEmission) { isEmission_ = isEmission; }
+
+public: // Getter
+	bool GetIsEmission() const { return isEmission_; }
 private:
 	// 借りてくる
 	WinAPI* sWinAPI = nullptr;
@@ -133,7 +137,9 @@ private:
 	Model* model_ = nullptr;
 
 private:
-	
+	// 発生させるかどうかのフラグ
+	bool isEmission_ = false;
+
 	// 使用するパーティクル名
 	std::string name_;
 
