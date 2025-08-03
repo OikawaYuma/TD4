@@ -7,7 +7,7 @@ MiniMap::~MiniMap()
 void MiniMap::Initialize(const Vector3& scale, const Vector3& rotate, const Vector3& translate, const std::string filename)
 {
 	// texture
-	texture_ = TextureManager::GetInstance()->StoreTexture("Resources/load3.png");
+	texture_ = TextureManager::GetInstance()->StoreTexture("Resources/driftmap/driftmap.png");
 	color_ = { 1.0f,1.0f,1.0f,1.0f };
 
 	// 初期化
@@ -15,6 +15,7 @@ void MiniMap::Initialize(const Vector3& scale, const Vector3& rotate, const Vect
 	objectPram_.lock()->worldTransform.scale_ = scale;
 	objectPram_.lock()->worldTransform.rotation_ = rotate;
 	objectPram_.lock()->worldTransform.translation_ = translate;
+	offset = translate;
 	objectPram_.lock()->color = color_;
 
 	if (objectPram_.lock()) {
@@ -32,18 +33,15 @@ void MiniMap::Update(Camera* camera)
 		// カメラの回転行列を作成
 		Matrix4x4 camRotMat = MakeRotationMatrix(camRot);
 
-		// 視界の左上に配置（前方に5.0f、左に1.5fオフセット）
-		Vector3 localOffset = { -1.7f, 0.0f, 5.0f };
-
 		// カメラの回転に合わせてオフセットをワールド変換
-		Vector3 worldOffset = TransformNormal(localOffset, camRotMat);
+		Vector3 worldOffset = TransformNormal(offset, camRotMat);
 
 		// オブジェクトのワールド位置を計算
 		Vector3 finalPos = camPos + worldOffset;
 		locked->worldTransform.translation_ = finalPos;
 
 		// X軸に90度回転を加える
-		constexpr float pi = 3.14159265f;
+		constexpr float pi = -3.14159265f;
 		Vector3 additionalRotation = { 90.0f * (pi / 180.0f), 0.0f, 0.0f };
 
 		// カメラ回転 + X軸回転

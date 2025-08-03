@@ -32,6 +32,7 @@
 #include "Collision/CollisionManager.h"
 #include "PhysicsSystem/PhysicsSystem.h"
 #include <map/MiniMap/MiniMap.h>
+#include <map/MiniMap/MiniPlayer.h>
 
 class GameScene :public IScene
 {
@@ -81,6 +82,8 @@ private:
 	std::unique_ptr<Particle> particle_;
 	// ミニマップ
 	std::unique_ptr<MiniMap> minimap_;
+	// ミニプレイヤー
+	std::unique_ptr<MiniPlayer> miniUI_;
 
 	Emitter emitter_{};
 	RandRangePro randRangePro_{};
@@ -105,5 +108,7 @@ private:
 	// 自然法則とかの計算クラス
 	std::unique_ptr<PhysicsSystem> physicsSystem_;
 
+	// 画面上のミニマップ左上位置
+	Vector2 miniMapOrigin = { 45.0f, 207.0f };
 };
 

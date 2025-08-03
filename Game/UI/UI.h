@@ -20,6 +20,7 @@ public:
 	// Setter
 
 	void SetSpeed(float* speed_);
+	//void SetRot(float rot_);
 	void SetGear(int gear);
 
 private:

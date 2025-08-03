@@ -36,9 +36,9 @@ void GameScene::Init()
 	fade_->StartFadeOut();
 
 	// miniMap
-	ModelManager::GetInstance()->LoadModel("Resources/map", "map.obj");
+	ModelManager::GetInstance()->LoadModel("Resources/driftmap", "minimap.obj");
 	minimap_ = std::make_unique<MiniMap>();
-	minimap_->Initialize({ 0.005f, 0.005f, 0.005f }, { 1.6f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, "map");
+	minimap_->Initialize({ 0.002f, 0.002f, 0.002f }, { 1.6f, 0.0f, 0.0f }, { -1.9f, 0.45f, 5.0f }, "minimap");
   
 	{
 		std::weak_ptr<ObjectPram> objectpram = Object3dManager::GetInstance()->StoreObject("TenQ", TextureManager::GetInstance()->StoreTexture("Resources/TenQ/TenQ.png"), 0);
@@ -98,6 +98,10 @@ void GameScene::Init()
 	// collisionManager
 	collisionManager_ = std::make_unique<CollisionManager>();
 
+	// ミニプレイヤー
+	miniUI_ = std::make_unique<MiniPlayer>();
+	miniUI_->Initialize();
+
 }
 
 void GameScene::Update()
@@ -140,6 +144,7 @@ void GameScene::Update()
 
 	carGear_->Update();
 	ui_->SetGear(carGear_->GetCurrentGear());
+	//ui_->SetRot(car_->GetWorldTransform()->rotation_.y);
 	ui_->Update();
 	
 	// fadeの更新
@@ -151,15 +156,39 @@ void GameScene::Update()
 		sceneNo = TITLE; // ステージシーンに遷移
 	}
 
+	// ミニプレイヤー
+	Vector2 playerPos = { car_->GetWorldTransform()->translation_.x, car_->GetWorldTransform()->translation_ .z};     // プレイヤーのワールド座標
+	// プレイヤーの回転角（0〜360°）
+	float playerRot = car_->GetWorldTransform()->rotation_.y; 
+
+	// ワールド→ミニマップの縮小倍率
+	float mapScale = 0.6f;
+
+	miniUI_->SetSpeed(car_->GetSpeed());
+
+	miniUI_->SetFromPlayer(playerPos, playerRot, miniMapOrigin, mapScale);
+	miniUI_->Update();
+
+
 	//physicsSystem_->Apply(1.0f / 60.0f);
 	ParticleManager::GetInstance()->Update(followCamera_->GetCamera());
 	Collision();
+
+#ifdef _DEBUG
+	ImGui::Begin("a");
+	ImGui::DragFloat2("Transform", &miniMapOrigin.x, 0.1f);
+	ImGui::DragFloat("scale", &mapScale, 0.1f);
+	ImGui::End();
+#endif // _DEBUG
 }
+
 void GameScene::Draw()
 {
 
 	Object3dManager::GetInstance()->Draw(followCamera_->GetCamera());
 	LineManager::GetInstance()->Draw(followCamera_->GetCamera());
+	// ミニプレイヤー
+	miniUI_->Draw();
 
 }
 
