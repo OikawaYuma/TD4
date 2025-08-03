@@ -221,8 +221,11 @@ std::list<Particle::ParticlePro> Particle::Emission(std::mt19937& randEngine)
 	const double PI = 3.141592653589793;
 	PI;
 	std::list<Particle::ParticlePro> particles;
-	for (uint32_t count = 0; count < emitter_.count; ++count) {
-		particles.push_back(MakeNewParticle(randEngine));
+	if (isEmission_) {
+
+		for (uint32_t count = 0; count < emitter_.count; ++count) {
+			particles.push_back(MakeNewParticle(randEngine));
+		}
 	}
 	return particles;
 }
@@ -236,12 +239,15 @@ void Particle::CreateParticle()
 
 void Particle::AddJsonPram()
 {
-	GlobalVariables::GetInstance()->AddItme(name_,"scale", emitter_.transform.scale);
-	GlobalVariables::GetInstance()->AddItme(name_, "rotate", emitter_.transform.rotate);
-	GlobalVariables::GetInstance()->AddItme(name_, "translate", worldTransform_.translation_);
-	GlobalVariables::GetInstance()->AddItme(name_, "randRangeX", emitter_.randRangeXYZ.rangeX);
-	GlobalVariables::GetInstance()->AddItme(name_, "randRangeY", emitter_.randRangeXYZ.rangeY);
-	GlobalVariables::GetInstance()->AddItme(name_, "randRangeZ", emitter_.randRangeXYZ.rangeZ);
+	//GlobalVariables::GetInstance()->CreateGroup(name_);
+	//GlobalVariables::GetInstance()->AddItme(name_,"scale", emitter_.transform.scale);
+	//GlobalVariables::GetInstance()->AddItme(name_, "rotate", emitter_.transform.rotate);
+	//GlobalVariables::GetInstance()->AddItme(name_, "translate", emitter_.transform.translate);
+	//GlobalVariables::GetInstance()->AddItme(name_, "velocity", emitter_.velocity_);
+	//GlobalVariables::GetInstance()->AddItme(name_, "size", emitter_.size);
+	//GlobalVariables::GetInstance()->AddItme(name_, "randRangeX", emitter_.randRangeXYZ.rangeX);
+	//GlobalVariables::GetInstance()->AddItme(name_, "randRangeY", emitter_.randRangeXYZ.rangeY);
+	//GlobalVariables::GetInstance()->AddItme(name_, "randRangeZ", emitter_.randRangeXYZ.rangeZ);
 }
 
 
@@ -250,9 +256,12 @@ void Particle::ApplyGlovalVariables()
 	emitter_.transform.scale = GlobalVariables::GetInstance()->GetVector3Value(name_, "scale");
 	emitter_.transform.rotate = GlobalVariables::GetInstance()->GetVector3Value(name_, "rotate");
 	emitter_.transform.translate = GlobalVariables::GetInstance()->GetVector3Value(name_, "translate");
+	emitter_.velocity_ = GlobalVariables::GetInstance()->GetVector3Value(name_, "velocity");
+	//emitter_.size = GlobalVariables::GetInstance()->GetFloatValue(name_, "size");
 	emitter_.randRangeXYZ.rangeX = GlobalVariables::GetInstance()->GetVector2Value(name_, "randRangeX");
 	emitter_.randRangeXYZ.rangeY = GlobalVariables::GetInstance()->GetVector2Value(name_, "randRangeY");
 	emitter_.randRangeXYZ.rangeZ = GlobalVariables::GetInstance()->GetVector2Value(name_, "randRangeZ");
+	
 }
 
 

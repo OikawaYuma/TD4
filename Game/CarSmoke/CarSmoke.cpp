@@ -8,7 +8,7 @@ void CarSmoke::Init()
 	particle_->SetModel("ball.obj");
 	particle_->Init();
 	particle_->SetName("bomb");
-	
+	particle_->SetIsEmission(true);
 
 
 	emitter_.count = 10;
@@ -21,6 +21,7 @@ void CarSmoke::Init()
 	particle_->SetScleChangeFlag(true);
 	particle_->SetEmitter(emitter_);
 	particle_->ApplyGlovalVariables();
+	
 	ParticleManager::GetInstance()->AddParticle(particle_);
 
 }

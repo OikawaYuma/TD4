@@ -119,7 +119,14 @@ void Car::CreateCarSmoke()
 {
 	carSmoke_ =  std::make_unique<CarSmoke>();
 	carSmoke_->Init();
+	carSmoke_->SetIsEmission(false);
 	carSmoke_->SetParent(&worldTransform_);
+
+	carBrakeSmoke_ = std::make_unique<CarBrakeSmoke>();
+	carBrakeSmoke_->Init();
+	// 車のブレーキ煙の初期化
+	carBrakeSmoke_->SetIsEmission(false);
+	carBrakeSmoke_->SetParent(&worldTransform_);
 
 }
 
@@ -227,6 +234,17 @@ void Car::BicycleModel()
 	float rearGripMultiplier = 1.0f;
 	if (brake_ > 0.1f && velocity_mps > 10.0f) {
 		rearGripMultiplier = std::clamp(1.0f - brake_ * 0.8f, 0.4f, 1.0f);
+		carBrakeSmoke_->SetIsEmission(true); // ブレーキ煙を出す
+	}
+	else {
+		carBrakeSmoke_->SetIsEmission(false); // ブレーキ煙を出さない
+	}
+
+	if (velocity_mps < 10.0f) {
+		carSmoke_->SetIsEmission(true); // 車の煙を出す
+	}
+	else {
+		carSmoke_->SetIsEmission(false); // 車の煙を出さない
 	}
 	rearGripMax *= rearGripMultiplier;
 

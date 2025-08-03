@@ -29,6 +29,7 @@ void ParticleManager::Draw()
 	for (auto& particle : particles_) {
 		if (auto p = particle.lock()) {
 			p->Draw();
+			
 		}
 	}
 }
