@@ -102,7 +102,7 @@ void GameScene::Init()
 	miniUI_ = std::make_unique<MiniPlayer>();
 	miniUI_->Initialize();
 	timer_.start();
-
+	
 	checkPoint_ = std::make_unique<CheckPoint>();
 	checkPoint_->Initialize({ 0.0f, 0.0f, 0.0f }, { 1.0f, 1.0f, 1.0f }, { 0.0f, 0.0f, 40.0f }, "box");
 }
@@ -182,6 +182,26 @@ void GameScene::Update()
 	ImGui::DragFloat2("Transform", &miniMapOrigin.x, 0.1f);
 	ImGui::DragFloat("scale", &mapScale, 0.1f);
 	// タイマー
+	if (ImGui::Button("Lap Record"))
+	{
+
+		timer_.recordLap();
+	}
+	// ラップ履歴を表示
+	const auto& laps = timer_.getLaps();
+	for (size_t i = 0; i < laps.size(); i++)
+	{
+		ImGui::Text("Lap %zu: %.2f sec", i + 1, laps[i]);
+	}
+	// 差分も確認
+	if (laps.size() >= 2)
+	{
+		double diff = timer_.getLastLapDiff();
+		if (diff < 0)
+			ImGui::Text("- %.2f", -diff);
+		else
+			ImGui::Text("+ %.2f", diff);
+	}
 	ImGui::Text("DeltaTimess: %d ms", timer_.elapsedTensOfMinutes());
 	ImGui::Text("DeltaTimes: %d ms", timer_.elapsedMinutesOnly());
 	ImGui::Text("DeltaTimem: %d ms", timer_.elapsedTensOfSeconds());
