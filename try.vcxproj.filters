@@ -338,6 +338,7 @@
     <ClCompile Include="Game\CarBrakeSmoke\CarBrakeSmoke.cpp" />
     <ClCompile Include="Game\map\MiniMap\MiniPlayer.cpp" />
     <ClCompile Include="Game\CheckPoint\CheckPoint.cpp" />
+    <ClCompile Include="Game\Timer\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Utility\function.h">
@@ -623,6 +624,7 @@
     <ClInclude Include="Game\CarBrakeSmoke\CarBrakeSmoke.h" />
     <ClInclude Include="Game\CheckPoint\CheckPoint.h" />
     <ClInclude Include="Game\map\MiniMap\MiniPlayer.h" />
+    <ClInclude Include="Game\Timer\Timer.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shader\Particle.PS.hlsl">
