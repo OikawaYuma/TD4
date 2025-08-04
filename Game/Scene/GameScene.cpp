@@ -176,7 +176,30 @@ void GameScene::Update()
 	//physicsSystem_->Apply(1.0f / 60.0f);
 	ParticleManager::GetInstance()->Update(followCamera_->GetCamera());
 	Collision();
+	// タイマー
+	ImGui::Begin("Timer");
+	if (ImGui::Button("Lap Record"))
+	{
 
+		timer_.recordLap();
+	}
+	// ラップ履歴を表示
+	const auto& laps = timer_.getLaps();
+	for (size_t i = 0; i < laps.size(); i++)
+	{
+		ImGui::Text("Lap %zu: %.2f sec", i + 1, laps[i]);
+	}
+	// 差分も確認
+	if (laps.size() >= 2)
+	{
+		double diff = timer_.getLastLapDiff();
+		if (diff < 0)
+			ImGui::Text("- %.2f", -diff);
+		else
+			ImGui::Text("+ %.2f", diff);
+	}
+	ImGui::Text("TIME: %d%d:%d%d", timer_.elapsedTensOfMinutes(), timer_.elapsedMinutesOnly(), timer_.elapsedTensOfSeconds(), timer_.elapsedSecondsOnly());
+	ImGui::End();
 #ifdef _DEBUG
 	ImGui::Begin("a");
 	ImGui::DragFloat2("Transform", &miniMapOrigin.x, 0.1f);
