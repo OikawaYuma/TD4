@@ -180,7 +180,6 @@ void GameScene::Update()
 	ImGui::Begin("Timer");
 	if (ImGui::Button("Lap Record"))
 	{
-
 		timer_.recordLap();
 	}
 	// ラップ履歴を表示
