@@ -77,6 +77,7 @@ void CarBody::SetParent(WorldTransform* worldTransform)
 
 void CarBody::OnCollision()
 {
+	
 	isHit_ = collider_->OnCollision();
 }
 

@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include <chrono>
 
 /// <summary>
@@ -57,6 +57,14 @@ public:
     /// <returns>経過時間の1の位の秒（0〜9）。</returns>
     int elapsedSecondsOnly() const;
 
+    // ラップ記録用の追加関数
+    void recordLap();                       // ラップタイムを記録
+    const std::vector<double>& getLaps() const; // 履歴参照
+    double getLastLapDiff() const;     
+    // 最後の2ラップ差分(+/-)
+    // ラップ履歴（最大3件）
+    std::vector<double> lapTimes;
+
 private:
     /// <summary>
     /// タイマーの開始時刻。
@@ -72,4 +80,5 @@ private:
     /// タイマーが動作中かどうかを示すフラグ。
     /// </summary>
     bool running;
+
 };

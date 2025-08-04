@@ -1,4 +1,4 @@
-﻿#include "Timer.h"
+#include "Timer.h"
 
 /// <summary>
 /// タイマーを開始する関数
@@ -86,4 +86,27 @@ int Timer::elapsedTensOfSeconds() const {
 int Timer::elapsedSecondsOnly() const {
     // 経過時間を秒単位で取得し、1の位の秒を計算
     return static_cast<int>(elapsedSeconds()) % 10;
+}
+
+void Timer::recordLap() {
+    stop(); // 今のラップタイムを確定
+    double lapTime = elapsedSeconds();
+
+    // 古い記録を削除
+    if (lapTimes.size() >= 3) {
+        lapTimes.erase(lapTimes.begin());
+    }
+    lapTimes.push_back(lapTime);
+
+    // 次のラップ計測を開始
+    start();
+}
+
+const std::vector<double>& Timer::getLaps() const {
+    return lapTimes;
+}
+
+double Timer::getLastLapDiff() const {
+    if (lapTimes.size() < 2) return 0.0;
+    return lapTimes.back() - lapTimes[lapTimes.size() - 2];
 }

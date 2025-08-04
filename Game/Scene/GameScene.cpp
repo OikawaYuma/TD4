@@ -103,8 +103,8 @@ void GameScene::Init()
 	miniUI_->Initialize();
 	timer_.start();
 
-	checkPoint_ = std::make_unique<CheckPoint>();
-	checkPoint_->Initialize({ 0.0f, 0.0f, 0.0f }, { 1.0f, 1.0f, 1.0f }, { 0.0f, 0.0f, 40.0f }, "box");
+	score_ = std::make_unique<Score>();
+	score_->Init({ 500.0f, 0.0f }, { 1.0f, 1.0f }, true, 100.0f);
 }
 
 void GameScene::Update()
@@ -155,10 +155,10 @@ void GameScene::Update()
 	minimap_->Update(followCamera_->GetCamera());
 	fade_->Update();
 
+
 	if (fade_->GetAlpha() >= 1.0f) {
 		sceneNo = TITLE; // ステージシーンに遷移
 	}
-	checkPoint_->Update();
 	// ミニプレイヤー
 	Vector2 playerPos = { car_->GetWorldTransform()->translation_.x, car_->GetWorldTransform()->translation_ .z};     // プレイヤーのワールド座標
 	// プレイヤーの回転角（0〜360°）
@@ -176,16 +176,57 @@ void GameScene::Update()
 	//physicsSystem_->Apply(1.0f / 60.0f);
 	ParticleManager::GetInstance()->Update(followCamera_->GetCamera());
 	Collision();
+	// タイマー
+	ImGui::Begin("Timer");
+	if (ImGui::Button("Lap Record"))
+	{
 
+		timer_.recordLap();
+	}
+	// ラップ履歴を表示
+	const auto& laps = timer_.getLaps();
+	for (size_t i = 0; i < laps.size(); i++)
+	{
+		ImGui::Text("Lap %zu: %.2f sec", i + 1, laps[i]);
+	}
+	// 差分も確認
+	if (laps.size() >= 2)
+	{
+		double diff = timer_.getLastLapDiff();
+		if (diff < 0)
+			ImGui::Text("- %.2f", -diff);
+		else
+			ImGui::Text("+ %.2f", diff);
+	}
+	ImGui::Text("TIME: %d%d:%d%d", timer_.elapsedTensOfMinutes(), timer_.elapsedMinutesOnly(), timer_.elapsedTensOfSeconds(), timer_.elapsedSecondsOnly());
+	ImGui::End();
 #ifdef _DEBUG
 	ImGui::Begin("a");
 	ImGui::DragFloat2("Transform", &miniMapOrigin.x, 0.1f);
 	ImGui::DragFloat("scale", &mapScale, 0.1f);
 	// タイマー
-	ImGui::Text("DeltaTimess: %d ms", timer_.elapsedTensOfMinutes());
-	ImGui::Text("DeltaTimes: %d ms", timer_.elapsedMinutesOnly());
-	ImGui::Text("DeltaTimem: %d ms", timer_.elapsedTensOfSeconds());
-	ImGui::Text("DeltaTimem: %d ms", timer_.elapsedSecondsOnly());
+	if (ImGui::Button("Lap Record"))
+	{
+
+		timer_.recordLap();
+	}
+	// ラップ履歴を表示
+	const auto& laps = timer_.getLaps();
+	for (size_t i = 0; i < laps.size(); i++)
+	{
+		ImGui::Text("Lap %zu: %.2f sec", i + 1, laps[i]);
+	}
+	// 差分も確認
+	if (laps.size() >= 2)
+	{
+		double diff = timer_.getLastLapDiff();
+		if (diff < 0)
+			ImGui::Text("- %.2f", -diff);
+		else
+			ImGui::Text("+ %.2f", diff);
+	}
+	ImGui::Text("TIME: %d%d:%d%d", timer_.elapsedTensOfMinutes(), timer_.elapsedMinutesOnly(), timer_.elapsedTensOfSeconds(), timer_.elapsedSecondsOnly());
+
 	ImGui::End();
 #endif // _DEBUG
 }
@@ -424,7 +465,6 @@ void GameScene::Collision()
 	for (const auto& fence : fences_) {
 		collisionManager_->PushCollider(fence->GetCollider());
 	}
-	collisionManager_->PushCollider(checkPoint_->GetCollider());
 	collisionManager_->CheckAllCollision();
 
 
