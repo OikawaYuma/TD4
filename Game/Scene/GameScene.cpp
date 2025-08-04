@@ -102,9 +102,9 @@ void GameScene::Init()
 	miniUI_ = std::make_unique<MiniPlayer>();
 	miniUI_->Initialize();
 	timer_.start();
-	
-	checkPoint_ = std::make_unique<CheckPoint>();
-	checkPoint_->Initialize({ 0.0f, 0.0f, 0.0f }, { 1.0f, 1.0f, 1.0f }, { 0.0f, 0.0f, 40.0f }, "box");
+
+	score_ = std::make_unique<Score>();
+	score_->Init({ 500.0f, 0.0f }, { 1.0f, 1.0f }, true, 100.0f);
 }
 
 void GameScene::Update()
@@ -155,10 +155,10 @@ void GameScene::Update()
 	minimap_->Update(followCamera_->GetCamera());
 	fade_->Update();
 
+
 	if (fade_->GetAlpha() >= 1.0f) {
 		sceneNo = TITLE; // ステージシーンに遷移
 	}
-	checkPoint_->Update();
 	// ミニプレイヤー
 	Vector2 playerPos = { car_->GetWorldTransform()->translation_.x, car_->GetWorldTransform()->translation_ .z};     // プレイヤーのワールド座標
 	// プレイヤーの回転角（0〜360°）
@@ -465,7 +465,6 @@ void GameScene::Collision()
 	for (const auto& fence : fences_) {
 		collisionManager_->PushCollider(fence->GetCollider());
 	}
-	collisionManager_->PushCollider(checkPoint_->GetCollider());
 	collisionManager_->CheckAllCollision();
 
 

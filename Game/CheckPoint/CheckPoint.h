@@ -17,6 +17,8 @@ public:
 	/// 衝突判定
 	/// </summary>
 	void OnCollision();
+
+	bool IsGameClear() const { return isGameClear_; }
 private:
 	Vector3 collisionScale_{ 1.0f, 1.0f, 1.0f }; // 衝突判定のスケール
 

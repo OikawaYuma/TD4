@@ -12,9 +12,9 @@ void CheckPoint::Initialize(const Vector3& scale, const Vector3& rotate, const V
 	}
 	// コライダーの初期化
 	collider_->SetWorldPosition(GetWorldPosition());
-	collider_->SetScale(collisionScale_);
+	collider_->SetScale(scale);
 	collider_->SetMatWorld(objectParam_.lock()->worldTransform.matWorld_);
-	collider_->SetCollisonAttribute(kCollisionAttributeEnemy);
+	collider_->SetCollisonAttribute(kCollisionAttributeCheckPoin);
 	collider_->SetCollisionMask(kCollisionAttributePlayer);
 }
 
@@ -28,5 +28,8 @@ void CheckPoint::OnCollision()
 	// 衝突したら何かする
 	if (collider_) {
 		isGameClear_ = true;
+	}
+	else {
+		isGameClear_ = false;
 	}
 }

@@ -35,7 +35,7 @@
 #include <map/MiniMap/MiniPlayer.h>
 #include "Timer/Timer.h"
 #include "CheckPoint/CheckPoint.h"
-
+#include "Score/Score.h"
 class GameScene :public IScene
 {
 public:
@@ -88,13 +88,15 @@ private:
 	std::unique_ptr<MiniPlayer> miniUI_;
 	// ミニプレイヤー
 	std::unique_ptr<CheckPoint> checkPoint_;
-
+	// スコア
+	std::unique_ptr<Score> score_;
 	Emitter emitter_{};
 	RandRangePro randRangePro_{};
 	std::unique_ptr<Fade> fade_;
 	// Sprite
 	std::unique_ptr<Sprite> sprite_;
 	std::unique_ptr<UI> ui_;
+
 	uint32_t spTx_ = 0;
 	LevelData levelData_{};
 
