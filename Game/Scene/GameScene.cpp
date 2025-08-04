@@ -202,10 +202,8 @@ void GameScene::Update()
 		else
 			ImGui::Text("+ %.2f", diff);
 	}
-	ImGui::Text("DeltaTimess: %d ms", timer_.elapsedTensOfMinutes());
-	ImGui::Text("DeltaTimes: %d ms", timer_.elapsedMinutesOnly());
-	ImGui::Text("DeltaTimem: %d ms", timer_.elapsedTensOfSeconds());
-	ImGui::Text("DeltaTimem: %d ms", timer_.elapsedSecondsOnly());
+	ImGui::Text("TIME: %d%d:%d%d", timer_.elapsedTensOfMinutes(), timer_.elapsedMinutesOnly(), timer_.elapsedTensOfSeconds(), timer_.elapsedSecondsOnly());
+
 	ImGui::End();
 #endif // _DEBUG
 }
